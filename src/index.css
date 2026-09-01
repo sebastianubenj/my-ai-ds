@@ -29,6 +29,7 @@
     --color-input: var(--input);
     --color-border: var(--border);
     --color-destructive: var(--destructive);
+    --color-destructive-foreground: var(--destructive-foreground);
     --color-accent-foreground: var(--accent-foreground);
     --color-accent: var(--accent);
     --color-muted-foreground: var(--muted-foreground);
@@ -64,19 +65,22 @@
     --popover: var(--semantics-colors-background);
     --popover-foreground: var(--semantics-colors-foreground);
     
+    /* Mapeados a Semantics (Figma es la fuente de verdad visual; ver Button token mapping) */
+    --primary: var(--semantics-colors-primary);
+    --primary-foreground: var(--semantics-colors-primary-foreground);
+    --secondary: var(--semantics-colors-secondary);
+    --secondary-foreground: var(--semantics-colors-secondary-foreground);
+    --muted: var(--semantics-colors-muted);
+    --muted-foreground: var(--semantics-colors-muted-foreground);
+    --accent: var(--semantics-colors-accent);
+    --accent-foreground: var(--semantics-colors-accent-foreground);
+    --destructive: var(--semantics-colors-destructive);
+    --destructive-foreground: var(--semantics-colors-destructive-foreground);
+    --border: var(--semantics-colors-border);
+    --ring: var(--semantics-colors-ring-focus);
+
     /* Valores por defecto / fallback de shadcn mientras conectas el resto */
-    --primary: oklch(0.205 0 0);
-    --primary-foreground: oklch(0.985 0 0);
-    --secondary: oklch(0.97 0 0);
-    --secondary-foreground: oklch(0.205 0 0);
-    --muted: oklch(0.97 0 0);
-    --muted-foreground: oklch(0.556 0 0);
-    --accent: oklch(0.97 0 0);
-    --accent-foreground: oklch(0.205 0 0);
-    --destructive: oklch(0.577 0.245 27.325);
-    --border: oklch(0.922 0 0);
     --input: oklch(0.922 0 0);
-    --ring: oklch(0.708 0 0);
     --chart-1: oklch(0.87 0 0);
     --chart-2: oklch(0.556 0 0);
     --chart-3: oklch(0.439 0 0);
@@ -91,6 +95,44 @@
     --sidebar-accent-foreground: oklch(0.205 0 0);
     --sidebar-border: oklch(0.922 0 0);
     --sidebar-ring: oklch(0.708 0 0);
+
+    /*
+     * Button component aliases.
+     * These are NOT new tokens — every value below aliases an existing
+     * Semantics-layer variable from src/styles/generated/tokens.css under a
+     * short, ergonomic name so CVA class strings stay readable. Shared
+     * cross-control values (sizing/spacing) are prefixed "control-"; values
+     * that are genuinely Button-specific are prefixed "button-".
+     */
+    --control-height-lg: var(--semantics-controls-size-lg-height);
+    --control-height-md: var(--semantics-controls-size-md-height);
+    --control-height-sm: var(--semantics-controls-size-sm-height);
+    --control-height-xs: var(--semantics-controls-size-xs-height);
+    --control-radius-lg: var(--semantics-controls-size-lg-radius);
+    --control-radius-md: var(--semantics-controls-size-md-radius);
+    --control-radius-sm: var(--semantics-controls-size-sm-radius);
+    --control-radius-xs: var(--semantics-controls-size-xs-radius);
+    --control-padding-inline-lg: var(--semantics-controls-padding-inline-lg);
+    --control-padding-inline-md: var(--semantics-controls-padding-inline-md);
+    --control-padding-inline-sm: var(--semantics-controls-padding-inline-sm);
+    --control-gap-lg: var(--semantics-controls-gap-lg);
+    --control-gap-sm: var(--semantics-controls-gap-sm);
+
+    --button-font-weight: var(--semantics-typography-button-font-weight);
+    --button-tracking-normal: var(--semantics-typography-button-tracking-normal);
+    --button-text-lg: var(--semantics-typography-button-button-xl-font-size);
+    --button-leading-lg: var(--semantics-typography-button-button-xl-lh-snug);
+    --button-text-sm: var(--semantics-typography-button-button-lg-font-size);
+    --button-leading-sm: var(--semantics-typography-button-button-lg-lh-snug);
+    --button-text-xs: var(--semantics-typography-button-button-md-font-size);
+    --button-leading-xs: var(--semantics-typography-button-button-md-lh-snug);
+
+    --ring-focus-width: var(--semantics-ring-focus-width-spread);
+    --button-primary-bg-hover: var(--semantics-colors-button-primary-bg-hover);
+    --button-secondary-bg-hover: var(--semantics-colors-button-secondary-bg-hover);
+    --button-secondary-fg-disabled: var(--semantics-colors-button-secondary-fg-disabled);
+    --button-destructive-bg-hover: var(--semantics-colors-button-destructive-bg-hover);
+    --button-destructive-ring-focus: var(--semantics-colors-button-destructive-ring-focus);
 }
 
 .dark {
