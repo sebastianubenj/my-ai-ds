@@ -1,0 +1,145 @@
+import * as ButtonStories from "./button.stories";
+import { Meta, Canvas } from "@storybook/addon-docs/blocks";
+
+<Meta of={ButtonStories} />
+
+# Button
+
+Buttons trigger actions or events. Use the appropriate variant based on the importance and intent of the action.
+
+## Variants
+
+Button variants communicate the hierarchy and intent of an action.
+
+### Primary
+
+Use `primary` for the main action in a view or section.
+
+<Canvas of={ButtonStories.Primary} />
+
+### Secondary
+
+Use `secondary` for supporting actions that are less prominent than the primary action.
+
+<Canvas of={ButtonStories.Secondary} />
+
+### Destructive
+
+Use `destructive` for actions that can cause irreversible or potentially harmful changes.
+
+<Canvas of={ButtonStories.Destructive} />
+
+### Outline
+
+Use `outline` for secondary actions when a visible border is needed.
+
+<Canvas of={ButtonStories.Outline} />
+
+### Ghost
+
+Use `ghost` for low-emphasis actions where minimal visual weight is appropriate.
+
+<Canvas of={ButtonStories.Ghost} />
+
+## Sizes
+
+Button sizes determine the dimensions of the button and should be chosen based on the context and available space.
+
+<Canvas of={ButtonStories.AllSizes} />
+
+The button supports four standard sizes and four icon-only sizes:
+
+- `lg` — Large
+- `md` — Medium
+- `sm` — Small
+- `xs` — Extra Small
+- `icon-lg` — Large icon-only button
+- `icon-md` — Medium icon-only button
+- `icon-sm` — Small icon-only button
+- `icon-xs` — Extra Small icon-only button
+
+## States
+
+Button states communicate the button's current interaction and availability.
+
+<Canvas of={ButtonStories.States} />
+
+The button supports the following states:
+
+- **Default** — The initial state of an enabled button.
+- **Hover** — Shown when the pointer is positioned over the button.
+- **Pressed** — Shown while the button is being activated.
+- **Focus** — Shown when the button receives keyboard focus.
+- **Disabled** — Indicates that the button is unavailable for interaction.
+
+## Icons
+
+Buttons can include icons to reinforce the meaning of an action or provide a visual cue.
+
+### Leading Icon
+
+Use a leading icon when it helps communicate the action before the button label.
+
+<Canvas of={ButtonStories.WithLeadingIcon} />
+
+### Trailing Icon
+
+Use a trailing icon when the icon reinforces an action or indicates what happens next.
+
+<Canvas of={ButtonStories.WithTrailingIcon} />
+
+### Icon Only
+
+Use an icon-only button when the action can be clearly understood from the icon alone.
+
+Icon-only buttons must include an accessible name using `aria-label`.
+
+<Canvas of={ButtonStories.IconOnly} />
+
+## Accessibility
+
+Buttons should always have a clear and accessible name that describes their action.
+
+### Button Label
+
+Use descriptive text that clearly communicates what the button does.
+
+<Canvas of={ButtonStories.Primary} />
+
+Avoid vague labels such as "Click here" or "Submit" when a more descriptive action can be provided.
+
+### Icon-Only Buttons
+
+Icon-only buttons must include an `aria-label` to provide an accessible name for users of assistive technologies.
+
+<Canvas of={ButtonStories.IconOnly} />
+
+For example:
+
+```tsx
+<Button
+  size="icon-md"
+  icon="arrow-left"
+  aria-label="Go back"
+/>
+```
+
+## API
+
+The Button component provides properties to control its appearance, content, behavior, and icons.
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant` | `"primary"` &#124; `"secondary"` &#124; `"destructive"` &#124; `"outline"` &#124; `"ghost"` | `"primary"` | Controls the visual style and intent of the button. |
+| `size` | `"lg"` &#124; `"md"` &#124; `"sm"` &#124; `"xs"` &#124; `"icon-lg"` &#124; `"icon-md"` &#124; `"icon-sm"` &#124; `"icon-xs"` | `"md"` | Controls the size of the button. |
+| `leadingIcon` | `IconName` | — | Displays an icon before the button label. Ignored for icon-only sizes. |
+| `trailingIcon` | `IconName` | — | Displays an icon after the button label. Ignored for icon-only sizes. |
+| `icon` | `IconName` | — | Displays the icon for icon-only sizes. |
+| `type` | `"button"` &#124; `"submit"` &#124; `"reset"` | `"button"` | Defines the button's behavior when used inside a form. |
+| `disabled` | `boolean` | `false` | Prevents interaction with the button. |
+| `children` | `React.ReactNode` | — | Content displayed inside the button. |
+| `aria-label` | `string` | — | Provides an accessible name for the button. Required for icon-only buttons unless `aria-labelledby` is provided. |
+| `aria-labelledby` | `string` | — | References an element that provides the accessible name. Can be used instead of `aria-label` for icon-only buttons. |
+| `className` | `string` | — | Adds custom CSS classes to the button. |
+
+The component also supports the standard HTML `<button>` attributes through `React.ComponentPropsWithoutRef<"button">`.

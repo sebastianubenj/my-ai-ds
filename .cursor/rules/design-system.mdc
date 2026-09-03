@@ -1,0 +1,598 @@
+---
+description: Rules for building and maintaining the My AI Design System
+alwaysApply: true
+---
+
+# Design System Rules
+
+## 1. General Architecture
+
+This repository is a React + TypeScript design system built with:
+
+- React
+- TypeScript
+- Vite
+- Storybook
+- Tailwind CSS v4
+- shadcn
+- Base UI
+- Style Dictionary
+- Figma MCP
+
+The design system is driven by design tokens exported from Figma.
+
+Do not introduce a new architecture, styling system, or token structure unless explicitly requested.
+
+Preserve the existing project architecture when implementing or modifying components.
+
+---
+
+## 2. Figma and Figma MCP
+
+Figma is the base/source for the visual design language of the design system.
+
+Figma MCP is used to inspect Figma components, variables, styles, properties, and specifications and to help translate them into React components.
+
+When implementing a new component from an existing Figma design:
+
+1. Inspect the relevant Figma component using Figma MCP before implementing it.
+2. Inspect the relevant Figma variables and styles.
+3. Inspect existing related components in the repository.
+4. Inspect existing design tokens before creating new ones.
+5. Reuse existing design tokens whenever possible.
+6. Map Figma variables and styles to the existing token architecture.
+7. Preserve the existing React, TypeScript, Tailwind, shadcn, and Base UI architecture.
+8. Do not blindly reproduce Figma's structure if it conflicts with the technical architecture.
+9. Do not create duplicate tokens when an existing token can represent the same design decision.
+10. Do not create or modify Figma variables unless explicitly requested.
+
+Figma MCP should help translate the design into code.
+
+It should not redefine the project's architecture.
+
+The technical implementation should adapt Figma's visual design to the existing code architecture rather than reproducing Figma literally.
+
+---
+
+## 3. Token Architecture
+
+The token architecture has two main layers:
+
+### Primitives
+
+Located in the token source and generated from Figma.
+
+Primitives contain foundational values such as:
+
+- Colors
+- Typography
+- Spacing
+- Border radius
+- Sizing
+- Other foundational values
+
+Primitives represent reusable foundational values.
+
+Primitives should not contain component-specific decisions.
+
+### Semantics
+
+Semantic tokens reference primitives and describe their intended purpose or usage.
+
+Examples include:
+
+- Background
+- Foreground
+- Primary
+- Secondary
+- Border
+- Focus
+- Controls
+- Typography roles
+- Component-specific semantic decisions
+
+Prefer semantic tokens when implementing components.
+
+Do not bypass semantic tokens and reference primitive values directly unless there is a clear architectural reason.
+
+---
+
+## 4. Token Representation in Code
+
+Figma values must be translated into the project's code-oriented token representation.
+
+Do not consume raw Figma values directly in component code when a transformed design-system token exists.
+
+Use the existing token transformation strategy:
+
+- Font sizes → `rem`
+- Semantic line heights → unitless ratios
+- Semantic letter spacing → `em`
+- Font weights → unitless numeric values
+- Spacing → `rem`
+- Dimensions and sizing → `rem`, unless another token-specific strategy exists
+- Border radius → `rem`
+- Opacity → unitless values
+- Shadows → generated CSS shadow values through the project's token transformation
+- Colors → semantic color tokens
+- Borders → semantic border tokens
+- Focus states → semantic focus/ring/effect tokens
+- Other visual properties → use the appropriate existing transformed token
+
+Components should consume the generated tokens rather than reproduce Figma values manually.
+
+Do not perform independent Figma-to-CSS conversions inside individual components.
+
+Do not hardcode transformed values when a corresponding token already exists.
+
+Do not create component-level calculations for typography, shadows, colors, spacing, or other tokenized visual properties.
+
+If a required design value does not have an appropriate token, identify the missing token before introducing a hardcoded value.
+
+---
+
+## 5. Token Generation
+
+The source token file is:
+
+`tokens/tokens.json`
+
+Tokens are transformed using:
+
+`build-tokens.js`
+
+Generated CSS is located at:
+
+`src/styles/generated/tokens.css`
+
+Do not manually edit:
+
+`src/styles/generated/tokens.css`
+
+When token changes are required:
+
+1. Update the source tokens or token-generation logic.
+2. Run:
+
+`npm run build:tokens`
+
+3. Verify the generated output.
+4. Verify that the generated CSS contains the expected tokens.
+
+The generated CSS is an artifact, not the source of truth.
+
+The token pipeline is:
+
+Figma  
+↓  
+`scripts/sync-tokens.js`  
+↓  
+`tokens/tokens.json`  
+↓  
+`build-tokens.js` / Style Dictionary  
+↓  
+`src/styles/generated/tokens.css`  
+↓  
+React / Tailwind / shadcn
+
+Do not bypass this pipeline without an explicit reason.
+
+---
+
+## 6. Styling
+
+Use Tailwind CSS v4 for component styling.
+
+Use existing CSS variables and semantic tokens whenever possible.
+
+Do not introduce arbitrary hardcoded values such as:
+
+- Colors
+- Font sizes
+- Font weights
+- Spacing
+- Border radius
+- Component heights
+- Shadows
+- Focus effects
+
+when an equivalent design-system token already exists.
+
+Arbitrary values are acceptable only when the design genuinely requires a value that does not exist in the token system.
+
+When a value is missing from the token system and is clearly part of the design system, prefer identifying or creating the appropriate token rather than permanently hardcoding the value.
+
+---
+
+## 7. shadcn and Base UI
+
+shadcn provides component architecture, utilities, and conventions.
+
+Base UI provides accessible primitives and interaction behavior where applicable.
+
+Use the existing shadcn and Base UI conventions where appropriate.
+
+Do not blindly preserve shadcn default visual values when equivalent design-system tokens exist.
+
+The design system's tokens are responsible for visual decisions.
+
+shadcn and Base UI should provide implementation structure, accessibility patterns, composability, and behavior—not replace the design system's visual language.
+
+Do not replace Base UI or shadcn primitives with custom implementations unless there is a clear design-system requirement.
+
+---
+
+## 8. Component Architecture
+
+Components should be:
+
+- Reusable
+- Composable
+- Accessible
+- Typed with TypeScript
+- Compatible with the existing design-system architecture
+
+Use `class-variance-authority` (CVA) for component variants when appropriate.
+
+Component variants should represent meaningful design-system decisions such as:
+
+- Type
+- Size
+- State
+- Appearance
+- Other explicitly defined component properties
+
+Do not create variants for arbitrary combinations that are not part of the design specification.
+
+Keep component APIs simple and predictable.
+
+Do not expose implementation details as public component props unless necessary.
+
+---
+
+## 9. Component Tokens
+
+Prefer semantic component-related tokens when they already exist.
+
+Shared values should remain shared when the same design decision applies to multiple components.
+
+For example, control sizing may be shared across:
+
+- Button
+- Input
+- Select
+- Checkbox
+- Radio
+- Other controls
+
+Do not create Button-specific tokens when the value is intentionally shared across controls.
+
+Conversely, do not create a generic token when the design decision is genuinely specific to one component.
+
+Before creating a new component token, verify whether an existing semantic token already represents the same design decision.
+
+---
+
+## 10. States and Interaction
+
+Components should implement the states defined by the design system.
+
+Common states may include:
+
+- Default
+- Hover
+- Pressed
+- Focus
+- Disabled
+- Error
+- Selected
+- Checked
+- Open
+- Other component-specific states
+
+Use semantic state tokens whenever they exist.
+
+Focus states must use the design system's focus/ring/effect tokens rather than arbitrary CSS values.
+
+Do not invent visual states that are not required by the component design.
+
+Do not remove interaction or accessibility states provided by Base UI or shadcn without a specific reason.
+
+---
+
+## 11. Typography
+
+Typography must use the existing typography token system.
+
+Prefer semantic typography tokens over primitive typography tokens when implementing components.
+
+Do not manually calculate typography values inside components.
+
+Follow the existing code representation:
+
+- Font size → `rem`
+- Line height → unitless ratio
+- Letter spacing → `em`
+- Font weight → numeric unitless value
+
+Use the semantic typography role appropriate for the component.
+
+If a component requires a typography style that does not exist, identify the missing semantic token rather than introducing arbitrary typography values.
+
+---
+
+## 12. Shadows, Borders, Colors, and Effects
+
+Visual effects are part of the token system.
+
+### Shadows
+
+Use existing shadow/effect tokens.
+
+The project already transforms Figma shadow objects into CSS-compatible shadow values.
+
+Do not recreate shadow values manually inside components when a corresponding token exists.
+
+### Borders
+
+Use semantic border tokens.
+
+Do not hardcode border colors when an equivalent semantic token exists.
+
+### Colors
+
+Use semantic color tokens for component styling.
+
+Avoid referencing primitive colors directly from components unless there is a clear architectural reason.
+
+### Focus
+
+Use semantic focus/ring/effect tokens.
+
+Do not create arbitrary focus shadows, outlines, or colors when an existing focus token exists.
+
+### Opacity
+
+Use opacity tokens when available.
+
+Represent opacity as unitless values in generated CSS.
+
+---
+
+## 13. Existing Components
+
+Before creating a new component:
+
+1. Inspect existing components.
+2. Inspect existing tokens.
+3. Inspect related Storybook stories.
+4. Reuse existing utilities and patterns.
+5. Check whether shadcn/Base UI already provides relevant primitives.
+6. Check whether an existing component can serve as a structural reference.
+
+The existing Button component is the primary reference for component implementation patterns.
+
+When creating a new component, follow established patterns from Button unless the new component genuinely requires a different architecture.
+
+Do not duplicate functionality that already exists.
+
+Do not refactor unrelated components while implementing a new component unless explicitly requested.
+
+---
+
+## 14. Component Implementation Workflow
+
+When asked to create a new component:
+
+### Step 1 — Inspect
+
+Inspect:
+
+- Relevant Figma component using Figma MCP
+- Existing related components
+- Existing tokens
+- Existing utilities
+- shadcn/Base UI primitives
+
+### Step 2 — Define
+
+Determine:
+
+- Component API
+- Variants
+- Sizes
+- States
+- Required/optional properties
+- Accessibility requirements
+- Relevant semantic tokens
+
+Do not invent variants that are not supported by the design.
+
+### Step 3 — Implement
+
+Create or modify only the files necessary for the component.
+
+Follow the existing component architecture.
+
+Use:
+
+- React
+- TypeScript
+- Tailwind CSS v4
+- CVA when appropriate
+- shadcn/Base UI patterns where appropriate
+- Existing design tokens
+
+### Step 4 — Document
+
+Create or update Storybook stories for the component.
+
+Stories should demonstrate meaningful:
+
+- Variants
+- Sizes
+- States
+- Important properties
+- Accessibility behavior
+
+Create or update MDX documentation when requested or when the component follows the established documentation pattern.
+
+### Step 5 — Verify
+
+Run appropriate checks such as:
+
+`npm run build`
+
+and verify Storybook when relevant.
+
+Verify that:
+
+- TypeScript passes
+- The component renders correctly
+- Expected tokens are being consumed
+- No `[object Object]` values appear in generated CSS
+- Existing components remain unaffected
+- No unrelated files were modified
+
+Prefer small, verifiable changes over large automated rewrites.
+
+---
+
+## 15. Storybook
+
+Every design-system component should have Storybook documentation.
+
+Use:
+
+- `.stories.tsx` for interactive stories, controls, variants, and examples.
+- `.mdx` for narrative documentation, usage guidance, API information, and design-system explanations.
+
+Do not duplicate large amounts of information between stories and MDX unnecessarily.
+
+Stories should demonstrate the component's meaningful states and variants without unnecessary complexity.
+
+When documenting APIs in MDX, use Storybook-compatible MDX syntax.
+
+Do not wrap MDX content in Markdown code fences unless the content is intentionally being shown as code.
+
+---
+
+## 16. Accessibility
+
+Components must follow accessible interaction patterns.
+
+Use appropriate:
+
+- Semantic HTML
+- ARIA attributes
+- Keyboard interactions
+- Focus states
+- Disabled states
+- Labels
+- Accessible names
+
+Prefer the accessibility behavior provided by Base UI and shadcn.
+
+Do not remove accessibility behavior unless there is a specific reason.
+
+Icon-only controls must have an accessible name.
+
+Do not rely on visual appearance alone to communicate component state.
+
+---
+
+## 17. Icons
+
+Use the existing `Icon` abstraction and icon registry when an icon is required.
+
+Do not import individual icon implementations directly into components when the existing icon system can provide the icon.
+
+Reuse the existing icon naming and sizing conventions.
+
+Do not introduce a second icon library or icon abstraction unless explicitly requested.
+
+---
+
+## 18. Source of Truth and Implementation Priority
+
+Use the following principles when making implementation decisions:
+
+1. Figma defines the intended visual design.
+2. The existing token architecture defines how that design is represented in code.
+3. Existing component architecture defines how components are implemented.
+4. shadcn/Base UI provide implementation and accessibility patterns.
+5. Tailwind provides utility syntax and defaults.
+
+When Figma and the technical implementation differ:
+
+- Preserve the intended visual design.
+- Preserve the existing technical architecture.
+- Adapt Figma values through the token system.
+- Do not reproduce Figma's internal structure literally when it is not appropriate for code.
+
+The goal is faithful design implementation without compromising the design-system architecture.
+
+---
+
+## 19. Scope Control
+
+When asked to implement a component:
+
+- Modify only the files necessary for that component.
+- Do not rewrite the project architecture.
+- Do not modify unrelated components.
+- Do not replace the token architecture.
+- Do not introduce a new styling solution.
+- Do not remove existing dependencies without a clear reason.
+- Do not perform broad refactors unless explicitly requested.
+- Do not modify Figma unless explicitly requested.
+- Do not change unrelated tokens.
+
+Before making architectural changes, explain why the change is necessary.
+
+If an existing pattern appears imperfect but does not block the requested work, preserve it and avoid unrelated refactoring.
+
+---
+
+## 20. Generated and Temporary Files
+
+Do not manually edit generated files.
+
+Generated token output:
+
+`src/styles/generated/tokens.css`
+
+Build output such as `dist/` is generated and should not be manually modified.
+
+Do not treat generated files as the source of truth.
+
+If generated output is incorrect, fix the source token or transformation logic and regenerate it.
+
+---
+
+## 21. Verification
+
+After implementing or modifying a component:
+
+1. Run the appropriate build or type checks.
+2. Run token generation when token-related files changed.
+3. Verify Storybook when the component or stories changed.
+4. Verify that generated tokens contain no `[object Object]` values.
+5. Verify that the component uses the expected design-system tokens.
+6. Verify accessibility behavior.
+7. Check that no unrelated files were modified.
+
+Prefer small, verifiable changes over large automated rewrites.
+
+---
+
+## 22. Do Not Guess When Design Information Is Missing
+
+If the Figma design, token system, or existing architecture does not provide enough information to make a reliable implementation decision:
+
+- Inspect the relevant source first.
+- Reuse an established pattern if one exists.
+- Identify the missing design-system decision explicitly.
+- Do not invent a new token, variant, state, or architecture without justification.
+
+When there are multiple technically valid implementations, prefer the one that is most consistent with the existing design-system patterns.

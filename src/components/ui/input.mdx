@@ -1,0 +1,91 @@
+import * as InputStories from "./input.stories";
+import { Meta, Canvas } from "@storybook/addon-docs/blocks";
+
+<Meta of={InputStories} />
+
+# Input
+
+A single-line form control for collecting user input. Supports `text` and `password` types, decorative leading/trailing icons, and validation styling.
+
+## Default
+
+<Canvas of={InputStories.Default} />
+
+## Password
+
+`type="password"` renders a native `<input type="password">`. Masking, autofill, and browser password-manager behavior all come from the browser — the component does not implement its own masking or a reveal/hide toggle.
+
+<Canvas of={InputStories.Password} />
+
+## Icons
+
+Leading and trailing icons are purely decorative and rendered through the design system's `Icon` component. They do not accept interaction.
+
+### Leading Icon
+
+<Canvas of={InputStories.WithLeadingIcon} />
+
+### Trailing Icon
+
+<Canvas of={InputStories.WithTrailingIcon} />
+
+### Leading and Trailing Icon
+
+<Canvas of={InputStories.WithLeadingAndTrailingIcon} />
+
+## Filled
+
+There is no `filled` prop. Whether the input shows placeholder styling or value styling is determined entirely by the native input's value — pass `value`/`defaultValue` like any other input.
+
+<Canvas of={InputStories.Filled} />
+
+## Error
+
+Set `error` to mark the field as invalid. This mirrors `aria-invalid="true"` on the underlying `<input>`, which drives both the destructive styling and the accessibility signal from a single source of truth.
+
+<Canvas of={InputStories.ErrorState} />
+
+<Canvas of={InputStories.ErrorFilled} />
+
+## Disabled
+
+Use the native `disabled` prop. If `disabled` and `error` are both set, the disabled appearance takes precedence.
+
+<Canvas of={InputStories.Disabled} />
+
+```tsx
+<Input disabled placeholder="Placeholder text" />
+```
+
+## Associating with a Label
+
+`Input` does not render its own label. Pair it with the existing `Label` component using `htmlFor` / `id`, the same pattern used for any native form control.
+
+```tsx
+<Label htmlFor="email">Email</Label>
+<Input id="email" type="text" placeholder="you@example.com" />
+```
+
+## Accessibility
+
+- Renders a native `<input>`, so keyboard behavior, focus, and typing all come from the browser.
+- `error` is mirrored to `aria-invalid` — style and semantics stay in sync automatically.
+- The focus ring appears on native `:focus` (not `:focus-visible`), since sighted mouse users editing a text field also need to see where focus landed.
+- Leading/trailing icons are decorative and marked `aria-hidden`; they never carry the field's accessible name.
+- `Input` intentionally does not include a label. Always pair it with a `Label` (or `aria-label`/`aria-labelledby`) so the field has an accessible name.
+
+## API
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `type` | `"text"` &#124; `"password"` | `"text"` | Native input type. Both render identically aside from browser masking behavior. |
+| `error` | `boolean` | `false` | Marks the input as invalid. Mirrored to `aria-invalid`. |
+| `leadingIcon` | `IconName` | — | Decorative icon displayed before the value/placeholder. |
+| `trailingIcon` | `IconName` | — | Decorative icon displayed after the value/placeholder. |
+| `disabled` | `boolean` | `false` | Prevents interaction with the input. |
+| `placeholder` | `string` | — | Placeholder text shown when the input is empty. |
+| `className` | `string` | — | Adds custom CSS classes to the input's wrapper. |
+
+The component also supports the standard HTML `<input>` attributes (`value`, `defaultValue`, `name`, `id`, `onChange`, etc.) through `React.ComponentPropsWithoutRef<"input">`, excluding `type` and `size`, which are replaced by the constrained `type` prop above.
+
+There are no `focus`, `filled`, or `focusFilled` props — those are interaction states derived automatically from the native input and CSS, not from React.

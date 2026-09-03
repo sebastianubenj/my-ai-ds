@@ -3,29 +3,10 @@
  */
 
 :root {
-  --font-typography-display-lg: [object Object];
-  --font-typography-display-md: [object Object];
-  --font-typography-display-sm: [object Object];
-  --font-typography-heading-xl: [object Object];
-  --font-typography-heading-lg: [object Object];
-  --font-typography-heading-md: [object Object];
-  --font-typography-heading-sm: [object Object];
-  --font-typography-body-lg: [object Object];
-  --font-typography-body-md: [object Object];
-  --font-typography-body-sm: [object Object];
-  --font-typography-label-xl: [object Object];
-  --font-typography-label-lg: [object Object];
-  --font-typography-label-md: [object Object];
-  --font-typography-label-sm: [object Object];
-  --font-typography-button-xl: [object Object];
-  --font-typography-button-lg: [object Object];
-  --font-typography-button-md: [object Object];
-  --font-typography-button-sm: [object Object];
-  --font-typography-caption-caption: [object Object];
-  --effect-focus-default: [object Object];
-  --effect-focus-destructive: [object Object];
-  --effect-shadows-popover-0: [object Object];
-  --effect-shadows-popover-1: [object Object];
+  --effect-focus-default: 0 0 0 0.1875rem #78716cff;
+  --effect-focus-destructive: 0 0 0 0.1875rem #e7000bff;
+  --effect-shadows-popover-0: 0 0.25rem 0.375rem -0.0625rem #0000001a;
+  --effect-shadows-popover-1: 0 0.125rem 0.25rem -0.125rem #0000001a;
   --primitives-spacing-0: 0;
   --primitives-spacing-1: 0.25rem;
   --primitives-spacing-2: 0.5rem;
@@ -641,7 +622,7 @@
   --semantics-typography-body-body-lg-font-size: var(--primitives-typography-font-size-text-base);
   --semantics-typography-body-body-md-font-size: var(--primitives-typography-font-size-text-sm);
   --semantics-typography-body-body-sm-font-size: var(--primitives-typography-font-size-text-xs);
-  --semantics-typography-button-font-weight: var(--primitives-typography-font-weight-regular);
+  --semantics-typography-button-font-weight: var(--primitives-typography-font-weight-medium);
   --semantics-typography-button-button-lg-font-size: var(--primitives-typography-font-size-text-base);
   --semantics-typography-button-button-md-font-size: var(--primitives-typography-font-size-text-sm);
   --semantics-typography-button-button-sm-font-size: var(--primitives-typography-font-size-text-xs);

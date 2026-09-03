@@ -1,61 +1,89 @@
 import * as React from "react";
+
 import { cva, type VariantProps } from "class-variance-authority";
 
 import { cn } from "@/lib/utils";
+
 import { Icon, type IconName } from "@/components/icon";
 
 const buttonVariants = cva(
   `inline-flex items-center justify-center shrink-0 whitespace-nowrap
-   font-sans [font-weight:var(--button-font-weight)] tracking-(--button-tracking-normal)
-   transition-colors outline-none
-   disabled:pointer-events-none disabled:cursor-not-allowed
-   aria-disabled:pointer-events-none aria-disabled:cursor-not-allowed
+   font-sans [font-weight:var(--semantics-typography-button-font-weight)] tracking-(--semantics-typography-button-tracking-normal)
+   transition-colors outline-none cursor-pointer
+   disabled:pointer-events-none disabled:cursor-default
+   aria-disabled:pointer-events-none aria-disabled:cursor-default
    [&_svg]:pointer-events-none [&_svg]:shrink-0`,
   {
     variants: {
       variant: {
         primary: `bg-primary text-primary-foreground
           hover:[background-color:var(--button-primary-bg-hover)]
-          focus-visible:[box-shadow:0_0_0_var(--ring-focus-width)_var(--ring)]
+          active:bg-primary
+          focus-visible:[box-shadow:var(--effect-focus-default)]
           disabled:opacity-25 aria-disabled:opacity-25`,
+
         secondary: `bg-secondary text-secondary-foreground
           hover:[background-color:var(--button-secondary-bg-hover)]
-          focus-visible:[box-shadow:0_0_0_var(--ring-focus-width)_var(--ring)]
+          active:bg-secondary
+          focus-visible:[box-shadow:var(--effect-focus-default)]
           disabled:[color:var(--button-secondary-fg-disabled)]
           aria-disabled:[color:var(--button-secondary-fg-disabled)]`,
+
         destructive: `bg-destructive text-destructive-foreground
           hover:[background-color:var(--button-destructive-bg-hover)]
-          focus-visible:[box-shadow:0_0_0_var(--ring-focus-width)_var(--button-destructive-ring-focus)]
+          active:bg-destructive
+          focus-visible:[box-shadow:var(--effect-focus-destructive)]
           disabled:opacity-25 aria-disabled:opacity-25`,
+
         outline: `bg-transparent text-secondary-foreground border border-border
           hover:bg-accent
-          focus-visible:[box-shadow:0_0_0_var(--ring-focus-width)_var(--ring)]
+          active:bg-transparent
+          focus-visible:[box-shadow:var(--effect-focus-default)]
           disabled:opacity-25 aria-disabled:opacity-25`,
+
         ghost: `bg-transparent text-secondary-foreground
           hover:bg-accent
-          focus-visible:[box-shadow:0_0_0_var(--ring-focus-width)_var(--ring)]
+          active:bg-transparent
+          focus-visible:[box-shadow:var(--effect-focus-default)]
           disabled:[color:var(--button-secondary-fg-disabled)]
           aria-disabled:[color:var(--button-secondary-fg-disabled)]`,
       },
+
       size: {
         lg: `h-(--control-height-lg) rounded-(--control-radius-lg)
           px-(--control-padding-inline-lg) gap-(--control-gap-lg)
-          text-(length:--button-text-lg) leading-(--button-leading-lg)`,
+          text-(length:--semantics-typography-button-button-xl-font-size)
+          leading-(--semantics-typography-button-button-xl-lh-snug)`,
+
         md: `h-(--control-height-md) rounded-(--control-radius-md)
           px-(--control-padding-inline-lg) gap-(--control-gap-lg)
-          text-(length:--button-text-lg) leading-(--button-leading-lg)`,
+          text-(length:--semantics-typography-button-button-xl-font-size)
+          leading-(--semantics-typography-button-button-xl-lh-snug)`,
+
         sm: `h-(--control-height-sm) rounded-(--control-radius-sm)
           px-(--control-padding-inline-md) gap-(--control-gap-sm)
-          text-(length:--button-text-sm) leading-(--button-leading-sm)`,
+          text-(length:--semantics-typography-button-button-lg-font-size)
+          leading-(--semantics-typography-button-button-lg-lh-snug)`,
+
         xs: `h-(--control-height-xs) rounded-(--control-radius-xs)
           px-(--control-padding-inline-sm) gap-(--control-gap-sm)
-          text-(length:--button-text-xs) leading-(--button-leading-xs)`,
-        "icon-lg": "h-(--control-height-lg) w-(--control-height-lg) rounded-(--control-radius-lg)",
-        "icon-md": "h-(--control-height-md) w-(--control-height-md) rounded-(--control-radius-md)",
-        "icon-sm": "h-(--control-height-sm) w-(--control-height-sm) rounded-(--control-radius-sm)",
-        "icon-xs": "h-(--control-height-xs) w-(--control-height-xs) rounded-(--control-radius-xs)",
+          text-(length:--semantics-typography-button-button-md-font-size)
+          leading-(--semantics-typography-button-button-md-lh-snug)`,
+
+        "icon-lg":
+          "h-(--control-height-lg) w-(--control-height-lg) rounded-(--control-radius-lg)",
+
+        "icon-md":
+          "h-(--control-height-md) w-(--control-height-md) rounded-(--control-radius-md)",
+
+        "icon-sm":
+          "h-(--control-height-sm) w-(--control-height-sm) rounded-(--control-radius-sm)",
+
+        "icon-xs":
+          "h-(--control-height-xs) w-(--control-height-xs) rounded-(--control-radius-xs)",
       },
     },
+
     defaultVariants: {
       variant: "primary",
       size: "md",
@@ -88,8 +116,10 @@ export interface ButtonProps
     VariantProps<typeof buttonVariants> {
   /** Icon rendered before the label. Ignored for icon-only sizes. */
   leadingIcon?: IconName;
+
   /** Icon rendered after the label. Ignored for icon-only sizes. */
   trailingIcon?: IconName;
+
   /** The icon to render for icon-only sizes (`icon-lg`, `icon-md`, `icon-sm`, `icon-xs`). */
   icon?: IconName;
 }
@@ -113,6 +143,7 @@ export function Button({
     if (isIconOnly && !icon) {
       console.warn("Button: an `icon` prop is required when using an icon-only `size`.");
     }
+
     if (isIconOnly && !props["aria-label"] && !props["aria-labelledby"]) {
       console.warn(
         "Button: icon-only buttons must have an accessible name via `aria-label` or `aria-labelledby`.",

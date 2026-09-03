@@ -267,15 +267,47 @@ StyleDictionary.registerTransform({
   }
 });
 
+// 6. custom-shadow -> CSS box-shadow.
+// Figma exports shadow tokens as composite objects. Convert the
+// components to a standard CSS box-shadow value and keep dimensions
+// in rem to match the rest of the design-system output.
+StyleDictionary.registerTransform({
+  name: 'ds/customShadow',
+  type: 'value',
+  filter: (token) => token.type === 'custom-shadow',
+  transform: (token) => {
+    const { offsetX, offsetY, radius, spread, color } = token.value;
+
+    const toRem = (value) => {
+      if (value === 0) return '0';
+      return `${value / 16}rem`;
+    };
+
+    return `${toRem(offsetX)} ${toRem(offsetY)} ${toRem(radius)} ${toRem(spread)} ${color}`;
+  },
+});
+
+const cssTokensFilter = (token) =>
+  !(
+    token.path?.[0] === 'font' &&
+    token.path?.[1] === 'typography'
+  );
+
 // 3. Configurar la compilación de Style Dictionary
 const sd = new StyleDictionary({
   source: ['tokens/tokens.json'], // Verifica que esta sea la ruta exacta de tu JSON
   preprocessors: ['typography/relative-units'],
+  hooks: {
+    filters: {
+      'ds/cssTokens': cssTokensFilter,
+    },
+  },
   platforms: {
     css: {
       transforms: [
         'attribute/cti',
         'name/kebab',
+        'ds/customShadow',
         'typography/relativeUnit',
         'ds/unitlessInteger',
         'ds/percentToUnitless',
@@ -287,6 +319,7 @@ const sd = new StyleDictionary({
         {
           destination: 'tokens.css',
           format: 'css/variables',
+          filter: 'ds/cssTokens',
           options: {
             outputReferences: true // Preserva las referencias como var(--primitives-...)
           }

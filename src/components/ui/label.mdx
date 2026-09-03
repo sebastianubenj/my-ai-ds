@@ -1,0 +1,40 @@
+import * as LabelStories from "./label.stories";
+import { Meta, Canvas } from "@storybook/addon-docs/blocks";
+
+<Meta of={LabelStories} />
+
+# Label
+
+A reusable form label. Use it to give form controls a clear, accessible name.
+
+## Basic
+
+<Canvas of={LabelStories.Basic} />
+
+## Associating with a form control
+
+Pass `htmlFor` with the id of the control it describes. Clicking the label focuses the associated control, and assistive technologies announce it as the control's accessible name.
+
+<Canvas of={LabelStories.WithFormControl} />
+
+```tsx
+<Label htmlFor="email">Email</Label>
+<input id="email" type="email" />
+```
+
+## Accessibility
+
+- Renders a native `<label>` element, so browsers and assistive technologies handle the label/control association automatically.
+- Always pair a `Label` with a control via matching `htmlFor` / `id` values rather than relying on visual proximity alone.
+
+## API
+
+The Label component is intentionally simple — it has no variants, sizes, or states.
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `htmlFor` | `string` | — | The `id` of the form control this label describes. |
+| `children` | `React.ReactNode` | — | The label's text content. |
+| `className` | `string` | — | Adds custom CSS classes to the label. |
+
+The component also supports the standard HTML `<label>` attributes through `React.ComponentPropsWithoutRef<"label">`.

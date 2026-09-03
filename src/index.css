@@ -80,7 +80,7 @@
     --ring: var(--semantics-colors-ring-focus);
 
     /* Valores por defecto / fallback de shadcn mientras conectas el resto */
-    --input: oklch(0.922 0 0);
+    --input: var(--semantics-colors-input);
     --chart-1: oklch(0.87 0 0);
     --chart-2: oklch(0.556 0 0);
     --chart-3: oklch(0.439 0 0);
@@ -118,21 +118,11 @@
     --control-gap-lg: var(--semantics-controls-gap-lg);
     --control-gap-sm: var(--semantics-controls-gap-sm);
 
-    --button-font-weight: var(--semantics-typography-button-font-weight);
-    --button-tracking-normal: var(--semantics-typography-button-tracking-normal);
-    --button-text-lg: var(--semantics-typography-button-button-xl-font-size);
-    --button-leading-lg: var(--semantics-typography-button-button-xl-lh-snug);
-    --button-text-sm: var(--semantics-typography-button-button-lg-font-size);
-    --button-leading-sm: var(--semantics-typography-button-button-lg-lh-snug);
-    --button-text-xs: var(--semantics-typography-button-button-md-font-size);
-    --button-leading-xs: var(--semantics-typography-button-button-md-lh-snug);
-
     --ring-focus-width: var(--semantics-ring-focus-width-spread);
     --button-primary-bg-hover: var(--semantics-colors-button-primary-bg-hover);
     --button-secondary-bg-hover: var(--semantics-colors-button-secondary-bg-hover);
     --button-secondary-fg-disabled: var(--semantics-colors-button-secondary-fg-disabled);
     --button-destructive-bg-hover: var(--semantics-colors-button-destructive-bg-hover);
-    --button-destructive-ring-focus: var(--semantics-colors-button-destructive-ring-focus);
 }
 
 .dark {
@@ -174,10 +164,14 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }
+
   html {
     @apply font-sans;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 }
