@@ -8,6 +8,7 @@
 @import "@fontsource-variable/inter";
 
 @custom-variant dark (&:is(.dark *));
+@custom-variant intent-keyboard (&:is(:root[data-focus-intent="keyboard"] *));
 
 @theme inline {
     --font-heading: var(--font-sans);
@@ -56,31 +57,27 @@
 /* 3. VINCULAR SHADCN CON TUS DESIGN TOKENS */
 :root {
     /* Mapea las variables que consume shadcn hacia tus tokens de Figma */
-    --background: var(--semantics-colors-background);
-    --foreground: var(--semantics-colors-foreground);
-    
-    /* Si tienes más mapeos en tu JSON, conéctalos aquí. Ejemplos: */
-    --card: var(--semantics-colors-background); 
-    --card-foreground: var(--semantics-colors-foreground);
-    --popover: var(--semantics-colors-background);
-    --popover-foreground: var(--semantics-colors-foreground);
-    
-    /* Mapeados a Semantics (Figma es la fuente de verdad visual; ver Button token mapping) */
-    --primary: var(--semantics-colors-primary);
-    --primary-foreground: var(--semantics-colors-primary-foreground);
-    --secondary: var(--semantics-colors-secondary);
-    --secondary-foreground: var(--semantics-colors-secondary-foreground);
-    --muted: var(--semantics-colors-muted);
-    --muted-foreground: var(--semantics-colors-muted-foreground);
-    --accent: var(--semantics-colors-accent);
-    --accent-foreground: var(--semantics-colors-accent-foreground);
-    --destructive: var(--semantics-colors-destructive);
-    --destructive-foreground: var(--semantics-colors-destructive-foreground);
-    --border: var(--semantics-colors-border);
-    --ring: var(--semantics-colors-ring-focus);
+    --background: var(--semantics-colors-background-default);
+    --foreground: var(--semantics-colors-foreground-default);
+
+    --card: var(--semantics-colors-background-default);
+    --card-foreground: var(--semantics-colors-foreground-default);
+    --popover: var(--semantics-colors-background-default);
+    --popover-foreground: var(--semantics-colors-foreground-default);
+
+    --primary: var(--semantics-colors-background-primary);
+    --primary-foreground: var(--semantics-colors-foreground-primary);
+    --secondary: var(--semantics-colors-background-secondary);
+    --secondary-foreground: var(--semantics-colors-foreground-default);
+    --accent: var(--semantics-colors-background-accent);
+    --accent-foreground: var(--semantics-colors-foreground-default);
+    --destructive: var(--semantics-colors-background-destructive);
+    --destructive-foreground: var(--semantics-colors-foreground-destructive);
+    --border: var(--semantics-colors-border-default);
+    --ring: var(--semantics-colors-border-ring-focus);
+    --input: var(--semantics-colors-border-default);
 
     /* Valores por defecto / fallback de shadcn mientras conectas el resto */
-    --input: var(--semantics-colors-input);
     --chart-1: oklch(0.87 0 0);
     --chart-2: oklch(0.556 0 0);
     --chart-3: oklch(0.439 0 0);
@@ -95,34 +92,6 @@
     --sidebar-accent-foreground: oklch(0.205 0 0);
     --sidebar-border: oklch(0.922 0 0);
     --sidebar-ring: oklch(0.708 0 0);
-
-    /*
-     * Button component aliases.
-     * These are NOT new tokens — every value below aliases an existing
-     * Semantics-layer variable from src/styles/generated/tokens.css under a
-     * short, ergonomic name so CVA class strings stay readable. Shared
-     * cross-control values (sizing/spacing) are prefixed "control-"; values
-     * that are genuinely Button-specific are prefixed "button-".
-     */
-    --control-height-lg: var(--semantics-controls-size-lg-height);
-    --control-height-md: var(--semantics-controls-size-md-height);
-    --control-height-sm: var(--semantics-controls-size-sm-height);
-    --control-height-xs: var(--semantics-controls-size-xs-height);
-    --control-radius-lg: var(--semantics-controls-size-lg-radius);
-    --control-radius-md: var(--semantics-controls-size-md-radius);
-    --control-radius-sm: var(--semantics-controls-size-sm-radius);
-    --control-radius-xs: var(--semantics-controls-size-xs-radius);
-    --control-padding-inline-lg: var(--semantics-controls-padding-inline-lg);
-    --control-padding-inline-md: var(--semantics-controls-padding-inline-md);
-    --control-padding-inline-sm: var(--semantics-controls-padding-inline-sm);
-    --control-gap-lg: var(--semantics-controls-gap-lg);
-    --control-gap-sm: var(--semantics-controls-gap-sm);
-
-    --ring-focus-width: var(--semantics-ring-focus-width-spread);
-    --button-primary-bg-hover: var(--semantics-colors-button-primary-bg-hover);
-    --button-secondary-bg-hover: var(--semantics-colors-button-secondary-bg-hover);
-    --button-secondary-fg-disabled: var(--semantics-colors-button-secondary-fg-disabled);
-    --button-destructive-bg-hover: var(--semantics-colors-button-destructive-bg-hover);
 }
 
 .dark {

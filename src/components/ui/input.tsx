@@ -1,11 +1,12 @@
 import * as React from "react";
 
 import { cn } from "@/lib/utils";
+import "@/lib/focus-intent";
 import { Icon, type IconName } from "@/components/icon";
 
 /**
  * Pixel size passed to the `Icon` component. Mirrors
- * `semantics.controls.size.icon-lg.size` (20px) — `Icon`'s `size` prop is a
+ * `primitives.spacing.5` (20px) — `Icon`'s `size` prop is a
  * plain number, so it can't be sourced from a CSS variable at render time.
  */
 const ICON_SIZE = 20;
@@ -34,22 +35,25 @@ export function Input({
   return (
     <div
       className={cn(
-        `flex w-full items-center gap-(--control-gap-lg)
-         h-(--control-height-md) rounded-(--control-radius-md)
-         border border-input bg-background px-(--control-padding-inline-lg)
-         has-disabled:bg-muted
-         has-aria-invalid:[border-color:var(--semantics-colors-controls-border-destructive)]
-         has-disabled:has-aria-invalid:border-input
-         has-focus:[box-shadow:var(--effect-focus-default)]
-         has-aria-invalid:has-focus:[box-shadow:var(--effect-focus-destructive)]
+        `flex w-full items-center gap-(--primitives-spacing-1-5)
+         h-(--primitives-spacing-11) rounded-(--primitives-radius-rounded-14)
+         border border-input bg-background px-(--primitives-spacing-2-5)
+         has-aria-invalid:[border-color:var(--semantics-colors-border-destructive)]
+         has-focus-within:border-(length:--primitives-border-width-border-2)
+         has-focus-within:[border-color:var(--semantics-colors-border-strong)]
+         has-aria-invalid:has-focus-within:[border-color:var(--semantics-colors-border-destructive)]
+         intent-keyboard:has-focus-within:[outline:var(--primitives-ring-focus-width-ring-2)_solid_var(--semantics-colors-border-ring-focus)]
+         intent-keyboard:has-focus-within:[outline-offset:var(--primitives-spacing-0-75)]
+         has-disabled:opacity-(--primitives-opacity-opacity-40)
          [&_svg]:pointer-events-none [&_svg]:shrink-0
-         [&_svg]:text-muted-foreground has-aria-invalid:[&_svg]:text-destructive-foreground
-         has-disabled:[&_svg]:[color:var(--semantics-colors-controls-fg-disabled)]`,
+         [&_svg]:[color:var(--semantics-colors-foreground-subtle)]
+         has-aria-invalid:[&_svg]:text-destructive-foreground`,
         className,
       )}
     >
       {leadingIcon && <Icon name={leadingIcon} size={ICON_SIZE} aria-hidden="true" />}
       <input
+        data-slot="input"
         type={type}
         disabled={disabled}
         aria-invalid={error}
@@ -58,12 +62,9 @@ export function Input({
           text-(length:--semantics-typography-body-body-lg-font-size)
           leading-(--semantics-typography-body-body-lg-lh-normal)
           tracking-(--semantics-typography-body-body-lg-tracking-tight)
-          text-foreground placeholder:text-muted-foreground
+          text-foreground placeholder:[color:var(--semantics-colors-foreground-subtle)]
           aria-invalid:text-destructive-foreground aria-invalid:placeholder:text-destructive-foreground
-          disabled:cursor-default disabled:[color:var(--semantics-colors-controls-fg-disabled)]
-          disabled:placeholder:[color:var(--semantics-colors-controls-fg-disabled)]
-          disabled:aria-invalid:[color:var(--semantics-colors-controls-fg-disabled)]
-          disabled:aria-invalid:placeholder:[color:var(--semantics-colors-controls-fg-disabled)]`}
+          disabled:cursor-default`}
         {...props}
       />
       {trailingIcon && <Icon name={trailingIcon} size={ICON_SIZE} aria-hidden="true" />}
