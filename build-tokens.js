@@ -287,10 +287,18 @@ StyleDictionary.registerTransform({
   },
 });
 
+// 'font.typography.*' is a composite (custom-fontStyle) Figma Styles export
+// with no registered CSS transform. 'typography.typography.*' is an
+// unrelated, scope-less, unused decomposition of the exact same text
+// styles (see tokens/tokens.json 'typography' -> 'typography'; the
+// canonical, actively-consumed collection is 'semantics.typography.*').
+// Neither is referenced by any token or component, so both are excluded
+// from the generated CSS output rather than emitted as dead/incorrect
+// variables.
 const cssTokensFilter = (token) =>
   !(
-    token.path?.[0] === 'font' &&
-    token.path?.[1] === 'typography'
+    (token.path?.[0] === 'font' && token.path?.[1] === 'typography') ||
+    token.path?.[0] === 'typography'
   );
 
 // 3. Configurar la compilación de Style Dictionary

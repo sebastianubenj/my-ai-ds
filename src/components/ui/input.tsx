@@ -60,7 +60,7 @@ export function Input({
           tracking-(--semantics-typography-body-body-lg-tracking-tight)
           text-foreground placeholder:text-muted-foreground
           aria-invalid:text-destructive-foreground aria-invalid:placeholder:text-destructive-foreground
-          disabled:cursor-not-allowed disabled:[color:var(--semantics-colors-controls-fg-disabled)]
+          disabled:cursor-default disabled:[color:var(--semantics-colors-controls-fg-disabled)]
           disabled:placeholder:[color:var(--semantics-colors-controls-fg-disabled)]
           disabled:aria-invalid:[color:var(--semantics-colors-controls-fg-disabled)]
           disabled:aria-invalid:placeholder:[color:var(--semantics-colors-controls-fg-disabled)]`}

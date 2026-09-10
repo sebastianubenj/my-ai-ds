@@ -161,21 +161,25 @@ When token changes are required:
 
 The generated CSS is an artifact, not the source of truth.
 
-The token pipeline is:
+The current token pipeline is:
 
-Figma  
-↓  
-`scripts/sync-tokens.js`  
-↓  
-`tokens/tokens.json`  
-↓  
-`build-tokens.js` / Style Dictionary  
-↓  
-`src/styles/generated/tokens.css`  
-↓  
+Figma
+↓
+Figma Design Tokens export
+↓
+`tokens/tokens.json`
+↓
+`build-tokens.js` / Style Dictionary
+↓
+`src/styles/generated/tokens.css`
+↓
 React / Tailwind / shadcn
 
-Do not bypass this pipeline without an explicit reason.
+The current `tokens/tokens.json` is populated through the Figma Design Tokens export process. `scripts/sync-tokens.js` is not currently part of the active token generation pipeline and should not be treated as the source of `tokens/tokens.json`.
+
+Do not modify or rely on `scripts/sync-tokens.js` as part of token generation unless explicitly requested.
+
+Do not bypass the active token pipeline without an explicit reason.
 
 ---
 
@@ -246,7 +250,44 @@ Do not create variants for arbitrary combinations that are not part of the desig
 
 Keep component APIs simple and predictable.
 
+### `data-slot`
+
+Use `data-slot` to identify component and subcomponent roots when it provides a useful structural, styling, debugging, or composition hook.
+
+Follow the existing shadcn/Base UI convention where appropriate.
+
+Do not add `data-slot` attributes to internal elements without a concrete reason.
+
+When a component uses `data-slot`, use a stable component-level name that matches the component or subcomponent name.
+
+### `className`
+
+When a component exposes a `className` prop, it should apply to the component's root rendered element.
+
+The root element is the outermost element representing the component's public layout boundary.
+
+For example:
+
+- Button → `<button>`
+- Label → `<label>`
+- Input → its component root/wrapper when the component requires internal structure
+
+Do not introduce separate element-specific class props unless there is a demonstrated need to style an internal element independently.
+
 Do not expose implementation details as public component props unless necessary.
+
+### Abstraction
+
+Do not extract shared utilities, constants, components, or abstractions based solely on two similar implementations.
+
+Before introducing a shared abstraction:
+
+1. Confirm that the abstraction represents the same design-system concept.
+2. Confirm that the abstraction will be reused by multiple components.
+3. Prefer observing repeated patterns before extracting small utilities prematurely.
+4. Avoid creating abstractions solely to eliminate small amounts of duplication.
+
+Prefer a clear, local implementation over a premature abstraction when the shared pattern is not yet established.
 
 ---
 
@@ -270,6 +311,16 @@ Do not create Button-specific tokens when the value is intentionally shared acro
 Conversely, do not create a generic token when the design decision is genuinely specific to one component.
 
 Before creating a new component token, verify whether an existing semantic token already represents the same design decision.
+
+### Refs
+
+Components that wrap or represent interactive DOM elements should preserve ref access when required by the underlying element or primitive.
+
+Follow the ref API supported by the project's current React version and the underlying shadcn/Base UI primitive.
+
+Do not introduce legacy ref-forwarding patterns solely for convention when the current React architecture provides a direct ref API.
+
+When implementing a component that wraps an interactive element, verify that its ref behavior remains compatible with the underlying primitive.
 
 ---
 
@@ -305,6 +356,19 @@ Do not remove interaction or accessibility states provided by Base UI or shadcn 
 Typography must use the existing typography token system.
 
 Prefer semantic typography tokens over primitive typography tokens when implementing components.
+
+### Token Duplication
+
+Do not create or consume duplicate token branches that represent the same design decision.
+
+Before introducing a new token collection, group, or token:
+
+1. Search the existing token source.
+2. Determine whether an equivalent primitive or semantic token already exists.
+3. Prefer the existing canonical token layer.
+4. Do not create alternate representations of the same value solely to match a Figma export structure.
+
+Figma export artifacts that are not part of the canonical token architecture should not be treated as component-facing tokens.
 
 Do not manually calculate typography values inside components.
 
