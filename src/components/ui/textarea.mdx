@@ -1,0 +1,91 @@
+import * as TextareaStories from "./textarea.stories";
+import { Meta, Canvas } from "@storybook/addon-docs/blocks";
+
+<Meta of={TextareaStories} />
+
+# Textarea
+
+## Overview
+
+A multi-line form control for entering and editing longer text. It is a standalone native `<textarea>` with validation styling. It does not render a label, description, or error message.
+
+## States
+
+- **Default** — 1px default border, default background, subtle placeholder, full opacity.
+- **Filled** — not a prop. Pass `value` or `defaultValue`; entered text uses the default foreground color.
+- **Focus** — native CSS. Pointer or keyboard focus applies a 2px strong border and padding compensation so the text does not jump. There is no `focus` prop.
+- **Error** — controlled through `error`, which mirrors `aria-invalid` and applies destructive styling.
+- **Disabled** — native `disabled`. If both `disabled` and `error` are passed, the disabled appearance takes precedence.
+
+## Default
+
+<Canvas of={TextareaStories.Default} />
+
+## Filled
+
+There is no `filled` prop. Whether the textarea shows placeholder styling or value styling is determined entirely by the native textarea's value — pass `value`/`defaultValue` like any other textarea.
+
+<Canvas of={TextareaStories.Filled} />
+
+## Focus
+
+<Canvas of={TextareaStories.Focus} />
+
+## Focus Visible
+
+Keyboard focus adds the design-system focus ring through the existing `focus-intent` system. It is not a public prop.
+
+<Canvas of={TextareaStories.KeyboardFocus} />
+
+## Error
+
+Set `error` to mark the field as invalid. This mirrors `aria-invalid="true"` on the underlying `<textarea>`, which drives both the destructive styling and the accessibility signal from a single source of truth.
+
+<Canvas of={TextareaStories.ErrorState} />
+
+<Canvas of={TextareaStories.FilledError} />
+
+## Disabled
+
+Use the native `disabled` prop. If `disabled` and `error` are both set, the disabled appearance takes precedence.
+
+<Canvas of={TextareaStories.Disabled} />
+
+```tsx
+<Textarea disabled placeholder="Placeholder text" />
+```
+
+## Content
+
+Placeholder text uses the native `placeholder` attribute. Entered text uses `value` or `defaultValue`. The control is multiline and uses native overflow scrolling. Height starts at 88px (`--primitives-spacing-22`) and can be resized through native textarea resizing. The corner grip is a decorative Resize Thumb; it does not implement custom drag behavior.
+
+## Associating with a Label
+
+`Textarea` does not render its own label. Pair it with the existing `Label` component using `htmlFor` / `id`, the same pattern used for any native form control.
+
+```tsx
+<Label htmlFor="message">Message</Label>
+<Textarea id="message" placeholder="Placeholder text" />
+```
+
+## Accessibility
+
+- Renders a native `<textarea>`, so keyboard behavior, focus, typing, and resizing all come from the browser.
+- `error` is mirrored to `aria-invalid` — style and semantics stay in sync automatically.
+- Pointer focus shows the 2px border. Keyboard focus also shows the focus ring via `focus-intent`.
+- The Resize Thumb is decorative and marked `aria-hidden`; it never carries the field's accessible name.
+- `Textarea` intentionally does not include a label. Always pair it with a `Label` (or `aria-label`/`aria-labelledby`) so the field has an accessible name.
+- Native `disabled`, `readOnly`, `required`, and consumer-provided `aria-*` attributes pass through unchanged.
+
+## API
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `error` | `boolean` | `false` | Marks the textarea as invalid. Mirrored to `aria-invalid`. |
+| `disabled` | `boolean` | — | Prevents interaction with the textarea. |
+| `placeholder` | `string` | — | Placeholder text shown when the textarea is empty. |
+| `className` | `string` | — | Adds custom CSS classes to the textarea's wrapper. |
+
+The component also supports the standard HTML `<textarea>` attributes through `React.ComponentPropsWithoutRef<"textarea">`, including `value`, `defaultValue`, `name`, `id`, `rows`, `cols`, `readOnly`, `required`, `onChange`, `aria-label`, `aria-labelledby`, and `aria-describedby`.
+
+There are no `focus`, `filled`, `variant`, `size`, `resize`, `showLabel`, or icon props — filled and focus are derived from the native textarea and CSS, not from React.
