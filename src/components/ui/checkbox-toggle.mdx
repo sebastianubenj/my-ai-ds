@@ -1,0 +1,110 @@
+import * as CheckboxToggleStories from "./checkbox-toggle.stories";
+import { Meta, Canvas } from "@storybook/addon-docs/blocks";
+
+<Meta of={CheckboxToggleStories} />
+
+# CheckboxToggle
+
+CheckboxToggle is a styled native checkbox control. It represents the checkbox indicator itself and does not render a label, helper text, or group layout.
+
+## States
+
+CheckboxToggle states communicate selection, validation, and availability.
+
+### Unchecked
+
+The default state of an enabled checkbox that is not selected.
+
+<Canvas of={CheckboxToggleStories.Unchecked} />
+
+### Checked
+
+Use `checked` when the checkbox is selected.
+
+<Canvas of={CheckboxToggleStories.Checked} />
+
+### Indeterminate
+
+Use `indeterminate` for a mixed or partially selected state. It is independent of `checked` and does not create a built-in three-state click cycle.
+
+<Canvas of={CheckboxToggleStories.Indeterminate} />
+
+### Invalid
+
+Use `invalid` to indicate a validation error. Invalid can be combined with unchecked, checked, and indeterminate.
+
+<Canvas of={CheckboxToggleStories.UncheckedInvalid} />
+
+<Canvas of={CheckboxToggleStories.CheckedInvalid} />
+
+<Canvas of={CheckboxToggleStories.IndeterminateInvalid} />
+
+### Disabled
+
+Use `disabled` when the checkbox is unavailable for interaction. Disabled can be combined with unchecked, checked, and indeterminate.
+
+<Canvas of={CheckboxToggleStories.DisabledUnchecked} />
+
+<Canvas of={CheckboxToggleStories.DisabledChecked} />
+
+<Canvas of={CheckboxToggleStories.DisabledIndeterminate} />
+
+## Accessibility
+
+CheckboxToggle should always have a clear and accessible name.
+
+### Native Semantics
+
+CheckboxToggle renders a native `<input type="checkbox">`. Keyboard behavior comes from the browser: Tab moves focus, and Space toggles the checked state.
+
+### Accessible Name
+
+CheckboxToggle does not render a label. Pair it with `Label` using matching `id` / `htmlFor` values, or provide an accessible name with `aria-label` or `aria-labelledby`.
+
+<Canvas of={CheckboxToggleStories.Unchecked} />
+
+For example:
+
+```tsx
+<Label htmlFor="terms">Accept terms</Label>
+<CheckboxToggle id="terms" />
+```
+
+```tsx
+<CheckboxToggle aria-label="Accept terms" />
+```
+
+### Invalid
+
+`invalid` is mirrored to `aria-invalid` on the underlying checkbox.
+
+### Disabled
+
+Disabled uses the native `disabled` attribute and prevents interaction.
+
+### Indeterminate
+
+`indeterminate` is represented through the native checkbox DOM property and is controlled with the `indeterminate` prop.
+
+### Focus Visible
+
+Focus Visible uses native `:focus-visible` behavior. It is not a public prop.
+
+<Canvas of={CheckboxToggleStories.KeyboardFocus} />
+
+## API
+
+The CheckboxToggle component provides properties to control its selection, validation, and availability.
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `checked` | `boolean` | — | Controls the checked state. |
+| `defaultChecked` | `boolean` | — | Sets the initial checked state for uncontrolled usage. |
+| `indeterminate` | `boolean` | `false` | Displays the checkbox in a mixed/partially selected state. This is independent of `checked`. |
+| `invalid` | `boolean` | `false` | Indicates that the checkbox is invalid and applies `aria-invalid`. |
+| `disabled` | `boolean` | — | Prevents interaction with the checkbox. |
+| `className` | `string` | — | Adds custom CSS classes to the component wrapper. |
+| `aria-label` | `string` | — | Provides an accessible name when no visible label is associated. |
+| `aria-labelledby` | `string` | — | References an element that provides the accessible name. |
+
+The component also supports the standard HTML `<input>` attributes through `React.ComponentPropsWithoutRef<"input">`, except `type` and `size`. `type` is fixed to `"checkbox"`, and `size` is not part of the public API.

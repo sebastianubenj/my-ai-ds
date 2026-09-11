@@ -1,0 +1,69 @@
+import * as CheckboxGroupStories from "./checkbox-group.stories";
+import { Meta, Canvas } from "@storybook/addon-docs/blocks";
+
+<Meta of={CheckboxGroupStories} />
+
+# CheckboxGroup
+
+CheckboxGroup is a composition wrapper for multiple independent Checkbox controls. It provides vertical layout and spacing. It does not manage selection, validation, or availability.
+
+## Composition
+
+Pass `Checkbox` components as `children`. Each Checkbox owns its own checked state, label, description, and interaction.
+
+```tsx
+<CheckboxGroup>
+  <Checkbox>Option one</Checkbox>
+  <Checkbox>Option two</Checkbox>
+  <Checkbox>Option three</Checkbox>
+</CheckboxGroup>
+```
+
+<Canvas of={CheckboxGroupStories.Interactive} />
+
+The group does not accept options, values, or a shared name. Compose the Checkboxes you need, including different labels, descriptions, and checked states.
+
+<Canvas of={CheckboxGroupStories.Composition} />
+
+## States
+
+Disabled and invalid are Figma group variants, but they are applied on the individual Checkbox children. CheckboxGroup does not expose or propagate `disabled` or `invalid`.
+
+### Default
+
+The default appearance is a vertical stack of enabled, unchecked Checkboxes.
+
+<Canvas of={CheckboxGroupStories.Unchecked} />
+
+### Disabled
+
+Set `disabled` on each Checkbox that should be unavailable.
+
+<Canvas of={CheckboxGroupStories.Disabled} />
+
+### Invalid
+
+Set `invalid` on each Checkbox that should show a validation error.
+
+<Canvas of={CheckboxGroupStories.Invalid} />
+
+## Layout
+
+CheckboxGroup is a vertical stack with 12px spacing between items (`--primitives-spacing-3`). It has no padding, background, border, radius, or focus ring. Height hugs its children.
+
+## Accessibility
+
+Each Checkbox remains an independent native checkbox. It keeps its own accessible name, `aria-invalid` handling, disabled behavior, and keyboard interaction: Tab moves focus between controls, and Space toggles the focused Checkbox.
+
+CheckboxGroup is not a focusable element and does not introduce a group label, error message, or custom keyboard model.
+
+## API
+
+The CheckboxGroup component provides layout for composed Checkbox children.
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `children` | `React.ReactNode` | — | Checkbox components rendered inside the group. |
+| `className` | `string` | — | Adds custom CSS classes to the group root. |
+
+The component also supports the standard HTML `<div>` attributes through `React.ComponentPropsWithoutRef<"div">`.

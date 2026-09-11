@@ -1,0 +1,141 @@
+import * as CheckboxStories from "./checkbox.stories";
+import { Meta, Canvas } from "@storybook/addon-docs/blocks";
+
+<Meta of={CheckboxStories} />
+
+# Checkbox
+
+Checkbox is a labeled native checkbox control. It composes `CheckboxToggle` with a label, optional description, and default or card layout.
+
+## Variants
+
+Checkbox variants communicate the layout context of the control.
+
+### Default
+
+Use `default` for checkboxes in forms and lists without a surrounding container.
+
+<Canvas of={CheckboxStories.Unchecked} />
+
+### Card
+
+Use `card` when the checkbox should appear inside a bordered, selectable container.
+
+<Canvas of={CheckboxStories.CardUnchecked} />
+
+## States
+
+Checkbox states communicate selection, validation, and availability.
+
+### Unchecked
+
+The default state of an enabled checkbox that is not selected.
+
+<Canvas of={CheckboxStories.Unchecked} />
+
+### Checked
+
+Use `checked` when the checkbox is selected.
+
+<Canvas of={CheckboxStories.Checked} />
+
+### Invalid
+
+Use `invalid` to indicate a validation error. On the default variant, the label and description use the destructive color. On the card variant, the container border and toggle become destructive while the label and description keep their default colors.
+
+<Canvas of={CheckboxStories.UncheckedInvalid} />
+
+<Canvas of={CheckboxStories.CheckedInvalid} />
+
+<Canvas of={CheckboxStories.CardUncheckedInvalid} />
+
+<Canvas of={CheckboxStories.CardCheckedInvalid} />
+
+### Disabled
+
+Use `disabled` when the checkbox is unavailable for interaction. Disabled can be combined with unchecked and checked.
+
+<Canvas of={CheckboxStories.UncheckedDisabled} />
+
+<Canvas of={CheckboxStories.CheckedDisabled} />
+
+<Canvas of={CheckboxStories.CardUncheckedDisabled} />
+
+<Canvas of={CheckboxStories.CardCheckedDisabled} />
+
+### Focus Visible
+
+Focus Visible uses native `:focus-visible` behavior on `CheckboxToggle`. It is not a public prop.
+
+<Canvas of={CheckboxStories.KeyboardFocus} />
+
+## Content
+
+### Label
+
+The visible label is passed as `children` and provides the accessible name.
+
+<Canvas of={CheckboxStories.LabelOnly} />
+
+### Description
+
+Use `description` for supporting text. It is associated with the checkbox through `aria-describedby`.
+
+<Canvas of={CheckboxStories.WithDescription} />
+
+## Accessibility
+
+Checkbox should always have a clear and accessible name.
+
+### Native Semantics
+
+Checkbox composes `CheckboxToggle`, which renders a native `<input type="checkbox">`. Keyboard behavior comes from the browser: Tab moves focus, and Space toggles the checked state. The entire label or card is clickable.
+
+### Accessible Name
+
+The visible label text (`children`) is the accessible name. Do not nest a `Label` component inside Checkbox.
+
+```tsx
+<Checkbox description="Required to continue">Accept terms</Checkbox>
+```
+
+### Description
+
+When `description` is provided, it is associated with the checkbox using `aria-describedby`. Existing `aria-describedby` values are preserved.
+
+### Invalid
+
+`invalid` is passed to `CheckboxToggle` and mirrored to `aria-invalid`.
+
+### Disabled
+
+Disabled uses the native `disabled` attribute and prevents interaction.
+
+### Indeterminate
+
+`indeterminate` is passed through to `CheckboxToggle`. It is independent of `checked` and does not create a built-in three-state click cycle.
+
+### Focus Visible
+
+Focus Visible uses native `:focus-visible` behavior on the 18px toggle. It is not a public prop.
+
+## API
+
+The Checkbox component provides properties to control its selection, layout, content, validation, and availability.
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant` | `"default"` &#124; `"card"` | `"default"` | Controls the layout appearance of the checkbox. |
+| `checked` | `boolean` | — | Controls the checked state. |
+| `defaultChecked` | `boolean` | — | Sets the initial checked state for uncontrolled usage. |
+| `indeterminate` | `boolean` | `false` | Displays the checkbox in a mixed/partially selected state. Passed through to `CheckboxToggle`. Independent of `checked`. |
+| `invalid` | `boolean` | `false` | Indicates that the checkbox is invalid and applies `aria-invalid`. |
+| `disabled` | `boolean` | — | Prevents interaction with the checkbox. |
+| `children` | `React.ReactNode` | — | Visible label. Provides the accessible name. |
+| `description` | `React.ReactNode` | — | Optional supporting text associated via `aria-describedby`. |
+| `className` | `string` | — | Adds custom CSS classes to the component root. |
+| `aria-label` | `string` | — | Provides an accessible name when no visible label is present. |
+| `aria-labelledby` | `string` | — | References an element that provides the accessible name. |
+| `aria-describedby` | `string` | — | Additional described-by ids. Merged with the description id when `description` is set. |
+
+The component also supports the standard HTML `<input>` attributes through `React.ComponentPropsWithoutRef<"input">`, except `type` and `size`. `type` is fixed to `"checkbox"` through `CheckboxToggle`, and `size` is not part of the public API.

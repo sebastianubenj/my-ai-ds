@@ -1,6 +1,6 @@
 import type { LucideIcon } from "lucide-react";
 
-import { Activity, ArrowLeft, ArrowRight, Search } from "lucide-react";
+import { Activity, ArrowLeft, ArrowRight, Check, Minus, Search } from "lucide-react";
 
 /**
  * Phase 1 icon registry: a hand-maintained, curated subset of the Figma
@@ -13,6 +13,8 @@ export const iconRegistry = {
   activity: Activity,
   "arrow-left": ArrowLeft,
   "arrow-right": ArrowRight,
+  check: Check,
+  minus: Minus,
   search: Search,
 } as const satisfies Record<string, LucideIcon>;
 
