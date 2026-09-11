@@ -40,6 +40,7 @@ export function Input({
          border border-input bg-background px-(--primitives-spacing-2-5)
          has-aria-invalid:[border-color:var(--semantics-colors-border-destructive)]
          has-focus-within:border-(length:--primitives-border-width-border-2)
+         has-focus-within:px-(--primitives-spacing-2-25)
          has-focus-within:[border-color:var(--semantics-colors-border-strong)]
          has-aria-invalid:has-focus-within:[border-color:var(--semantics-colors-border-destructive)]
          intent-keyboard:has-focus-within:[outline:var(--primitives-ring-focus-width-ring-2)_solid_var(--semantics-colors-border-ring-focus)]

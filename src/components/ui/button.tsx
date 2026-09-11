@@ -10,77 +10,86 @@ const buttonVariants = cva(
   `inline-flex items-center justify-center shrink-0 whitespace-nowrap
    font-sans [font-weight:var(--semantics-typography-button-font-weight)] tracking-(--semantics-typography-button-tracking-normal)
    transition-colors outline-none cursor-pointer
+   focus-visible:[outline:var(--primitives-ring-focus-width-ring-2)_solid_var(--semantics-colors-border-ring-focus)]
+   focus-visible:[outline-offset:var(--primitives-spacing-0-75)]
    disabled:pointer-events-none disabled:cursor-default
    aria-disabled:pointer-events-none aria-disabled:cursor-default
    [&_svg]:pointer-events-none [&_svg]:shrink-0`,
   {
     variants: {
       variant: {
-        primary: `bg-primary text-primary-foreground
-          hover:[background-color:var(--button-primary-bg-hover)]
-          active:bg-primary
-          focus-visible:[box-shadow:var(--effect-focus-default)]
-          disabled:opacity-25 aria-disabled:opacity-25`,
+        primary: `[background-color:var(--semantics-colors-background-primary)]
+          [color:var(--semantics-colors-foreground-primary)]
+          hover:[background-color:var(--semantics-colors-interaction-primary-hover)]
+          active:[background-color:var(--semantics-colors-background-primary)]
+          disabled:opacity-(--primitives-opacity-opacity-10)
+          aria-disabled:opacity-(--primitives-opacity-opacity-10)`,
 
-        secondary: `bg-secondary text-secondary-foreground
-          hover:[background-color:var(--button-secondary-bg-hover)]
-          active:bg-secondary
-          focus-visible:[box-shadow:var(--effect-focus-default)]
-          disabled:[color:var(--button-secondary-fg-disabled)]
-          aria-disabled:[color:var(--button-secondary-fg-disabled)]`,
+        secondary: `[background-color:var(--semantics-colors-background-secondary)]
+          [color:var(--semantics-colors-foreground-default)]
+          hover:[background-color:var(--semantics-colors-interaction-secondary-hover)]
+          active:[background-color:var(--semantics-colors-background-secondary)]
+          disabled:[color:var(--semantics-colors-foreground-subtle)]
+          aria-disabled:[color:var(--semantics-colors-foreground-subtle)]
+          disabled:opacity-(--primitives-opacity-opacity-50)
+          aria-disabled:opacity-(--primitives-opacity-opacity-50)`,
 
-        destructive: `bg-destructive text-destructive-foreground
-          hover:[background-color:var(--button-destructive-bg-hover)]
-          active:bg-destructive
-          focus-visible:[box-shadow:var(--effect-focus-destructive)]
-          disabled:opacity-25 aria-disabled:opacity-25`,
+        destructive: `[background-color:var(--semantics-colors-background-destructive)]
+          [color:var(--semantics-colors-foreground-destructive)]
+          hover:[background-color:var(--semantics-colors-interaction-destructive-hover)]
+          active:[background-color:var(--semantics-colors-background-destructive)]
+          disabled:opacity-(--primitives-opacity-opacity-25)
+          aria-disabled:opacity-(--primitives-opacity-opacity-25)`,
 
-        outline: `bg-transparent text-secondary-foreground border border-border
-          hover:bg-accent
+        outline: `bg-transparent [color:var(--semantics-colors-foreground-default)]
+          border-solid border-(length:--primitives-border-width-border)
+          [border-color:var(--semantics-colors-border-strong)]
+          hover:[background-color:var(--semantics-colors-background-accent)]
           active:bg-transparent
-          focus-visible:[box-shadow:var(--effect-focus-default)]
-          disabled:opacity-25 aria-disabled:opacity-25`,
+          disabled:opacity-(--primitives-opacity-opacity-10)
+          aria-disabled:opacity-(--primitives-opacity-opacity-10)`,
 
-        ghost: `bg-transparent text-secondary-foreground
-          hover:bg-accent
+        ghost: `bg-transparent [color:var(--semantics-colors-foreground-default)]
+          hover:[background-color:var(--semantics-colors-background-accent)]
           active:bg-transparent
-          focus-visible:[box-shadow:var(--effect-focus-default)]
-          disabled:[color:var(--button-secondary-fg-disabled)]
-          aria-disabled:[color:var(--button-secondary-fg-disabled)]`,
+          disabled:[color:var(--semantics-colors-foreground-subtle)]
+          aria-disabled:[color:var(--semantics-colors-foreground-subtle)]
+          disabled:opacity-(--primitives-opacity-opacity-50)
+          aria-disabled:opacity-(--primitives-opacity-opacity-50)`,
       },
 
       size: {
-        lg: `h-(--control-height-lg) rounded-(--control-radius-lg)
-          px-(--control-padding-inline-lg) gap-(--control-gap-lg)
+        lg: `h-(--primitives-spacing-12) rounded-(--primitives-radius-rounded-2xl)
+          px-(--primitives-spacing-2-5) gap-(--primitives-spacing-1)
           text-(length:--semantics-typography-button-button-xl-font-size)
           leading-(--semantics-typography-button-button-xl-lh-snug)`,
 
-        md: `h-(--control-height-md) rounded-(--control-radius-md)
-          px-(--control-padding-inline-lg) gap-(--control-gap-lg)
+        md: `h-(--primitives-spacing-11) rounded-(--primitives-radius-rounded-14)
+          px-(--primitives-spacing-2) gap-(--primitives-spacing-1)
           text-(length:--semantics-typography-button-button-xl-font-size)
           leading-(--semantics-typography-button-button-xl-lh-snug)`,
 
-        sm: `h-(--control-height-sm) rounded-(--control-radius-sm)
-          px-(--control-padding-inline-md) gap-(--control-gap-sm)
+        sm: `h-(--primitives-spacing-10) rounded-(--primitives-radius-rounded-xl)
+          px-(--primitives-spacing-1-5) gap-(--primitives-spacing-0-5)
           text-(length:--semantics-typography-button-button-lg-font-size)
           leading-(--semantics-typography-button-button-lg-lh-snug)`,
 
-        xs: `h-(--control-height-xs) rounded-(--control-radius-xs)
-          px-(--control-padding-inline-sm) gap-(--control-gap-sm)
+        xs: `h-(--primitives-spacing-8) rounded-(--primitives-radius-rounded-10)
+          px-(--primitives-spacing-1) gap-(--primitives-spacing-0-5)
           text-(length:--semantics-typography-button-button-md-font-size)
           leading-(--semantics-typography-button-button-md-lh-snug)`,
 
         "icon-lg":
-          "h-(--control-height-lg) w-(--control-height-lg) rounded-(--control-radius-lg)",
+          "h-(--primitives-spacing-12) w-(--primitives-spacing-12) rounded-(--primitives-radius-rounded-2xl)",
 
         "icon-md":
-          "h-(--control-height-md) w-(--control-height-md) rounded-(--control-radius-md)",
+          "h-(--primitives-spacing-11) w-(--primitives-spacing-11) rounded-(--primitives-radius-rounded-14)",
 
         "icon-sm":
-          "h-(--control-height-sm) w-(--control-height-sm) rounded-(--control-radius-sm)",
+          "h-(--primitives-spacing-10) w-(--primitives-spacing-10) rounded-(--primitives-radius-rounded-xl)",
 
         "icon-xs":
-          "h-(--control-height-xs) w-(--control-height-xs) rounded-(--control-radius-xs)",
+          "h-(--primitives-spacing-8) w-(--primitives-spacing-8) rounded-(--primitives-radius-rounded-10)",
       },
     },
 
@@ -96,9 +105,9 @@ export type ButtonSize = NonNullable<VariantProps<typeof buttonVariants>["size"]
 
 /**
  * Pixel size passed to the `Icon` component per Button size tier. Mirrors
- * `semantics.controls.size.icon-lg.size` (20px) and
- * `semantics.controls.size.icon-sm.size` (16px) — `Icon`'s `size` prop is a
- * plain number, so it can't be sourced from a CSS variable at render time.
+ * `primitives.spacing.5` (20px) and `primitives.spacing.4` (16px) — `Icon`'s
+ * `size` prop is a plain number, so it can't be sourced from a CSS variable
+ * at render time.
  */
 const ICON_PIXEL_SIZE: Record<ButtonSize, number> = {
   lg: 20,
