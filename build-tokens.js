@@ -1,3 +1,5 @@
+import { readFileSync } from 'node:fs';
+
 import StyleDictionary from 'style-dictionary';
 
 // ---------------------------------------------------------------------------
@@ -47,6 +49,78 @@ function isTokenLeaf(node) {
 function figmaScopes(node) {
   return node?.extensions?.[FIGMA_EXT]?.scopes ?? [];
 }
+
+// ---------------------------------------------------------------------------
+// Known Figma exporter failures (color variables with a separate alpha)
+// ---------------------------------------------------------------------------
+// Figma can bind a semantic color to a primitive AND apply an independent
+// alpha/opacity on top of that alias (e.g. "background/destructive" =
+// {primitives.colors.red.500} at 15% alpha). The current
+// org.lukasoppermann.figmaDesignTokens exporter does not know how to
+// serialize that specific combination: instead of writing the resolved
+// alias + alpha, it silently falls back to a literal "#000000ff" for every
+// token bound this way. This has been independently verified against the
+// live Figma variables (not derivable from tokens.json itself, which
+// preserves no alias, primitive name, or alpha for these tokens) for the
+// six known-affected tokens listed in tokens/exporter-overrides.json.
+//
+// tokens/tokens.json stays the raw, untouched Figma export artifact. This
+// preprocessor is the one place that normalizes those six known-bad values
+// in memory, before Style Dictionary resolves/transforms anything else:
+//   1. Look up the token's Figma variableId in exporter-overrides.json.
+//   2. Only touch it if the token's *current* value is still the exact
+//      "#000000ff" sentinel the exporter produces on failure — if the
+//      exporter is ever fixed and starts emitting a real value, this guard
+//      makes the override a permanent no-op instead of clobbering it.
+//   3. Resolve the named primitive's own (already-correct) literal color
+//      and re-apply the verified alpha, rather than hardcoding a final hex
+//      in the override file — if the primitive itself is retuned later,
+//      this normalization follows it automatically.
+const EXPORTER_OVERRIDES = JSON.parse(readFileSync('tokens/exporter-overrides.json', 'utf-8'));
+const EXPORTER_FAILURE_SENTINEL = '#000000ff';
+
+function getNodeAtPath(root, dotPath) {
+  let node = root;
+  for (const key of dotPath.split('.')) node = node?.[key];
+  return node;
+}
+
+// Primitives in this file are always stored as opaque 8-digit hex
+// ("#rrggbbff"), so applying a different alpha only means replacing the
+// trailing alpha byte, not recomputing the color itself.
+function applyAlpha(primitiveHex, alphaPercent) {
+  const rgb = primitiveHex.slice(0, 7);
+  const alphaByte = Math.round((alphaPercent / 100) * 255);
+  return `${rgb}${alphaByte.toString(16).padStart(2, '0')}`;
+}
+
+function applyExporterOverrides(root, node) {
+  if (!node || typeof node !== 'object') return;
+
+  if (isTokenLeaf(node)) {
+    const variableId = node.extensions?.[FIGMA_EXT]?.variableId;
+    const override = variableId ? EXPORTER_OVERRIDES[variableId] : undefined;
+    if (override && node.value === EXPORTER_FAILURE_SENTINEL) {
+      const primitive = getNodeAtPath(root, override.primitive);
+      if (typeof primitive?.value === 'string') {
+        node.value = applyAlpha(primitive.value, override.alphaPercent);
+      }
+    }
+    return;
+  }
+
+  for (const key of Object.keys(node)) {
+    applyExporterOverrides(root, node[key]);
+  }
+}
+
+StyleDictionary.registerPreprocessor({
+  name: 'figma/exporter-overrides',
+  preprocessor: (dictionary) => {
+    applyExporterOverrides(dictionary, dictionary);
+    return dictionary;
+  },
+});
 
 // Follows a "{a.b.c}" alias reference chain to its final raw value, walking
 // the same raw (pre-resolution) tree the preprocessor receives.
@@ -304,7 +378,7 @@ const cssTokensFilter = (token) =>
 // 3. Configurar la compilación de Style Dictionary
 const sd = new StyleDictionary({
   source: ['tokens/tokens.json'], // Verifica que esta sea la ruta exacta de tu JSON
-  preprocessors: ['typography/relative-units'],
+  preprocessors: ['figma/exporter-overrides', 'typography/relative-units'],
   hooks: {
     filters: {
       'ds/cssTokens': cssTokensFilter,
