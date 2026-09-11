@@ -1,0 +1,81 @@
+import * as RadioGroupStories from "./radio-group.stories";
+import { Meta, Canvas } from "@storybook/addon-docs/blocks";
+
+<Meta of={RadioGroupStories} />
+
+# RadioGroup
+
+RadioGroup is a composition wrapper for related RadioItem controls. It provides vertical layout and spacing. It does not manage selection, validation, or availability. Mutual exclusivity comes from native radio behavior through a shared `name`, not from RadioGroup state.
+
+## Composition
+
+Pass `RadioItem` components as `children`. The Figma Slot maps to React `children`. There is no fixed item count. Each RadioItem owns its own label, description, and interaction. Give radios in the same group the same `name` and distinct `value`s.
+
+```tsx
+<RadioGroup>
+  <RadioItem name="plan" value="basic">
+    Basic
+  </RadioItem>
+  <RadioItem name="plan" value="pro">
+    Pro
+  </RadioItem>
+  <RadioItem name="plan" value="team">
+    Team
+  </RadioItem>
+</RadioGroup>
+```
+
+<Canvas of={RadioGroupStories.Interactive} />
+
+Compose the RadioItems you need, including different labels, descriptions, and checked states.
+
+<Canvas of={RadioGroupStories.Composition} />
+
+## States
+
+RadioGroup itself has no variants or visual states. There is no group-level selected style. Disabled and invalid belong to individual RadioItems. RadioGroup does not expose or propagate `disabled` or `invalid`.
+
+### Default
+
+The default appearance is a vertical stack of enabled, unchecked RadioItems.
+
+<Canvas of={RadioGroupStories.Unchecked} />
+
+### Disabled
+
+Set `disabled` on each RadioItem that should be unavailable.
+
+<Canvas of={RadioGroupStories.Disabled} />
+
+### Invalid
+
+Set `invalid` on each RadioItem that should show a validation error.
+
+<Canvas of={RadioGroupStories.Invalid} />
+
+## Layout
+
+RadioGroup is a vertical stack with 12px spacing between items (`--primitives-spacing-3`). It has no padding, background, border, radius, or focus ring. Width is container-driven. Height hugs its children.
+
+## Accessibility
+
+Each RadioItem remains a native radio. It keeps its own accessible name, `aria-invalid` handling, disabled behavior, and focus ring through RadioToggle.
+
+Radios that share a `name` are mutually exclusive. Keyboard behavior comes from the browser: Tab moves focus into the group, and arrow keys move selection among radios with the same name. RadioGroup does not implement roving tabindex or React context.
+
+RadioGroup renders a `<div>`. It does not add `role="radiogroup"` because the audited Figma component has no group label. Consumers can pass `role` or `aria-labelledby` on the root when an external group name exists.
+
+RadioGroup is not a focusable element and does not introduce a group label, error message, or custom keyboard model.
+
+## API
+
+The RadioGroup component provides layout for composed RadioItem children.
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `children` | `React.ReactNode` | — | RadioItem components rendered inside the group. |
+| `className` | `string` | — | Adds custom CSS classes to the group root. |
+
+The component also supports the standard HTML `<div>` attributes through `React.ComponentPropsWithoutRef<"div">`.
+
+RadioGroup does not expose `value`, `defaultValue`, `onValueChange`, `name`, `disabled`, `invalid`, or `orientation`. Pass `name`, `value`, `checked`, `defaultChecked`, `disabled`, and `invalid` on each RadioItem.

@@ -1,0 +1,96 @@
+import * as RadioToggleStories from "./radio-toggle.stories";
+import { Meta, Canvas } from "@storybook/addon-docs/blocks";
+
+<Meta of={RadioToggleStories} />
+
+# RadioToggle
+
+RadioToggle is a styled native radio control. It represents the radio indicator itself and does not render a label, helper text, or group layout.
+
+## States
+
+RadioToggle states communicate selection, validation, and availability.
+
+### Unchecked
+
+The default state of an enabled radio that is not selected.
+
+<Canvas of={RadioToggleStories.Unchecked} />
+
+### Checked
+
+Use `checked` when the radio is selected. A checked radio stays a white circle with a strong border and an inner dot. It is not a filled circle.
+
+<Canvas of={RadioToggleStories.Checked} />
+
+### Invalid
+
+Use `invalid` to indicate a validation error. Invalid can be combined with unchecked and checked.
+
+<Canvas of={RadioToggleStories.UncheckedInvalid} />
+
+<Canvas of={RadioToggleStories.CheckedInvalid} />
+
+### Disabled
+
+Use `disabled` when the radio is unavailable for interaction. Disabled can be combined with unchecked and checked.
+
+<Canvas of={RadioToggleStories.DisabledUnchecked} />
+
+<Canvas of={RadioToggleStories.DisabledChecked} />
+
+## Accessibility
+
+RadioToggle should always have a clear and accessible name.
+
+### Native Semantics
+
+RadioToggle renders a native `<input type="radio">`. Keyboard behavior comes from the browser: Tab moves focus, and Space selects the focused radio. A selected radio cannot be unchecked by clicking it again. Mutually exclusive choices are formed later by giving radios the same `name`.
+
+### Accessible Name
+
+RadioToggle does not render a label. Pair it with `Label` using matching `id` / `htmlFor` values, or provide an accessible name with `aria-label` or `aria-labelledby`.
+
+<Canvas of={RadioToggleStories.Unchecked} />
+
+For example:
+
+```tsx
+<Label htmlFor="plan-pro">Pro</Label>
+<RadioToggle id="plan-pro" name="plan" value="pro" />
+```
+
+```tsx
+<RadioToggle name="plan" value="pro" aria-label="Pro" />
+```
+
+### Invalid
+
+`invalid` is mirrored to `aria-invalid` on the underlying radio.
+
+### Disabled
+
+Disabled uses the native `disabled` attribute and prevents interaction.
+
+### Focus Visible
+
+Focus Visible uses native `:focus-visible` behavior. It is not a public prop.
+
+<Canvas of={RadioToggleStories.KeyboardFocus} />
+
+## API
+
+The RadioToggle component provides properties to control its selection, validation, and availability.
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `checked` | `boolean` | — | Controls the checked state. When used as a controlled prop, provide `onChange` to handle user interaction. |
+| `defaultChecked` | `boolean` | — | Sets the initial checked state for uncontrolled usage. |
+| `name` | `string` | — | Groups radios so only one radio with the same name can be selected. |
+| `invalid` | `boolean` | `false` | Indicates that the radio is invalid and applies `aria-invalid`. |
+| `disabled` | `boolean` | — | Prevents interaction with the radio. |
+| `className` | `string` | — | Adds custom CSS classes to the component wrapper. |
+| `aria-label` | `string` | — | Provides an accessible name when no visible label is associated. |
+| `aria-labelledby` | `string` | — | References an element that provides the accessible name. |
+
+The component also supports the standard HTML `<input>` attributes through `React.ComponentPropsWithoutRef<"input">`, except `type` and `size`. `type` is fixed to `"radio"`, and `size` is not part of the public API. Native `name` and `value` pass through unchanged.

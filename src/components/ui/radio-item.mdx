@@ -1,0 +1,153 @@
+import * as RadioItemStories from "./radio-item.stories";
+import { Meta, Canvas } from "@storybook/addon-docs/blocks";
+
+<Meta of={RadioItemStories} />
+
+# RadioItem
+
+RadioItem is a labeled native radio control. It composes `RadioToggle` with a label, optional description, and default or card layout.
+
+## Variants
+
+RadioItem variants communicate the layout context of the control.
+
+### Default
+
+Use `default` for radios in forms and lists without a surrounding container.
+
+<Canvas of={RadioItemStories.Unchecked} />
+
+### Card
+
+Use `card` when the radio should appear inside a bordered, selectable container. Checked and unchecked cards use the same border. There is no selected-card style.
+
+<Canvas of={RadioItemStories.CardUnchecked} />
+
+## States
+
+RadioItem states communicate selection, validation, and availability. Checked and unchecked come from the native radio. RadioItem has no indeterminate state.
+
+### Unchecked
+
+The default state of an enabled radio that is not selected.
+
+<Canvas of={RadioItemStories.Unchecked} />
+
+### Checked
+
+Use `checked` when the radio is selected. A selected radio cannot be unchecked by clicking it again.
+
+<Canvas of={RadioItemStories.Checked} />
+
+### Invalid
+
+Use `invalid` to indicate a validation error. On the default variant, the label and description use the destructive color. On the card variant, the container border and toggle become destructive while the label and description keep their default colors.
+
+<Canvas of={RadioItemStories.UncheckedInvalid} />
+
+<Canvas of={RadioItemStories.CheckedInvalid} />
+
+<Canvas of={RadioItemStories.CardUncheckedInvalid} />
+
+<Canvas of={RadioItemStories.CardCheckedInvalid} />
+
+### Disabled
+
+Use `disabled` when the radio is unavailable for interaction. Disabled can be combined with unchecked and checked. Disabled appearance is applied on the RadioItem root, not as RadioToggle's standalone disabled opacity.
+
+<Canvas of={RadioItemStories.DisabledUnchecked} />
+
+<Canvas of={RadioItemStories.DisabledChecked} />
+
+<Canvas of={RadioItemStories.CardDisabledUnchecked} />
+
+<Canvas of={RadioItemStories.CardDisabledChecked} />
+
+### Focus Visible
+
+Focus Visible uses native `:focus-visible` behavior on `RadioToggle`. RadioItem does not add a second focus ring. It is not a public prop.
+
+<Canvas of={RadioItemStories.KeyboardFocus} />
+
+## Content
+
+### Label
+
+The visible label is passed as `children` and provides the accessible name.
+
+<Canvas of={RadioItemStories.LabelOnly} />
+
+### Description
+
+Use `description` for supporting text. It is associated with the radio through `aria-describedby`.
+
+<Canvas of={RadioItemStories.WithDescription} />
+
+## Accessibility
+
+RadioItem should always have a clear and accessible name.
+
+### Native Semantics
+
+RadioItem composes `RadioToggle`, which renders a native `<input type="radio">`. Keyboard behavior comes from the browser: Tab moves focus, and Space selects the focused radio. The entire label or card is clickable because RadioItem uses a wrapping `<label>`. Do not nest a `Label` component inside RadioItem.
+
+Mutually exclusive choices are formed by giving radios the same `name`. RadioItem does not create RadioGroup semantics.
+
+```tsx
+<RadioItem name="plan" value="pro" description="Includes extra seats">
+  Pro
+</RadioItem>
+<RadioItem name="plan" value="team" description="For growing teams">
+  Team
+</RadioItem>
+```
+
+### Accessible Name
+
+The visible label text (`children`) is the accessible name.
+
+```tsx
+<RadioItem name="plan" value="pro" description="Includes extra seats">
+  Pro
+</RadioItem>
+```
+
+When there is no visible label, provide an accessible name with `aria-label` or `aria-labelledby`.
+
+### Description
+
+When `description` is provided, it is associated with the radio using `aria-describedby`. Existing `aria-describedby` values are preserved.
+
+### Invalid
+
+`invalid` is passed to `RadioToggle` and mirrored to `aria-invalid`.
+
+### Disabled
+
+Disabled uses the native `disabled` attribute and prevents interaction.
+
+### Focus Visible
+
+Focus Visible uses native `:focus-visible` behavior on the 18px toggle. It is not a public prop.
+
+## API
+
+The RadioItem component provides properties to control its selection, layout, content, validation, and availability.
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant` | `"default"` &#124; `"card"` | `"default"` | Controls the layout appearance of the radio item. |
+| `checked` | `boolean` | — | Controls the checked state. When used as a controlled prop, provide `onChange` to handle user interaction. |
+| `defaultChecked` | `boolean` | — | Sets the initial checked state for uncontrolled usage. |
+| `name` | `string` | — | Groups radios so only one radio with the same name can be selected. |
+| `value` | `string` | — | Value submitted with the form when this radio is selected. |
+| `invalid` | `boolean` | `false` | Indicates that the radio is invalid and applies `aria-invalid`. |
+| `disabled` | `boolean` | — | Prevents interaction with the radio. |
+| `children` | `React.ReactNode` | — | Visible label. Provides the accessible name. |
+| `description` | `React.ReactNode` | — | Optional supporting text associated via `aria-describedby`. |
+| `className` | `string` | — | Adds custom CSS classes to the component root. |
+| `aria-label` | `string` | — | Provides an accessible name when no visible label is present. |
+| `aria-labelledby` | `string` | — | References an element that provides the accessible name. |
+| `aria-describedby` | `string` | — | Additional described-by ids. Merged with the description id when `description` is set. |
+
+The component also supports the standard HTML `<input>` attributes through `React.ComponentPropsWithoutRef<"input">`, except `type` and `size`. `type` is fixed to `"radio"` through `RadioToggle`, and `size` is not part of the public API. Native `name` and `value` pass through unchanged. RadioItem does not manage React state of its own; checked state is delegated to the native radio.
