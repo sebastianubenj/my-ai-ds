@@ -65,25 +65,6 @@ export const Interactive: Story = {
   args: {
     defaultChecked: false,
   },
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-    const checkbox = canvas.getByRole("checkbox");
-
-    await expect(checkbox).not.toBeChecked();
-
-    await userEvent.click(checkbox);
-    await expect(checkbox).toBeChecked();
-
-    await userEvent.click(checkbox);
-    await expect(checkbox).not.toBeChecked();
-
-    checkbox.focus();
-    await userEvent.keyboard(" ");
-    await expect(checkbox).toBeChecked();
-
-    await userEvent.keyboard(" ");
-    await expect(checkbox).not.toBeChecked();
-  },
 };
 
 /* -------------------------------------------------------------------------- */

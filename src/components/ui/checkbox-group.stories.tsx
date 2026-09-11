@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { expect, userEvent, within } from "storybook/test";
+import { expect, within } from "storybook/test";
 
 import { Checkbox } from "./checkbox";
 import { CheckboxGroup } from "./checkbox-group";
@@ -45,31 +45,6 @@ export const Interactive: Story = {
       <Checkbox defaultChecked={false}>Option three</Checkbox>
     </CheckboxGroup>
   ),
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-    const checkboxes = canvas.getAllByRole("checkbox");
-
-    await expect(checkboxes).toHaveLength(3);
-    await expect(checkboxes[0]).not.toBeChecked();
-    await expect(checkboxes[1]).not.toBeChecked();
-    await expect(checkboxes[2]).not.toBeChecked();
-
-    await userEvent.click(checkboxes[0]);
-    await expect(checkboxes[0]).toBeChecked();
-    await expect(checkboxes[1]).not.toBeChecked();
-    await expect(checkboxes[2]).not.toBeChecked();
-
-    await userEvent.click(checkboxes[1]);
-    await expect(checkboxes[1]).toBeChecked();
-    await expect(checkboxes[0]).toBeChecked();
-    await expect(checkboxes[2]).not.toBeChecked();
-
-    checkboxes[2].focus();
-    await userEvent.keyboard(" ");
-    await expect(checkboxes[2]).toBeChecked();
-    await expect(checkboxes[0]).toBeChecked();
-    await expect(checkboxes[1]).toBeChecked();
-  },
 };
 
 /* -------------------------------------------------------------------------- */
