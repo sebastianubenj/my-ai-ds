@@ -17,7 +17,7 @@ const triggerClassName = `
   box-border flex w-full items-center gap-(--primitives-spacing-1-5)
   h-(--primitives-spacing-11) rounded-(--primitives-radius-rounded-14)
   border border-input bg-background px-(--primitives-spacing-2-5)
-  text-left outline-none cursor-pointer
+  text-left outline-none cursor-pointer group
   font-sans [font-weight:var(--semantics-typography-body-font-weight)]
   text-(length:--semantics-typography-body-body-lg-font-size)
   leading-(--semantics-typography-body-body-lg-lh-normal)
@@ -154,8 +154,19 @@ export function Select({
           placeholder={placeholder}
           className="min-w-0 flex-1 truncate"
         />
-        <SelectPrimitive.Icon className="flex shrink-0">
-          <Icon name="chevron-down" size={ICON_SIZE} aria-hidden="true" />
+        <SelectPrimitive.Icon className="relative flex size-(--primitives-spacing-5) shrink-0">
+          <Icon
+            name="chevron-down"
+            size={ICON_SIZE}
+            aria-hidden="true"
+            className="group-data-popup-open:invisible"
+          />
+          <Icon
+            name="chevron-up"
+            size={ICON_SIZE}
+            aria-hidden="true"
+            className="absolute inset-0 invisible group-data-popup-open:visible"
+          />
         </SelectPrimitive.Icon>
       </SelectPrimitive.Trigger>
       {children}
