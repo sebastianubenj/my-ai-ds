@@ -1,0 +1,216 @@
+import * as SelectStories from "./select.stories";
+import { Meta, Canvas } from "@storybook/addon-docs/blocks";
+
+<Meta of={SelectStories} />
+
+# Select
+
+## Overview
+
+Select is a form control for choosing one option from a reasonably sized list. It composes a trigger with a popover list of options. Pair it with the existing `Label` component for a visible accessible name.
+
+Select is intended for lists that can be scanned without search. Around seven visible options typically fit without scrolling. Longer lists scroll inside the popover. When filtering or type-to-search becomes important — often around 20 or more options — prefer a Combobox instead of encoding a limit into Select.
+
+## Anatomy / composition
+
+The public pieces are composed together. `Select` owns selection and open state. `SelectContent` is the popover. `SelectItem` is a selectable option. `SelectGroup` and `SelectLabel` organize related options.
+
+```tsx
+<Label htmlFor="fruit">Fruit</Label>
+<Select id="fruit" placeholder="Placeholder text">
+  <SelectContent>
+    <SelectGroup>
+      <SelectLabel>Citrus</SelectLabel>
+      <SelectItem value="orange">Orange</SelectItem>
+      <SelectItem value="lemon">Lemon</SelectItem>
+    </SelectGroup>
+    <SelectItem value="mango">Mango</SelectItem>
+  </SelectContent>
+</Select>
+```
+
+- **Select** — root and trigger. Width follows the parent. Height is 44px.
+- **SelectContent** — portaled popover aligned to the trigger width, 4px below.
+- **SelectItem** — option row. Selected items show a trailing check.
+- **SelectGroup** — associates a group label with its options. It has no extra visual chrome.
+- **SelectLabel** — non-selectable group heading inside `SelectContent`. It is not the form `Label` component.
+
+<Canvas of={SelectStories.Interactive} />
+
+## States
+
+- **Default** — 1px default border, default background, subtle placeholder, full opacity.
+- **Filled** — not a prop. Pass `value` or `defaultValue`; the selected label uses the default foreground color.
+- **Focus** — pointer or keyboard focus applies a 2px strong border and 9px horizontal padding so the text does not jump. There is no `focus` prop. While the popover is open, the trigger keeps that same 2px border.
+- **Error** — controlled through `error`, which mirrors `aria-invalid` and applies destructive styling.
+- **Disabled** — `disabled` on `Select`. If both `disabled` and `error` are passed, the disabled appearance takes precedence.
+
+### Default
+
+<Canvas of={SelectStories.Default} />
+
+### Filled
+
+There is no `filled` prop. Whether the trigger shows placeholder styling or value styling is determined by the selected value.
+
+<Canvas of={SelectStories.Filled} />
+
+### Focus
+
+<Canvas of={SelectStories.Focus} />
+
+### Focus Visible
+
+Keyboard focus adds the design-system focus ring through the existing `focus-intent` system. It is not a public prop.
+
+<Canvas of={SelectStories.KeyboardFocus} />
+
+### Error
+
+Set `error` to mark the field as invalid. This mirrors `aria-invalid="true"` on the trigger.
+
+<Canvas of={SelectStories.ErrorState} />
+
+<Canvas of={SelectStories.FilledError} />
+
+### Disabled
+
+<Canvas of={SelectStories.Disabled} />
+
+```tsx
+<Select disabled placeholder="Placeholder text">
+  <SelectContent>
+    <SelectItem value="apple">Apple</SelectItem>
+  </SelectContent>
+</Select>
+```
+
+## Selection
+
+Selection is owned by `Select` through `value` / `defaultValue` / `onValueChange`. The highlighted option follows pointer hover and keyboard movement and uses the same accent treatment as Figma hover. Pressed uses that same highlight — there is no separate pressed style. The selected option shows the trailing check icon.
+
+<Canvas of={SelectStories.SelectedItem} />
+
+<Canvas of={SelectStories.HighlightedItem} />
+
+## Grouping
+
+Wrap related options in `SelectGroup` and label them with `SelectLabel`. `SelectLabel` is a non-selectable heading: muted body/lg text, 44px row, no hover, focus, selected, or disabled states. Optional `leadingIcon` and `trailingIcon` match the trigger/item icon pattern when needed.
+
+<Canvas of={SelectStories.WithGroups} />
+
+## Icons
+
+- The trigger always shows a trailing chevron. It is not configurable.
+- `leadingIcon` on `Select` and `SelectItem` is optional and decorative.
+- Selected `SelectItem`s show the `check` icon on the trailing side. That indicator is not a public prop.
+
+<Canvas of={SelectStories.WithLeadingIcon} />
+
+## Option states
+
+Disabled options cannot be selected. Destructive options use destructive foreground, and destructive highlight uses the subtle destructive hover background.
+
+<Canvas of={SelectStories.DisabledItem} />
+
+<Canvas of={SelectStories.DestructiveItem} />
+
+## Scrolling
+
+The popover height follows its content. It is capped by available viewport space from Base UI (`--available-height`) and scrolls with the native scrollbar when the list is longer than that maximum. There is no option-count limit and no `showScrollbar` prop. Catalog frames such as 343×190 are documentation sizes, not runtime constraints.
+
+<Canvas of={SelectStories.LongList} />
+
+## Controlled vs uncontrolled
+
+Uncontrolled usage uses `defaultValue` and `defaultOpen`. Controlled usage uses `value` / `onValueChange` and `open` / `onOpenChange`.
+
+The trigger shows each option's visible label, not its `value`. Labels are inferred from `SelectItem` children. If options are wrapped in a custom component that Select cannot see, pass the `items` prop on `Select`.
+
+<Canvas of={SelectStories.ControlledValue} />
+
+<Canvas of={SelectStories.ControlledOpen} />
+
+## Associating with a Label
+
+`Select` does not render a form label. Pair it with the existing `Label` component using `htmlFor` / `id`.
+
+```tsx
+<Label htmlFor="fruit">Fruit</Label>
+<Select id="fruit" placeholder="Placeholder text">
+  <SelectContent>
+    <SelectItem value="apple">Apple</SelectItem>
+  </SelectContent>
+</Select>
+```
+
+<Canvas of={SelectStories.WithFormLabel} />
+
+## Accessibility
+
+- The trigger is a `combobox` with a `listbox` popup. Keyboard navigation, typeahead, focus management, and option semantics come from Base UI.
+- `error` is mirrored to `aria-invalid` on the trigger.
+- Pointer focus shows the 2px border. Keyboard focus also shows the focus ring via `focus-intent`.
+- Leading icons and the chevron are decorative and marked `aria-hidden`.
+- `SelectLabel` is associated with its `SelectGroup` through Base UI (`aria-labelledby` on the group).
+- Always provide an accessible name with `Label`, `aria-label`, or `aria-labelledby`.
+
+## API
+
+### Select
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `placeholder` | `ReactNode` | — | Placeholder shown when no value is selected. |
+| `error` | `boolean` | `false` | Marks the select as invalid. Mirrored to `aria-invalid`. |
+| `leadingIcon` | `IconName` | — | Decorative icon displayed before the value/placeholder. |
+| `disabled` | `boolean` | — | Prevents interaction with the select. |
+| `value` | `string \| null` | — | Controlled selected value. |
+| `defaultValue` | `string \| null` | — | Uncontrolled initial selected value. |
+| `onValueChange` | `(value, eventDetails) => void` | — | Called when the selected value changes. |
+| `open` | `boolean` | — | Controlled open state. |
+| `defaultOpen` | `boolean` | `false` | Uncontrolled initial open state. |
+| `onOpenChange` | `(open, eventDetails) => void` | — | Called when the popover opens or closes. |
+| `required` | `boolean` | `false` | Marks the hidden input as required. |
+| `name` | `string` | — | Name of the hidden input for form submission. |
+| `id` | `string` | — | Id applied to the trigger. |
+| `items` | `Record<string, ReactNode> \| { value, label }[]` | inferred | Optional label map. Inferred from `SelectItem` children when omitted. |
+| `className` | `string` | — | Adds custom CSS classes to the trigger. |
+
+`Select` also accepts `form`, `autoComplete`, `readOnly`, `aria-label`, `aria-labelledby`, and `aria-describedby`. There are no `state`, `filled`, `focus`, `showLeadingIcon`, or `showScrollbar` props.
+
+### SelectContent
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `children` | `ReactNode` | — | `SelectItem`, `SelectGroup`, and `SelectLabel` nodes. |
+| `className` | `string` | — | Adds custom CSS classes to the popover. |
+
+### SelectItem
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `string` | — | Unique value that identifies the option. |
+| `children` | `ReactNode` | — | Visible option label. |
+| `disabled` | `boolean` | `false` | Prevents the option from being selected. |
+| `destructive` | `boolean` | `false` | Applies destructive option styling. |
+| `leadingIcon` | `IconName` | — | Decorative icon displayed before the label. |
+| `className` | `string` | — | Adds custom CSS classes to the option. |
+
+Selected and highlighted states are not props. They come from Base UI.
+
+### SelectGroup
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `children` | `ReactNode` | — | `SelectLabel` and `SelectItem` nodes. |
+| `className` | `string` | — | Adds custom CSS classes to the group. |
+
+### SelectLabel
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `children` | `ReactNode` | — | Group heading text. |
+| `leadingIcon` | `IconName` | — | Decorative icon displayed before the label. |
+| `trailingIcon` | `IconName` | — | Decorative icon displayed after the label. |
+| `className` | `string` | — | Adds custom CSS classes to the group label. |
