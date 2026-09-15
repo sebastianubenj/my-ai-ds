@@ -3,7 +3,7 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 import { Label } from "@/components/ui/label";
 
-export interface FieldProps extends React.ComponentPropsWithoutRef<"div"> {
+export interface FieldProps extends React.ComponentProps<"div"> {
   children: React.ReactNode;
   /** Visible field name. Omit to hide the label row. */
   label?: React.ReactNode;
@@ -25,6 +25,7 @@ export function Field({
   description,
   error = false,
   htmlFor,
+  ref,
   ...props
 }: FieldProps) {
   const descriptionId = description && htmlFor ? `${htmlFor}-description` : undefined;
@@ -34,6 +35,7 @@ export function Field({
       data-slot="field"
       className={cn("flex w-full flex-col items-start gap-(--primitives-spacing-1)", className)}
       {...props}
+      ref={ref}
     >
       {label ? (
         <Label

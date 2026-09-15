@@ -17,7 +17,7 @@ const DRAG_PROMPT = "Drop your file here";
 const HELPER_TEXT = "JPEG, PNG or PDF format, up to 5MB";
 
 export interface FileUploadProps
-  extends Omit<React.ComponentPropsWithoutRef<"input">, "type" | "size" | "value"> {
+  extends Omit<React.ComponentProps<"input">, "type" | "size" | "value"> {
   /** Marks the control as invalid. Mirrored to `aria-invalid` on the native file input. */
   error?: boolean;
   /** Presentational filename shown when no file has been selected yet. */
@@ -36,6 +36,7 @@ export function FileUpload({
   fileName,
   disabled,
   onChange,
+  ref,
   ...props
 }: FileUploadProps) {
   const inputRef = React.useRef<HTMLInputElement>(null);
@@ -192,7 +193,14 @@ export function FileUpload({
       </svg>
       <input
         {...props}
-        ref={inputRef}
+        ref={(node) => {
+          inputRef.current = node;
+          if (typeof ref === "function") {
+            ref(node);
+          } else if (ref) {
+            ref.current = node;
+          }
+        }}
         type="file"
         disabled={disabled}
         aria-invalid={error}

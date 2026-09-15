@@ -418,3 +418,32 @@ export const WithFormLabel: Story = {
     </div>
   ),
 };
+
+/* -------------------------------------------------------------------------- */
+/* Forwards ref                                                                */
+/* -------------------------------------------------------------------------- */
+
+export const ForwardsRef: Story = {
+  render: function ForwardsRefRender(args) {
+    const ref = React.useRef<HTMLButtonElement>(null);
+
+    React.useLayoutEffect(() => {
+      if (ref.current) {
+        ref.current.setAttribute("data-ref-tag", ref.current.tagName);
+      }
+    }, []);
+
+    return (
+      <Select {...args} ref={ref}>
+        <SelectContent>{fruitItems()}</SelectContent>
+      </Select>
+    );
+  },
+  play: async ({ canvasElement }) => {
+    const trigger = await getTrigger(canvasElement);
+
+    await expect(trigger).toBeInstanceOf(HTMLButtonElement);
+    await expect(trigger.tagName).toBe("BUTTON");
+    await expect(trigger).toHaveAttribute("data-ref-tag", "BUTTON");
+  },
+};

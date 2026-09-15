@@ -1,3 +1,4 @@
+import * as React from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, userEvent, within } from "storybook/test";
 
@@ -166,5 +167,32 @@ export const TypingUpdatesValue: Story = {
     await expect(input).toHaveValue("Hello");
 
     await userEvent.tab();
+  },
+};
+
+/* -------------------------------------------------------------------------- */
+/* Ref                                                                         */
+/* -------------------------------------------------------------------------- */
+
+export const ForwardsRef: Story = {
+  args: {
+    placeholder: "Placeholder text",
+  },
+  render: function ForwardsRefRender(args) {
+    const ref = React.useRef<HTMLInputElement>(null);
+
+    React.useLayoutEffect(() => {
+      if (ref.current) {
+        ref.current.setAttribute("data-ref-tag", ref.current.tagName);
+      }
+    }, []);
+
+    return <Input {...args} className="w-80" ref={ref} />;
+  },
+  play: async ({ canvasElement }) => {
+    const input = within(canvasElement).getByPlaceholderText("Placeholder text");
+
+    await expect(input.tagName).toBe("INPUT");
+    await expect(input).toHaveAttribute("data-ref-tag", "INPUT");
   },
 };

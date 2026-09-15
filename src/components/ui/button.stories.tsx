@@ -1,3 +1,4 @@
+import * as React from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, userEvent, within } from "storybook/test";
 
@@ -215,5 +216,34 @@ export const IconOnly: Story = {
     size: "icon-md",
     icon: "arrow-left",
     "aria-label": "Go back",
+  },
+};
+
+/* -------------------------------------------------------------------------- */
+/* Ref                                                                         */
+/* -------------------------------------------------------------------------- */
+
+export const ForwardsRef: Story = {
+  args: {
+    variant: "primary",
+    size: "md",
+    children: "Button",
+  },
+  render: function ForwardsRefRender(args) {
+    const ref = React.useRef<HTMLButtonElement>(null);
+
+    React.useLayoutEffect(() => {
+      if (ref.current) {
+        ref.current.setAttribute("data-ref-tag", ref.current.tagName);
+      }
+    }, []);
+
+    return <Button {...args} ref={ref} />;
+  },
+  play: async ({ canvasElement }) => {
+    const button = within(canvasElement).getByRole("button", { name: "Button" });
+
+    await expect(button.tagName).toBe("BUTTON");
+    await expect(button).toHaveAttribute("data-ref-tag", "BUTTON");
   },
 };

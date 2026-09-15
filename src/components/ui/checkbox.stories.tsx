@@ -1,3 +1,4 @@
+import * as React from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, userEvent, within } from "storybook/test";
 
@@ -222,5 +223,33 @@ export const KeyboardFocus: Story = {
 
     await userEvent.tab();
     await expect(checkbox).toHaveFocus();
+  },
+};
+
+/* -------------------------------------------------------------------------- */
+/* Ref                                                                         */
+/* -------------------------------------------------------------------------- */
+
+export const ForwardsRef: Story = {
+  args: {
+    children: "Label",
+    description: "Description",
+  },
+  render: function ForwardsRefRender(args) {
+    const ref = React.useRef<HTMLInputElement>(null);
+
+    React.useLayoutEffect(() => {
+      if (ref.current) {
+        ref.current.setAttribute("data-ref-tag", ref.current.tagName);
+      }
+    }, []);
+
+    return <Checkbox {...args} ref={ref} />;
+  },
+  play: async ({ canvasElement }) => {
+    const checkbox = within(canvasElement).getByRole("checkbox");
+
+    await expect(checkbox.tagName).toBe("INPUT");
+    await expect(checkbox).toHaveAttribute("data-ref-tag", "INPUT");
   },
 };

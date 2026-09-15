@@ -252,7 +252,11 @@ Keep component APIs simple and predictable.
 
 ### `data-slot`
 
-Use `data-slot` to identify component and subcomponent roots when it provides a useful structural, styling, debugging, or composition hook.
+Use `data-slot` to identify the primary public DOM/styling surface of a component or compound component when it provides a useful structural, styling, debugging, or composition hook.
+
+The `data-slot` target does not have to be the same element as the public React `ref`.
+
+For composite controls, place `data-slot` on the DOM surface that represents the component's primary visual/interactive surface. Do not require every component to place `data-slot` on its root if another surface is more appropriate.
 
 Follow the existing shadcn/Base UI convention where appropriate.
 
@@ -260,17 +264,21 @@ Do not add `data-slot` attributes to internal elements without a concrete reason
 
 When a component uses `data-slot`, use a stable component-level name that matches the component or subcomponent name.
 
+Preserve existing component-specific `data-slot` placement unless there is a clear architectural reason to change it.
+
 ### `className`
 
-When a component exposes a `className` prop, it should apply to the component's root rendered element.
+When a component exposes a `className` prop, it should apply to the component's public styling surface.
 
-The root element is the outermost element representing the component's public layout boundary.
+That surface is often the outermost layout boundary. For wrapper-based components, it may be a chrome wrapper while `ref` points at a nested native control.
 
 For example:
 
 - Button → `<button>`
 - Label → `<label>`
 - Input → its component root/wrapper when the component requires internal structure
+
+Do not force `className` and `ref` to resolve to the same DOM element merely for consistency.
 
 Do not introduce separate element-specific class props unless there is a demonstrated need to style an internal element independently.
 
@@ -314,11 +322,20 @@ Before creating a new component token, verify whether an existing semantic token
 
 ### Refs
 
-Components that wrap or represent interactive DOM elements should preserve ref access when required by the underlying element or primitive.
+Use the React 19 ref-as-a-prop pattern. Accept `ref` directly as a prop. Do not use `React.forwardRef`.
 
-Follow the ref API supported by the project's current React version and the underlying shadcn/Base UI primitive.
+Use `React.ComponentProps<...>` or an appropriate `Pick`/`Omit` when exposing native props, including `ref`.
 
-Do not introduce legacy ref-forwarding patterns solely for convention when the current React architecture provides a direct ref API.
+The public ref should resolve to the component's intended primary DOM target:
+
+- Form controls → the primary native interactive/form control
+- Layout/composition components → the structural root
+
+A wrapper-based component may apply `className` and `ref` to different DOM elements when that matches its architecture.
+
+When a component wraps another component that owns the native control, pass the public ref through to that control.
+
+Follow the ref API supported by the underlying shadcn/Base UI primitive.
 
 When implementing a component that wraps an interactive element, verify that its ref behavior remains compatible with the underlying primitive.
 
@@ -343,7 +360,22 @@ Common states may include:
 
 Use semantic state tokens whenever they exist.
 
+### Validation props
+
+Use `error` for text-like/form-field controls such as Input, Textarea, Select, File Upload, and Field.
+
+Use `invalid` for binary controls such as Checkbox and Radio.
+
+Preserve the existing public APIs of implemented components. New components should follow the convention of their control family rather than introducing arbitrary validation prop names.
+
+### Focus
+
 Focus states must use the design system's focus/ring/effect tokens rather than arbitrary CSS values.
+
+There are two existing focus patterns. New components should follow the closest existing component rather than introducing a third system:
+
+- Compact native controls such as Button, Checkbox, and Radio use native `:focus-visible`.
+- Text-like controls whose visual focus state is a 2px strong border (Input, Textarea, Select, File Upload) use the `focus-intent` / `intent-keyboard` token pattern with `:has-focus-within`. Pointer focus may show the strong border without the keyboard focus ring; the additional ring is for keyboard focus.
 
 Do not invent visual states that are not required by the component design.
 

@@ -1,3 +1,4 @@
+import * as React from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, within } from "storybook/test";
 
@@ -132,4 +133,29 @@ export const Composition: Story = {
       <Checkbox defaultChecked>Label</Checkbox>
     </CheckboxGroup>
   ),
+};
+
+/* -------------------------------------------------------------------------- */
+/* Ref                                                                         */
+/* -------------------------------------------------------------------------- */
+
+export const ForwardsRef: Story = {
+  render: function ForwardsRefRender() {
+    const ref = React.useRef<HTMLDivElement>(null);
+
+    React.useLayoutEffect(() => {
+      if (ref.current) {
+        ref.current.setAttribute("data-ref-tag", ref.current.tagName);
+      }
+    }, []);
+
+    return <CheckboxGroup ref={ref} />;
+  },
+  play: async ({ canvasElement }) => {
+    const group = canvasElement.querySelector('[data-slot="checkbox-group"]');
+
+    await expect(group).toBeInstanceOf(HTMLDivElement);
+    await expect(group).toHaveAttribute("data-ref-tag", "DIV");
+    await expect((group as HTMLDivElement).tagName).toBe("DIV");
+  },
 };

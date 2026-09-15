@@ -121,7 +121,7 @@ const ICON_PIXEL_SIZE: Record<ButtonSize, number> = {
 };
 
 export interface ButtonProps
-  extends React.ComponentPropsWithoutRef<"button">,
+  extends React.ComponentProps<"button">,
     VariantProps<typeof buttonVariants> {
   /** Icon rendered before the label. Ignored for icon-only sizes. */
   leadingIcon?: IconName;
@@ -142,6 +142,7 @@ export function Button({
   icon,
   type = "button",
   children,
+  ref,
   ...props
 }: ButtonProps) {
   const resolvedSize = size ?? "md";
@@ -165,6 +166,7 @@ export function Button({
       type={type}
       className={cn(buttonVariants({ variant, size: resolvedSize }), className)}
       {...props}
+      ref={ref}
     >
       {isIconOnly ? (
         icon && <Icon name={icon} size={iconSize} />

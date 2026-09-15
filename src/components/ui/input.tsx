@@ -12,7 +12,7 @@ import { Icon, type IconName } from "@/components/icon";
 const ICON_SIZE = 20;
 
 export interface InputProps
-  extends Omit<React.ComponentPropsWithoutRef<"input">, "type" | "size"> {
+  extends Omit<React.ComponentProps<"input">, "type" | "size"> {
   /** Native input type. Both render identically except for browser masking behavior. */
   type?: "text" | "password";
   /** Marks the input as invalid. Mirrored to `aria-invalid` for styling and accessibility. */
@@ -30,6 +30,7 @@ export function Input({
   leadingIcon,
   trailingIcon,
   disabled,
+  ref,
   ...props
 }: InputProps) {
   return (
@@ -67,6 +68,7 @@ export function Input({
           aria-invalid:text-destructive-foreground aria-invalid:placeholder:text-destructive-foreground
           disabled:cursor-default`}
         {...props}
+        ref={ref}
       />
       {trailingIcon && <Icon name={trailingIcon} size={ICON_SIZE} aria-hidden="true" />}
     </div>

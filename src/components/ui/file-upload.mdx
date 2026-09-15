@@ -136,7 +136,7 @@ Field’s `error` styles the support line only. File Upload’s `error` styles t
 | `onChange` | `ChangeEventHandler<input>` | — | Called when the selected file changes. |
 | `className` | `string` | — | Adds custom CSS classes to the dropzone root. |
 
-The component also supports the remaining native `<input type="file">` attributes through `React.ComponentPropsWithoutRef<"input">`, excluding `type`, `size`, and `value`.
+The component also supports the remaining native `<input type="file">` attributes through `React.ComponentProps<"input">`, excluding `type`, `size`, and `value`.
 
 There are no `state`, `status`, `dragOver`, `showLeadingIcon`, `placeholder`, `focus`, or `focusVisible` props. Empty, uploaded, drag-over, and focus are derived from the native input, nested Browse button, and pointer events.
 

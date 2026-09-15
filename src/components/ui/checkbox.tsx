@@ -41,7 +41,7 @@ const toggleDisabledVisualReset = `
 export type CheckboxVariant = NonNullable<VariantProps<typeof checkboxVariants>["variant"]>;
 
 export interface CheckboxProps
-  extends Omit<React.ComponentPropsWithoutRef<"input">, "type" | "size"> {
+  extends Omit<React.ComponentProps<"input">, "type" | "size"> {
   checked?: boolean;
   defaultChecked?: boolean;
   indeterminate?: boolean;
@@ -62,6 +62,7 @@ export function Checkbox({
   variant = "default",
   children,
   description,
+  ref,
   ...props
 }: CheckboxProps) {
   const descriptionId = React.useId();
@@ -86,6 +87,7 @@ export function Checkbox({
           disabled={disabled}
           invalid={invalid}
           aria-describedby={describedBy}
+          ref={ref}
         />
       </span>
       {showLabel || showDescription ? (

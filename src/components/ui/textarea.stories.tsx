@@ -1,3 +1,4 @@
+import * as React from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, userEvent, within } from "storybook/test";
 
@@ -112,5 +113,32 @@ export const KeyboardFocus: Story = {
 
     await userEvent.tab();
     await expect(textarea).toHaveFocus();
+  },
+};
+
+/* -------------------------------------------------------------------------- */
+/* Ref                                                                         */
+/* -------------------------------------------------------------------------- */
+
+export const ForwardsRef: Story = {
+  args: {
+    placeholder: "Placeholder text",
+  },
+  render: function ForwardsRefRender(args) {
+    const ref = React.useRef<HTMLTextAreaElement>(null);
+
+    React.useLayoutEffect(() => {
+      if (ref.current) {
+        ref.current.setAttribute("data-ref-tag", ref.current.tagName);
+      }
+    }, []);
+
+    return <Textarea {...args} className="w-80" ref={ref} />;
+  },
+  play: async ({ canvasElement }) => {
+    const textarea = within(canvasElement).getByPlaceholderText("Placeholder text");
+
+    await expect(textarea.tagName).toBe("TEXTAREA");
+    await expect(textarea).toHaveAttribute("data-ref-tag", "TEXTAREA");
   },
 };

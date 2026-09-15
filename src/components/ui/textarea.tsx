@@ -10,12 +10,12 @@ import { Icon } from "@/components/icon";
  */
 const RESIZE_THUMB_SIZE = 20;
 
-export interface TextareaProps extends React.ComponentPropsWithoutRef<"textarea"> {
+export interface TextareaProps extends React.ComponentProps<"textarea"> {
   /** Marks the textarea as invalid. Mirrored to `aria-invalid` for styling and accessibility. */
   error?: boolean;
 }
 
-export function Textarea({ className, error = false, disabled, ...props }: TextareaProps) {
+export function Textarea({ className, error = false, disabled, ref, ...props }: TextareaProps) {
   return (
     <div
       className={cn(
@@ -53,6 +53,7 @@ export function Textarea({ className, error = false, disabled, ...props }: Texta
           intent-keyboard:focus:[outline-offset:var(--primitives-spacing-0-75)]
           disabled:cursor-default
           [&::-webkit-resizer]:opacity-0`}
+        ref={ref}
       />
       <Icon
         name="resize-thumb"

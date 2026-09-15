@@ -70,7 +70,7 @@ Use the native `disabled` prop. If `disabled` and `error` are both set, the disa
 
 - Renders a native `<input>`, so keyboard behavior, focus, and typing all come from the browser.
 - `error` is mirrored to `aria-invalid` — style and semantics stay in sync automatically.
-- The focus ring appears on native `:focus` (not `:focus-visible`), since sighted mouse users editing a text field also need to see where focus landed.
+- Pointer focus produces the 2px strong focus border. Keyboard focus uses that same strong border plus the `intent-keyboard` focus ring. Both are derived through `:has-focus-within` on the wrapper.
 - Leading/trailing icons are decorative and marked `aria-hidden`; they never carry the field's accessible name.
 - `Input` intentionally does not include a label. Always pair it with a `Label` (or `aria-label`/`aria-labelledby`) so the field has an accessible name.
 
@@ -86,6 +86,6 @@ Use the native `disabled` prop. If `disabled` and `error` are both set, the disa
 | `placeholder` | `string` | — | Placeholder text shown when the input is empty. |
 | `className` | `string` | — | Adds custom CSS classes to the input's wrapper. |
 
-The component also supports the standard HTML `<input>` attributes (`value`, `defaultValue`, `name`, `id`, `onChange`, etc.) through `React.ComponentPropsWithoutRef<"input">`, excluding `type` and `size`, which are replaced by the constrained `type` prop above.
+The component also supports the standard HTML `<input>` attributes (`value`, `defaultValue`, `name`, `id`, `onChange`, etc.) through `React.ComponentProps<"input">`, excluding `type` and `size`, which are replaced by the constrained `type` prop above.
 
 There are no `focus`, `filled`, or `focusFilled` props — those are interaction states derived automatically from the native input and CSS, not from React.

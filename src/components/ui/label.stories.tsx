@@ -1,4 +1,6 @@
+import * as React from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { expect, within } from "storybook/test";
 
 import { Label } from "./label";
 
@@ -31,5 +33,32 @@ type Story = StoryObj<typeof meta>;
 export const Basic: Story = {
   args: {
     children: "Label",
+  },
+};
+
+/* -------------------------------------------------------------------------- */
+/* Ref                                                                         */
+/* -------------------------------------------------------------------------- */
+
+export const ForwardsRef: Story = {
+  args: {
+    children: "Label",
+  },
+  render: function ForwardsRefRender(args) {
+    const ref = React.useRef<HTMLLabelElement>(null);
+
+    React.useLayoutEffect(() => {
+      if (ref.current) {
+        ref.current.setAttribute("data-ref-tag", ref.current.tagName);
+      }
+    }, []);
+
+    return <Label {...args} ref={ref} />;
+  },
+  play: async ({ canvasElement }) => {
+    const label = within(canvasElement).getByText("Label");
+
+    await expect(label.tagName).toBe("LABEL");
+    await expect(label).toHaveAttribute("data-ref-tag", "LABEL");
   },
 };

@@ -101,7 +101,9 @@ function collectSelectItems(children: React.ReactNode): SelectItemRecord[] {
 
 type SelectRootProps = Omit<SelectPrimitive.Root.Props<string, false>, "multiple" | "children">;
 
-export interface SelectProps extends SelectRootProps {
+export interface SelectProps
+  extends SelectRootProps,
+    Pick<React.ComponentProps<"button">, "ref"> {
   children?: React.ReactNode;
   /** Marks the select as invalid. Mirrored to `aria-invalid` on the trigger. */
   error?: boolean;
@@ -128,6 +130,7 @@ export function Select({
   "aria-labelledby": ariaLabelledBy,
   "aria-describedby": ariaDescribedBy,
   items,
+  ref,
   ...rootProps
 }: SelectProps) {
   const collectedItems = collectSelectItems(children);
@@ -148,6 +151,7 @@ export function Select({
         aria-labelledby={ariaLabelledBy}
         aria-describedby={ariaDescribedBy}
         className={cn(triggerClassName, className)}
+        ref={ref}
       >
         {leadingIcon ? <Icon name={leadingIcon} size={ICON_SIZE} aria-hidden="true" /> : null}
         <SelectPrimitive.Value

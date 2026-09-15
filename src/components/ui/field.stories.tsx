@@ -1,4 +1,6 @@
+import * as React from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { expect } from "storybook/test";
 
 import { Checkbox } from "./checkbox";
 import { CheckboxGroup } from "./checkbox-group";
@@ -269,6 +271,35 @@ export const WithRadioGroup: Story = {
       </RadioGroup>
     </Field>
   ),
+};
+
+/* -------------------------------------------------------------------------- */
+/* Forwards ref                                                                */
+/* -------------------------------------------------------------------------- */
+
+export const ForwardsRef: Story = {
+  render: function ForwardsRefRender() {
+    const ref = React.useRef<HTMLDivElement>(null);
+
+    React.useLayoutEffect(() => {
+      if (ref.current) {
+        ref.current.setAttribute("data-ref-tag", ref.current.tagName);
+      }
+    }, []);
+
+    return (
+      <Field ref={ref} label="Email" htmlFor="field-forwards-ref-email">
+        <Input id="field-forwards-ref-email" placeholder="you@example.com" />
+      </Field>
+    );
+  },
+  play: async ({ canvasElement }) => {
+    const field = canvasElement.querySelector('[data-slot="field"]');
+
+    await expect(field).toBeInstanceOf(HTMLDivElement);
+    await expect(field).toHaveAttribute("data-ref-tag", "DIV");
+    await expect((field as HTMLDivElement).tagName).toBe("DIV");
+  },
 };
 
 /* -------------------------------------------------------------------------- */

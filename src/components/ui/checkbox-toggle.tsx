@@ -13,7 +13,7 @@ const ICON_SIZE = 16;
 const ICON_STROKE_WIDTH = 2;
 
 export interface CheckboxToggleProps
-  extends Omit<React.ComponentPropsWithoutRef<"input">, "type" | "size"> {
+  extends Omit<React.ComponentProps<"input">, "type" | "size"> {
   checked?: boolean;
   defaultChecked?: boolean;
   indeterminate?: boolean;
@@ -29,6 +29,7 @@ export function CheckboxToggle({
   disabled,
   invalid = false,
   onChange,
+  ref,
   ...props
 }: CheckboxToggleProps) {
   const inputRef = React.useRef<HTMLInputElement>(null);
@@ -59,7 +60,14 @@ export function CheckboxToggle({
     >
       <input
         {...props}
-        ref={inputRef}
+        ref={(node) => {
+          inputRef.current = node;
+          if (typeof ref === "function") {
+            ref(node);
+          } else if (ref) {
+            ref.current = node;
+          }
+        }}
         data-slot="checkbox-toggle"
         type="checkbox"
         checked={checked}

@@ -1,3 +1,4 @@
+import * as React from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, userEvent, within } from "storybook/test";
 
@@ -261,4 +262,30 @@ export const WithFieldError: Story = {
       />
     </Field>
   ),
+};
+
+/* -------------------------------------------------------------------------- */
+/* Forwards ref                                                                */
+/* -------------------------------------------------------------------------- */
+
+export const ForwardsRef: Story = {
+  render: function ForwardsRefRender(args) {
+    const ref = React.useRef<HTMLInputElement>(null);
+
+    React.useLayoutEffect(() => {
+      if (ref.current) {
+        ref.current.setAttribute("data-ref-tag", ref.current.tagName);
+      }
+    }, []);
+
+    return <FileUpload {...args} ref={ref} />;
+  },
+  play: async ({ canvasElement }) => {
+    const input = getInput(canvasElement);
+
+    await expect(input).toBeInstanceOf(HTMLInputElement);
+    await expect(input.tagName).toBe("INPUT");
+    await expect(input).toHaveAttribute("type", "file");
+    await expect(input).toHaveAttribute("data-ref-tag", "INPUT");
+  },
 };

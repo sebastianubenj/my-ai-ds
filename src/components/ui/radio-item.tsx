@@ -40,7 +40,7 @@ const toggleDisabledVisualReset = `
 export type RadioItemVariant = NonNullable<VariantProps<typeof radioItemVariants>["variant"]>;
 
 export interface RadioItemProps
-  extends Omit<React.ComponentPropsWithoutRef<"input">, "type" | "size"> {
+  extends Omit<React.ComponentProps<"input">, "type" | "size"> {
   checked?: boolean;
   defaultChecked?: boolean;
   disabled?: boolean;
@@ -59,6 +59,7 @@ export function RadioItem({
   variant = "default",
   children,
   description,
+  ref,
   ...props
 }: RadioItemProps) {
   const descriptionId = React.useId();
@@ -82,6 +83,7 @@ export function RadioItem({
           disabled={disabled}
           invalid={invalid}
           aria-describedby={describedBy}
+          ref={ref}
         />
       </span>
       {showLabel || showDescription ? (

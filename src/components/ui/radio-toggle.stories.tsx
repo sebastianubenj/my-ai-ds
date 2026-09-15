@@ -1,3 +1,4 @@
+import * as React from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, userEvent, within } from "storybook/test";
 
@@ -128,5 +129,32 @@ export const KeyboardFocus: Story = {
 
     await userEvent.tab();
     await expect(radio).toHaveFocus();
+  },
+};
+
+/* -------------------------------------------------------------------------- */
+/* Ref                                                                         */
+/* -------------------------------------------------------------------------- */
+
+export const ForwardsRef: Story = {
+  args: {
+    "aria-label": "Option",
+  },
+  render: function ForwardsRefRender(args) {
+    const ref = React.useRef<HTMLInputElement>(null);
+
+    React.useLayoutEffect(() => {
+      if (ref.current) {
+        ref.current.setAttribute("data-ref-tag", ref.current.tagName);
+      }
+    }, []);
+
+    return <RadioToggle {...args} ref={ref} />;
+  },
+  play: async ({ canvasElement }) => {
+    const radio = within(canvasElement).getByRole("radio");
+
+    await expect(radio.tagName).toBe("INPUT");
+    await expect(radio).toHaveAttribute("data-ref-tag", "INPUT");
   },
 };

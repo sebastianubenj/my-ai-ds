@@ -2,9 +2,9 @@ import * as React from "react";
 
 import { cn } from "@/lib/utils";
 
-export type LabelProps = React.ComponentPropsWithoutRef<"label">;
+export type LabelProps = React.ComponentProps<"label">;
 
-export function Label({ className, ...props }: LabelProps) {
+export function Label({ className, ref, ...props }: LabelProps) {
   return (
     <label
       data-slot="label"
@@ -16,6 +16,7 @@ export function Label({ className, ...props }: LabelProps) {
         className,
       )}
       {...props}
+      ref={ref}
     />
   );
 }

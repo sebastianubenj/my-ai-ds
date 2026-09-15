@@ -179,6 +179,8 @@ The trigger shows each option's visible label, not its `value`. Labels are infer
 
 `Select` also accepts `form`, `autoComplete`, `readOnly`, `aria-label`, `aria-labelledby`, and `aria-describedby`. There are no `state`, `filled`, `focus`, `showLeadingIcon`, or `showScrollbar` props.
 
+The public `ref` resolves to the Select trigger, a `button` (`HTMLButtonElement`). Select uses the underlying Base UI trigger's ref behavior. The ref does not resolve to `SelectContent`, `SelectItem`, or an outer composition wrapper.
+
 ### SelectContent
 
 | Prop | Type | Default | Description |

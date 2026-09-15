@@ -3,7 +3,7 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 
 export interface RadioToggleProps
-  extends Omit<React.ComponentPropsWithoutRef<"input">, "type" | "size"> {
+  extends Omit<React.ComponentProps<"input">, "type" | "size"> {
   checked?: boolean;
   defaultChecked?: boolean;
   disabled?: boolean;
@@ -16,6 +16,7 @@ export function RadioToggle({
   defaultChecked,
   disabled,
   invalid = false,
+  ref,
   ...props
 }: RadioToggleProps) {
   return (
@@ -48,6 +49,7 @@ export function RadioToggle({
           aria-invalid:[border-color:var(--semantics-colors-border-destructive)]
           aria-invalid:checked:[border-color:var(--semantics-colors-border-destructive)]
           disabled:pointer-events-none disabled:cursor-default`}
+        ref={ref}
       />
       <span
         aria-hidden="true"
