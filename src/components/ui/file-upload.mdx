@@ -1,0 +1,143 @@
+import * as FileUploadStories from "./file-upload.stories";
+import { Meta, Canvas } from "@storybook/addon-docs/blocks";
+
+<Meta of={FileUploadStories} />
+
+# File Upload
+
+A dropzone for selecting a single file. It wraps a native `<input type="file">` with a dashed target, a status icon, format helper text, and a Browse button.
+
+File Upload is a form control. It is not a Field. Pair it with `Field` when a visible label or external error message is needed.
+
+## Anatomy / behavior
+
+The public surface is one component. The native file input is visually hidden and remains in the accessibility tree. The Browse button opens the system file picker. Dragging a file over the dropzone shows the drag-over appearance. Dropping a file selects it.
+
+```tsx
+<FileUpload id="attachment" aria-label="Attachment" />
+```
+
+- Empty and uploaded are not props. They follow whether a file has been selected (or a presentational `fileName`).
+- Drag-over is not a prop. It follows pointer drag events on the dropzone.
+- Focus is not a prop. It is derived from `:focus-within` when the hidden native file input or the Browse button has focus. The dropzone root is not focusable.
+- There is no remove control, progress, uploading, retry, thumbnail, or multi-file UI.
+
+## States
+
+- **Empty** — upload icon, “Choose a file or drag & drop it here”, helper text, Browse button.
+- **Uploaded** — not a prop. Selecting a file (or passing `fileName`) shows the file icon and the filename. Browse stays available so the file can be replaced.
+- **Focus** — not a public prop. Derived from `:focus-within` on the dropzone when the hidden native file input or the Browse button has focus. Pointer focus applies a 2px strong dashed border without the keyboard focus ring. The root itself is not focusable.
+- **Focus visible** — keyboard focus on those same interactive children shows that Focus stroke plus the design-system focus ring through `focus-intent`. It is not a public prop.
+- **Drag-over** — 2px strong dashed border, drag-over fill, and “Drop your file here”. Error chrome is suppressed while dragging.
+- **Error** — `error` mirrors `aria-invalid` and applies destructive border, primary text, and icon color. Helper text stays subtle. Browse stays the default outline Button.
+- **Disabled** — native `disabled`. Root opacity is 45%. The nested Button is not switched to Button’s disabled variant.
+
+### Empty
+
+<Canvas of={FileUploadStories.Empty} />
+
+### Uploaded
+
+There is no `status` prop. Pass `fileName` to show a filename before the user selects a file, or select a file through Browse or drop. The native input `value` is not controlled.
+
+<Canvas of={FileUploadStories.Uploaded} />
+
+<Canvas of={FileUploadStories.SelectFile} />
+
+<Canvas of={FileUploadStories.DropFile} />
+
+### Error
+
+Set `error` on File Upload for dropzone chrome. Set `error` on `Field` separately if an error message is needed below.
+
+<Canvas of={FileUploadStories.ErrorState} />
+
+<Canvas of={FileUploadStories.UploadedError} />
+
+### Focus
+
+<Canvas of={FileUploadStories.Focus} />
+
+### Focus Visible
+
+<Canvas of={FileUploadStories.KeyboardFocus} />
+
+### Drag over
+
+Drag a file onto the dropzone. Error styling is overridden while a file is held over the control.
+
+<Canvas of={FileUploadStories.DragOver} />
+
+<Canvas of={FileUploadStories.DragOverError} />
+
+### Disabled
+
+<Canvas of={FileUploadStories.Disabled} />
+
+<Canvas of={FileUploadStories.DisabledUploaded} />
+
+```tsx
+<FileUpload disabled aria-label="Attachment" />
+```
+
+If `disabled` and `error` are both set, the disabled appearance takes precedence.
+
+## Associating with Field
+
+File Upload does not render a Field label or Field error message. It keeps its internal format/size helper. Pair `Field.htmlFor` with File Upload’s `id`.
+
+```tsx
+<Field
+  label="Attachment"
+  htmlFor="attachment"
+  description="Attach a supporting document."
+>
+  <FileUpload id="attachment" aria-describedby="attachment-description" />
+</Field>
+```
+
+Field’s `error` styles the support line only. File Upload’s `error` styles the dropzone. Set both when the control is invalid:
+
+```tsx
+<Field
+  label="Attachment"
+  htmlFor="attachment"
+  description="Please upload a JPEG, PNG, or PDF up to 5MB."
+  error
+>
+  <FileUpload id="attachment" error aria-describedby="attachment-description" />
+</Field>
+```
+
+<Canvas of={FileUploadStories.WithField} />
+
+<Canvas of={FileUploadStories.WithFieldError} />
+
+## Accessibility
+
+- The native file input stays in the tab order and can be named with `Field` + `htmlFor` / `id`, or with `aria-label` / `aria-labelledby`.
+- Browse is a real `Button` and also opens the file picker.
+- `error` is mirrored to `aria-invalid`.
+- `disabled` disables the input and blocks Browse and drop.
+- Keyboard focus on the hidden file input or Browse shows the 2px dashed focus border. Keyboard intent also shows the focus ring. The dropzone root is not in the tab order.
+- Icons are decorative and marked `aria-hidden`.
+
+## API
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `error` | `boolean` | `false` | Marks the control as invalid. Mirrored to `aria-invalid`. |
+| `fileName` | `string` | — | Presentational filename when no file has been selected yet. |
+| `disabled` | `boolean` | — | Prevents file selection and drag-and-drop. |
+| `accept` | `string` | — | Native accepted file types. Not validated by the component. |
+| `required` | `boolean` | — | Native required attribute. |
+| `name` | `string` | — | Native input name. |
+| `id` | `string` | — | Id of the native file input. Use with `Field.htmlFor`. |
+| `onChange` | `ChangeEventHandler<input>` | — | Called when the selected file changes. |
+| `className` | `string` | — | Adds custom CSS classes to the dropzone root. |
+
+The component also supports the remaining native `<input type="file">` attributes through `React.ComponentPropsWithoutRef<"input">`, excluding `type`, `size`, and `value`.
+
+There are no `state`, `status`, `dragOver`, `showLeadingIcon`, `placeholder`, `focus`, or `focusVisible` props. Empty, uploaded, drag-over, and focus are derived from the native input, nested Browse button, and pointer events.
+
+The helper text “JPEG, PNG or PDF format, up to 5MB” is part of the visual design. The component does not enforce file type or size.

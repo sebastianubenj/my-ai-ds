@@ -7,8 +7,10 @@ import {
   Check,
   ChevronDown,
   ChevronUp,
+  File,
   Minus,
   Search,
+  Upload,
   createLucideIcon,
 } from "lucide-react";
 
@@ -43,9 +45,11 @@ export const iconRegistry = {
   check: Check,
   "chevron-down": ChevronDown,
   "chevron-up": ChevronUp,
+  file: File,
   minus: Minus,
   "resize-thumb": ResizeThumb,
   search: Search,
+  upload: Upload,
 } as const satisfies Record<string, LucideIcon>;
 
 export type IconName = keyof typeof iconRegistry;
