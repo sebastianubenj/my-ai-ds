@@ -1,0 +1,155 @@
+import * as FieldStories from "./field.stories";
+import { Meta, Canvas } from "@storybook/addon-docs/blocks";
+
+<Meta of={FieldStories} />
+
+# Field
+
+A form field wrapper that combines a label, a single form control, and an optional description or error message.
+
+Field is a composition wrapper. It is not a form control. It has no border, background, radius, or other chrome. Width follows the parent. Height follows its content.
+
+## When to use
+
+Use Field when a control needs a visible label and, optionally, supporting text or an error message.
+
+Pair it with existing controls:
+
+- `Input`
+- `Select`
+- `Textarea`
+- `CheckboxGroup`
+- `RadioGroup`
+
+Do not use Field to restyle those controls. Each control keeps its own states, including `error`, `disabled`, and interaction.
+
+## Composition
+
+The Figma control slot maps to React `children`. Pass one control. Field does not clone children or inject props.
+
+```tsx
+<Field label="Email" htmlFor="email">
+  <Input id="email" placeholder="you@example.com" />
+</Field>
+```
+
+<Canvas of={FieldStories.Default} />
+
+## Label
+
+Pass `label` to render the label row. Omit `label` to hide it. There is no `showLabel` prop.
+
+The existing `Label` component renders the name. Pass `htmlFor` on Field and the same `id` on the control so clicking the label focuses the control.
+
+```tsx
+<Field label="Email" htmlFor="email">
+  <Input id="email" />
+</Field>
+```
+
+<Canvas of={FieldStories.WithoutLabel} />
+
+## Optional fields
+
+Set `optional` to show a muted `(optional)` marker next to the label. The React default is `false`. There is no required asterisk and no `required` visual prop. HTML `required` belongs on the control.
+
+```tsx
+<Field label="Nickname" optional htmlFor="nickname">
+  <Input id="nickname" />
+</Field>
+```
+
+<Canvas of={FieldStories.Optional} />
+
+## Description vs error
+
+Field has one supporting line.
+
+- No `description` — no support text
+- `description` — muted helper text
+- `description` + `error` — destructive error text
+
+Do not pass a helper and an error at the same time. There are no separate `helperText` or `errorMessage` props.
+
+```tsx
+<Field
+  label="Email"
+  htmlFor="email"
+  description="We’ll never share your email with anyone else."
+>
+  <Input id="email" aria-describedby="email-description" />
+</Field>
+```
+
+<Canvas of={FieldStories.Description} />
+
+Field’s `error` prop styles the supporting text only. It does **not** set `error` on the child. Set both when the control should look invalid:
+
+```tsx
+<Field
+  label="Email"
+  htmlFor="email"
+  description="Please enter a valid email address."
+  error
+>
+  <Input id="email" error aria-describedby="email-description" />
+</Field>
+```
+
+<Canvas of={FieldStories.Error} />
+
+When both `htmlFor` and `description` are set, the description element’s `id` is `` `${htmlFor}-description` ``. Pass that same value as `aria-describedby` on the control. Field does not inject `aria-describedby` into children.
+
+## Examples
+
+### Input
+
+<Canvas of={FieldStories.WithInput} />
+
+### Textarea
+
+<Canvas of={FieldStories.WithTextarea} />
+
+### Select
+
+<Canvas of={FieldStories.WithSelect} />
+
+### CheckboxGroup
+
+CheckboxGroup and RadioGroup contain multiple controls, so `htmlFor` is usually omitted. The Field label is a visible group heading. Each item keeps its own accessible name.
+
+<Canvas of={FieldStories.WithCheckboxGroup} />
+
+### RadioGroup
+
+<Canvas of={FieldStories.WithRadioGroup} />
+
+### Multiple fields
+
+<Canvas of={FieldStories.Composition} />
+
+## Accessibility
+
+- Field renders a `<div>`. It does not add a Field-level ARIA role.
+- The label is the existing `Label` component. Pair `htmlFor` with the control’s `id`.
+- `(optional)` is rendered inside the label so it is part of the accessible name.
+- `disabled`, `required`, `aria-invalid`, and the control’s visual error state belong on the child.
+- Field does not clone children or set `error` / `id` / `aria-describedby` on them.
+- Wire `aria-describedby` on the control when a description is present, using `` `${htmlFor}-description` ``.
+- For CheckboxGroup and RadioGroup, prefer the Field label as a visual heading and keep item-level names on each control.
+
+## API
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `children` | `React.ReactNode` | — | The form control. |
+| `label` | `React.ReactNode` | — | Visible field name. Omit to hide the label row. |
+| `optional` | `boolean` | `false` | Shows an “(optional)” marker next to the label. |
+| `description` | `React.ReactNode` | — | Supporting helper or error copy. |
+| `error` | `boolean` | `false` | Styles the description as an error. Does not set `error` on the child. |
+| `htmlFor` | `string` | — | Associates the label with a control. Match this to the control’s `id`. |
+| `className` | `string` | — | Adds custom CSS classes to the Field root. |
+
+The component also supports the standard HTML `<div>` attributes through `React.ComponentPropsWithoutRef<"div">`. Native `id` belongs to the Field root, not the nested control.
+
+There are no `supportMessage`, `showLabel`, `control`, `required`, `disabled`, `value`, `placeholder`, `size`, `state`, `variant`, `helperText`, or `errorMessage` props.
