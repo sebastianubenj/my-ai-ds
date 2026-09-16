@@ -18,13 +18,13 @@ const metaClassName = `m-0 flex flex-wrap gap-x-(--primitives-spacing-4) gap-y-(
   text-(length:--semantics-typography-body-body-sm-font-size)
   leading-(--semantics-typography-body-body-sm-lh-normal)
   tracking-(--semantics-typography-body-body-sm-tracking-tight)
-  [color:var(--semantics-colors-foreground-accent)]`;
+  [color:var(--semantics-colors-foreground-subtle)]`;
 
 const noteClassName = `m-0 font-sans [font-weight:var(--semantics-typography-body-font-weight)]
   text-(length:--semantics-typography-body-body-sm-font-size)
   leading-(--semantics-typography-body-body-sm-lh-normal)
   tracking-(--semantics-typography-body-body-sm-tracking-tight)
-  [color:var(--semantics-colors-foreground-accent)]`;
+  [color:var(--semantics-colors-foreground-subtle)]`;
 
 const surfaceClassName = `box-border size-(--primitives-spacing-20) shrink-0
   rounded-(--primitives-radius-rounded-14)
@@ -38,7 +38,7 @@ const stageClassName = `flex items-center justify-center
 
 function Status({ used }: { used: boolean }) {
   return (
-    <span className={`${captionClassName} [color:var(--semantics-colors-foreground-accent)]`}>
+    <span className={`${captionClassName} [color:var(--semantics-colors-foreground-subtle)]`}>
       {used ? "Used" : "Unused"}
     </span>
   );

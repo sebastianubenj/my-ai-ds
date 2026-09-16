@@ -53,7 +53,7 @@ export function TypographySpecimen({
           text-(length:--semantics-typography-body-body-sm-font-size)
           leading-(--semantics-typography-body-body-sm-lh-normal)
           tracking-(--semantics-typography-body-body-sm-tracking-tight)
-          [color:var(--semantics-colors-foreground-accent)]`}
+          [color:var(--semantics-colors-foreground-subtle)]`}
       >
         {meta.map((item) => (
           <div key={item.label} className="flex gap-(--primitives-spacing-1)">

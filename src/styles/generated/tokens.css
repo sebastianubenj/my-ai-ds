@@ -148,7 +148,7 @@
   --primitives-colors-neutral-200: #e5e5e5ff;
   --primitives-colors-neutral-300: #d4d4d4ff;
   --primitives-colors-neutral-400: #a3a3a3ff;
-  --primitives-colors-neutral-500: #737373ff;
+  --primitives-colors-neutral-500: #767676ff;
   --primitives-colors-neutral-600: #525252ff;
   --primitives-colors-neutral-700: #404040ff;
   --primitives-colors-neutral-800: #262626ff;
@@ -302,9 +302,8 @@
   --semantics-colors-background-info: var(--primitives-colors-sky-600);
   --semantics-colors-foreground-primary: var(--primitives-colors-white);
   --semantics-colors-foreground-default: var(--primitives-colors-neutral-900);
-  --semantics-colors-foreground-subtle: var(--primitives-colors-neutral-400);
+  --semantics-colors-foreground-subtle: var(--primitives-colors-neutral-500);
   --semantics-colors-foreground-destructive: var(--primitives-colors-red-500);
-  --semantics-colors-foreground-accent: var(--primitives-colors-neutral-500);
   --semantics-colors-border-strong: var(--primitives-colors-neutral-900);
   --semantics-colors-border-ring-focus: var(--primitives-colors-blue-500);
   --semantics-colors-border-default: var(--primitives-colors-neutral-200);

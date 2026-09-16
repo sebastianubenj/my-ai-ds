@@ -11,7 +11,7 @@ const metaClassName = `m-0 flex flex-wrap gap-x-(--primitives-spacing-4) gap-y-(
   text-(length:--semantics-typography-body-body-sm-font-size)
   leading-(--semantics-typography-body-body-sm-lh-normal)
   tracking-(--semantics-typography-body-body-sm-tracking-tight)
-  [color:var(--semantics-colors-foreground-accent)]`;
+  [color:var(--semantics-colors-foreground-subtle)]`;
 
 function TokenMeta({
   figmaName,
@@ -25,7 +25,7 @@ function TokenMeta({
     <div className="flex min-w-0 flex-1 flex-col gap-(--primitives-spacing-2)">
       <div className="flex min-w-0 items-baseline justify-between gap-(--primitives-spacing-3)">
         <figcaption className={captionClassName}>{figmaName}</figcaption>
-        <span className={`${captionClassName} [color:var(--semantics-colors-foreground-accent)]`}>
+        <span className={`${captionClassName} [color:var(--semantics-colors-foreground-subtle)]`}>
           {status}
         </span>
       </div>

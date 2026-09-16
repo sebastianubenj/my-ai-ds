@@ -9,7 +9,7 @@ const metaClassName = `m-0 flex flex-col gap-(--primitives-spacing-1)
   text-(length:--semantics-typography-body-body-sm-font-size)
   leading-(--semantics-typography-body-body-sm-lh-normal)
   tracking-(--semantics-typography-body-body-sm-tracking-tight)
-  [color:var(--semantics-colors-foreground-accent)]`;
+  [color:var(--semantics-colors-foreground-subtle)]`;
 
 const swatchClassName = `box-border w-full shrink-0
   border-solid border-(length:--primitives-border-width-border)
