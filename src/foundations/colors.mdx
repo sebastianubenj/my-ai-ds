@@ -1,0 +1,66 @@
+import * as ColorStories from "./colors.stories";
+import { Meta, Canvas } from "@storybook/addon-docs/blocks";
+
+<Meta of={ColorStories} />
+
+# Colors
+
+Primitive palette → semantic roles → components. Specimens consume the existing CSS variables. This page is documentation, not a public Color component.
+
+Components consume **semantic** colors. Primitive colors are the palette those roles alias.
+
+The design system currently documents a **single light theme**. Figma collections have one mode, and semantic color tokens have no dark variants.
+
+## Semantic
+
+### Background
+
+<Canvas of={ColorStories.Background} />
+
+### Foreground
+
+<Canvas of={ColorStories.Foreground} />
+
+### Border
+
+<Canvas of={ColorStories.Border} />
+
+### Interaction
+
+<Canvas of={ColorStories.Interaction} />
+
+### Other
+
+<Canvas of={ColorStories.Other} />
+
+## Primitive
+
+The palette. Blue currently contains only `500`. Unused steps are still valid tokens.
+
+### Neutral
+
+White, black, and the 50–950 scale.
+
+<Canvas of={ColorStories.Neutral} />
+
+### Red
+
+<Canvas of={ColorStories.Red} />
+
+### Amber
+
+<Canvas of={ColorStories.Amber} />
+
+### Emerald
+
+<Canvas of={ColorStories.Emerald} />
+
+### Sky
+
+<Canvas of={ColorStories.Sky} />
+
+### Blue
+
+A single token. There is no blue 50–950 scale.
+
+<Canvas of={ColorStories.Blue} />
