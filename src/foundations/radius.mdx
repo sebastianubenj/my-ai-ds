@@ -1,0 +1,20 @@
+import * as RadiusStories from "./radius.stories";
+import { Meta, Canvas } from "@storybook/addon-docs/blocks";
+
+<Meta of={RadiusStories} />
+
+# Radius
+
+The design system's corner-radius scale. Specimens consume the existing `primitives.radius.*` CSS variables. This page is documentation, not a public Radius component.
+
+Radius is a **primitive-only** foundation. There is no semantic radius layer. Named steps such as `rounded-sm`, `rounded-lg`, and `rounded-full` coexist with numeric steps such as `rounded-10`, `rounded-14`, `rounded-18`, and `rounded-20`. All values are raw primitives.
+
+The Figma audit shows this scale bound heavily across UI components. Focus Visible frames also use `rounded-18`, `rounded-20`, and `rounded-lg`. Focus ring width is a separate primitive group and is not part of this Foundation.
+
+This page documents the token scale, not component-specific radius decisions. Unused steps are still valid published primitives.
+
+## Scale
+
+All 14 primitive radius tokens, ordered by pixel value.
+
+<Canvas of={RadiusStories.Scale} />
