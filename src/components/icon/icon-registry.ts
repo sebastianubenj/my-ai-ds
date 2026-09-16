@@ -27,6 +27,7 @@ const ResizeThumb = createLucideIcon("resize-thumb", [
       fill: "currentColor",
       stroke: "none",
       transform: "scale(1.5)",
+      key: "resize-thumb",
     },
   ],
 ]);

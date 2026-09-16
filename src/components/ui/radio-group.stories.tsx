@@ -61,16 +61,16 @@ export const Interactive: Story = {
 export const Unchecked: Story = {
   render: () => (
     <RadioGroup>
-      <RadioItem name="unchecked" value="one" checked={false}>
+      <RadioItem name="unchecked" value="one">
         Label
       </RadioItem>
-      <RadioItem name="unchecked" value="two" checked={false}>
+      <RadioItem name="unchecked" value="two">
         Label
       </RadioItem>
-      <RadioItem name="unchecked" value="three" checked={false}>
+      <RadioItem name="unchecked" value="three">
         Label
       </RadioItem>
-      <RadioItem name="unchecked" value="four" checked={false}>
+      <RadioItem name="unchecked" value="four">
         Label
       </RadioItem>
     </RadioGroup>
@@ -104,16 +104,16 @@ export const Composition: Story = {
 export const Disabled: Story = {
   render: () => (
     <RadioGroup>
-      <RadioItem name="disabled" value="one" checked={false} disabled>
+      <RadioItem name="disabled" value="one" disabled>
         Label
       </RadioItem>
-      <RadioItem name="disabled" value="two" checked={false} disabled>
+      <RadioItem name="disabled" value="two" disabled>
         Label
       </RadioItem>
-      <RadioItem name="disabled" value="three" checked={false} disabled>
+      <RadioItem name="disabled" value="three" disabled>
         Label
       </RadioItem>
-      <RadioItem name="disabled" value="four" checked={false} disabled>
+      <RadioItem name="disabled" value="four" disabled>
         Label
       </RadioItem>
     </RadioGroup>
@@ -133,16 +133,16 @@ export const Disabled: Story = {
 export const Invalid: Story = {
   render: () => (
     <RadioGroup>
-      <RadioItem name="invalid" value="one" checked={false} invalid>
+      <RadioItem name="invalid" value="one" invalid>
         Label
       </RadioItem>
-      <RadioItem name="invalid" value="two" checked={false} invalid>
+      <RadioItem name="invalid" value="two" invalid>
         Label
       </RadioItem>
-      <RadioItem name="invalid" value="three" checked={false} invalid>
+      <RadioItem name="invalid" value="three" invalid>
         Label
       </RadioItem>
-      <RadioItem name="invalid" value="four" checked={false} invalid>
+      <RadioItem name="invalid" value="four" invalid>
         Label
       </RadioItem>
     </RadioGroup>

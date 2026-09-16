@@ -78,13 +78,13 @@ export const Interactive: Story = {
 
 export const Unchecked: Story = {
   args: {
-    checked: false,
+    defaultChecked: false,
   },
 };
 
 export const Checked: Story = {
   args: {
-    checked: true,
+    defaultChecked: true,
   },
 };
 
@@ -94,7 +94,7 @@ export const Checked: Story = {
 
 export const UncheckedInvalid: Story = {
   args: {
-    checked: false,
+    defaultChecked: false,
     invalid: true,
   },
   play: async ({ canvasElement }) => {
@@ -107,7 +107,7 @@ export const UncheckedInvalid: Story = {
 
 export const CheckedInvalid: Story = {
   args: {
-    checked: true,
+    defaultChecked: true,
     invalid: true,
   },
 };
@@ -118,7 +118,7 @@ export const CheckedInvalid: Story = {
 
 export const DisabledUnchecked: Story = {
   args: {
-    checked: false,
+    defaultChecked: false,
     disabled: true,
   },
   play: async ({ canvasElement }) => {
@@ -131,7 +131,7 @@ export const DisabledUnchecked: Story = {
 
 export const DisabledChecked: Story = {
   args: {
-    checked: true,
+    defaultChecked: true,
     disabled: true,
   },
 };
@@ -143,14 +143,14 @@ export const DisabledChecked: Story = {
 export const CardUnchecked: Story = {
   args: {
     variant: "card",
-    checked: false,
+    defaultChecked: false,
   },
 };
 
 export const CardChecked: Story = {
   args: {
     variant: "card",
-    checked: true,
+    defaultChecked: true,
   },
 };
 
@@ -161,7 +161,7 @@ export const CardChecked: Story = {
 export const CardUncheckedInvalid: Story = {
   args: {
     variant: "card",
-    checked: false,
+    defaultChecked: false,
     invalid: true,
   },
 };
@@ -169,7 +169,7 @@ export const CardUncheckedInvalid: Story = {
 export const CardCheckedInvalid: Story = {
   args: {
     variant: "card",
-    checked: true,
+    defaultChecked: true,
     invalid: true,
   },
 };
@@ -181,7 +181,7 @@ export const CardCheckedInvalid: Story = {
 export const CardDisabledUnchecked: Story = {
   args: {
     variant: "card",
-    checked: false,
+    defaultChecked: false,
     disabled: true,
   },
 };
@@ -189,7 +189,7 @@ export const CardDisabledUnchecked: Story = {
 export const CardDisabledChecked: Story = {
   args: {
     variant: "card",
-    checked: true,
+    defaultChecked: true,
     disabled: true,
   },
 };

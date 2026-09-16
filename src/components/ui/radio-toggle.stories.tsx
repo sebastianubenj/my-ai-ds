@@ -56,13 +56,13 @@ export const Interactive: Story = {
 
 export const Unchecked: Story = {
   args: {
-    checked: false,
+    defaultChecked: false,
   },
 };
 
 export const UncheckedInvalid: Story = {
   args: {
-    checked: false,
+    defaultChecked: false,
     invalid: true,
   },
   play: async ({ canvasElement }) => {
@@ -79,13 +79,13 @@ export const UncheckedInvalid: Story = {
 
 export const Checked: Story = {
   args: {
-    checked: true,
+    defaultChecked: true,
   },
 };
 
 export const CheckedInvalid: Story = {
   args: {
-    checked: true,
+    defaultChecked: true,
     invalid: true,
   },
 };
@@ -96,7 +96,7 @@ export const CheckedInvalid: Story = {
 
 export const DisabledUnchecked: Story = {
   args: {
-    checked: false,
+    defaultChecked: false,
     disabled: true,
   },
   play: async ({ canvasElement }) => {
@@ -109,7 +109,7 @@ export const DisabledUnchecked: Story = {
 
 export const DisabledChecked: Story = {
   args: {
-    checked: true,
+    defaultChecked: true,
     disabled: true,
   },
 };
