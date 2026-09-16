@@ -304,6 +304,7 @@
   --semantics-colors-foreground-default: var(--primitives-colors-neutral-900);
   --semantics-colors-foreground-subtle: var(--primitives-colors-neutral-400);
   --semantics-colors-foreground-destructive: var(--primitives-colors-red-500);
+  --semantics-colors-foreground-accent: var(--primitives-colors-neutral-500);
   --semantics-colors-border-strong: var(--primitives-colors-neutral-900);
   --semantics-colors-border-ring-focus: var(--primitives-colors-blue-500);
   --semantics-colors-border-default: var(--primitives-colors-neutral-200);

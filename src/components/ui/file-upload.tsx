@@ -237,7 +237,7 @@ export function FileUpload({
           text-(length:--semantics-typography-body-body-sm-font-size)
           leading-(--semantics-typography-body-body-sm-lh-normal)
           tracking-(--semantics-typography-body-body-sm-tracking-tight)
-          [color:var(--semantics-colors-foreground-subtle)]`}
+          [color:var(--semantics-colors-foreground-accent)]`}
       >
         {HELPER_TEXT}
       </p>
