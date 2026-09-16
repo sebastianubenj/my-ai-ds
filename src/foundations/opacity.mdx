@@ -1,0 +1,54 @@
+import * as OpacityStories from "./opacity.stories";
+import { Meta, Canvas } from "@storybook/addon-docs/blocks";
+
+<Meta of={OpacityStories} />
+
+# Opacity
+
+The design system's node-opacity scale. Specimens consume the existing `primitives.opacity.*` CSS variables. This page is documentation, not a public Opacity component.
+
+Opacity is a **primitive-only** foundation under `Primitives → Opacity`. There is no semantic opacity layer. Do not create one. Components consume these tokens directly for whole-control opacity, primarily in disabled states.
+
+Figma values are percentages (0–100). Generated CSS is unitless (`45` → `0.45`) through the existing token pipeline. Names follow the Figma **variable names** (`opacity-15`, `opacity-35`, `opacity-45`, `opacity-55`). Do not use Figma `codeSyntax.WEB` as the token name.
+
+This page documents the token scale, not component-specific opacity decisions. Unused steps are still valid published primitives. Unused means no Figma binding, not that the token is deprecated.
+
+## Opacity vs color alpha
+
+This scale is **node opacity**: it fades an entire layer (fill, border, text, and icon together). It is not the same as:
+
+- semantic **color** tokens that already include alpha, such as interaction or destructive fills
+- **shadow** color primitives that include alpha
+
+Those belong to Colors and Shadows. They are not opacity tokens.
+
+## Disabled states
+
+Figma currently binds this scale to **disabled** component states. These are component-state recipes, not semantic opacity tokens. Component demonstrations belong on the component docs, not this Foundation.
+
+| Component/state | Figma opacity |
+| --- | ---: |
+| Button primary / outline | 15% |
+| Button ghost / secondary | 55% |
+| Button destructive | 25% |
+| Checkbox / Radio item | 45% |
+| Checkbox / Radio toggle — unchecked | 45% |
+| Checkbox / Radio toggle — checked / indeterminate | 15% |
+| Input | 45% |
+| Textarea | 45% |
+| Select / SelectItem | 45% |
+| File Upload | 45% |
+
+`opacity-35` is not a general disabled recipe. Figma has two nested instance overrides at `opacity-35` on the checked toggle inside disabled Checkbox/Radio **card** variants. Those sit on a parent already at `opacity-45` and are not a third disabled token.
+
+## Implementation note
+
+Some current React components consume `opacity-10`, `opacity-40`, and `opacity-50`, while Figma component bindings use `opacity-15`, `opacity-45`, and `opacity-55`. That discrepancy follows incorrect Figma `codeSyntax.WEB` labels (`opacity-15` labeled `opacity-10`, and the same pattern for 35/45/55). React and Figma are not currently identical. This Foundation documents the token system and Figma usage; it does not change components.
+
+Used/Unused on the scale below follows **Figma bindings**, not current React consumption.
+
+## Scale
+
+All 18 primitive opacity tokens, ordered by value. Specimens apply `opacity: var(--primitives-opacity-opacity-*)` over a checkerboard so transparency is visible.
+
+<Canvas of={OpacityStories.Scale} />
