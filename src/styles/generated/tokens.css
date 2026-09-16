@@ -159,7 +159,7 @@
   --primitives-colors-red-200: #ff939bff;
   --primitives-colors-red-300: #ff5b69ff;
   --primitives-colors-red-400: #ff0031ff;
-  --primitives-colors-red-500: #e7000bff;
+  --primitives-colors-red-500: #d60000ff;
   --primitives-colors-red-600: #ca0000ff;
   --primitives-colors-red-700: #980000ff;
   --primitives-colors-red-800: #650000ff;
@@ -245,10 +245,10 @@
   --primitives-shadows-color-transparent: #00000000;
   --primitives-shadows-color-black-10: #0000001a;
   --primitives-shadows-color-black-5: #0000000d;
-  --semantics-colors-background-destructive: #e7000b26;
+  --semantics-colors-background-destructive: #d6000026;
   --semantics-colors-interaction-primary-hover: #171717e6;
-  --semantics-colors-interaction-destructive-hover: #e7000b40;
-  --semantics-colors-interaction-destructive-subtle-hover: #e7000b1a;
+  --semantics-colors-interaction-destructive-hover: #d6000040;
+  --semantics-colors-interaction-destructive-subtle-hover: #d600001a;
   --semantics-colors-interaction-secondary-hover: #f5f5f5ff;
   --semantics-colors-interaction-file-upload-drag-over: #0071e31a;
   --semantics-typography-heading-heading-sm-lh-tight: 1.25;
@@ -303,7 +303,7 @@
   --semantics-colors-foreground-primary: var(--primitives-colors-white);
   --semantics-colors-foreground-default: var(--primitives-colors-neutral-900);
   --semantics-colors-foreground-subtle: var(--primitives-colors-neutral-500);
-  --semantics-colors-foreground-destructive: var(--primitives-colors-red-500);
+  --semantics-colors-foreground-destructive: var(--primitives-colors-red-600);
   --semantics-colors-border-strong: var(--primitives-colors-neutral-900);
   --semantics-colors-border-ring-focus: var(--primitives-colors-blue-500);
   --semantics-colors-border-default: var(--primitives-colors-neutral-200);
