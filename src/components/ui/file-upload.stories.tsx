@@ -147,8 +147,8 @@ export const DragOver: Story = {
     const dropzone = getDropzone(canvasElement);
 
     dropzone.dispatchEvent(new DragEvent("dragenter", { bubbles: true, cancelable: true }));
+    await expect(await within(canvasElement).findByText("Drop your file here")).toBeInTheDocument();
     await expect(dropzone).toHaveAttribute("data-dragging", "true");
-    await expect(within(canvasElement).getByText("Drop your file here")).toBeInTheDocument();
   },
 };
 
@@ -160,8 +160,8 @@ export const DragOverError: Story = {
     const dropzone = getDropzone(canvasElement);
 
     dropzone.dispatchEvent(new DragEvent("dragenter", { bubbles: true, cancelable: true }));
+    await expect(await within(canvasElement).findByText("Drop your file here")).toBeInTheDocument();
     await expect(dropzone).toHaveAttribute("data-dragging", "true");
-    await expect(within(canvasElement).getByText("Drop your file here")).toBeInTheDocument();
   },
 };
 
@@ -208,11 +208,18 @@ export const DropFile: Story = {
     const dataTransfer = new DataTransfer();
     dataTransfer.items.add(file);
 
-    dropzone.dispatchEvent(
-      new DragEvent("drop", { bubbles: true, cancelable: true, dataTransfer }),
-    );
+    const dropEvent = new DragEvent("drop", {
+      bubbles: true,
+      cancelable: true,
+      dataTransfer,
+    });
+    // Chromium ignores constructor `dataTransfer` on synthetic DragEvents.
+    Object.defineProperty(dropEvent, "dataTransfer", {
+      value: dataTransfer,
+    });
+    dropzone.dispatchEvent(dropEvent);
 
-    await expect(canvas.getByText("notes.pdf")).toBeInTheDocument();
+    await expect(await canvas.findByText("notes.pdf")).toBeInTheDocument();
   },
 };
 
