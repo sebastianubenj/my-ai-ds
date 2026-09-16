@@ -1,0 +1,74 @@
+import * as IconographyStories from "./iconography.stories";
+import { Meta, Canvas } from "@storybook/addon-docs/blocks";
+
+<Meta of={IconographyStories} />
+
+# Iconography
+
+The design system's icon family, size usage, stroke relationship, and color inheritance. This page is documentation, not a public Iconography component.
+
+Iconography is **intentionally lightweight**. There is no icon-size, icon-stroke, or icon-color token scale. Specimens render through the existing `Icon` component.
+
+> Iconography documents system-level rules; the Icon component owns the React API.
+
+Do not treat this page as an icon catalog, a registry listing, or a props reference.
+
+## Icon Family
+
+The production family is **Lucide** (`lucide-react`). Figma has a dedicated Icons page with about 1531 Lucide components, named `Lucide Icons / {kebab-name}`, all mastered at 16×16. There is no Figma component set for the library.
+
+Figma also has an `Icon Placeholder` that can swap Lucide, Huge, Tabler, Phosphor, and Remix. React currently ships **Lucide only** through a curated `Icon` registry. Huge, Tabler, Phosphor, and Remix are not production React implementations.
+
+<Canvas of={IconographyStories.IconFamily} />
+
+## Size Usage
+
+Observed sizes are **16px** and **20px**. They are `Icon` pixel props, not icon-size tokens, and not aliases of spacing tokens. They happen to match `primitives.spacing.4` (16px) and `primitives.spacing.5` (20px) numerically.
+
+| Size | Used for |
+| --- | --- |
+| 16px | Figma Lucide masters, Checkbox icons, Button small / extra-small |
+| 20px | Input, Select, File Upload, Textarea resize thumb, Button medium / large |
+
+Figma also has a 24×24 `Utility / Component Icon` wrapper. 24px is not an established React Icon size.
+
+<Canvas of={IconographyStories.SizeUsage} />
+
+## Stroke
+
+Figma Lucide vectors bind stroke width to `border-width/border-1,33` (1.33px) at the 16px master. That token belongs to the **Borders** foundation. It is not an icon-specific stroke token.
+
+React uses Lucide's default `strokeWidth={2}` on a 24×24 viewBox:
+
+- `2 × 16 / 24 ≈ 1.33px`
+- `2 × 20 / 24 ≈ 1.67px`
+
+That is why the React stroke matches Figma at 16px and scales at 20px. `resize-thumb` is a filled exception; its path does not use the Lucide stroke as the visible construction.
+
+<Canvas of={IconographyStories.Stroke} />
+
+## Color
+
+Figma icons bind stroke and fill to `semantics.colors.foreground.default`. React icons inherit `currentColor`. Consumers set color through surrounding CSS. There are no icon-color tokens. Semantic color stays in the **Colors** foundation.
+
+<Canvas of={IconographyStories.Color} />
+
+## Figma ↔ Code
+
+```text
+Figma:
+Icon Placeholder
+→ library swap
+→ Lucide component
+
+React:
+<Icon name="…" />
+→ curated registry
+→ lucide-react
+```
+
+Naming is Lucide kebab on both sides (`Lucide Icons / arrow-left` → `arrow-left`). `resize-thumb` is a project-specific filled exception.
+
+Figma contains about 1531 Lucide components. React currently exposes 11 registry names. That is a curated Phase 1 subset, not a requirement to import the full Figma catalog, and unused Figma icons have not been pixel-verified. Semantic `icon-library/*` booleans control Figma placeholder visibility only; React does not consume them.
+
+<Canvas of={IconographyStories.FigmaToCode} />
