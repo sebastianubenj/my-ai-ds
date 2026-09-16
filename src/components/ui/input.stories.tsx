@@ -3,6 +3,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, userEvent, within } from "storybook/test";
 
 import { Input } from "./input";
+import { Label } from "./label";
 
 const iconOptions = ["arrow-left", "arrow-right", "activity", "search"] as const;
 
@@ -105,8 +106,15 @@ export const WithLeadingAndTrailingIcon: Story = {
 
 export const Filled: Story = {
   args: {
+    id: "input-filled",
     defaultValue: "Hello world",
   },
+  render: (args) => (
+    <div className="flex w-full flex-col gap-(--primitives-spacing-2)">
+      <Label htmlFor="input-filled">Example</Label>
+      <Input {...args} className="w-80" />
+    </div>
+  ),
 };
 
 /* -------------------------------------------------------------------------- */
@@ -129,9 +137,16 @@ export const ErrorState: Story = {
 
 export const ErrorFilled: Story = {
   args: {
+    id: "input-error-filled",
     error: true,
     defaultValue: "Invalid value",
   },
+  render: (args) => (
+    <div className="flex w-full flex-col gap-(--primitives-spacing-2)">
+      <Label htmlFor="input-error-filled">Example</Label>
+      <Input {...args} className="w-80" />
+    </div>
+  ),
 };
 
 /* -------------------------------------------------------------------------- */
