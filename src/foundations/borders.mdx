@@ -1,0 +1,40 @@
+import * as BordersStories from "./borders.stories";
+import { Meta, Canvas } from "@storybook/addon-docs/blocks";
+
+<Meta of={BordersStories} />
+
+# Borders
+
+The design system's stroke-width and focus-ring-width scales. Specimens consume the existing `primitives.border-width.*` and `primitives.ring-focus-width.*` CSS variables. This page is documentation, not a public Borders component.
+
+Widths are **primitive-only**. There is no semantic border-width or ring-width layer. Semantic border **colors** belong to the Colors Foundation.
+
+Fractional-looking names use Figma's comma notation. For example, `border-width/border-1,33` is 1.33px (`--primitives-border-width-border-1-33`).
+
+This page documents the token scale, not component-specific border decisions. Unused steps are still valid published primitives. Unused means no Figma binding, not that the token is deprecated.
+
+## Stroke Widths
+
+Default UI chrome uses `border` (1px). Stronger control states such as focus, drag-over, and open use `border-2` (2px). `border-1,33`, `border-1,5`, and `border-1,66` are primarily Figma Lucide/vector stroke widths, not container borders. `border-0,5` currently has no Figma bindings.
+
+`border-2` is a control stroke. It is not the focus ring. `ring-2` is a different token even though both resolve to 2px.
+
+<Canvas of={BordersStories.StrokeWidths} />
+
+## Focus Ring Widths
+
+Focus ring width is a separate primitive scale used by Focus Visible frames. The currently bound step is `ring-2` (2px). `ring-0`, `ring-1`, `ring-3`, and `ring-4` have no Figma bindings.
+
+The Focus Visible recipe combines existing tokens. It is not a new token:
+
+- width: `ring-focus-width/ring-2`
+- color: `semantics.colors.border.ring-focus`
+- offset: `primitives.spacing.0,75` (3px)
+- radius: follows the control (`rounded-18` is shown here as the text-control example)
+
+The implementation has two focus patterns. Do not treat them as a third token layer:
+
+1. Compact controls (Button, Checkbox, Radio) use native `:focus-visible`.
+2. Text-like controls (Input, Textarea, Select, File Upload) use the `focus-intent` / `intent-keyboard` pattern: a stronger `border-2` stroke, plus a keyboard-only `ring-2` outline.
+
+<Canvas of={BordersStories.FocusRingWidths} />
