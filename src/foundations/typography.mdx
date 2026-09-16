@@ -1,0 +1,44 @@
+import * as TypographyStories from "./typography.stories";
+import { Meta, Canvas } from "@storybook/addon-docs/blocks";
+
+<Meta of={TypographyStories} />
+
+# Typography
+
+The design system's type styles. Specimens consume the canonical `semantics.typography.*` tokens. This page is documentation, not a public Typography component.
+
+## Display
+
+Hero and marketing scale. Semi Bold (600), tighter line height.
+
+<Canvas of={TypographyStories.Display} />
+
+## Heading
+
+Page and section titles. Semi Bold (600), tight line height.
+
+<Canvas of={TypographyStories.Heading} />
+
+## Body
+
+Running text. Regular (400), normal line height.
+
+<Canvas of={TypographyStories.Body} />
+
+## Label
+
+UI labels. Medium (500), snug line height.
+
+<Canvas of={TypographyStories.Label} />
+
+## Button
+
+Control labels. Medium (500), snug line height, normal tracking.
+
+<Canvas of={TypographyStories.Button} />
+
+## Caption
+
+Fine print. Regular (400), snug line height. A single caption style.
+
+<Canvas of={TypographyStories.Caption} />
