@@ -261,13 +261,17 @@ export const PrimaryLoading: Story = {
     variant: "primary",
     size: "md",
     loading: true,
+    leadingIcon: "arrow-left",
     children: "Log in",
   },
   play: async ({ canvasElement }) => {
     const button = within(canvasElement).getByRole("button", { name: "Log in" });
+    const svgs = button.querySelectorAll("svg");
 
     await expectLoadingButton(button, { name: "Log in" });
     await expect(button).toHaveTextContent("Log in");
+    await expect(svgs).toHaveLength(1);
+    await expect(svgs[0]).toHaveClass("animate-spin");
   },
 };
 
