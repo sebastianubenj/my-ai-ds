@@ -13,14 +13,16 @@ const ICON_SIZE = 20;
 
 export interface InputProps
   extends Omit<React.ComponentProps<"input">, "type" | "size"> {
-  /** Native input type. Both render identically except for browser masking behavior. */
-  type?: "text" | "password";
+  /** Native input type. All types share the same chrome; native type behavior comes from the browser. */
+  type?: "text" | "password" | "email";
   /** Marks the input as invalid. Mirrored to `aria-invalid` for styling and accessibility. */
   error?: boolean;
   /** Icon rendered before the value/placeholder. Purely decorative. */
   leadingIcon?: IconName;
-  /** Icon rendered after the value/placeholder. Purely decorative. */
+  /** Icon rendered after the value/placeholder. Purely decorative. Ignored when `trailing` is set. */
   trailingIcon?: IconName;
+  /** Interactive or custom content rendered after the value. The consumer owns the control. */
+  trailing?: React.ReactNode;
 }
 
 export function Input({
@@ -29,10 +31,15 @@ export function Input({
   error = false,
   leadingIcon,
   trailingIcon,
+  trailing,
   disabled,
   ref,
   ...props
 }: InputProps) {
+  if (import.meta.env.DEV && trailing != null && trailingIcon) {
+    console.warn("Input: `trailing` takes precedence over `trailingIcon`. Do not pass both.");
+  }
+
   return (
     <div
       className={cn(
@@ -40,12 +47,12 @@ export function Input({
          h-(--primitives-spacing-11) rounded-(--primitives-radius-rounded-14)
          border border-input bg-background px-(--primitives-spacing-2-5)
          has-aria-invalid:[border-color:var(--semantics-colors-border-destructive)]
-         has-focus-within:border-(length:--primitives-border-width-border-2)
-         has-focus-within:px-(--primitives-spacing-2-25)
-         has-focus-within:[border-color:var(--semantics-colors-border-strong)]
-         has-aria-invalid:has-focus-within:[border-color:var(--semantics-colors-border-destructive)]
-         intent-keyboard:has-focus-within:[outline:var(--primitives-ring-focus-width-ring-2)_solid_var(--semantics-colors-border-ring-focus)]
-         intent-keyboard:has-focus-within:[outline-offset:var(--primitives-spacing-0-75)]
+         has-[[data-slot=input]:focus]:border-(length:--primitives-border-width-border-2)
+         has-[[data-slot=input]:focus]:px-(--primitives-spacing-2-25)
+         has-[[data-slot=input]:focus]:[border-color:var(--semantics-colors-border-strong)]
+         has-aria-invalid:has-[[data-slot=input]:focus]:[border-color:var(--semantics-colors-border-destructive)]
+         intent-keyboard:has-[[data-slot=input]:focus]:[outline:var(--primitives-ring-focus-width-ring-2)_solid_var(--semantics-colors-border-ring-focus)]
+         intent-keyboard:has-[[data-slot=input]:focus]:[outline-offset:var(--primitives-spacing-0-75)]
          has-disabled:opacity-(--primitives-opacity-opacity-40)
          [&_svg]:pointer-events-none [&_svg]:shrink-0
          [&_svg]:[color:var(--semantics-colors-foreground-subtle)]
@@ -70,7 +77,13 @@ export function Input({
         {...props}
         ref={ref}
       />
-      {trailingIcon && <Icon name={trailingIcon} size={ICON_SIZE} aria-hidden="true" />}
+      {trailing ? (
+        <span className={cn("flex shrink-0 items-center", disabled && "pointer-events-none")}>
+          {trailing}
+        </span>
+      ) : (
+        trailingIcon && <Icon name={trailingIcon} size={ICON_SIZE} aria-hidden="true" />
+      )}
     </div>
   );
 }

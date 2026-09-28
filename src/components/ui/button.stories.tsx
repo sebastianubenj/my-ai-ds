@@ -51,6 +51,11 @@ const meta = {
       control: "boolean",
       description: "Prevents interaction with the button.",
     },
+    loading: {
+      control: "boolean",
+      description:
+      "Shows a leading loader indicator and prevents interaction while preserving the default loading appearance.",
+    },
     "aria-label": {
       control: "text",
       description: "Accessible name for the button, required for icon-only buttons.",
@@ -154,6 +159,7 @@ export const States: Story = {
       <Button>Pressed</Button>
       <Button>Focus</Button>
       <Button disabled>Disabled</Button>
+      <Button loading>Loading</Button>
     </div>
   ),
   play: async ({ canvasElement }) => {
@@ -164,6 +170,7 @@ export const States: Story = {
     const pressedButton = buttons[2];
     const focusButton = buttons[3];
     const disabledButton = buttons[4];
+    const loadingButton = buttons[5];
 
     // Hover
     await userEvent.hover(hoverButton);
@@ -185,6 +192,14 @@ export const States: Story = {
 
     // Disabled
     await expect(disabledButton).toBeDisabled();
+
+    // Loading is a state/property, not a variant
+    await expect(loadingButton).toHaveTextContent("Loading");
+    await expect(loadingButton).toBeDisabled();
+    await expect(loadingButton).toHaveAttribute("aria-busy", "true");
+    await expect(loadingButton).toHaveAttribute("data-loading", "true");
+    await expect(loadingButton.querySelector("svg.animate-spin")).toBeTruthy();
+    await expect(getComputedStyle(loadingButton).opacity).toBe("1");
   },
 };
 
@@ -216,6 +231,150 @@ export const IconOnly: Story = {
     size: "icon-md",
     icon: "arrow-left",
     "aria-label": "Go back",
+  },
+};
+
+/* -------------------------------------------------------------------------- */
+/* Loading                                                                     */
+/* -------------------------------------------------------------------------- */
+
+async function expectLoadingButton(
+  button: HTMLElement,
+  { name, dataLoading = true }: { name: string; dataLoading?: boolean },
+) {
+  await expect(button).toHaveAccessibleName(name);
+  await expect(button).toBeDisabled();
+  await expect(button).toHaveAttribute("aria-busy", "true");
+  await expect(button.querySelector("svg.animate-spin")).toBeTruthy();
+  await expect(getComputedStyle(button).pointerEvents).toBe("none");
+
+  if (dataLoading) {
+    await expect(button).toHaveAttribute("data-loading", "true");
+    await expect(getComputedStyle(button).opacity).toBe("1");
+  } else {
+    await expect(button).not.toHaveAttribute("data-loading");
+  }
+}
+
+export const PrimaryLoading: Story = {
+  args: {
+    variant: "primary",
+    size: "md",
+    loading: true,
+    children: "Log in",
+  },
+  play: async ({ canvasElement }) => {
+    const button = within(canvasElement).getByRole("button", { name: "Log in" });
+
+    await expectLoadingButton(button, { name: "Log in" });
+    await expect(button).toHaveTextContent("Log in");
+  },
+};
+
+export const GhostLoading: Story = {
+  args: {
+    variant: "ghost",
+    size: "md",
+    loading: true,
+    children: "Log in",
+  },
+  play: async ({ canvasElement }) => {
+    const button = within(canvasElement).getByRole("button", { name: "Log in" });
+
+    await expectLoadingButton(button, { name: "Log in" });
+    await expect(button).toHaveTextContent("Log in");
+  },
+};
+
+export const IconOnlyLoading: Story = {
+  args: {
+    variant: "primary",
+    size: "icon-md",
+    icon: "arrow-left",
+    loading: true,
+    "aria-label": "Go back",
+  },
+  play: async ({ canvasElement }) => {
+    const button = within(canvasElement).getByRole("button", { name: "Go back" });
+    const svgs = button.querySelectorAll("svg");
+
+    await expectLoadingButton(button, { name: "Go back" });
+    await expect(svgs).toHaveLength(1);
+    await expect(svgs[0]).toHaveClass("animate-spin");
+  },
+};
+
+export const LoadingSizes: Story = {
+  render: () => (
+    <div className="flex flex-wrap items-center gap-4">
+      <Button size="lg" loading>
+        Log in
+      </Button>
+      <Button size="md" loading>
+        Log in
+      </Button>
+      <Button size="sm" loading>
+        Log in
+      </Button>
+      <Button size="xs" loading>
+        Log in
+      </Button>
+      <Button
+        size="icon-lg"
+        icon="arrow-left"
+        loading
+        aria-label="Go back"
+      />
+      <Button
+        size="icon-md"
+        icon="arrow-left"
+        loading
+        aria-label="Go back"
+      />
+      <Button
+        size="icon-sm"
+        icon="arrow-left"
+        loading
+        aria-label="Go back"
+      />
+      <Button
+        size="icon-xs"
+        icon="arrow-left"
+        loading
+        aria-label="Go back"
+      />
+    </div>
+  ),
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const labeled = canvas.getAllByRole("button", { name: "Log in" });
+    const iconOnly = canvas.getAllByRole("button", { name: "Go back" });
+
+    await expect(labeled).toHaveLength(4);
+    await expect(iconOnly).toHaveLength(4);
+
+    for (const button of [...labeled, ...iconOnly]) {
+      await expectLoadingButton(button, {
+        name: button.getAttribute("aria-label") ?? "Log in",
+      });
+    }
+  },
+};
+
+export const LoadingAndDisabled: Story = {
+  args: {
+    variant: "primary",
+    size: "md",
+    loading: true,
+    disabled: true,
+    children: "Log in",
+  },
+  play: async ({ canvasElement }) => {
+    const button = within(canvasElement).getByRole("button", { name: "Log in" });
+
+    await expectLoadingButton(button, { name: "Log in", dataLoading: false });
+    await expect(button).toHaveTextContent("Log in");
+    await expect(Number.parseFloat(getComputedStyle(button).opacity)).toBeLessThan(1);
   },
 };
 

@@ -14,6 +14,8 @@ const buttonVariants = cva(
    focus-visible:[outline-offset:var(--primitives-spacing-0-75)]
    disabled:pointer-events-none disabled:cursor-default
    aria-disabled:pointer-events-none aria-disabled:cursor-default
+   disabled:data-[loading]:opacity-(--primitives-opacity-opacity-100)
+   aria-disabled:data-[loading]:opacity-(--primitives-opacity-opacity-100)
    [&_svg]:pointer-events-none [&_svg]:shrink-0`,
   {
     variants: {
@@ -32,7 +34,9 @@ const buttonVariants = cva(
           disabled:[color:var(--semantics-colors-foreground-subtle)]
           aria-disabled:[color:var(--semantics-colors-foreground-subtle)]
           disabled:opacity-(--primitives-opacity-opacity-50)
-          aria-disabled:opacity-(--primitives-opacity-opacity-50)`,
+          aria-disabled:opacity-(--primitives-opacity-opacity-50)
+          disabled:data-[loading]:[color:var(--semantics-colors-foreground-default)]
+          aria-disabled:data-[loading]:[color:var(--semantics-colors-foreground-default)]`,
 
         destructive: `[background-color:var(--semantics-colors-background-destructive)]
           [color:var(--semantics-colors-foreground-destructive)]
@@ -55,7 +59,9 @@ const buttonVariants = cva(
           disabled:[color:var(--semantics-colors-foreground-subtle)]
           aria-disabled:[color:var(--semantics-colors-foreground-subtle)]
           disabled:opacity-(--primitives-opacity-opacity-50)
-          aria-disabled:opacity-(--primitives-opacity-opacity-50)`,
+          aria-disabled:opacity-(--primitives-opacity-opacity-50)
+          disabled:data-[loading]:[color:var(--semantics-colors-foreground-default)]
+          aria-disabled:data-[loading]:[color:var(--semantics-colors-foreground-default)]`,
       },
 
       size: {
@@ -131,6 +137,12 @@ export interface ButtonProps
 
   /** The icon to render for icon-only sizes (`icon-lg`, `icon-md`, `icon-sm`, `icon-xs`). */
   icon?: IconName;
+
+  /**
+   * Shows a leading loader indicator and prevents interaction.
+   * Does not change the visual variant. An explicit `disabled` prop wins visually.
+   */
+  loading?: boolean;
 }
 
 export function Button({
@@ -140,6 +152,8 @@ export function Button({
   leadingIcon,
   trailingIcon,
   icon,
+  loading = false,
+  disabled,
   type = "button",
   children,
   ref,
@@ -148,6 +162,8 @@ export function Button({
   const resolvedSize = size ?? "md";
   const isIconOnly = resolvedSize.startsWith("icon-");
   const iconSize = ICON_PIXEL_SIZE[resolvedSize];
+  const showLoadingVisuals = loading && !disabled;
+  const loader = <Icon name="loader" size={iconSize} className="animate-spin" />;
 
   if (import.meta.env.DEV) {
     if (isIconOnly && !icon) {
@@ -166,13 +182,16 @@ export function Button({
       type={type}
       className={cn(buttonVariants({ variant, size: resolvedSize }), className)}
       {...props}
+      disabled={disabled || loading}
+      aria-busy={loading ? true : undefined}
+      data-loading={showLoadingVisuals ? true : undefined}
       ref={ref}
     >
       {isIconOnly ? (
-        icon && <Icon name={icon} size={iconSize} />
+        loading ? loader : icon && <Icon name={icon} size={iconSize} />
       ) : (
         <>
-          {leadingIcon && <Icon name={leadingIcon} size={iconSize} />}
+          {loading ? loader : leadingIcon && <Icon name={leadingIcon} size={iconSize} />}
           {children}
           {trailingIcon && <Icon name={trailingIcon} size={iconSize} />}
         </>

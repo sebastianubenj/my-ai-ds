@@ -71,6 +71,31 @@ The button supports the following states:
 - **Pressed** — Shown while the button is being activated.
 - **Focus** — Shown when the button receives keyboard focus.
 - **Disabled** — Indicates that the button is unavailable for interaction.
+- **Loading** — A boolean property (`loading`), not a variant. Shows a leading loader while an action is in progress.
+
+### Loading
+
+Set `loading` to show the loader indicator in front of the existing label. The label stays visible, the button keeps its current `variant` and `size`, and interaction is blocked so the action cannot be submitted repeatedly.
+
+Loading uses the full-opacity default appearance. It does not use the disabled opacity treatment. If both `loading` and `disabled` are set, `disabled` wins visually.
+
+While loading, the button is not activatable and exposes `aria-busy="true"`. The accessible name is preserved from the label or, for icon-only buttons, from `aria-label`.
+
+```tsx
+<Button loading>
+  Log in
+</Button>
+```
+
+<Canvas of={ButtonStories.PrimaryLoading} />
+
+Loading works with every variant. Ghost is shown here as a second example:
+
+<Canvas of={ButtonStories.GhostLoading} />
+
+Icon-only sizes replace the existing icon with the loader and keep the `aria-label`:
+
+<Canvas of={ButtonStories.IconOnlyLoading} />
 
 ## Icons
 
@@ -137,6 +162,7 @@ The Button component provides properties to control its appearance, content, beh
 | `icon` | `IconName` | — | Displays the icon for icon-only sizes. |
 | `type` | `"button"` &#124; `"submit"` &#124; `"reset"` | `"button"` | Defines the button's behavior when used inside a form. |
 | `disabled` | `boolean` | `false` | Prevents interaction with the button. |
+| `loading` | `boolean` | `false` | Shows a leading loader indicator and prevents interaction. Not a visual variant. The label remains visible. Exposes `aria-busy`. An explicit `disabled` prop wins visually. |
 | `children` | `React.ReactNode` | — | Content displayed inside the button. |
 | `aria-label` | `string` | — | Provides an accessible name for the button. Required for icon-only buttons unless `aria-labelledby` is provided. |
 | `aria-labelledby` | `string` | — | References an element that provides the accessible name. Can be used instead of `aria-label` for icon-only buttons. |

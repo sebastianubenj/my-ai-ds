@@ -2,6 +2,7 @@ import * as React from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, userEvent, within } from "storybook/test";
 
+import { Button } from "./button";
 import { Input } from "./input";
 import { Label } from "./label";
 
@@ -16,7 +17,7 @@ const meta = {
   argTypes: {
     type: {
       control: "select",
-      options: ["text", "password"],
+      options: ["text", "password", "email"],
       description: "Native input type.",
     },
     error: {
@@ -32,6 +33,10 @@ const meta = {
       control: "select",
       options: iconOptions,
       description: "Decorative icon displayed after the value/placeholder.",
+    },
+    trailing: {
+      control: false,
+      description: "Interactive or custom content rendered after the value.",
     },
     placeholder: {
       control: "text",
@@ -54,6 +59,25 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     placeholder: "Placeholder text",
+  },
+};
+
+/* -------------------------------------------------------------------------- */
+/* Email                                                                       */
+/* -------------------------------------------------------------------------- */
+
+export const Email: Story = {
+  args: {
+    type: "email",
+    autoComplete: "email",
+    placeholder: "you@example.com",
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const input = canvas.getByPlaceholderText("you@example.com");
+
+    await expect(input).toHaveAttribute("type", "email");
+    await expect(input).toHaveAttribute("autocomplete", "email");
   },
 };
 
@@ -97,6 +121,76 @@ export const WithLeadingAndTrailingIcon: Story = {
     leadingIcon: "search",
     trailingIcon: "arrow-right",
     placeholder: "Placeholder text",
+  },
+};
+
+/* -------------------------------------------------------------------------- */
+/* Trailing slot                                                               */
+/* -------------------------------------------------------------------------- */
+
+export const WithTrailing: Story = {
+  render: function WithTrailingRender() {
+    const [value, setValue] = React.useState("");
+    const [visible, setVisible] = React.useState(false);
+    const [submitted, setSubmitted] = React.useState(false);
+
+    return (
+      <form
+        className="w-80"
+        onSubmit={(event) => {
+          event.preventDefault();
+          setSubmitted(true);
+        }}
+      >
+        <Input
+          type={visible ? "text" : "password"}
+          placeholder="Placeholder text"
+          value={value}
+          onChange={(event) => setValue(event.target.value)}
+          trailing={
+            value ? (
+              <Button
+                type="button"
+                variant="ghost"
+                size="icon-xs"
+                icon={visible ? "eye-off" : "eye"}
+                aria-label={visible ? "Hide password" : "Show password"}
+                className="hover:[background-color:transparent] [&_svg]:![color:var(--semantics-colors-foreground-default)]"
+                onClick={() => setVisible((value) => !value)}
+              />
+            ) : undefined
+          }
+        />
+        {submitted ? <p>Form submitted</p> : null}
+      </form>
+    );
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const input = canvas.getByPlaceholderText("Placeholder text");
+
+    await expect(canvas.queryByRole("button", { name: "Show password" })).not.toBeInTheDocument();
+    await expect(input).toHaveAttribute("type", "password");
+
+    await userEvent.type(input, "a");
+    const toggle = canvas.getByRole("button", { name: "Show password" });
+
+    await expect(toggle).toBeInTheDocument();
+    await expect(toggle).toHaveAttribute("type", "button");
+    await expect(input).toHaveAttribute("type", "password");
+
+    toggle.focus();
+    await expect(toggle).toHaveFocus();
+
+    await userEvent.click(toggle);
+    await expect(input).toHaveAttribute("type", "text");
+    await expect(canvas.getByRole("button", { name: "Hide password" })).toBeInTheDocument();
+    await expect(canvas.queryByText("Form submitted")).not.toBeInTheDocument();
+
+    await userEvent.click(canvas.getByRole("button", { name: "Hide password" }));
+    await expect(input).toHaveAttribute("type", "password");
+    await expect(canvas.getByRole("button", { name: "Show password" })).toBeInTheDocument();
+    await expect(canvas.queryByText("Form submitted")).not.toBeInTheDocument();
   },
 };
 
