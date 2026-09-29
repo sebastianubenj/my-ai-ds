@@ -55,7 +55,7 @@ Each UI component has `.tsx`, `.stories.tsx`, and `.mdx`.
 - **error** on text/form fields (Input, Select, Field). **invalid** on binary controls (Checkbox, Radio).
 - Two focus patterns: compact controls use `:focus-visible` (Button); text-like controls use `focus-intent` (Input).
 - Patterns keep `href="#"` and do not validate or route. That belongs in a consuming app.
-- Do not add components, dark theme, or size variants without a Figma source.
+- Do not add components or size variants without a Figma source. There is no dark theme; do not add `class="dark"` or `dark:` utilities.
 
 ## License
 

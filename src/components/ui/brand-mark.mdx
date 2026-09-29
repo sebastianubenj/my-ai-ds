@@ -1,0 +1,28 @@
+import * as BrandMarkStories from "./brand-mark.stories";
+import { Meta, Canvas } from "@storybook/addon-docs/blocks";
+
+<Meta of={BrandMarkStories} />
+
+# BrandMark
+
+The “my ai ds” wordmark. Color follows `foreground-default`. Height follows the Login/Register Figma sizes (`spacing/10` on small viewports, `spacing/12` from `md` up). Pass `className` to override size.
+
+## Basic
+
+<Canvas of={BrandMarkStories.Basic} />
+
+```tsx
+<BrandMark />
+```
+
+## Accessibility
+
+Renders an `<svg>` with `role="img"` and `aria-label="my ai ds"`.
+
+## API
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `className` | `string` | — | Adds custom CSS classes to the SVG. |
+
+The component also supports the standard SVG attributes through `React.ComponentProps<"svg">`.
