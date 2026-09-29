@@ -2,7 +2,6 @@ import * as React from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, userEvent, within } from "storybook/test";
 
-import { BrandMark } from "@/components/ui/brand-mark";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Field } from "@/components/ui/field";
@@ -16,10 +15,8 @@ function LoginPattern() {
 
   return (
     <div
-      className="flex min-h-dvh w-full flex-col items-center px-(--primitives-spacing-6) py-(--primitives-spacing-4) gap-(--primitives-spacing-10) md:p-(--primitives-spacing-6) md:gap-(--primitives-spacing-28-5) [background-color:var(--semantics-colors-background-default)]"
+      className="flex min-h-dvh w-full flex-col items-center justify-center px-(--primitives-spacing-6) py-(--primitives-spacing-4) md:p-(--primitives-spacing-6) [background-color:var(--semantics-colors-background-default)]"
     >
-      <BrandMark />
-
       <form
         className="flex w-full max-w-sm flex-col items-center gap-(--primitives-spacing-10) md:gap-(--primitives-spacing-12)"
         onSubmit={(event) => {

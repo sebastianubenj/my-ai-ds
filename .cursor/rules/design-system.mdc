@@ -5,6 +5,16 @@ alwaysApply: true
 
 # Design System Rules
 
+## Documentation map
+
+This file is the source of truth for architecture and agent behavior. Do not add a repo-level `.md` (`ARCHITECTURE`, `CONTRIBUTING`, `GUARDRAILS`, or similar) for a rule that already lives here.
+
+- `README.md` is human onboarding: what the repo is, how to run it, and where files live. It must not restate these rules.
+- `.mdx` next to a component or foundation is Storybook usage (when to use it, canvases, accessibility notes). Add MDX when that family already has MDX. Do not add MDX for a pattern or view unless the story cannot carry the usage guidance.
+- `.stories.tsx` are the examples, controls, and `play` tests. Component API is the TypeScript props. An MDX API table explains usage; it is not a second contract.
+- Tokens: `tokens/tokens.json` and `build-tokens.js`. Generated CSS is an artifact.
+- Enforcement is `npm run check`, not another markdown file.
+
 ## 1. General Architecture
 
 This repository is a React + TypeScript design system built with:
@@ -668,17 +678,11 @@ If generated output is incorrect, fix the source token or transformation logic a
 
 ## 21. Verification
 
-After implementing or modifying a component:
+After implementing or modifying a component, pattern, or view, run `npm run check`.
 
-1. Run the appropriate build or type checks.
-2. Run token generation when token-related files changed.
-3. Verify Storybook when the component or stories changed.
-4. Verify that generated tokens contain no `[object Object]` values.
-5. Verify that the component uses the expected design-system tokens.
-6. Verify accessibility behavior.
-7. Check that no unrelated files were modified.
+When token source or `build-tokens.js` changed, run `npm run build:tokens` first and confirm the generated CSS has no `[object Object]` values.
 
-Prefer small, verifiable changes over large automated rewrites.
+When UI changed, confirm the affected Storybook story. Testing rules are in section 23.
 
 ---
 
@@ -692,3 +696,45 @@ If the Figma design, token system, or existing architecture does not provide eno
 - Do not invent a new token, variant, state, or architecture without justification.
 
 When there are multiple technically valid implementations, prefer the one that is most consistent with the existing design-system patterns.
+
+---
+
+## 23. Testing
+
+Behavior tests are Storybook `play` functions. `npm test` runs them in Vitest browser mode (Playwright, Chromium) through `@storybook/addon-vitest`.
+
+Do not add `*.test.ts` / `*.test.tsx` for UI that a `play` function already covers. Add a unit test only for logic that is awkward to assert through the rendered story (pure transforms, token build helpers).
+
+`@storybook/addon-a11y` is installed. `parameters.a11y.test` is `todo`: violations show in Storybook and do not fail `npm test`. Fix accessibility bugs in the work you touch. Do not switch this to `error` until the existing catalog is clean.
+
+Do not gate on a coverage percentage. `@vitest/coverage-v8` is installed and unused. Line coverage would count stories, MDX, and specimens and would not add confidence.
+
+### Do not test
+
+- Generated files (`src/styles/generated/tokens.css`) or token JSON shape
+- Foundations and other documentation-only stories
+- CSS class strings, CVA output, or internal DOM that is not the public contract
+- Every visual variant when behavior is the same
+- The same behavior in both a `play` function and a unit test
+- Snapshots
+- Product rules the story does not implement (routing, form validation schemas)
+
+### Components
+
+Stories show the real variants and states. Add `play` for behavior: events, keyboard, disabled, loading, `error` / `invalid`, and the public `ref` target. One interaction story may cover several states. A story that only documents appearance does not need `play`.
+
+### Patterns
+
+`play` covers behavior that exists only because components are composed (labels, submit, password visibility). Do not re-test component variants inside the pattern. Do not assert validation or navigation the pattern does not implement.
+
+### Views
+
+There is no views layer yet. When one exists, test the observable flow (navigation, loading, error) with `play` if it renders in Storybook. Do not unit-test layout markup.
+
+### Done
+
+`npm run check` must pass: typecheck, lint, test, build.
+
+- Component: implementation, stories for real variants and states, MDX when that component family has MDX, `play` when there is behavior.
+- Pattern: composition story, `play` for composed behavior.
+- View: a behavior test for each critical flow. No extra unit tests for markup.
