@@ -3,12 +3,11 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, userEvent, within } from "storybook/test";
 
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Field } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Link } from "@/components/ui/link";
 
-function LoginWordmark() {
+function RegisterWordmark() {
   return (
     <div className="h-(--primitives-spacing-10) w-auto md:h-(--primitives-spacing-12)">
       <svg
@@ -50,16 +49,19 @@ function LoginWordmark() {
   );
 }
 
-function LoginPattern() {
+function RegisterPattern() {
+  const [name, setName] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const [confirmPassword, setConfirmPassword] = React.useState("");
   const [passwordVisible, setPasswordVisible] = React.useState(false);
+  const [confirmPasswordVisible, setConfirmPasswordVisible] = React.useState(false);
 
   return (
     <div
       className="flex min-h-dvh w-full flex-col items-center px-(--primitives-spacing-6) py-(--primitives-spacing-4) gap-(--primitives-spacing-10) md:p-(--primitives-spacing-6) md:gap-(--primitives-spacing-28-5) [background-color:var(--semantics-colors-background-default)]"
     >
-      <LoginWordmark />
+      <RegisterWordmark />
 
       <form
         className="flex w-full max-w-sm flex-col items-center gap-(--primitives-spacing-10) md:gap-(--primitives-spacing-12)"
@@ -78,7 +80,7 @@ function LoginPattern() {
                 leading-(--semantics-typography-display-display-sm-lh-tighter)
                 tracking-(--semantics-typography-display-display-sm-tracking-tight)`}
             >
-              Welcome back
+              Create your account
             </h1>
             <p
               className={`m-0 w-full font-sans
@@ -87,13 +89,24 @@ function LoginPattern() {
                 leading-(--semantics-typography-heading-heading-xl-lh-tight)
                 tracking-(--semantics-typography-heading-heading-xl-tracking-tight)`}
             >
-              Sign in to your account
+              Get started with your account
             </p>
           </div>
 
-          <Field label="Email" htmlFor="login-email">
+          <Field label="Name" htmlFor="register-name">
             <Input
-              id="login-email"
+              id="register-name"
+              type="text"
+              autoComplete="name"
+              placeholder="Enter your name"
+              value={name}
+              onChange={(event) => setName(event.target.value)}
+            />
+          </Field>
+
+          <Field label="Email" htmlFor="register-email">
+            <Input
+              id="register-email"
               type="email"
               autoComplete="email"
               placeholder="Enter your email"
@@ -102,50 +115,64 @@ function LoginPattern() {
             />
           </Field>
 
-          <div className="flex w-full flex-col items-start gap-(--primitives-spacing-2)">
-            <Field label="Password" htmlFor="login-password">
-              <Input
-                id="login-password"
-                type={passwordVisible ? "text" : "password"}
-                autoComplete="current-password"
-                placeholder="Enter your password"
-                value={password}
-                onChange={(event) => setPassword(event.target.value)}
-                trailing={
-                  password ? (
-                    <Button
-                      type="button"
-                      variant="ghost"
-                      size="icon-xs"
-                      icon={passwordVisible ? "eye-off" : "eye"}
-                      aria-label={passwordVisible ? "Hide password" : "Show password"}
-                      className="hover:[background-color:transparent] [&_svg]:![color:var(--semantics-colors-foreground-default)]"
-                      onClick={() => setPasswordVisible((visible) => !visible)}
-                    />
-                  ) : undefined
-                }
-              />
-            </Field>
+          <Field label="Password" htmlFor="register-password">
+            <Input
+              id="register-password"
+              type={passwordVisible ? "text" : "password"}
+              autoComplete="new-password"
+              placeholder="Enter your password"
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+              trailing={
+                password ? (
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="icon-xs"
+                    icon={passwordVisible ? "eye-off" : "eye"}
+                    aria-label={passwordVisible ? "Hide password" : "Show password"}
+                    className="hover:[background-color:transparent] [&_svg]:![color:var(--semantics-colors-foreground-default)]"
+                    onClick={() => setPasswordVisible((visible) => !visible)}
+                  />
+                ) : undefined
+              }
+            />
+          </Field>
 
-            <div className="flex w-full items-center justify-between">
-              <Checkbox>Remember me</Checkbox>
-              <span
-                className={`shrink-0 text-right font-sans
-                  [font-weight:var(--semantics-typography-label-font-weight)]
-                  text-(length:--semantics-typography-label-label-md-font-size)
-                  leading-(--semantics-typography-label-label-md-lh-snug)
-                  tracking-(--semantics-typography-label-label-md-tracking-0-125)
-                  [color:var(--semantics-colors-foreground-default)]`}
-              >
-                <Link href="#">Forgot password?</Link>
-              </span>
-            </div>
-          </div>
+          <Field label="Confirm your password" htmlFor="register-confirm-password">
+            <Input
+              id="register-confirm-password"
+              type={confirmPasswordVisible ? "text" : "password"}
+              autoComplete="new-password"
+              placeholder="Confirm your password"
+              value={confirmPassword}
+              onChange={(event) => setConfirmPassword(event.target.value)}
+              trailing={
+                confirmPassword ? (
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="icon-xs"
+                    icon={confirmPasswordVisible ? "eye-off" : "eye"}
+                    aria-label={
+                      confirmPasswordVisible
+                        ? "Hide confirm password"
+                        : "Show confirm password"
+                    }
+                    className="hover:[background-color:transparent] [&_svg]:![color:var(--semantics-colors-foreground-default)]"
+                    onClick={() =>
+                      setConfirmPasswordVisible((visible) => !visible)
+                    }
+                  />
+                ) : undefined
+              }
+            />
+          </Field>
         </div>
 
         <div className="flex w-full flex-col items-center gap-(--primitives-spacing-6)">
           <Button type="submit" variant="primary" size="lg" className="w-full">
-            Log in
+            Create account
           </Button>
           <p
             className={`m-0 flex w-full items-start justify-center gap-(--primitives-spacing-1)
@@ -155,8 +182,8 @@ function LoginPattern() {
               tracking-(--semantics-typography-button-tracking-normal)
               [color:var(--semantics-colors-foreground-default)]`}
           >
-            <span>Don’t have an account?</span>
-            <Link href="#">Sign up</Link>
+            <span>Already have an account?</span>
+            <Link href="#">Log in</Link>
           </p>
         </div>
       </form>
@@ -165,7 +192,7 @@ function LoginPattern() {
 }
 
 const meta = {
-  title: "Patterns/Login",
+  title: "Patterns/Register",
   parameters: {
     layout: "fullscreen",
   },
@@ -176,19 +203,28 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  render: () => <LoginPattern />,
+  render: () => <RegisterPattern />,
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
+    const name = canvas.getByLabelText("Name");
     const email = canvas.getByLabelText("Email");
     const password = canvas.getByLabelText("Password");
-    const submit = canvas.getByRole("button", { name: "Log in" });
+    const confirmPassword = canvas.getByLabelText("Confirm your password");
+    const submit = canvas.getByRole("button", { name: "Create account" });
 
+    await expect(name).toHaveAttribute("type", "text");
+    await expect(name).toHaveAttribute("autocomplete", "name");
     await expect(email).toHaveAttribute("type", "email");
     await expect(email).toHaveAttribute("autocomplete", "email");
     await expect(password).toHaveAttribute("type", "password");
-    await expect(password).toHaveAttribute("autocomplete", "current-password");
+    await expect(password).toHaveAttribute("autocomplete", "new-password");
+    await expect(confirmPassword).toHaveAttribute("type", "password");
+    await expect(confirmPassword).toHaveAttribute("autocomplete", "new-password");
     await expect(submit).toHaveAttribute("type", "submit");
     await expect(canvas.queryByRole("button", { name: "Show password" })).not.toBeInTheDocument();
+    await expect(
+      canvas.queryByRole("button", { name: "Show confirm password" }),
+    ).not.toBeInTheDocument();
 
     await userEvent.click(password);
     await userEvent.type(password, "secret");
@@ -204,5 +240,18 @@ export const Default: Story = {
     await userEvent.click(canvas.getByRole("button", { name: "Hide password" }));
     await expect(password).toHaveAttribute("type", "password");
     await expect(canvas.getByRole("button", { name: "Show password" })).toBeInTheDocument();
+
+    await userEvent.click(confirmPassword);
+    await userEvent.type(confirmPassword, "secret");
+    const confirmToggle = canvas.getByRole("button", {
+      name: "Show confirm password",
+    });
+
+    await expect(confirmToggle).toHaveAttribute("type", "button");
+    await userEvent.click(confirmToggle);
+    await expect(confirmPassword).toHaveAttribute("type", "text");
+    await expect(
+      canvas.getByRole("button", { name: "Hide confirm password" }),
+    ).toBeInTheDocument();
   },
 };

@@ -1,0 +1,78 @@
+import * as LinkStories from "./link.stories";
+import { Meta, Canvas } from "@storybook/addon-docs/blocks";
+
+<Meta of={LinkStories} />
+
+# Link
+
+Link is interactive text for navigation. It is not a Button and not a form control.
+
+Typography inherits from the surrounding text. Link owns underline, interaction states, and the focus ring.
+
+## Basic
+
+<Canvas of={LinkStories.Basic} />
+
+## Inheriting typography
+
+Place Link inside the text that should define its type and default color. Do not pass size variants on Link.
+
+```tsx
+<p className="/* label-md tokens */">
+  Forgot password? <Link href="#">Reset it</Link>
+</p>
+
+<p className="/* button-xl tokens */">
+  Don’t have an account? <Link href="#">Sign up</Link>
+</p>
+```
+
+<Canvas of={LinkStories.InheritsTypography} />
+
+## States
+
+<Canvas of={LinkStories.States} />
+
+- **Default** — Underlined. Font and color come from the parent.
+- **Hover** — Underline is removed. Color stays inherited.
+- **Pressed** — Underline returns while the pointer is down.
+- **Focus** — Keyboard focus uses the design-system ring (`:focus-visible`), offset `spacing/0.75` (3px) on all sides, and ring corner radius `rounded-sm` (4px). The text itself has no corner radius.
+- **Disabled** — Not activatable. Uses `foreground-subtle` and `opacity-50`. The underline stays. Exposed as `aria-disabled`.
+
+## Destructive
+
+Use `destructive` for irreversible navigation, such as deleting an account. It changes color to `foreground-destructive`. It is not a form `error` state.
+
+<Canvas of={LinkStories.Destructive} />
+
+If `disabled` and `destructive` are both set, `disabled` wins visually.
+
+## Accessibility
+
+- Renders a native `<a>`. Always provide a real `href` for the destination.
+- Disabled links stay anchors, expose `aria-disabled="true"`, and are removed from the tab order.
+- The accessible name comes from the link text.
+
+```tsx
+<Link href="/settings">Account settings</Link>
+<Link href="/account/delete" destructive>
+  Delete account
+</Link>
+<Link href="/reset" disabled>
+  Reset password
+</Link>
+```
+
+## API
+
+Link has no size variants. Type and default color inherit from context.
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `href` | `string` | — | The URL the link navigates to. |
+| `destructive` | `boolean` | `false` | Destructive visual intent. Not form validation. |
+| `disabled` | `boolean` | `false` | Prevents navigation and interaction. Exposed as `aria-disabled`. |
+| `children` | `React.ReactNode` | — | The link's text content. |
+| `className` | `string` | — | Adds custom CSS classes to the link. |
+
+The component also supports the standard HTML `<a>` attributes through `React.ComponentProps<"a">`.
