@@ -1,75 +1,62 @@
-# React + TypeScript + Vite
+# my-ai-ds
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React + TypeScript design system. Visual language comes from Figma. Storybook is the working catalog.
 
-Currently, two official plugins are available:
+Stack: Vite, Tailwind CSS v4, shadcn structure, Base UI, Style Dictionary.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Run
 
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```bash
+npm install
+npx playwright install chromium
+npm run storybook
 ```
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+Storybook: [http://localhost:6006](http://localhost:6006)
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+```bash
+npm run typecheck
+npm run lint
+npm test
+```
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+`npm run dev` is the leftover Vite app shell. Use Storybook for the design system.
+
+## Tokens
 
 ```
+Figma Design Tokens export
+  → tokens/tokens.json
+  → npm run build:tokens   (build-tokens.js / Style Dictionary)
+  → src/styles/generated/tokens.css
+```
+
+Do not edit `src/styles/generated/tokens.css`. Change source tokens or `build-tokens.js`, then regenerate.
+
+`scripts/sync-tokens.js` is not part of this pipeline.
+
+Prefer **semantic** tokens in components (`foreground-default`, `label-md`, `spacing/4`). Do not invent tokens or variants that Figma does not define.
+
+Known exporter gaps for a few colors live in `tokens/exporter-overrides.json`. That file is applied in memory during token build.
+
+## Layout
+
+| Path | Role |
+| --- | --- |
+| `src/components/ui/` | Components (Button, Field, Input, Link, …) |
+| `src/components/icon/` | Curated icon registry. Import `Icon`, not Lucide directly |
+| `src/foundations/` | Token specimens (color, type, space, …) |
+| `src/patterns/` | Composed screens (Login, Register). Specimens, not product routes |
+
+Each UI component has `.tsx`, `.stories.tsx`, and `.mdx`.
+
+## Conventions
+
+- **error** on text/form fields (Input, Select, Field). **invalid** on binary controls (Checkbox, Radio).
+- Two focus patterns: compact controls use `:focus-visible` (Button); text-like controls use `focus-intent` (Input).
+- Patterns keep `href="#"` and do not validate or route. That belongs in a consuming app.
+- Do not add components, dark theme, or size variants without a Figma source.
+
+## License
+
+Private. Not published as an npm package yet.
