@@ -51,31 +51,16 @@ function figmaScopes(node) {
 }
 
 // ---------------------------------------------------------------------------
-// Known Figma exporter failures (color variables with a separate alpha)
+// Historical sentinel repair
 // ---------------------------------------------------------------------------
-// Figma can bind a semantic color to a primitive AND apply an independent
-// alpha/opacity on top of that alias (e.g. "background/destructive" =
-// {primitives.colors.red.500} at 15% alpha). The current
-// org.lukasoppermann.figmaDesignTokens exporter does not know how to
-// serialize that specific combination: instead of writing the resolved
-// alias + alpha, it silently falls back to a literal "#000000ff" for every
-// token bound this way. This has been independently verified against the
-// live Figma variables (not derivable from tokens.json itself, which
-// preserves no alias, primitive name, or alpha for these tokens) for the
-// six known-affected tokens listed in tokens/exporter-overrides.json.
+// The old Design Tokens plugin wrote "#000000ff" for some semantic colors
+// that were a color alias plus a separate opacity. The Variables exporter
+// now writes the resolved color, so tokens/exporter-overrides.json is empty.
 //
-// tokens/tokens.json stays the raw, untouched Figma export artifact. This
-// preprocessor is the one place that normalizes those six known-bad values
-// in memory, before Style Dictionary resolves/transforms anything else:
-//   1. Look up the token's Figma variableId in exporter-overrides.json.
-//   2. Only touch it if the token's *current* value is still the exact
-//      "#000000ff" sentinel the exporter produces on failure — if the
-//      exporter is ever fixed and starts emitting a real value, this guard
-//      makes the override a permanent no-op instead of clobbering it.
-//   3. Resolve the named primitive's own (already-correct) literal color
-//      and re-apply the verified alpha, rather than hardcoding a final hex
-//      in the override file — if the primitive itself is retuned later,
-//      this normalization follows it automatically.
+// This preprocessor remains a guard. It looks up a variableId in that file
+// and replaces the value only when the token is still exactly "#000000ff".
+// A real color, including primitives.colors.black, is left alone. Do not add
+// an override to change a value the exporter already resolved.
 const EXPORTER_OVERRIDES = JSON.parse(readFileSync('tokens/exporter-overrides.json', 'utf-8'));
 const EXPORTER_FAILURE_SENTINEL = '#000000ff';
 

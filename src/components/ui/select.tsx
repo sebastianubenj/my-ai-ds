@@ -4,14 +4,7 @@ import { cva } from "class-variance-authority";
 
 import { cn } from "@/lib/utils";
 import "@/lib/focus-intent";
-import { Icon, type IconName } from "@/components/icon";
-
-/**
- * Pixel size passed to the `Icon` component. Mirrors
- * `primitives.spacing.5` (20px) — `Icon`'s `size` prop is a
- * plain number, so it can't be sourced from a CSS variable at render time.
- */
-const ICON_SIZE = 20;
+import { Icon, iconBox20, type IconName } from "@/components/icon";
 
 const triggerClassName = `
   box-border flex w-full items-center gap-(--primitives-spacing-1-5)
@@ -153,7 +146,7 @@ export function Select({
         className={cn(triggerClassName, className)}
         ref={ref}
       >
-        {leadingIcon ? <Icon name={leadingIcon} size={ICON_SIZE} aria-hidden="true" /> : null}
+        {leadingIcon ? <Icon name={leadingIcon} size={iconBox20} aria-hidden="true" /> : null}
         <SelectPrimitive.Value
           placeholder={placeholder}
           className="min-w-0 flex-1 truncate"
@@ -161,13 +154,13 @@ export function Select({
         <SelectPrimitive.Icon className="relative flex size-(--primitives-spacing-5) shrink-0">
           <Icon
             name="chevron-down"
-            size={ICON_SIZE}
+            size={iconBox20}
             aria-hidden="true"
             className="group-data-popup-open:invisible"
           />
           <Icon
             name="chevron-up"
-            size={ICON_SIZE}
+            size={iconBox20}
             aria-hidden="true"
             className="absolute inset-0 invisible group-data-popup-open:visible"
           />
@@ -266,9 +259,9 @@ export function SelectLabel({
       )}
       {...props}
     >
-      {leadingIcon ? <Icon name={leadingIcon} size={ICON_SIZE} aria-hidden="true" /> : null}
+      {leadingIcon ? <Icon name={leadingIcon} size={iconBox20} aria-hidden="true" /> : null}
       <span className="min-w-0 flex-1 truncate">{children}</span>
-      {trailingIcon ? <Icon name={trailingIcon} size={ICON_SIZE} aria-hidden="true" /> : null}
+      {trailingIcon ? <Icon name={trailingIcon} size={iconBox20} aria-hidden="true" /> : null}
     </SelectPrimitive.GroupLabel>
   );
 }
@@ -294,10 +287,10 @@ export function SelectItem({
       label={label ?? (typeof children === "string" ? children : undefined)}
       {...props}
     >
-      {leadingIcon ? <Icon name={leadingIcon} size={ICON_SIZE} aria-hidden="true" /> : null}
+      {leadingIcon ? <Icon name={leadingIcon} size={iconBox20} aria-hidden="true" /> : null}
       <SelectPrimitive.ItemText className="min-w-0 flex-1 truncate">{children}</SelectPrimitive.ItemText>
       <SelectPrimitive.ItemIndicator className="flex shrink-0">
-        <Icon name="check" size={ICON_SIZE} aria-hidden="true" />
+        <Icon name="check" size={iconBox20} aria-hidden="true" />
       </SelectPrimitive.ItemIndicator>
     </SelectPrimitive.Item>
   );

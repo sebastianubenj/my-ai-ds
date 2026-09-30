@@ -1,4 +1,4 @@
-import { Icon, type IconName } from "@/components/icon";
+import { Icon, iconBox20, type IconName } from "@/components/icon";
 
 import type {
   IconColorExampleRecord,
@@ -11,6 +11,7 @@ import {
   ICON_COLOR,
   ICON_FAMILY,
   ICON_LIBRARY_BOOLEANS,
+  ICON_SIZES,
   ICON_STROKE,
 } from "./iconography-data";
 
@@ -112,13 +113,13 @@ export function IconSizeSpecimen({
         className={`${stageClassName} gap-(--primitives-spacing-6) p-(--primitives-spacing-8)`}
       >
         {icons.map((name) => (
-          <Icon key={name} name={name} size={record.px} aria-hidden="true" />
+          <Icon key={name} name={name} size={record.box} aria-hidden="true" />
         ))}
       </div>
-      <figcaption className={captionClassName}>{record.px}px usage</figcaption>
+      <figcaption className={captionClassName}>{record.px}px at the default root</figcaption>
       <p className={noteClassName}>
-        Observed control size. Not an icon-size token. React <code>Icon</code> takes a numeric{" "}
-        <code>size</code> prop.
+        Width and height use {record.spacingNote}. Not an icon-size token. The stroke width stays{" "}
+        <code>2</code> and scales with the box.
       </p>
       <MetaList
         items={[
@@ -155,16 +156,16 @@ export function IconStrokeSpecimen({
   return (
     <figure className="m-0 flex min-w-0 flex-col gap-(--primitives-spacing-4)">
       <div className="flex flex-wrap gap-(--primitives-spacing-6)">
-        {[16, 20].map((px) => (
+        {ICON_SIZES.map((record) => (
           <div
-            key={px}
+            key={record.px}
             className={`${stageClassName} gap-(--primitives-spacing-4) p-(--primitives-spacing-8)`}
           >
             {icons.map((name) => (
               <Icon
-                key={`${px}-${name}`}
+                key={`${record.px}-${name}`}
                 name={name}
-                size={px}
+                size={record.box}
                 strokeWidth={ICON_STROKE.reactStrokeWidth}
                 aria-hidden="true"
               />
@@ -195,7 +196,7 @@ export function IconFilledExceptionSpecimen() {
   return (
     <figure className="m-0 flex min-w-0 flex-col gap-(--primitives-spacing-4)">
       <div className={`${stageClassName} p-(--primitives-spacing-8)`}>
-        <Icon name="resize-thumb" size={20} aria-hidden="true" />
+        <Icon name="resize-thumb" size={iconBox20} aria-hidden="true" />
       </div>
       <figcaption className={captionClassName}>
         {ICON_STROKE.filledException} — filled exception
@@ -221,7 +222,7 @@ export function IconColorSpecimen({
         className={`${stageClassName} p-(--primitives-spacing-8)`}
         style={{ color: `var(${example.cssVar})` }}
       >
-        <Icon name={iconName} size={20} aria-hidden="true" />
+        <Icon name={iconName} size={iconBox20} aria-hidden="true" />
       </div>
       <figcaption className={captionClassName}>{example.label}</figcaption>
       <p className={noteClassName}>

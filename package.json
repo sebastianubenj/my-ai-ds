@@ -6,13 +6,14 @@
   "scripts": {
     "build:tokens": "node build-tokens.js",
     "tokens:normalize": "node scripts/normalize-figma-variables.js",
+    "tokens:test": "node --test scripts/normalize-figma-variables.test.js",
     "dev": "npm run build:tokens && vite",
     "build": "npm run build:tokens && tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
     "typecheck": "tsc -b",
     "test": "vitest run --project storybook",
-    "check": "npm run typecheck && npm run lint && npm run test && npm run build",
+    "check": "npm run typecheck && npm run lint && npm run tokens:test && npm run test && npm run build",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },

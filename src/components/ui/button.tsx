@@ -4,7 +4,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 
 import { cn } from "@/lib/utils";
 
-import { Icon, type IconName } from "@/components/icon";
+import { Icon, iconBox16, iconBox20, type IconName } from "@/components/icon";
 
 const buttonVariants = cva(
   `inline-flex items-center justify-center shrink-0 whitespace-nowrap
@@ -109,21 +109,16 @@ const buttonVariants = cva(
 export type ButtonVariant = NonNullable<VariantProps<typeof buttonVariants>["variant"]>;
 export type ButtonSize = NonNullable<VariantProps<typeof buttonVariants>["size"]>;
 
-/**
- * Pixel size passed to the `Icon` component per Button size tier. Mirrors
- * `primitives.spacing.5` (20px) and `primitives.spacing.4` (16px) — `Icon`'s
- * `size` prop is a plain number, so it can't be sourced from a CSS variable
- * at render time.
- */
-const ICON_PIXEL_SIZE: Record<ButtonSize, number> = {
-  lg: 20,
-  md: 20,
-  sm: 16,
-  xs: 16,
-  "icon-lg": 20,
-  "icon-md": 20,
-  "icon-sm": 16,
-  "icon-xs": 16,
+/** Icon box per Button size. Large tiers use spacing.5; small tiers use spacing.4. */
+const ICON_BOX: Record<ButtonSize, string> = {
+  lg: iconBox20,
+  md: iconBox20,
+  sm: iconBox16,
+  xs: iconBox16,
+  "icon-lg": iconBox20,
+  "icon-md": iconBox20,
+  "icon-sm": iconBox16,
+  "icon-xs": iconBox16,
 };
 
 export interface ButtonProps
@@ -161,7 +156,7 @@ export function Button({
 }: ButtonProps) {
   const resolvedSize = size ?? "md";
   const isIconOnly = resolvedSize.startsWith("icon-");
-  const iconSize = ICON_PIXEL_SIZE[resolvedSize];
+  const iconSize = ICON_BOX[resolvedSize];
   const showLoadingVisuals = loading && !disabled;
   const loader = <Icon name="loader" size={iconSize} className="animate-spin" />;
 

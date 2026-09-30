@@ -112,8 +112,8 @@ export const SEMANTIC_FOREGROUND: SemanticColorRecord[] = [
     name: "Destructive",
     token: "semantics.colors.foreground.destructive",
     cssVar: "--semantics-colors-foreground-destructive",
-    generated: "var(--primitives-colors-red-500)",
-    alias: "primitives.colors.red.500",
+    generated: "var(--primitives-colors-red-600)",
+    alias: "primitives.colors.red.600",
   },
 ];
 
@@ -167,14 +167,14 @@ export const SEMANTIC_INTERACTION: SemanticColorRecord[] = [
     name: "Destructive / Hover",
     token: "semantics.colors.interaction.destructive.hover",
     cssVar: "--semantics-colors-interaction-destructive-hover",
-    generated: "#e7000b40",
-    alias: "primitives.colors.red.500 @ 25%",
+    generated: "#d6000033",
+    alias: "primitives.colors.red.500 @ 20%",
   },
   {
     name: "Destructive / Subtle hover",
     token: "semantics.colors.interaction.destructive.subtle-hover",
     cssVar: "--semantics-colors-interaction-destructive-subtle-hover",
-    generated: "#e7000b1a",
+    generated: "#d600001a",
     alias: "primitives.colors.red.500 @ 10%",
   },
   {
@@ -224,7 +224,7 @@ const RED_HEX: Record<(typeof SCALE)[number], string> = {
   "200": "#ff939bff",
   "300": "#ff5b69ff",
   "400": "#ff0031ff",
-  "500": "#e7000bff",
+  "500": "#d60000ff",
   "600": "#ca0000ff",
   "700": "#980000ff",
   "800": "#650000ff",

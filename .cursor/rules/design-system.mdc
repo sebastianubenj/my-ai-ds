@@ -12,7 +12,7 @@ This file is the source of truth for architecture and agent behavior. Do not add
 - `README.md` is human onboarding: what the repo is, how to run it, and where files live. It must not restate these rules.
 - `.mdx` next to a component or foundation is Storybook usage (when to use it, canvases, accessibility notes). Add MDX when that family already has MDX. Do not add MDX for a pattern or view unless the story cannot carry the usage guidance.
 - `.stories.tsx` are the examples, controls, and `play` tests. Component API is the TypeScript props. An MDX API table explains usage; it is not a second contract.
-- Tokens: `tokens/tokens.json` and `build-tokens.js`. Generated CSS is an artifact.
+- Tokens: the Figma variables plugin writes `tokens/figma-variables.raw.json`. `scripts/normalize-figma-variables.js` rebuilds primitives and semantics in `tokens/tokens.json`. Font, typography, and effect stay in that file. `build-tokens.js` writes generated CSS, which is an artifact.
 - Enforcement is `npm run check`, not another markdown file.
 
 ## 1. General Architecture
@@ -161,21 +161,26 @@ Do not manually edit:
 
 When token changes are required:
 
-1. Update the source tokens or token-generation logic.
-2. Run:
+1. For a Figma variable change, run the development plugin in `figma/export-variables/`, save the download as `tokens/figma-variables.raw.json`, then run `npm run tokens:normalize`. That rewrites primitives and semantics. Font, typography, and effect stay as they are in `tokens/tokens.json` and are not rebuilt from Variables.
+2. For a change to those preserved styles, or to token-generation logic, edit that source directly.
+3. Run:
 
 `npm run build:tokens`
 
-3. Verify the generated output.
-4. Verify that the generated CSS contains the expected tokens.
+4. Verify the generated output.
+5. Verify that the generated CSS contains the expected tokens.
 
 The generated CSS is an artifact, not the source of truth.
 
 The current token pipeline is:
 
-Figma
+Figma local variables
 ↓
-Figma Design Tokens export
+`figma/export-variables/`
+↓
+`tokens/figma-variables.raw.json`
+↓
+`npm run tokens:normalize`
 ↓
 `tokens/tokens.json`
 ↓
@@ -184,10 +189,6 @@ Figma Design Tokens export
 `src/styles/generated/tokens.css`
 ↓
 React / Tailwind / shadcn
-
-The current `tokens/tokens.json` is populated through the Figma Design Tokens export process. `scripts/sync-tokens.js` is not currently part of the active token generation pipeline and should not be treated as the source of `tokens/tokens.json`.
-
-Do not modify or rely on `scripts/sync-tokens.js` as part of token generation unless explicitly requested.
 
 Do not bypass the active token pipeline without an explicit reason.
 
@@ -680,7 +681,7 @@ If generated output is incorrect, fix the source token or transformation logic a
 
 After implementing or modifying a component, pattern, or view, run `npm run check`.
 
-When token source or `build-tokens.js` changed, run `npm run build:tokens` first and confirm the generated CSS has no `[object Object]` values.
+When Figma variables changed, export them and run `npm run tokens:normalize` before `npm run build:tokens`. When token source or `build-tokens.js` changed, run `npm run build:tokens` first and confirm the generated CSS has no `[object Object]` values.
 
 When UI changed, confirm the affected Storybook story. Testing rules are in section 23.
 
@@ -733,7 +734,7 @@ There is no views layer yet. When one exists, test the observable flow (navigati
 
 ### Done
 
-`npm run check` must pass: typecheck, lint, test, build.
+`npm run check` must pass: typecheck, lint, token tests, Storybook tests, build.
 
 - Component: implementation, stories for real variants and states, MDX when that component family has MDX, `play` when there is behavior.
 - Pattern: composition story, `play` for composed behavior.

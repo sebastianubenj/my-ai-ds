@@ -2,14 +2,7 @@ import * as React from "react";
 
 import { cn } from "@/lib/utils";
 import "@/lib/focus-intent";
-import { Icon, type IconName } from "@/components/icon";
-
-/**
- * Pixel size passed to the `Icon` component. Mirrors
- * `primitives.spacing.5` (20px) — `Icon`'s `size` prop is a
- * plain number, so it can't be sourced from a CSS variable at render time.
- */
-const ICON_SIZE = 20;
+import { Icon, iconBox20, type IconName } from "@/components/icon";
 
 export interface InputProps
   extends Omit<React.ComponentProps<"input">, "type" | "size"> {
@@ -60,7 +53,7 @@ export function Input({
         className,
       )}
     >
-      {leadingIcon && <Icon name={leadingIcon} size={ICON_SIZE} aria-hidden="true" />}
+      {leadingIcon && <Icon name={leadingIcon} size={iconBox20} aria-hidden="true" />}
       <input
         data-slot="input"
         type={type}
@@ -82,7 +75,7 @@ export function Input({
           {trailing}
         </span>
       ) : (
-        trailingIcon && <Icon name={trailingIcon} size={ICON_SIZE} aria-hidden="true" />
+        trailingIcon && <Icon name={trailingIcon} size={iconBox20} aria-hidden="true" />
       )}
     </div>
   );

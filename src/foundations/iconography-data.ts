@@ -1,4 +1,4 @@
-import type { IconName } from "@/components/icon";
+import { iconBox16, iconBox20, type IconName } from "@/components/icon";
 
 export interface IconLibraryRecord {
   name: string;
@@ -7,12 +7,11 @@ export interface IconLibraryRecord {
 }
 
 export interface IconSizeRecord {
+  /** Width and height at a 16px root. The rendered box is `box`. */
   px: number;
-  /**
-   * Numeric spacing counterpart, if any. Size remains an `Icon` pixel prop,
-   * not an icon-size token and not a spacing alias.
-   */
-  spacingNote: string | null;
+  /** CSS length passed to `Icon` `size`. A spacing variable, not an icon-size token. */
+  box: string;
+  spacingNote: string;
   uses: string[];
 }
 
@@ -63,7 +62,8 @@ export const REPRESENTATIVE_ICONS: IconName[] = [
 export const ICON_SIZES: IconSizeRecord[] = [
   {
     px: 16,
-    spacingNote: "Same numeric value as primitives.spacing.4 (16px)",
+    box: iconBox16,
+    spacingNote: "primitives.spacing.4",
     uses: [
       "Figma Lucide masters",
       "Checkbox icons",
@@ -72,7 +72,8 @@ export const ICON_SIZES: IconSizeRecord[] = [
   },
   {
     px: 20,
-    spacingNote: "Same numeric value as primitives.spacing.5 (20px)",
+    box: iconBox20,
+    spacingNote: "primitives.spacing.5",
     uses: [
       "Input",
       "Select",

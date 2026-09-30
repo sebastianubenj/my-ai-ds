@@ -1,14 +1,7 @@
 import * as React from "react";
 
 import { cn } from "@/lib/utils";
-import { Icon } from "@/components/icon";
-
-/**
- * Pixel size passed to the `Icon` component. Mirrors
- * `primitives.spacing.4` (16px) — `Icon`'s `size` prop is a
- * plain number, so it can't be sourced from a CSS variable at render time.
- */
-const ICON_SIZE = 16;
+import { Icon, iconBox16 } from "@/components/icon";
 
 const ICON_STROKE_WIDTH = 2;
 
@@ -98,14 +91,14 @@ export function CheckboxToggle({
       />
       <Icon
         name="check"
-        size={ICON_SIZE}
+        size={iconBox16}
         strokeWidth={ICON_STROKE_WIDTH}
         aria-hidden="true"
         className="pointer-events-none relative z-10 hidden peer-checked:block peer-indeterminate:hidden"
       />
       <Icon
         name="minus"
-        size={ICON_SIZE}
+        size={iconBox16}
         strokeWidth={ICON_STROKE_WIDTH}
         aria-hidden="true"
         className="pointer-events-none relative z-10 hidden peer-indeterminate:block"

@@ -23,12 +23,12 @@ Figma also has an `Icon Placeholder` that can swap Lucide, Huge, Tabler, Phospho
 
 ## Size Usage
 
-Observed sizes are **16px** and **20px**. They are `Icon` pixel props, not icon-size tokens, and not aliases of spacing tokens. They happen to match `primitives.spacing.4` (16px) and `primitives.spacing.5` (20px) numerically.
+Observed boxes are **16px** and **20px** at the default root. Width and height use `primitives.spacing.4` and `primitives.spacing.5`, so the box follows the root font size. There is no icon-size token scale.
 
-| Size | Used for |
-| --- | --- |
-| 16px | Figma Lucide masters, Checkbox icons, Button small / extra-small |
-| 20px | Input, Select, File Upload, Textarea resize thumb, Button medium / large |
+| Size at a 16px root | Box | Used for |
+| --- | --- | --- |
+| 16px | `primitives.spacing.4` | Figma Lucide masters, Checkbox icons, Button small / extra-small |
+| 20px | `primitives.spacing.5` | Input, Select, File Upload, Textarea resize thumb, Button medium / large |
 
 Figma also has a 24×24 `Utility / Component Icon` wrapper. 24px is not an established React Icon size.
 
@@ -38,12 +38,12 @@ Figma also has a 24×24 `Utility / Component Icon` wrapper. 24px is not an estab
 
 Figma Lucide vectors bind stroke width to `border-width/border-1,33` (1.33px) at the 16px master. That token belongs to the **Borders** foundation. It is not an icon-specific stroke token.
 
-React uses Lucide's default `strokeWidth={2}` on a 24×24 viewBox:
+React uses Lucide's default `strokeWidth={2}` on a 24×24 viewBox. The stroke stays in viewBox units, so it scales with the box:
 
-- `2 × 16 / 24 ≈ 1.33px`
-- `2 × 20 / 24 ≈ 1.67px`
+- `2 × 16 / 24 ≈ 1.33px` at a 16px root
+- `2 × 20 / 24 ≈ 1.67px` at a 16px root
 
-That is why the React stroke matches Figma at 16px and scales at 20px. `resize-thumb` is a filled exception; its path does not use the Lucide stroke as the visible construction.
+That is why the React stroke matches Figma at 16px and is heavier at 20px. `resize-thumb` is a filled exception; its path does not use the Lucide stroke as the visible construction.
 
 <Canvas of={IconographyStories.Stroke} />
 

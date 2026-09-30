@@ -2,15 +2,8 @@ import * as React from "react";
 
 import { cn } from "@/lib/utils";
 import "@/lib/focus-intent";
-import { Icon } from "@/components/icon";
+import { Icon, iconBox20 } from "@/components/icon";
 import { Button } from "@/components/ui/button";
-
-/**
- * Pixel size passed to the `Icon` component. Mirrors
- * `primitives.spacing.5` (20px) — `Icon`'s `size` prop is a
- * plain number, so it can't be sourced from a CSS variable at render time.
- */
-const ICON_SIZE = 20;
 
 const EMPTY_PROMPT = "Choose a file or drag & drop it here";
 const DRAG_PROMPT = "Drop your file here";
@@ -209,7 +202,7 @@ export function FileUpload({
       />
       <Icon
         name={isUploaded ? "file" : "upload"}
-        size={ICON_SIZE}
+        size={iconBox20}
         aria-hidden="true"
         className={
           showErrorChrome

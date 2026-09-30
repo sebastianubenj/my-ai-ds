@@ -2,13 +2,7 @@ import * as React from "react";
 
 import { cn } from "@/lib/utils";
 import "@/lib/focus-intent";
-import { Icon } from "@/components/icon";
-
-/**
- * Pixel size passed to the `Icon` component. Mirrors
- * `primitives.spacing.5` (20px) — the Figma Resize Thumb instance is 20×20.
- */
-const RESIZE_THUMB_SIZE = 20;
+import { Icon, iconBox20 } from "@/components/icon";
 
 export interface TextareaProps extends React.ComponentProps<"textarea"> {
   /** Marks the textarea as invalid. Mirrored to `aria-invalid` for styling and accessibility. */
@@ -57,7 +51,7 @@ export function Textarea({ className, error = false, disabled, ref, ...props }: 
       />
       <Icon
         name="resize-thumb"
-        size={RESIZE_THUMB_SIZE}
+        size={iconBox20}
         aria-hidden="true"
         className="pointer-events-none absolute [bottom:var(--primitives-spacing-1-5)] [right:var(--primitives-spacing-1-5)]"
       />
