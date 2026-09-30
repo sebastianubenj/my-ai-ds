@@ -1,0 +1,15 @@
+<!doctype html>
+<script>
+  window.onmessage = (event) => {
+    const message = event.data.pluginMessage;
+    const blob = new Blob([JSON.stringify(message.payload, null, 2)], {
+      type: "application/json",
+    });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = message.filename;
+    link.click();
+    URL.revokeObjectURL(link.href);
+    parent.postMessage({ pluginMessage: { done: true } }, "*");
+  };
+</script>

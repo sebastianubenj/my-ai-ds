@@ -60,8 +60,8 @@ export const SEMANTIC_BACKGROUND: SemanticColorRecord[] = [
     name: "Destructive",
     token: "semantics.colors.background.destructive",
     cssVar: "--semantics-colors-background-destructive",
-    generated: "#e7000b26",
-    alias: "primitives.colors.red.500 @ 15%",
+    generated: "#d600001a",
+    alias: "primitives.colors.red.500 @ 10%",
   },
   {
     name: "Success",

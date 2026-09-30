@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "build:tokens": "node build-tokens.js",
+    "tokens:normalize": "node scripts/normalize-figma-variables.js",
     "dev": "npm run build:tokens && vite",
     "build": "npm run build:tokens && tsc -b && vite build",
     "lint": "eslint .",
