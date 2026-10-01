@@ -1,0 +1,40 @@
+import * as NavigationStories from "./navigation.stories";
+import { Meta, Canvas } from "@storybook/addon-docs/blocks";
+
+<Meta of={NavigationStories} />
+
+# Navigation
+
+One bar. Desktop shows the mark, primary links, and search. Below the `md` breakpoint it shows the mark, search, and menu.
+
+The menu is one shared panel, passed as `menu`. It is not a submenu of each primary link, and the open bar does not mark a current link. `open` is controlled. On mobile the menu button opens it and the header becomes the close control (`x` on the right). Pass `onBack` to add the back control on the left. Desktop has no extra trigger; set `open` to show the panel under the same bar.
+
+Do not use `Link` for these items. `Link` is underlined text. `NavigationLink` is the bar label. `NavigationMenuLink` is the large panel link.
+
+The closed bar fill is `colors/background/primary-blur`. Its blur is `glass/navigation/frost`. The open panel is solid `colors/background/primary`. The desktop area under the panel uses `colors/background/primary-blur` and `background-blur/navigation`.
+
+## Desktop
+
+<Canvas of={NavigationStories.Desktop} />
+
+## Desktop open
+
+<Canvas of={NavigationStories.DesktopOpen} />
+
+## Mobile
+
+The `md` breakpoint follows the viewport width, and Docs renders canvases inside a wide page. These two examples use a 390px frame so the mobile layout applies. In the story view, use the Viewport control.
+
+<iframe
+  title="Navigation mobile"
+  src="iframe.html?id=components-navigation--mobile&viewMode=story"
+  style={{ width: 390, height: 50, border: "1px solid var(--semantics-colors-border-default)", display: "block" }}
+/>
+
+## Mobile open
+
+<iframe
+  title="Navigation mobile open"
+  src="iframe.html?id=components-navigation--mobile-open&viewMode=story"
+  style={{ width: 390, height: 640, border: "1px solid var(--semantics-colors-border-default)", display: "block" }}
+/>

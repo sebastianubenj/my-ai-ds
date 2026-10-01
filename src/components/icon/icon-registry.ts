@@ -6,14 +6,17 @@ import {
   ArrowRight,
   Check,
   ChevronDown,
+  ChevronLeft,
   ChevronUp,
   Eye,
   EyeOff,
   File,
   Loader,
+  Menu,
   Minus,
   Search,
   Upload,
+  X,
   createLucideIcon,
 } from "lucide-react";
 
@@ -48,15 +51,18 @@ export const iconRegistry = {
   "arrow-right": ArrowRight,
   check: Check,
   "chevron-down": ChevronDown,
+  "chevron-left": ChevronLeft,
   "chevron-up": ChevronUp,
   eye: Eye,
   "eye-off": EyeOff,
   file: File,
   loader: Loader,
+  menu: Menu,
   minus: Minus,
   "resize-thumb": ResizeThumb,
   search: Search,
   upload: Upload,
+  x: X,
 } as const satisfies Record<string, LucideIcon>;
 
 export type IconName = keyof typeof iconRegistry;

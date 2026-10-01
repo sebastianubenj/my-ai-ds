@@ -5,6 +5,7 @@
 :root {
   --effect-shadows-popover-0: 0 0.25rem 0.375rem -0.0625rem #0000001a;
   --effect-shadows-popover-1: 0 0.125rem 0.25rem -0.125rem #0000001a;
+  --primitives-background-blur-navigation: 1.5rem;
   --primitives-border-width-border: 0.0625rem;
   --primitives-border-width-border-0-5: 0.03125rem;
   --primitives-border-width-border-1-33: 0.083125rem;
@@ -302,6 +303,7 @@
   --semantics-typography-label-label-sm-tracking-0-125: -0.0125em;
   --semantics-typography-label-label-xl-lh-snug: 1.375;
   --semantics-typography-label-label-xl-tracking-0-125: -0.0125em;
+  --semantics-background-blur-navigation: var(--primitives-background-blur-navigation);
   --semantics-colors-background-accent: var(--primitives-colors-neutral-100);
   --semantics-colors-background-default: var(--primitives-colors-white);
   --semantics-colors-background-info: var(--primitives-colors-sky-600);
@@ -317,6 +319,7 @@
   --semantics-colors-foreground-destructive: var(--primitives-colors-red-600);
   --semantics-colors-foreground-primary: var(--primitives-colors-white);
   --semantics-colors-foreground-subtle: var(--primitives-colors-neutral-500);
+  --semantics-colors-foreground-subtle-on-dark: var(--primitives-colors-neutral-400);
   --semantics-colors-interaction-navigation-link-hover: var(--primitives-colors-neutral-300);
   --semantics-colors-scrollbar-thumb: var(--primitives-colors-neutral-300);
   --semantics-glass-navigation-depth: var(--primitives-glass-default-depth);

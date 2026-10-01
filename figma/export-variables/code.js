@@ -87,41 +87,47 @@ function rawCollection(collection, variableIds) {
   };
 }
 
-const collections = await figma.variables.getLocalVariableCollectionsAsync();
-const variables = await figma.variables.getLocalVariablesAsync();
-const collectionById = new Map(collections.map((collection) => [collection.id, collection]));
+async function exportVariables() {
+  const collections = await figma.variables.getLocalVariableCollectionsAsync();
+  const variables = await figma.variables.getLocalVariablesAsync();
+  const collectionById = new Map(collections.map((collection) => [collection.id, collection]));
 
-const sortedCollections = [...collections].sort(
-  (left, right) => compareText(left.name, right.name) || compareText(left.id, right.id),
-);
-const sortedVariables = [...variables].sort((left, right) => {
-  const leftCollection = collectionById.get(left.variableCollectionId)?.name ?? "";
-  const rightCollection = collectionById.get(right.variableCollectionId)?.name ?? "";
-  return (
-    compareText(leftCollection, rightCollection) ||
-    compareText(left.name, right.name) ||
-    compareText(left.id, right.id)
+  const sortedCollections = [...collections].sort(
+    (left, right) => compareText(left.name, right.name) || compareText(left.id, right.id),
   );
-});
+  const sortedVariables = [...variables].sort((left, right) => {
+    const leftCollection = collectionById.get(left.variableCollectionId)?.name ?? "";
+    const rightCollection = collectionById.get(right.variableCollectionId)?.name ?? "";
+    return (
+      compareText(leftCollection, rightCollection) ||
+      compareText(left.name, right.name) ||
+      compareText(left.id, right.id)
+    );
+  });
 
-const idsByCollection = new Map(sortedCollections.map((collection) => [collection.id, []]));
-for (const variable of sortedVariables) {
-  const ids = idsByCollection.get(variable.variableCollectionId);
-  if (ids) ids.push(variable.id);
+  const idsByCollection = new Map(sortedCollections.map((collection) => [collection.id, []]));
+  for (const variable of sortedVariables) {
+    const ids = idsByCollection.get(variable.variableCollectionId);
+    if (ids) ids.push(variable.id);
+  }
+
+  const payload = {
+    collections: sortedCollections.map((collection) =>
+      rawCollection(collection, idsByCollection.get(collection.id) ?? []),
+    ),
+    variables: sortedVariables.map(rawVariable),
+  };
+
+  figma.showUI(__html__, { visible: false, width: 1, height: 1 });
+  figma.ui.onmessage = () => {
+    figma.closePlugin(`Downloaded ${sortedVariables.length} variables`);
+  };
+  figma.ui.postMessage({
+    filename: "figma-variables.raw.json",
+    payload,
+  });
 }
 
-const payload = {
-  collections: sortedCollections.map((collection) =>
-    rawCollection(collection, idsByCollection.get(collection.id) ?? []),
-  ),
-  variables: sortedVariables.map(rawVariable),
-};
-
-figma.showUI(__html__, { visible: false, width: 1, height: 1 });
-figma.ui.onmessage = () => {
-  figma.closePlugin(`Downloaded ${sortedVariables.length} variables`);
-};
-figma.ui.postMessage({
-  filename: "figma-variables.raw.json",
-  payload,
+exportVariables().catch((error) => {
+  figma.closePlugin(error instanceof Error ? error.message : "Export failed");
 });

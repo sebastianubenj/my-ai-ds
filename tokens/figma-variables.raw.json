@@ -14,6 +14,7 @@
         }
       ],
       "variableIds": [
+        "VariableID:387:543",
         "VariableID:9:1599",
         "VariableID:9:1597",
         "VariableID:9:1598",
@@ -278,6 +279,7 @@
         }
       ],
       "variableIds": [
+        "VariableID:388:544",
         "VariableID:18:147",
         "VariableID:16:94",
         "VariableID:19:153",
@@ -295,6 +297,7 @@
         "VariableID:19:154",
         "VariableID:16:144",
         "VariableID:18:152",
+        "VariableID:399:536",
         "VariableID:74:2149",
         "VariableID:237:3960",
         "VariableID:243:2812",
@@ -387,6 +390,21 @@
     }
   ],
   "variables": [
+    {
+      "id": "VariableID:387:543",
+      "name": "background-blur/navigation",
+      "remote": false,
+      "key": "2f0f370cf6ad3511298b3db90821115c7985e03f",
+      "variableCollectionId": "VariableCollectionId:9:2",
+      "resolvedType": "FLOAT",
+      "scopes": [],
+      "codeSyntax": {},
+      "hiddenFromPublishing": false,
+      "description": "",
+      "valuesByMode": {
+        "9:0": 24
+      }
+    },
     {
       "id": "VariableID:9:1599",
       "name": "border-width/border",
@@ -3501,7 +3519,8 @@
       "variableCollectionId": "VariableCollectionId:9:2",
       "resolvedType": "FLOAT",
       "scopes": [
-        "WIDTH_HEIGHT"
+        "WIDTH_HEIGHT",
+        "GAP"
       ],
       "codeSyntax": {},
       "hiddenFromPublishing": false,
@@ -4654,6 +4673,26 @@
       }
     },
     {
+      "id": "VariableID:388:544",
+      "name": "background-blur/navigation",
+      "remote": false,
+      "key": "332900cf0fc9a9b4aa68dce8b7f3a56069b62002",
+      "variableCollectionId": "VariableCollectionId:9:3",
+      "resolvedType": "FLOAT",
+      "scopes": [
+        "EFFECT_FLOAT"
+      ],
+      "codeSyntax": {},
+      "hiddenFromPublishing": false,
+      "description": "",
+      "valuesByMode": {
+        "9:1": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:387:543"
+        }
+      }
+    },
+    {
       "id": "VariableID:18:147",
       "name": "colors/background/accent",
       "remote": false,
@@ -5022,6 +5061,28 @@
       }
     },
     {
+      "id": "VariableID:399:536",
+      "name": "colors/foreground/subtle-on-dark",
+      "remote": false,
+      "key": "74cf9f5d2563951981265e8790f61959398c49bb",
+      "variableCollectionId": "VariableCollectionId:9:3",
+      "resolvedType": "COLOR",
+      "scopes": [
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "codeSyntax": {},
+      "hiddenFromPublishing": false,
+      "description": "",
+      "valuesByMode": {
+        "9:1": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:9:2060"
+        }
+      }
+    },
+    {
       "id": "VariableID:74:2149",
       "name": "colors/interaction/destructive/hover",
       "remote": false,
@@ -5110,7 +5171,10 @@
       "variableCollectionId": "VariableCollectionId:9:3",
       "resolvedType": "COLOR",
       "scopes": [
-        "TEXT_FILL"
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
       ],
       "codeSyntax": {},
       "hiddenFromPublishing": false,
