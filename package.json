@@ -12,7 +12,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "typecheck": "tsc -b",
-    "test": "vitest run --project storybook",
+    "test": "vitest run",
     "check": "npm run typecheck && npm run lint && npm run tokens:test && npm run test && npm run build",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"

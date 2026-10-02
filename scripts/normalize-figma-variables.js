@@ -11,6 +11,8 @@ const TOKEN_TYPE = {
   FLOAT: 'dimension',
   STRING: 'string',
   BOOLEAN: 'boolean',
+  TIMING: 'duration',
+  EASING: 'cubicBezier',
 };
 
 const SOURCE_PATH = 'tokens/tokens.json';
@@ -252,6 +254,21 @@ function variableValue(variable, byId, collectionById) {
     return normalizeFloat(value);
   }
   if (variable.resolvedType === 'STRING' || variable.resolvedType === 'BOOLEAN') return value;
+  // TIMING variables hold seconds. The value stays in seconds here; build-tokens.js
+  // formats it as milliseconds for CSS.
+  if (variable.resolvedType === 'TIMING') {
+    if (typeof value !== 'number') {
+      throw new Error(`Variable "${variable.name}" is TIMING but its value is not a number.`);
+    }
+    return normalizeFloat(value);
+  }
+  if (variable.resolvedType === 'EASING') {
+    const curve = value?.easingFunctionCubicBezier;
+    if (!curve) {
+      throw new Error(`Variable "${variable.name}" is EASING but is not a cubic bezier.`);
+    }
+    return [curve.x1, curve.y1, curve.x2, curve.y2].map(normalizeFloat);
+  }
   throw new Error(`Unsupported resolvedType "${variable.resolvedType}" on "${variable.name}".`);
 }
 

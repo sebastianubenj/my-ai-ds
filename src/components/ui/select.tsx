@@ -92,11 +92,13 @@ function collectSelectItems(children: React.ReactNode): SelectItemRecord[] {
   return items;
 }
 
-type SelectRootProps = Omit<SelectPrimitive.Root.Props<string, false>, "multiple" | "children">;
+type SelectRootProps = Omit<
+  SelectPrimitive.Root.Props<string, false>,
+  "multiple" | "children"
+>;
 
 export interface SelectProps
-  extends SelectRootProps,
-    Pick<React.ComponentProps<"button">, "ref"> {
+  extends SelectRootProps, Pick<React.ComponentProps<"button">, "ref"> {
   children?: React.ReactNode;
   /** Marks the select as invalid. Mirrored to `aria-invalid` on the trigger. */
   error?: boolean;
@@ -127,7 +129,8 @@ export function Select({
   ...rootProps
 }: SelectProps) {
   const collectedItems = collectSelectItems(children);
-  const resolvedItems = items ?? (collectedItems.length > 0 ? collectedItems : undefined);
+  const resolvedItems =
+    items ?? (collectedItems.length > 0 ? collectedItems : undefined);
 
   return (
     <SelectPrimitive.Root
@@ -146,7 +149,9 @@ export function Select({
         className={cn(triggerClassName, className)}
         ref={ref}
       >
-        {leadingIcon ? <Icon name={leadingIcon} size={iconBox20} aria-hidden="true" /> : null}
+        {leadingIcon ? (
+          <Icon name={leadingIcon} size={iconBox20} aria-hidden="true" />
+        ) : null}
         <SelectPrimitive.Value
           placeholder={placeholder}
           className="min-w-0 flex-1 truncate"
@@ -184,7 +189,7 @@ export function SelectContent({ className, children }: SelectContentProps) {
         sideOffset={4}
         align="start"
         alignItemWithTrigger={false}
-        className="z-50 outline-none"
+        className="z-(--semantics-layer-popover) outline-none"
       >
         <SelectPrimitive.Popup
           data-slot="select-content"
@@ -215,7 +220,10 @@ export function SelectContent({ className, children }: SelectContentProps) {
   );
 }
 
-export interface SelectGroupProps extends Omit<SelectPrimitive.Group.Props, "className"> {
+export interface SelectGroupProps extends Omit<
+  SelectPrimitive.Group.Props,
+  "className"
+> {
   className?: string;
 }
 
@@ -229,7 +237,10 @@ export function SelectGroup({ className, ...props }: SelectGroupProps) {
   );
 }
 
-export interface SelectLabelProps extends Omit<SelectPrimitive.GroupLabel.Props, "className"> {
+export interface SelectLabelProps extends Omit<
+  SelectPrimitive.GroupLabel.Props,
+  "className"
+> {
   leadingIcon?: IconName;
   trailingIcon?: IconName;
   className?: string;
@@ -259,14 +270,21 @@ export function SelectLabel({
       )}
       {...props}
     >
-      {leadingIcon ? <Icon name={leadingIcon} size={iconBox20} aria-hidden="true" /> : null}
+      {leadingIcon ? (
+        <Icon name={leadingIcon} size={iconBox20} aria-hidden="true" />
+      ) : null}
       <span className="min-w-0 flex-1 truncate">{children}</span>
-      {trailingIcon ? <Icon name={trailingIcon} size={iconBox20} aria-hidden="true" /> : null}
+      {trailingIcon ? (
+        <Icon name={trailingIcon} size={iconBox20} aria-hidden="true" />
+      ) : null}
     </SelectPrimitive.GroupLabel>
   );
 }
 
-export interface SelectItemProps extends Omit<SelectPrimitive.Item.Props, "className"> {
+export interface SelectItemProps extends Omit<
+  SelectPrimitive.Item.Props,
+  "className"
+> {
   destructive?: boolean;
   leadingIcon?: IconName;
   className?: string;
@@ -287,8 +305,12 @@ export function SelectItem({
       label={label ?? (typeof children === "string" ? children : undefined)}
       {...props}
     >
-      {leadingIcon ? <Icon name={leadingIcon} size={iconBox20} aria-hidden="true" /> : null}
-      <SelectPrimitive.ItemText className="min-w-0 flex-1 truncate">{children}</SelectPrimitive.ItemText>
+      {leadingIcon ? (
+        <Icon name={leadingIcon} size={iconBox20} aria-hidden="true" />
+      ) : null}
+      <SelectPrimitive.ItemText className="min-w-0 flex-1 truncate">
+        {children}
+      </SelectPrimitive.ItemText>
       <SelectPrimitive.ItemIndicator className="flex shrink-0">
         <Icon name="check" size={iconBox20} aria-hidden="true" />
       </SelectPrimitive.ItemIndicator>

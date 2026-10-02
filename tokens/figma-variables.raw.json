@@ -14,7 +14,6 @@
         }
       ],
       "variableIds": [
-        "VariableID:387:543",
         "VariableID:9:1599",
         "VariableID:9:1597",
         "VariableID:9:1598",
@@ -79,13 +78,6 @@
         "VariableID:23:208",
         "VariableID:23:212",
         "VariableID:9:2039",
-        "VariableID:372:549",
-        "VariableID:372:550",
-        "VariableID:372:551",
-        "VariableID:372:553",
-        "VariableID:372:554",
-        "VariableID:372:502",
-        "VariableID:372:552",
         "VariableID:9:1877",
         "VariableID:9:1876",
         "VariableID:9:1875",
@@ -317,6 +309,25 @@
         "VariableID:55:6549",
         "VariableID:55:6548",
         "VariableID:55:6550",
+        "VariableID:427:569",
+        "VariableID:427:575",
+        "VariableID:427:574",
+        "VariableID:427:576",
+        "VariableID:427:573",
+        "VariableID:427:567",
+        "VariableID:427:566",
+        "VariableID:425:408",
+        "VariableID:427:568",
+        "VariableID:425:404",
+        "VariableID:425:405",
+        "VariableID:427:561",
+        "VariableID:425:403",
+        "VariableID:425:406",
+        "VariableID:427:562",
+        "VariableID:425:399",
+        "VariableID:425:401",
+        "VariableID:425:398",
+        "VariableID:425:407",
         "VariableID:103:5760",
         "VariableID:103:5762",
         "VariableID:103:5761",
@@ -390,21 +401,6 @@
     }
   ],
   "variables": [
-    {
-      "id": "VariableID:387:543",
-      "name": "background-blur/navigation",
-      "remote": false,
-      "key": "2f0f370cf6ad3511298b3db90821115c7985e03f",
-      "variableCollectionId": "VariableCollectionId:9:2",
-      "resolvedType": "FLOAT",
-      "scopes": [],
-      "codeSyntax": {},
-      "hiddenFromPublishing": false,
-      "description": "",
-      "valuesByMode": {
-        "9:0": 24
-      }
-    },
     {
       "id": "VariableID:9:1599",
       "name": "border-width/border",
@@ -1665,111 +1661,6 @@
           "b": 1,
           "a": 1
         }
-      }
-    },
-    {
-      "id": "VariableID:372:549",
-      "name": "glass/default/depth",
-      "remote": false,
-      "key": "e879c8e1108ddc62dca4e1290e46e5598a9a0609",
-      "variableCollectionId": "VariableCollectionId:9:2",
-      "resolvedType": "FLOAT",
-      "scopes": [],
-      "codeSyntax": {},
-      "hiddenFromPublishing": false,
-      "description": "",
-      "valuesByMode": {
-        "9:0": 1
-      }
-    },
-    {
-      "id": "VariableID:372:550",
-      "name": "glass/default/dispersion",
-      "remote": false,
-      "key": "80fd24272a71fdd01a213217b8329a8f0b1e9b52",
-      "variableCollectionId": "VariableCollectionId:9:2",
-      "resolvedType": "FLOAT",
-      "scopes": [],
-      "codeSyntax": {},
-      "hiddenFromPublishing": false,
-      "description": "",
-      "valuesByMode": {
-        "9:0": 100
-      }
-    },
-    {
-      "id": "VariableID:372:551",
-      "name": "glass/default/frost",
-      "remote": false,
-      "key": "3890b9163933ea06c0b5c4c3f3c7bfb1b9196cf3",
-      "variableCollectionId": "VariableCollectionId:9:2",
-      "resolvedType": "FLOAT",
-      "scopes": [],
-      "codeSyntax": {},
-      "hiddenFromPublishing": false,
-      "description": "",
-      "valuesByMode": {
-        "9:0": 15
-      }
-    },
-    {
-      "id": "VariableID:372:553",
-      "name": "glass/default/light/-45",
-      "remote": false,
-      "key": "a339aa327a8b66baecb17fe2419b53bad5643547",
-      "variableCollectionId": "VariableCollectionId:9:2",
-      "resolvedType": "FLOAT",
-      "scopes": [],
-      "codeSyntax": {},
-      "hiddenFromPublishing": false,
-      "description": "",
-      "valuesByMode": {
-        "9:0": -45
-      }
-    },
-    {
-      "id": "VariableID:372:554",
-      "name": "glass/default/light/0",
-      "remote": false,
-      "key": "0db61c865b49c4675ee10ce56ee6ebd880d88b51",
-      "variableCollectionId": "VariableCollectionId:9:2",
-      "resolvedType": "FLOAT",
-      "scopes": [],
-      "codeSyntax": {},
-      "hiddenFromPublishing": false,
-      "description": "",
-      "valuesByMode": {
-        "9:0": 0
-      }
-    },
-    {
-      "id": "VariableID:372:502",
-      "name": "glass/default/refraction",
-      "remote": false,
-      "key": "f99112683e408ce06331740128ce1a69d3629f1f",
-      "variableCollectionId": "VariableCollectionId:9:2",
-      "resolvedType": "FLOAT",
-      "scopes": [],
-      "codeSyntax": {},
-      "hiddenFromPublishing": false,
-      "description": "",
-      "valuesByMode": {
-        "9:0": 0
-      }
-    },
-    {
-      "id": "VariableID:372:552",
-      "name": "glass/default/splay",
-      "remote": false,
-      "key": "1738f271e097ad6e80d19bbb2f8215242db843c6",
-      "variableCollectionId": "VariableCollectionId:9:2",
-      "resolvedType": "FLOAT",
-      "scopes": [],
-      "codeSyntax": {},
-      "hiddenFromPublishing": false,
-      "description": "",
-      "valuesByMode": {
-        "9:0": 0
       }
     },
     {
@@ -4686,10 +4577,7 @@
       "hiddenFromPublishing": false,
       "description": "",
       "valuesByMode": {
-        "9:1": {
-          "type": "VARIABLE_ALIAS",
-          "id": "VariableID:387:543"
-        }
+        "9:1": 24
       }
     },
     {
@@ -5272,10 +5160,7 @@
       "hiddenFromPublishing": false,
       "description": "",
       "valuesByMode": {
-        "9:1": {
-          "type": "VARIABLE_ALIAS",
-          "id": "VariableID:372:549"
-        }
+        "9:1": 1
       }
     },
     {
@@ -5292,10 +5177,7 @@
       "hiddenFromPublishing": false,
       "description": "",
       "valuesByMode": {
-        "9:1": {
-          "type": "VARIABLE_ALIAS",
-          "id": "VariableID:372:550"
-        }
+        "9:1": 100
       }
     },
     {
@@ -5312,10 +5194,7 @@
       "hiddenFromPublishing": false,
       "description": "",
       "valuesByMode": {
-        "9:1": {
-          "type": "VARIABLE_ALIAS",
-          "id": "VariableID:372:551"
-        }
+        "9:1": 15
       }
     },
     {
@@ -5332,10 +5211,7 @@
       "hiddenFromPublishing": false,
       "description": "",
       "valuesByMode": {
-        "9:1": {
-          "type": "VARIABLE_ALIAS",
-          "id": "VariableID:372:553"
-        }
+        "9:1": -45
       }
     },
     {
@@ -5352,10 +5228,7 @@
       "hiddenFromPublishing": false,
       "description": "",
       "valuesByMode": {
-        "9:1": {
-          "type": "VARIABLE_ALIAS",
-          "id": "VariableID:372:554"
-        }
+        "9:1": 0
       }
     },
     {
@@ -5372,10 +5245,7 @@
       "hiddenFromPublishing": false,
       "description": "",
       "valuesByMode": {
-        "9:1": {
-          "type": "VARIABLE_ALIAS",
-          "id": "VariableID:372:502"
-        }
+        "9:1": 0
       }
     },
     {
@@ -5392,10 +5262,7 @@
       "hiddenFromPublishing": false,
       "description": "",
       "valuesByMode": {
-        "9:1": {
-          "type": "VARIABLE_ALIAS",
-          "id": "VariableID:372:552"
-        }
+        "9:1": 0
       }
     },
     {
@@ -5484,6 +5351,343 @@
       }
     },
     {
+      "id": "VariableID:427:569",
+      "name": "layer/base",
+      "remote": false,
+      "key": "4c93319457ba3bc8257f569a7d985a521cb8dc00",
+      "variableCollectionId": "VariableCollectionId:9:3",
+      "resolvedType": "FLOAT",
+      "scopes": [],
+      "codeSyntax": {},
+      "hiddenFromPublishing": false,
+      "description": "",
+      "valuesByMode": {
+        "9:1": 0
+      }
+    },
+    {
+      "id": "VariableID:427:575",
+      "name": "layer/navigation",
+      "remote": false,
+      "key": "7c3ee8dba33cf57e935cdc2fd87de35e8bafe626",
+      "variableCollectionId": "VariableCollectionId:9:3",
+      "resolvedType": "FLOAT",
+      "scopes": [],
+      "codeSyntax": {},
+      "hiddenFromPublishing": false,
+      "description": "",
+      "valuesByMode": {
+        "9:1": 50
+      }
+    },
+    {
+      "id": "VariableID:427:574",
+      "name": "layer/panel",
+      "remote": false,
+      "key": "fb5a9dbc57ace908be034739c51195e8faf413ee",
+      "variableCollectionId": "VariableCollectionId:9:3",
+      "resolvedType": "FLOAT",
+      "scopes": [],
+      "codeSyntax": {},
+      "hiddenFromPublishing": false,
+      "description": "",
+      "valuesByMode": {
+        "9:1": 40
+      }
+    },
+    {
+      "id": "VariableID:427:576",
+      "name": "layer/popover",
+      "remote": false,
+      "key": "276328a66c54c9665b575f065dcfb45d83c85e44",
+      "variableCollectionId": "VariableCollectionId:9:3",
+      "resolvedType": "FLOAT",
+      "scopes": [],
+      "codeSyntax": {},
+      "hiddenFromPublishing": false,
+      "description": "",
+      "valuesByMode": {
+        "9:1": 60
+      }
+    },
+    {
+      "id": "VariableID:427:573",
+      "name": "layer/scrim",
+      "remote": false,
+      "key": "2f408f04580a03abe24e4955f5f115b79ba31c5f",
+      "variableCollectionId": "VariableCollectionId:9:3",
+      "resolvedType": "FLOAT",
+      "scopes": [],
+      "codeSyntax": {},
+      "hiddenFromPublishing": false,
+      "description": "",
+      "valuesByMode": {
+        "9:1": 30
+      }
+    },
+    {
+      "id": "VariableID:427:567",
+      "name": "motion/delay/hover-close",
+      "remote": false,
+      "key": "1dfa4a7656db38212f375c3b206cc2d55262c669",
+      "variableCollectionId": "VariableCollectionId:9:3",
+      "resolvedType": "TIMING",
+      "scopes": [
+        "ALL_SCOPES"
+      ],
+      "codeSyntax": {},
+      "hiddenFromPublishing": false,
+      "description": "",
+      "valuesByMode": {
+        "9:1": 0.11999999731779099
+      }
+    },
+    {
+      "id": "VariableID:427:566",
+      "name": "motion/delay/hover-open",
+      "remote": false,
+      "key": "1a4a6f487767a924903a24051765a0a10c362e5f",
+      "variableCollectionId": "VariableCollectionId:9:3",
+      "resolvedType": "TIMING",
+      "scopes": [
+        "ALL_SCOPES"
+      ],
+      "codeSyntax": {},
+      "hiddenFromPublishing": false,
+      "description": "",
+      "valuesByMode": {
+        "9:1": 0.07999999821186066
+      }
+    },
+    {
+      "id": "VariableID:425:408",
+      "name": "motion/delay/reveal",
+      "remote": false,
+      "key": "b03a6038721f5220e356cbfb641df7638927eee1",
+      "variableCollectionId": "VariableCollectionId:9:3",
+      "resolvedType": "TIMING",
+      "scopes": [
+        "ALL_SCOPES"
+      ],
+      "codeSyntax": {},
+      "hiddenFromPublishing": false,
+      "description": "",
+      "valuesByMode": {
+        "9:1": 0.20000000298023224
+      }
+    },
+    {
+      "id": "VariableID:427:568",
+      "name": "motion/delay/scrim",
+      "remote": false,
+      "key": "ef257ad8758e5cc5602ea7888524435edf44f1e9",
+      "variableCollectionId": "VariableCollectionId:9:3",
+      "resolvedType": "TIMING",
+      "scopes": [
+        "ALL_SCOPES"
+      ],
+      "codeSyntax": {},
+      "hiddenFromPublishing": false,
+      "description": "",
+      "valuesByMode": {
+        "9:1": 0.07999999821186066
+      }
+    },
+    {
+      "id": "VariableID:425:404",
+      "name": "motion/duration/120",
+      "remote": false,
+      "key": "dff4c2ef8517e564bc4e06d2b34b63136c8b362b",
+      "variableCollectionId": "VariableCollectionId:9:3",
+      "resolvedType": "TIMING",
+      "scopes": [
+        "ALL_SCOPES"
+      ],
+      "codeSyntax": {},
+      "hiddenFromPublishing": false,
+      "description": "",
+      "valuesByMode": {
+        "9:1": 0.11999999731779099
+      }
+    },
+    {
+      "id": "VariableID:425:405",
+      "name": "motion/duration/200",
+      "remote": false,
+      "key": "7dc32e3ff9ebe77894596692a39462f0d7171f6f",
+      "variableCollectionId": "VariableCollectionId:9:3",
+      "resolvedType": "TIMING",
+      "scopes": [
+        "ALL_SCOPES"
+      ],
+      "codeSyntax": {},
+      "hiddenFromPublishing": false,
+      "description": "",
+      "valuesByMode": {
+        "9:1": 0.20000000298023224
+      }
+    },
+    {
+      "id": "VariableID:427:561",
+      "name": "motion/duration/240",
+      "remote": false,
+      "key": "507c42a3c3adae2d61e1ec75f203a69e7a2cadeb",
+      "variableCollectionId": "VariableCollectionId:9:3",
+      "resolvedType": "TIMING",
+      "scopes": [
+        "ALL_SCOPES"
+      ],
+      "codeSyntax": {},
+      "hiddenFromPublishing": false,
+      "description": "",
+      "valuesByMode": {
+        "9:1": 0.23999999463558197
+      }
+    },
+    {
+      "id": "VariableID:425:403",
+      "name": "motion/duration/30",
+      "remote": false,
+      "key": "7a29a6d9ffafcb7237013138e727236b3f4bd637",
+      "variableCollectionId": "VariableCollectionId:9:3",
+      "resolvedType": "TIMING",
+      "scopes": [
+        "ALL_SCOPES"
+      ],
+      "codeSyntax": {},
+      "hiddenFromPublishing": false,
+      "description": "",
+      "valuesByMode": {
+        "9:1": 0.029999999329447746
+      }
+    },
+    {
+      "id": "VariableID:425:406",
+      "name": "motion/duration/320",
+      "remote": false,
+      "key": "564317af993e1001b78d8823e25373de63957e01",
+      "variableCollectionId": "VariableCollectionId:9:3",
+      "resolvedType": "TIMING",
+      "scopes": [
+        "ALL_SCOPES"
+      ],
+      "codeSyntax": {},
+      "hiddenFromPublishing": false,
+      "description": "",
+      "valuesByMode": {
+        "9:1": 0.3199999928474426
+      }
+    },
+    {
+      "id": "VariableID:427:562",
+      "name": "motion/duration/40",
+      "remote": false,
+      "key": "86c835e47b9ffdae6795b716454c9efca45a9e6e",
+      "variableCollectionId": "VariableCollectionId:9:3",
+      "resolvedType": "TIMING",
+      "scopes": [
+        "ALL_SCOPES"
+      ],
+      "codeSyntax": {},
+      "hiddenFromPublishing": false,
+      "description": "",
+      "valuesByMode": {
+        "9:1": 0.03999999910593033
+      }
+    },
+    {
+      "id": "VariableID:425:399",
+      "name": "motion/easing/in",
+      "remote": false,
+      "key": "d0e8a3aa4333a4b3b2084c1ec0c41405cd53f5b4",
+      "variableCollectionId": "VariableCollectionId:9:3",
+      "resolvedType": "EASING",
+      "scopes": [
+        "ALL_SCOPES"
+      ],
+      "codeSyntax": {},
+      "hiddenFromPublishing": false,
+      "description": "",
+      "valuesByMode": {
+        "9:1": {
+          "easingFunctionCubicBezier": {
+            "x1": 0.41999998688697815,
+            "x2": 1,
+            "y1": 0,
+            "y2": 1
+          },
+          "type": "CUSTOM_CUBIC_BEZIER"
+        }
+      }
+    },
+    {
+      "id": "VariableID:425:401",
+      "name": "motion/easing/out",
+      "remote": false,
+      "key": "2b816fde3d84d5e750ec3c0935df66dedb80d3a7",
+      "variableCollectionId": "VariableCollectionId:9:3",
+      "resolvedType": "EASING",
+      "scopes": [
+        "ALL_SCOPES"
+      ],
+      "codeSyntax": {},
+      "hiddenFromPublishing": false,
+      "description": "",
+      "valuesByMode": {
+        "9:1": {
+          "easingFunctionCubicBezier": {
+            "x1": 0,
+            "x2": 0.5799999833106995,
+            "y1": 0,
+            "y2": 1
+          },
+          "type": "CUSTOM_CUBIC_BEZIER"
+        }
+      }
+    },
+    {
+      "id": "VariableID:425:398",
+      "name": "motion/easing/standard",
+      "remote": false,
+      "key": "34dbda96bfa4ac0583fe708703d38319ff2588a0",
+      "variableCollectionId": "VariableCollectionId:9:3",
+      "resolvedType": "EASING",
+      "scopes": [
+        "ALL_SCOPES"
+      ],
+      "codeSyntax": {},
+      "hiddenFromPublishing": false,
+      "description": "",
+      "valuesByMode": {
+        "9:1": {
+          "easingFunctionCubicBezier": {
+            "x1": 0.4000000059604645,
+            "x2": 0.6000000238418579,
+            "y1": 0,
+            "y2": 1
+          },
+          "type": "CUSTOM_CUBIC_BEZIER"
+        }
+      }
+    },
+    {
+      "id": "VariableID:425:407",
+      "name": "motion/stagger",
+      "remote": false,
+      "key": "be7b9a13a33ca096550177f7707493e16e0d7b7f",
+      "variableCollectionId": "VariableCollectionId:9:3",
+      "resolvedType": "TIMING",
+      "scopes": [
+        "ALL_SCOPES"
+      ],
+      "codeSyntax": {},
+      "hiddenFromPublishing": false,
+      "description": "",
+      "valuesByMode": {
+        "9:1": 0.019999999552965164
+      }
+    },
+    {
       "id": "VariableID:103:5760",
       "name": "shadow/popover/layer-1/blur",
       "remote": false,
@@ -5497,10 +5701,7 @@
       "hiddenFromPublishing": false,
       "description": "",
       "valuesByMode": {
-        "9:1": {
-          "type": "VARIABLE_ALIAS",
-          "id": "VariableID:11:2386"
-        }
+        "9:1": 6
       }
     },
     {
@@ -5518,10 +5719,16 @@
       "description": "",
       "valuesByMode": {
         "9:1": {
-          "r": 0,
-          "g": 0,
-          "b": 0,
-          "a": 0.10000000149011612
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 1
+          },
+          "opacity": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:9:2031"
+          }
         }
       }
     },
@@ -5539,10 +5746,7 @@
       "hiddenFromPublishing": false,
       "description": "",
       "valuesByMode": {
-        "9:1": {
-          "type": "VARIABLE_ALIAS",
-          "id": "VariableID:11:2385"
-        }
+        "9:1": -1
       }
     },
     {
@@ -5559,10 +5763,7 @@
       "hiddenFromPublishing": false,
       "description": "",
       "valuesByMode": {
-        "9:1": {
-          "type": "VARIABLE_ALIAS",
-          "id": "VariableID:11:2387"
-        }
+        "9:1": 4
       }
     },
     {
@@ -5579,10 +5780,7 @@
       "hiddenFromPublishing": false,
       "description": "",
       "valuesByMode": {
-        "9:1": {
-          "type": "VARIABLE_ALIAS",
-          "id": "VariableID:11:2394"
-        }
+        "9:1": 4
       }
     },
     {
@@ -5600,10 +5798,16 @@
       "description": "",
       "valuesByMode": {
         "9:1": {
-          "r": 0,
-          "g": 0,
-          "b": 0,
-          "a": 0.10000000149011612
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 1
+          },
+          "opacity": {
+            "type": "VARIABLE_ALIAS",
+            "id": "VariableID:9:2031"
+          }
         }
       }
     },
@@ -5621,10 +5825,7 @@
       "hiddenFromPublishing": false,
       "description": "",
       "valuesByMode": {
-        "9:1": {
-          "type": "VARIABLE_ALIAS",
-          "id": "VariableID:11:2393"
-        }
+        "9:1": -2
       }
     },
     {
@@ -5641,10 +5842,7 @@
       "hiddenFromPublishing": false,
       "description": "",
       "valuesByMode": {
-        "9:1": {
-          "type": "VARIABLE_ALIAS",
-          "id": "VariableID:11:2395"
-        }
+        "9:1": 2
       }
     },
     {

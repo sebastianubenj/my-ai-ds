@@ -215,6 +215,7 @@ function classifyDimension(token) {
   if (scopes.includes('FONT_WEIGHT')) return 'font-weight';
   if (scopes.includes('OPACITY')) return 'opacity';
 
+  if (token.path?.[0] === 'semantics' && token.path?.[1] === 'layer') return 'layer';
   if (pathIncludes(token, 'font-weight')) return 'font-weight';
   if (pathIncludes(token, 'opacity')) return 'opacity';
   if (pathIncludes(token, 'line-height')) return 'line-height';
@@ -259,7 +260,7 @@ StyleDictionary.registerTransform({
   },
 });
 
-// 2. font-weight -> bare unitless integer (100-900). Figma has no dedicated
+// 2. font-weight and z-index layers -> bare unitless integer (100-900, 0-60). Figma has no dedicated
 // "number" variable type, so these are mistakenly typed "dimension" in the
 // source export, which would otherwise make them look like a sizing value.
 StyleDictionary.registerTransform({
@@ -268,7 +269,7 @@ StyleDictionary.registerTransform({
   filter: (token) =>
     token.type === 'dimension' &&
     typeof token.value === 'number' &&
-    classifyDimension(token) === 'font-weight',
+    ['font-weight', 'layer'].includes(classifyDimension(token)),
   transform: (token) => `${token.value}`,
 });
 
@@ -326,7 +327,23 @@ StyleDictionary.registerTransform({
   }
 });
 
-// 6. custom-shadow -> CSS box-shadow.
+// 6. Motion. Figma TIMING variables are exported in seconds and EASING variables
+// as [x1, y1, x2, y2] control points.
+StyleDictionary.registerTransform({
+  name: 'ds/duration',
+  type: 'value',
+  filter: (token) => token.type === 'duration' && typeof token.value === 'number',
+  transform: (token) => `${roundTo5(token.value * 1000)}ms`,
+});
+
+StyleDictionary.registerTransform({
+  name: 'ds/cubicBezier',
+  type: 'value',
+  filter: (token) => token.type === 'cubicBezier' && Array.isArray(token.value),
+  transform: (token) => `cubic-bezier(${token.value.join(', ')})`,
+});
+
+// 7. custom-shadow -> CSS box-shadow.
 // Figma exports shadow tokens as composite objects. Convert the
 // components to a standard CSS box-shadow value and keep dimensions
 // in rem to match the rest of the design-system output.
@@ -375,6 +392,8 @@ const sd = new StyleDictionary({
         'attribute/cti',
         'name/kebab',
         'ds/customShadow',
+        'ds/duration',
+        'ds/cubicBezier',
         'typography/relativeUnit',
         'ds/unitlessInteger',
         'ds/percentToUnitless',

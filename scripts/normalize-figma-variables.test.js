@@ -330,6 +330,40 @@ test('boolean value and scopes are preserved', () => {
   assert.deepEqual(token.extensions['org.lukasoppermann.figmaDesignTokens'].scopes, ['ALL_SCOPES']);
 });
 
+test('timing becomes a duration in seconds and easing a cubic bezier', () => {
+  const candidate = normalizeFigmaVariables(raw(
+    [sem],
+    [
+      variable({
+        id: 'base',
+        name: 'motion/duration/base',
+        variableCollectionId: 'c-sem',
+        resolvedType: 'TIMING',
+        valuesByMode: { 'm-sem': 0.23999999463558197 },
+      }),
+      variable({
+        id: 'standard',
+        name: 'motion/easing/standard',
+        variableCollectionId: 'c-sem',
+        resolvedType: 'EASING',
+        valuesByMode: {
+          'm-sem': {
+            type: 'CUSTOM_CUBIC_BEZIER',
+            easingFunctionCubicBezier: { x1: 0.4000000059604645, y1: 0, x2: 0.6000000238418579, y2: 1 },
+          },
+        },
+      }),
+    ],
+  ), SOURCE);
+
+  const duration = leaf(candidate, 'semantics.motion.duration.base');
+  assert.equal(duration.type, 'duration');
+  assert.equal(duration.value, 0.24);
+  const easing = leaf(candidate, 'semantics.motion.easing.standard');
+  assert.equal(easing.type, 'cubicBezier');
+  assert.deepEqual(easing.value, [0.4, 0, 0.6, 1]);
+});
+
 test('font, typography, and effect are copied unchanged', () => {
   const candidate = normalizeFigmaVariables(raw([prim], []), SOURCE);
   assert.deepEqual(candidate.font, SOURCE.font);

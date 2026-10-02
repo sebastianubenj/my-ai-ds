@@ -679,7 +679,18 @@ If generated output is incorrect, fix the source token or transformation logic a
 
 ## 21. Verification
 
-After implementing or modifying a component, pattern, or view, run `npm run check`.
+Keep validation proportional to the change. Do not run `npm run check` after every edit, and do not rerun it because of a small edit after a successful run.
+
+While iterating, use lightweight validation: type checking or linting when relevant, and targeted tests only for code directly related to them. For purely visual, styling, documentation, or Storybook-content changes, do not run the whole suite.
+
+Run the full `npm run check` when:
+
+1. A meaningful implementation task is complete, or a component, pattern, or view changed substantially.
+2. Several consecutive edits belong to one task: wait until the implementation is reasonably complete.
+3. The user asks for it.
+4. A task is about to be considered ready to commit, when appropriate.
+
+If a check fails, fix the issue and rerun only the relevant check to verify the fix.
 
 When Figma variables changed, export them and run `npm run tokens:normalize` before `npm run build:tokens`. When token source or `build-tokens.js` changed, run `npm run build:tokens` first and confirm the generated CSS has no `[object Object]` values.
 
@@ -702,9 +713,9 @@ When there are multiple technically valid implementations, prefer the one that i
 
 ## 23. Testing
 
-Behavior tests are Storybook `play` functions. `npm test` runs them in Vitest browser mode (Playwright, Chromium) through `@storybook/addon-vitest`.
+Behavior tests are Storybook `play` functions. `npm test` runs them in Vitest browser mode (Playwright, Chromium) through `@storybook/addon-vitest`, plus the `browser` project (`*.browser.test.tsx`) for behavior a story cannot set up: viewport size and media preferences such as `prefers-reduced-motion` (the `emulateReducedMotion` command in `vite.config.ts`).
 
-Do not add `*.test.ts` / `*.test.tsx` for UI that a `play` function already covers. Add a unit test only for logic that is awkward to assert through the rendered story (pure transforms, token build helpers).
+Do not add `*.test.ts` / `*.test.tsx` for UI that a `play` function already covers. `*.browser.test.tsx` is only for what a story cannot set up. Add a unit test only for logic that is awkward to assert through the rendered story (pure transforms, token build helpers).
 
 `@storybook/addon-a11y` is installed. `parameters.a11y.test` is `todo`: violations show in Storybook and do not fail `npm test`. Fix accessibility bugs in the work you touch. Do not switch this to `error` until the existing catalog is clean.
 
@@ -714,7 +725,7 @@ Do not gate on a coverage percentage. `@vitest/coverage-v8` is installed and unu
 
 - Generated files (`src/styles/generated/tokens.css`) or token JSON shape
 - Foundations and other documentation-only stories
-- CSS class strings, CVA output, or internal DOM that is not the public contract
+- CSS class strings, CVA output, or internal DOM that is not the public contract. A computed style may be asserted when it is the observable result of a behavior (for example, no transition under reduced motion, or the stagger delay of an item), never the class that produces it
 - Every visual variant when behavior is the same
 - The same behavior in both a `play` function and a unit test
 - Snapshots

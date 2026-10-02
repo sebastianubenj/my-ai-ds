@@ -34,6 +34,27 @@ export default defineConfig({
           }]
         }
       }
+    }, {
+      extends: true,
+      test: {
+        // Behavior that needs a browser condition a story cannot change: viewport size and
+        // media preferences such as reduced motion.
+        name: 'browser',
+        include: ['src/**/*.browser.test.tsx'],
+        browser: {
+          enabled: true,
+          headless: true,
+          provider: playwright({}),
+          instances: [{
+            browser: 'chromium'
+          }],
+          commands: {
+            emulateReducedMotion: async (context, value: 'reduce' | 'no-preference') => {
+              await context.page.emulateMedia({ reducedMotion: value });
+            }
+          }
+        }
+      }
     }]
   }
 });

@@ -1,34 +1,92 @@
 import * as NavigationStories from "./navigation.stories";
-import { Meta, Canvas } from "@storybook/addon-docs/blocks";
+import { Meta } from "@storybook/addon-docs/blocks";
 
 <Meta of={NavigationStories} />
 
 # Navigation
 
-One bar. Desktop shows the mark, primary links, and search. Below the `md` breakpoint it shows the mark, search, and menu.
+One bar. Desktop shows the mark, primary links, and search. Below the `md` breakpoint (768px) it shows the mark, search, and menu.
 
-The menu is one shared panel, passed as `menu`. It is not a submenu of each primary link, and the open bar does not mark a current link. `open` is controlled. On mobile the menu button opens it and the header becomes the close control (`x` on the right). Pass `onBack` to add the back control on the left. Desktop has no extra trigger; set `open` to show the panel under the same bar.
+## Desktop behavior
+
+Each `NavigationLink` is a real link. Clicking it follows `href`. Pass `menu` and `menuLabel` to also open a panel under the bar while the link is hovered, as in the Apple global nav. Moving to another link swaps the content without closing the panel. Links without `menu` just navigate. With touch there is no hover, so the first tap on a link with `menu` opens its panel and the second tap follows `href`.
+
+`menu` holds `NavigationSection` elements. The panel is one surface under the whole bar, layered over the page with the scrim behind it. It does not push the page down.
+
+- **Open and close** — hover opens it after a short delay and it stays open while the pointer is anywhere over the bar or the panel. It closes when the pointer leaves both. `Escape`, a press outside, and clicking a panel link also close it.
+- **Search** — the search button opens a search panel under the bar on click or `Enter`. Hover never opens it, and the pointer leaving the bar does not close it. The field takes focus on open. `Escape`, a press outside, or the clear button after typing behave as in the field below.
+- **Keyboard** — focusing a link with `menu` shows the Figma `ShowIconLink` chevron next to it, as a button, named by `menuLabel`. `Enter` on the link follows `href`. `Enter` on the chevron opens the panel and moves focus into it.
+- **Sticky bar** — the bar is `sticky top-0` and stays visible while the page scrolls, so the panels always open under it. Sticky only works when no ancestor of `Navigation` sets `overflow` to anything but `visible` (`hidden`, `auto`, or `scroll`), and the bar is expected at the top of the page. In an ancestor that scrolls, put `Navigation` outside it, or make the bar `fixed` through `className` (for example `fixed inset-x-0 top-0`). The panels use fixed positioning, so they follow it.
+- **Controlled value** — give each link a `value`, then use `value`, `defaultValue`, and `onValueChange` on `Navigation` to read or set the open panel. Pass `null` to close it.
+- **Mark** — the mark is a link to `logoHref`. The app decides the URL and any client-side routing, for example in a pattern or view.
+
+## Search field
+
+`NavigationSearch` is the field used in both panels. It is a `role="search"` form with a search input. `default` shows the placeholder (the `searchLabel`). `filled` appears once there is text and adds a clear button named by `clearSearchLabel`. Use `searchValue`, `onSearchValueChange`, and `onSearchSubmit` on `Navigation` to read the text and handle submit. To open or close the panel from outside, set `value` to `"search"` or `null`.
+
+## Mobile behavior
+
+The search button opens a full-screen search view with the same field and focus in the field. It animates like the menu: the menu button turns into the close control and the panel grows from the bar. Closing it returns focus to the search button.
+
+The menu button opens one shared panel passed as `menu` on `Navigation`. The `menu` of each `NavigationLink` is not used below `md`, because the links do not exist there. `open` is controlled when set, and the button works on its own when it is omitted. The header becomes the close control (`x` on the right). While the panel is open the bar stays at the top, the panel fills the viewport below it and scrolls on its own when the content is taller, and the page behind does not scroll. The menu button points at the panel with `aria-controls`. This relies on the bar being sticky at the top of the page; see the sticky note in desktop behavior.
+
+The panel has two levels. On the second level the first `NavigationSection` is shown without its heading. On the first level, a `NavigationMenuLink` with `submenu` opens that content as the second level instead of navigating, and the header gains the back control (`backLabel`) on the left. On the second level, a link navigates to its `href`, and back returns to the first level. Without `submenu`, a link always navigates, and so does every link in the desktop panel. `onBack` is called when back is pressed.
 
 Do not use `Link` for these items. `Link` is underlined text. `NavigationLink` is the bar label. `NavigationMenuLink` is the large panel link.
 
-The closed bar fill is `colors/background/primary-blur`. Its blur is `glass/navigation/frost`. The open panel is solid `colors/background/primary`. The desktop area under the panel uses `colors/background/primary-blur` and `background-blur/navigation`.
+The closed bar fill is `colors/background/primary-blur`. Its blur is `glass/navigation/frost`. The panel is solid `colors/background/primary`. The scrim over the page uses `colors/background/primary-blur` and `background-blur/navigation`.
+
+## Motion
+
+There are no motion tokens yet. Duration and easing (`cubic-bezier(0.4, 0, 0.6, 1)`) are local constants in `navigation.tsx`, taken from apple.com.
+
+- **Open and close.** The panel background is revealed from top to bottom on open and hidden from bottom to top on close (desktop), or grows in rows (mobile), over `motion/duration/320`. The scrim fades in with a short delay. Links and headings fall in from above, staggered by group and item, and leave 8px upward without delay in `motion/duration/200`. They start 8px above, wait `motion/delay-reveal` (200ms) and last `motion/duration/240` each, trailing by `motion/stagger` (20ms), as on apple.com. The delay grows by at most 12 steps, so long menus do not keep waiting. On mobile each group trails the previous one; on desktop all sections animate together, so only the item position within a section staggers it. This only happens when the panel opens, not when it switches links.
+- **Switching links.** With the panel open, hovering another link animates the panel height to the new content, growing or shrinking over `motion/duration/320`. The texts blink: the old ones disappear in `motion/duration/30` and the new ones appear in `motion/duration/40`.
+- **Menu button.** The icon has two lines that converge and rotate into a close icon on open, and reverse on close. It does the same when the search view opens.
+- **Mobile levels.** Moving to the second level, the current texts fade out while sliding 24px to the left and the new texts fade in from 24px to the right. Going back mirrors it. Both last `motion/duration/240`, and the back control fades in and out with them.
+- **Reduced motion.** All transitions are off under `prefers-reduced-motion`.
 
 ## Desktop
 
-<Canvas of={NavigationStories.Desktop} />
+The panel is layered over the page and the scrim covers the viewport, so these examples run in their own frame. Hover a link to open its panel.
+
+<iframe
+  title="Navigation desktop"
+  src="iframe.html?id=components-navigation--desktop&viewMode=story"
+  style={{
+    width: "100%",
+    height: 640,
+    border: "1px solid var(--semantics-colors-border-default)",
+    display: "block",
+  }}
+/>
 
 ## Desktop open
 
-<Canvas of={NavigationStories.DesktopOpen} />
+<iframe
+  title="Navigation desktop open"
+  src="iframe.html?id=components-navigation--desktop-open&viewMode=story"
+  style={{
+    width: "100%",
+    height: 640,
+    border: "1px solid var(--semantics-colors-border-default)",
+    display: "block",
+  }}
+/>
 
 ## Mobile
 
-The `md` breakpoint follows the viewport width, and Docs renders canvases inside a wide page. These two examples use a 390px frame so the mobile layout applies. In the story view, use the Viewport control.
+The `md` breakpoint (768px) follows the viewport width, and Docs renders canvases inside a wide page. These two examples use a 390px frame so the mobile layout applies. In the story view, use the Viewport control.
 
 <iframe
   title="Navigation mobile"
   src="iframe.html?id=components-navigation--mobile&viewMode=story"
-  style={{ width: 390, height: 50, border: "1px solid var(--semantics-colors-border-default)", display: "block" }}
+  style={{
+    width: 390,
+    height: 50,
+    border: "1px solid var(--semantics-colors-border-default)",
+    display: "block",
+  }}
 />
 
 ## Mobile open
@@ -36,5 +94,10 @@ The `md` breakpoint follows the viewport width, and Docs renders canvases inside
 <iframe
   title="Navigation mobile open"
   src="iframe.html?id=components-navigation--mobile-open&viewMode=story"
-  style={{ width: 390, height: 640, border: "1px solid var(--semantics-colors-border-default)", display: "block" }}
+  style={{
+    width: 390,
+    height: 640,
+    border: "1px solid var(--semantics-colors-border-default)",
+    display: "block",
+  }}
 />
