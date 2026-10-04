@@ -26,7 +26,7 @@ export function OpacitySpecimen({
       <div
         className={`relative size-(--primitives-spacing-20) shrink-0 overflow-hidden
           rounded-(--primitives-radius-rounded-10)
-          border-solid border-(length:--primitives-border-width-border)
+          border-solid border-(length:--primitives-stroke-width-border)
           [border-color:var(--semantics-colors-border-default)]`}
         style={{
           backgroundImage: `repeating-conic-gradient(var(--semantics-colors-background-default) 0% 25%, var(--semantics-colors-background-accent) 0% 50%)`,

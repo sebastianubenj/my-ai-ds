@@ -31,14 +31,14 @@ export function SpacingSpecimen({
       </div>
       <div
         className={`box-border flex h-(--primitives-spacing-4) w-full max-w-5xl items-stretch overflow-hidden
-          border-solid border-(length:--primitives-border-width-border)
+          border-solid border-(length:--primitives-stroke-width-border)
           [border-color:var(--semantics-colors-border-default)]
           rounded-(--primitives-radius-rounded-10)
           [background-color:var(--semantics-colors-background-accent)]`}
       >
         {px === 0 ? (
           <div
-            className="h-full w-0 shrink-0 border-r-(length:--primitives-border-width-border-2) border-solid
+            className="h-full w-0 shrink-0 border-r-(length:--primitives-stroke-width-border-2) border-solid
               [border-color:var(--semantics-colors-foreground-default)]"
             aria-hidden
           />

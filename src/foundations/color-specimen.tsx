@@ -12,7 +12,7 @@ const metaClassName = `m-0 flex flex-col gap-(--primitives-spacing-1)
   [color:var(--semantics-colors-foreground-subtle)]`;
 
 const swatchClassName = `box-border w-full shrink-0
-  border-solid border-(length:--primitives-border-width-border)
+  border-solid border-(length:--primitives-stroke-width-border)
   [border-color:var(--semantics-colors-border-default)]
   rounded-(--primitives-radius-rounded-10)`;
 

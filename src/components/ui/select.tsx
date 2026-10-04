@@ -3,6 +3,7 @@ import { Select as SelectPrimitive } from "@base-ui/react/select";
 import { cva } from "class-variance-authority";
 
 import { cn } from "@/lib/utils";
+import { scrollbarClassName } from "@/lib/scrollbar";
 import "@/lib/focus-intent";
 import { Icon, iconBox20, type IconName } from "@/components/icon";
 
@@ -19,11 +20,11 @@ const triggerClassName = `
   data-placeholder:[color:var(--semantics-colors-foreground-subtle)]
   aria-invalid:[border-color:var(--semantics-colors-border-destructive)]
   aria-invalid:[color:var(--semantics-colors-foreground-destructive)]
-  focus:border-(length:--primitives-border-width-border-2)
+  focus:border-(length:--primitives-stroke-width-border-2)
   focus:px-(--primitives-spacing-2-25)
   focus:[border-color:var(--semantics-colors-border-strong)]
   aria-invalid:focus:[border-color:var(--semantics-colors-border-destructive)]
-  data-popup-open:border-(length:--primitives-border-width-border-2)
+  data-popup-open:border-(length:--primitives-stroke-width-border-2)
   data-popup-open:px-(--primitives-spacing-2-25)
   data-popup-open:[border-color:var(--semantics-colors-border-strong)]
   aria-invalid:data-popup-open:[border-color:var(--semantics-colors-border-destructive)]
@@ -196,21 +197,18 @@ export function SelectContent({ className, children }: SelectContentProps) {
           className={cn(
             `flex w-(--anchor-width) max-h-(--available-height) flex-col overflow-hidden
              rounded-(--primitives-radius-rounded-14) border border-input bg-background
-             py-(--primitives-spacing-1) pr-(--primitives-spacing-1) pl-(--primitives-spacing-0-5)
+             px-(--primitives-spacing-0-5) py-(--primitives-spacing-1)
              [box-shadow:var(--effect-shadows-popover-0),var(--effect-shadows-popover-1)]
              outline-none`,
             className,
           )}
         >
           <SelectPrimitive.List
-            className={`min-h-0 flex-1 overflow-y-auto overscroll-contain
-              px-(--primitives-spacing-1) py-(--primitives-spacing-0-5)
-              [scrollbar-width:thin]
-              [scrollbar-color:var(--semantics-colors-scrollbar-thumb)_transparent]
-              [&::-webkit-scrollbar]:w-(--primitives-spacing-1)
-              [&::-webkit-scrollbar-track]:bg-transparent
-              [&::-webkit-scrollbar-thumb]:rounded-full
-              [&::-webkit-scrollbar-thumb]:[background-color:var(--semantics-colors-scrollbar-thumb)]`}
+            className={cn(
+              `min-h-0 flex-1 overflow-y-auto overscroll-contain [scrollbar-gutter:stable]
+              pl-(--primitives-spacing-1) pr-(--primitives-spacing-1-5) py-(--primitives-spacing-0-5)`,
+              scrollbarClassName,
+            )}
           >
             {children}
           </SelectPrimitive.List>

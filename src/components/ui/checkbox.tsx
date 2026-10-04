@@ -14,7 +14,7 @@ const checkboxVariants = cva(
       variant: {
         default: "",
         card: `w-full p-(--primitives-spacing-3)
-          border-solid border-(length:--primitives-border-width-border)
+          border-solid border-(length:--primitives-stroke-width-border)
           [border-color:var(--semantics-colors-border-default)]
           rounded-(--primitives-radius-rounded-10)
           has-aria-invalid:[border-color:var(--semantics-colors-border-destructive)]

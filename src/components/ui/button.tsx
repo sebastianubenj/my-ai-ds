@@ -46,7 +46,7 @@ const buttonVariants = cva(
           aria-disabled:opacity-(--primitives-opacity-opacity-25)`,
 
         outline: `bg-transparent [color:var(--semantics-colors-foreground-default)]
-          border-solid border-(length:--primitives-border-width-border)
+          border-solid border-(length:--primitives-stroke-width-border)
           [border-color:var(--semantics-colors-border-strong)]
           hover:[background-color:var(--semantics-colors-background-accent)]
           active:bg-transparent

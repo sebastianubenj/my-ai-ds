@@ -188,9 +188,9 @@ export const SEMANTIC_INTERACTION: SemanticColorRecord[] = [
 
 export const SEMANTIC_OTHER: SemanticColorRecord[] = [
   {
-    name: "Scrollbar / Thumb",
-    token: "semantics.colors.scrollbar.thumb",
-    cssVar: "--semantics-colors-scrollbar-thumb",
+    name: "Interaction / Scrollbar / Thumb",
+    token: "semantics.colors.interaction.scrollbar.thumb",
+    cssVar: "--semantics-colors-interaction-scrollbar-thumb",
     generated: "var(--primitives-colors-neutral-300)",
     alias: "primitives.colors.neutral.300",
   },

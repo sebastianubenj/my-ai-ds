@@ -40,7 +40,7 @@ export function RadioToggle({
         className={`peer absolute inset-0 m-0 cursor-pointer appearance-none
           [border-radius:var(--primitives-radius-rounded-full)]
           [background-color:var(--semantics-colors-background-default)]
-          border-solid border-(length:--primitives-border-width-border)
+          border-solid border-(length:--primitives-stroke-width-border)
           [border-color:var(--semantics-colors-border-default)]
           outline-none
           focus-visible:[outline:var(--primitives-ring-focus-width-ring-2)_solid_var(--semantics-colors-border-ring-focus)]

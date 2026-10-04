@@ -7,34 +7,20 @@ import { Meta, Canvas } from "@storybook/addon-docs/blocks";
 
 The design system's shadow architecture. Specimens consume the existing CSS variables. This page is documentation, not a public Shadow component.
 
-Shadows are composed as **Primitives → Semantics → Effect Style**. Primitive geometry and colors are the parts. Semantic `shadow/popover` maps the md geometry into a role. The Effect Style `shadows/popover` is the canonical complete recipe.
+Shadows are composed as **Semantics → Effect Style**. The semantic `shadow/popover` tokens hold the y, blur, spread, and color of each layer as raw values. The Effect Style `shadows/popover` is the canonical complete recipe. There are no primitive shadow tokens.
 
 Figma currently binds this shadow only on **Select** (`SelectContent`). Component demonstrations belong on the Select docs, not this Foundation.
-
-Unused primitive scale steps remain valid published tokens. Unused means no Figma binding and not an alias target of a bound semantic token. `shadows/scale/md/*` is **Used** because semantic popover aliases those primitives, even though the md tokens have no direct node bindings.
 
 Shadow colors contain their own alpha. They stay in this Foundation; they are not Colors tokens and are not Opacity tokens.
 
 ## Popover Recipe
 
-The only complete Figma Effect Style. Consume the generated `--effect-shadows-popover-*` variables as a stacked `box-shadow`. There is no semantic x token; offset X comes from primitive `shadows/scale/x` (0).
+The only complete Figma Effect Style. Consume the generated `--effect-shadows-popover-*` variables as a stacked `box-shadow`. Offset X is always 0 and has no token.
 
 <Canvas of={ShadowStories.PopoverRecipe} />
 
-## Primitive Scale
-
-Decomposed y, blur, and spread parts, plus shared x. Specimens compose `box-shadow` from those CSS variables and `primitives.shadows.color.black-10` so the geometry is visible. That color choice is a scale demonstration. It is **not** an official Effect Style. Do not treat sm, lg, xl, or 2xl as published recipes.
-
-<Canvas of={ShadowStories.PrimitiveScale} />
-
-## Primitive Colors
-
-Effect colors with baked-in alpha. All four are currently unused as Figma variable bindings. Semantic popover color is the same hex as `black-10` (`#0000001a`) but is a raw value, not an alias.
-
-<Canvas of={ShadowStories.PrimitiveColors} />
-
 ## Semantic Parts
 
-`shadow/popover` aliases `primitives.shadows.scale.md` for y, blur, and spread on each layer. Color is raw `#0000001a`, not aliased to `shadows/color/black-10`. Layer specimens below are part demonstrations. The canonical complete shadow is the Effect Style above.
+`shadow/popover` stores y, blur, spread, and color (`#0000001a`) per layer as raw values. Layer specimens below are part demonstrations. The canonical complete shadow is the Effect Style above.
 
 <Canvas of={ShadowStories.SemanticParts} />

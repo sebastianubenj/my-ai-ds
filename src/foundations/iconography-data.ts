@@ -92,9 +92,9 @@ export const FIGMA_UTILITY_ICON_SIZE = 24;
  * icon-specific token.
  */
 export const ICON_STROKE = {
-  figmaName: "border-width/border-1,33",
-  token: "primitives.border-width.border-1,33",
-  cssVar: "--primitives-border-width-border-1-33",
+  figmaName: "stroke-width/border-1,33",
+  token: "primitives.stroke-width.border-1,33",
+  cssVar: "--primitives-stroke-width-border-1-33",
   figmaPx: 1.33,
   reactStrokeWidth: 2,
   lucideViewBox: 24,

@@ -38,19 +38,18 @@ const RING_FOCUS_WIDTH_SCALE: Omit<BorderTokenRecord, "figmaName" | "token" | "c
   { px: 1, rem: "0.0625rem", used: false, status: "Unused" },
   { px: 2, rem: "0.125rem", used: true, status: "Used — Focus Visible" },
   { px: 3, rem: "0.1875rem", used: false, status: "Unused" },
-  { px: 4, rem: "0.25rem", used: false, status: "Unused" },
 ];
 
-const RING_FOCUS_WIDTH_STEPS = ["ring-0", "ring-1", "ring-2", "ring-3", "ring-4"] as const;
+const RING_FOCUS_WIDTH_STEPS = ["ring-0", "ring-1", "ring-2", "ring-3"] as const;
 
 function cssVarFromStep(group: string, step: string) {
   return `--primitives-${group}-${step.replaceAll(",", "-")}`;
 }
 
 export const BORDER_WIDTH_TOKENS: BorderTokenRecord[] = BORDER_WIDTH_STEPS.map((step, index) => ({
-  figmaName: `border-width/${step}`,
-  token: `primitives.border-width.${step}`,
-  cssVar: cssVarFromStep("border-width", step),
+  figmaName: `stroke-width/${step}`,
+  token: `primitives.stroke-width.${step}`,
+  cssVar: cssVarFromStep("stroke-width", step),
   ...BORDER_WIDTH_SCALE[index],
 }));
 

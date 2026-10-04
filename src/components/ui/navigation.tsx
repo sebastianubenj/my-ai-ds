@@ -2,6 +2,7 @@ import * as React from "react";
 import { NavigationMenu } from "@base-ui/react/navigation-menu";
 
 import { cn } from "@/lib/utils";
+import { scrollbarClassName } from "@/lib/scrollbar";
 import { Icon, iconBox16, iconBox20 } from "@/components/icon";
 
 const focusRing = `relative outline-none
@@ -355,7 +356,7 @@ function NavigationMenuIcon({ open }: { open: boolean }) {
       viewBox="0 0 16 16"
       aria-hidden="true"
       data-state={open ? "open" : "closed"}
-      className="group/menu-icon size-(--primitives-spacing-4) fill-none stroke-current [stroke-width:var(--primitives-border-width-border-1-33)]"
+      className="group/menu-icon size-(--primitives-spacing-4) fill-none stroke-current [stroke-width:var(--primitives-stroke-width-border-1-33)]"
       strokeLinecap="round"
     >
       <g
@@ -1292,9 +1293,10 @@ export function Navigation({
               ref={mobileMenuRef}
               data-slot="navigation-menu"
               aria-label={menuLabel}
-              className="min-h-0 overflow-x-hidden overflow-y-auto overscroll-contain
-              [background-color:var(--semantics-colors-background-primary)]
-              [color:var(--semantics-colors-foreground-primary)]"
+              className={cn(
+                "min-h-0 overflow-x-hidden overflow-y-auto overscroll-contain [background-color:var(--semantics-colors-background-primary)] [color:var(--semantics-colors-foreground-primary)]",
+                scrollbarClassName,
+              )}
             >
               <MobileLevelView
                 level={level}
@@ -1305,9 +1307,10 @@ export function Navigation({
           ) : (
             <div
               data-slot="navigation-search-panel"
-              className="min-h-0 overflow-x-hidden overflow-y-auto overscroll-contain
-              [background-color:var(--semantics-colors-background-primary)]
-              [color:var(--semantics-colors-foreground-primary)]"
+              className={cn(
+                "min-h-0 overflow-x-hidden overflow-y-auto overscroll-contain [background-color:var(--semantics-colors-background-primary)] [color:var(--semantics-colors-foreground-primary)]",
+                scrollbarClassName,
+              )}
             >
               <div
                 className={cn(

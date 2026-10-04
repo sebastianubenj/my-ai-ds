@@ -40,7 +40,7 @@ export function Input({
          h-(--primitives-spacing-11) rounded-(--primitives-radius-rounded-14)
          border border-input bg-background px-(--primitives-spacing-2-5)
          has-aria-invalid:[border-color:var(--semantics-colors-border-destructive)]
-         has-[[data-slot=input]:focus]:border-(length:--primitives-border-width-border-2)
+         has-[[data-slot=input]:focus]:border-(length:--primitives-stroke-width-border-2)
          has-[[data-slot=input]:focus]:px-(--primitives-spacing-2-25)
          has-[[data-slot=input]:focus]:[border-color:var(--semantics-colors-border-strong)]
          has-aria-invalid:has-[[data-slot=input]:focus]:[border-color:var(--semantics-colors-border-destructive)]

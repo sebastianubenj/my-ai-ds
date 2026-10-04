@@ -71,7 +71,7 @@ export function CheckboxToggle({
         className={`peer absolute inset-0 m-0 cursor-pointer appearance-none
           rounded-(--primitives-radius-rounded-sm)
           [background-color:var(--semantics-colors-background-default)]
-          border-solid border-(length:--primitives-border-width-border)
+          border-solid border-(length:--primitives-stroke-width-border)
           [border-color:var(--semantics-colors-border-default)]
           outline-none
           focus-visible:[outline:var(--primitives-ring-focus-width-ring-2)_solid_var(--semantics-colors-border-ring-focus)]
@@ -85,8 +85,8 @@ export function CheckboxToggle({
           aria-invalid:[border-color:var(--semantics-colors-border-destructive)]
           aria-invalid:checked:border-0
           aria-invalid:indeterminate:border-0
-          aria-invalid:checked:[box-shadow:inset_0_0_0_var(--primitives-border-width-border)_var(--semantics-colors-border-destructive)]
-          aria-invalid:indeterminate:[box-shadow:inset_0_0_0_var(--primitives-border-width-border)_var(--semantics-colors-border-destructive)]
+          aria-invalid:checked:[box-shadow:inset_0_0_0_var(--primitives-stroke-width-border)_var(--semantics-colors-border-destructive)]
+          aria-invalid:indeterminate:[box-shadow:inset_0_0_0_var(--primitives-stroke-width-border)_var(--semantics-colors-border-destructive)]
           disabled:pointer-events-none disabled:cursor-default`}
       />
       <Icon

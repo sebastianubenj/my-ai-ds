@@ -79,7 +79,7 @@ export function FocusRingSpecimen(record: BorderTokenRecord) {
         <div
           className={`box-border size-(--primitives-spacing-12) shrink-0
             rounded-(--primitives-radius-rounded-18)
-            border-solid border-(length:--primitives-border-width-border)
+            border-solid border-(length:--primitives-stroke-width-border)
             [border-color:var(--semantics-colors-border-default)]
             [background-color:var(--semantics-colors-background-default)]
             [outline-color:var(--semantics-colors-border-ring-focus)]

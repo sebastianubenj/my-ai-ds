@@ -29,7 +29,7 @@ export function RadiusSpecimen({
       >
         <div
           className={`box-border size-(--primitives-spacing-16) shrink-0
-            border-solid border-(length:--primitives-border-width-border)
+            border-solid border-(length:--primitives-stroke-width-border)
             [border-color:var(--semantics-colors-border-default)]
             [background-color:var(--semantics-colors-background-primary)]`}
           style={{ borderRadius: `var(${cssVar})` }}

@@ -39,7 +39,7 @@ export function Textarea({ className, error = false, disabled, ref, ...props }: 
           aria-invalid:[border-color:var(--semantics-colors-border-destructive)]
           aria-invalid:text-destructive-foreground
           aria-invalid:placeholder:text-destructive-foreground
-          focus:[border-width:var(--primitives-border-width-border-2)]
+          focus:[border-width:var(--primitives-stroke-width-border-2)]
           focus:[padding:var(--primitives-spacing-1-75)_var(--primitives-spacing-1-5)_var(--primitives-spacing-1-5)_var(--primitives-spacing-2-25)]
           focus:[border-color:var(--semantics-colors-border-strong)]
           aria-invalid:focus:[border-color:var(--semantics-colors-border-destructive)]
