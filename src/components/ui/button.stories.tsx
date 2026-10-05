@@ -18,6 +18,12 @@ const meta = {
       options: ["primary", "secondary", "destructive", "outline", "ghost"],
       description: "Controls the visual style of the button.",
     },
+    surface: {
+      control: "select",
+      options: ["default", "on-primary"],
+      description:
+        "Surface the button sits on. on-primary is for a primary action on background/primary.",
+    },
     size: {
       control: "select",
       options: [
@@ -109,6 +115,22 @@ export const Ghost: Story = {
     size: "md",
     children: "Button",
   },
+};
+
+export const OnPrimary: Story = {
+  args: {
+    variant: "primary",
+    surface: "on-primary",
+    size: "md",
+    children: "Button",
+  },
+  decorators: [
+    (Story) => (
+      <div className="flex items-center justify-center rounded-(--primitives-radius-rounded-xl) p-(--primitives-spacing-8) [background-color:var(--semantics-colors-background-primary)]">
+        <Story />
+      </div>
+    ),
+  ],
 };
 
 /* -------------------------------------------------------------------------- */

@@ -21,7 +21,7 @@ const noteClassName = `m-0 font-sans [font-weight:var(--semantics-typography-bod
 
 const surfaceClassName = `box-border size-(--primitives-spacing-20) shrink-0
   rounded-(--primitives-radius-rounded-14)
-  border-solid border-(length:--primitives-stroke-width-border)
+  border-solid border-(length:--primitives-stroke-width-stroke)
   [border-color:var(--semantics-colors-border-default)]
   [background-color:var(--semantics-colors-background-default)]`;
 

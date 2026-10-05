@@ -14,7 +14,7 @@ const checkboxVariants = cva(
       variant: {
         default: "",
         card: `w-full p-(--primitives-spacing-3)
-          border-solid border-(length:--primitives-stroke-width-border)
+          border-solid border-(length:--primitives-stroke-width-stroke)
           [border-color:var(--semantics-colors-border-default)]
           rounded-(--primitives-radius-rounded-10)
           has-aria-invalid:[border-color:var(--semantics-colors-border-destructive)]
@@ -77,7 +77,7 @@ export function Checkbox({
 
   return (
     <label data-slot="checkbox" className={cn(checkboxVariants({ variant }), className)}>
-      <span className="flex shrink-0 items-start pt-(--primitives-spacing-0-25)">
+      <span className="flex shrink-0 items-start pt-(--primitives-spacing-out-of-scale-0-25)">
         <CheckboxToggle
           {...inputProps}
           className={toggleDisabledVisualReset}
@@ -91,7 +91,7 @@ export function Checkbox({
         />
       </span>
       {showLabel || showDescription ? (
-        <span className="flex min-w-0 flex-col gap-(--primitives-spacing-0-5)">
+        <span className="flex min-w-0 flex-col gap-(--primitives-spacing-out-of-scale-0-5)">
           {showLabel ? (
             <span
               className={cn(

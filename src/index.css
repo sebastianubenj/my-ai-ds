@@ -1,5 +1,6 @@
 /* 1. IMPORTAR TOKENS GENERADOS (SIEMPRE ARRIBA) */
 @import "./styles/generated/tokens.css";
+@import "./styles/generated/tokens.dark.css";
 
 /* 2. IMPORTS DE TAILWIND Y LIBRERÍAS */
 @import "tailwindcss";
@@ -93,8 +94,12 @@
     --sidebar-ring: oklch(0.708 0 0);
 }
 
-/* Dark is not part of the Figma system. Do not add `.dark` or `dark:` utilities.
-   `npx shadcn add` may restore a `.dark` block — delete it again. */
+/* Dark mode comes from the Semantic Colors collection in Figma. It is applied with
+   `data-theme="dark"` on <html>, and tokens.dark.css overrides the --semantics-colors-* variables.
+   Do not add `.dark` or `dark:` utilities. `npx shadcn add` may restore a `.dark` block — delete it again. */
+:root[data-theme="dark"] {
+    color-scheme: dark;
+}
 
 @layer base {
   * {
@@ -102,7 +107,8 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply text-foreground;
+    background-color: var(--semantics-colors-background-page);
   }
 
   html {

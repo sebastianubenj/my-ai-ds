@@ -36,7 +36,7 @@ Figma also has a 24×24 `Utility / Component Icon` wrapper. 24px is not an estab
 
 ## Stroke
 
-Figma Lucide vectors bind stroke width to `stroke-width/border-1,33` (1.33px) at the 16px master. That token belongs to the **Borders** foundation. It is not an icon-specific stroke token.
+Figma Lucide vectors bind stroke width to `stroke-width/stroke-1,33` (1.33px) at the 16px master. That token belongs to the **Borders** foundation. It is not an icon-specific stroke token.
 
 React uses Lucide's default `strokeWidth={2}` on a 24×24 viewBox. The stroke stays in viewBox units, so it scales with the box:
 
@@ -69,6 +69,6 @@ React:
 
 Naming is Lucide kebab on both sides (`Lucide Icons / arrow-left` → `arrow-left`). `resize-thumb` is a project-specific filled exception.
 
-Figma contains about 1531 Lucide components. React currently exposes 17 registry names. That is a curated Phase 1 subset, not a requirement to import the full Figma catalog, and unused Figma icons have not been pixel-verified. Semantic `icon-library/*` booleans control Figma placeholder visibility only; React does not consume them.
+Figma contains about 1531 Lucide components. React currently exposes 18 registry names. That is a curated Phase 1 subset, not a requirement to import the full Figma catalog, and unused Figma icons have not been pixel-verified. Semantic `icon-library/*` booleans control Figma placeholder visibility only; React does not consume them.
 
 <Canvas of={IconographyStories.FigmaToCode} />

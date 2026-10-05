@@ -27,10 +27,10 @@ export function Textarea({ className, error = false, disabled, ref, ...props }: 
         disabled={disabled}
         aria-invalid={error}
       className={`box-border block w-full resize-y bg-background outline-none
-          h-[var(--primitives-spacing-22)] min-h-[var(--primitives-spacing-22)]
+          h-[var(--primitives-spacing-out-of-scale-22)] min-h-[var(--primitives-spacing-out-of-scale-22)]
           rounded-(--primitives-radius-rounded-14)
           border border-input
-          [padding:var(--primitives-spacing-2)_var(--primitives-spacing-1-5)_var(--primitives-spacing-1-5)_var(--primitives-spacing-2-5)]
+          [padding:var(--primitives-spacing-2)_var(--primitives-spacing-out-of-scale-1-5)_var(--primitives-spacing-out-of-scale-1-5)_var(--primitives-spacing-out-of-scale-2-5)]
           font-sans [font-weight:var(--semantics-typography-body-font-weight)]
           text-(length:--semantics-typography-body-body-lg-font-size)
           leading-(--semantics-typography-body-body-lg-lh-normal)
@@ -39,12 +39,12 @@ export function Textarea({ className, error = false, disabled, ref, ...props }: 
           aria-invalid:[border-color:var(--semantics-colors-border-destructive)]
           aria-invalid:text-destructive-foreground
           aria-invalid:placeholder:text-destructive-foreground
-          focus:[border-width:var(--primitives-stroke-width-border-2)]
-          focus:[padding:var(--primitives-spacing-1-75)_var(--primitives-spacing-1-5)_var(--primitives-spacing-1-5)_var(--primitives-spacing-2-25)]
+          focus:[border-width:var(--primitives-stroke-width-stroke-2)]
+          focus:[padding:var(--primitives-spacing-out-of-scale-1-75)_var(--primitives-spacing-out-of-scale-1-5)_var(--primitives-spacing-out-of-scale-1-5)_var(--primitives-spacing-out-of-scale-2-25)]
           focus:[border-color:var(--semantics-colors-border-strong)]
           aria-invalid:focus:[border-color:var(--semantics-colors-border-destructive)]
           intent-keyboard:focus:[outline:var(--primitives-ring-focus-width-ring-2)_solid_var(--semantics-colors-border-ring-focus)]
-          intent-keyboard:focus:[outline-offset:var(--primitives-spacing-0-75)]
+          intent-keyboard:focus:[outline-offset:var(--primitives-spacing-out-of-scale-0-75)]
           disabled:cursor-default
           [&::-webkit-resizer]:opacity-0`}
         ref={ref}
@@ -53,7 +53,7 @@ export function Textarea({ className, error = false, disabled, ref, ...props }: 
         name="resize-thumb"
         size={iconBox20}
         aria-hidden="true"
-        className="pointer-events-none absolute [bottom:var(--primitives-spacing-1-5)] [right:var(--primitives-spacing-1-5)]"
+        className="pointer-events-none absolute [bottom:var(--primitives-spacing-out-of-scale-1-5)] [right:var(--primitives-spacing-out-of-scale-1-5)]"
       />
     </div>
   );

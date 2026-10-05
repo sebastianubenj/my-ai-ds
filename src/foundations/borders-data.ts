@@ -25,12 +25,12 @@ const BORDER_WIDTH_SCALE: Omit<BorderTokenRecord, "figmaName" | "token" | "cssVa
 ];
 
 const BORDER_WIDTH_STEPS = [
-  "border-0,5",
-  "border",
-  "border-1,33",
-  "border-1,5",
-  "border-1,66",
-  "border-2",
+  "stroke-0,5",
+  "stroke",
+  "stroke-1,33",
+  "stroke-1,5",
+  "stroke-1,66",
+  "stroke-2",
 ] as const;
 
 const RING_FOCUS_WIDTH_SCALE: Omit<BorderTokenRecord, "figmaName" | "token" | "cssVar">[] = [

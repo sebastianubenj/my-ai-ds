@@ -3,11 +3,11 @@ import { NavigationMenu } from "@base-ui/react/navigation-menu";
 
 import { cn } from "@/lib/utils";
 import { scrollbarClassName } from "@/lib/scrollbar";
-import { Icon, iconBox16, iconBox20 } from "@/components/icon";
+import { Icon, iconBox16, iconBox20, type IconName } from "@/components/icon";
 
 const focusRing = `relative outline-none
   after:pointer-events-none after:absolute after:content-[''] after:hidden
-  after:[inset:calc(-1*(var(--primitives-spacing-0-75)+var(--primitives-ring-focus-width-ring-2)))]
+  after:[inset:calc(-1*(var(--primitives-spacing-out-of-scale-0-75)+var(--primitives-ring-focus-width-ring-2)))]
   after:[border:var(--primitives-ring-focus-width-ring-2)_solid_var(--semantics-colors-border-ring-focus)]
   after:[border-radius:var(--primitives-radius-rounded-sm)]
   focus-visible:after:block`;
@@ -19,39 +19,41 @@ const linkClassName = `inline-flex h-(--primitives-spacing-8) shrink-0 items-cen
   leading-(--semantics-typography-label-label-sm-lh-snug)
   tracking-(--semantics-typography-label-label-sm-tracking-0-125)
   whitespace-nowrap [color:inherit] cursor-pointer
-  hover:[color:var(--semantics-colors-interaction-navigation-link-hover)]
+  [@media(hover:hover)]:hover:[color:var(--semantics-colors-foreground-primary-highlight)]
   ${focusRing}`;
 
 const menuLinkClassName = `flex w-full items-center justify-start no-underline
-  px-(--primitives-spacing-8) py-(--primitives-spacing-1-5) md:px-(--primitives-spacing-2)
+  px-(--primitives-spacing-8) py-(--primitives-spacing-out-of-scale-1-5) md:px-(--primitives-spacing-2)
   font-sans [font-weight:var(--semantics-typography-heading-font-weight)]
   text-(length:--semantics-typography-heading-heading-xl-font-size)
   leading-(--semantics-typography-heading-heading-xl-lh-tight)
   tracking-(--semantics-typography-heading-heading-xl-tracking-tight)
   whitespace-nowrap cursor-pointer
   [color:var(--semantics-colors-foreground-primary)]
-  hover:[color:var(--semantics-colors-interaction-navigation-link-hover)]
+  [@media(hover:hover)]:hover:[color:var(--semantics-colors-foreground-primary-highlight)]
   ${focusRing}`;
 
 const iconButtonClassName = `box-border inline-flex shrink-0 items-center justify-center
   border-0 bg-transparent p-0 [color:inherit] cursor-pointer
-  hover:[color:var(--semantics-colors-interaction-navigation-link-hover)]
-  size-(--primitives-spacing-9)
+  pointer-events-auto
+  [@media(hover:hover)]:hover:[color:var(--semantics-colors-foreground-primary-highlight)]
+  size-(--primitives-spacing-out-of-scale-9)
+  md:h-(--primitives-spacing-8) md:w-auto md:px-(--primitives-spacing-1)
   ${focusRing}`;
 
-const chevronClassName = `absolute top-0 left-[calc(100%-var(--primitives-spacing-1)+var(--primitives-spacing-1-5))]
+const chevronClassName = `absolute top-0 left-[calc(100%-var(--primitives-spacing-1)+var(--primitives-spacing-out-of-scale-1-5))]
   box-border inline-flex h-(--primitives-spacing-8) w-(--primitives-spacing-3) items-center justify-center
   pt-(--primitives-spacing-1)
   border-0 bg-transparent [color:inherit] cursor-pointer
   pointer-events-none opacity-0
   group-has-[:focus-visible]/item:pointer-events-auto group-has-[:focus-visible]/item:opacity-100
-  hover:[color:var(--semantics-colors-interaction-navigation-link-hover)]`;
+  [@media(hover:hover)]:hover:[color:var(--semantics-colors-foreground-primary-highlight)]`;
 
 const SEARCH_VALUE = "search";
 const DESKTOP_QUERY = "(min-width: 48rem)";
 
 const searchFieldClassName = `box-border flex w-full items-center
-  gap-(--primitives-spacing-2-5) py-(--primitives-spacing-1-5)
+  gap-(--primitives-spacing-out-of-scale-2-5) py-(--primitives-spacing-out-of-scale-1-5)
   [color:var(--semantics-colors-foreground-primary)]`;
 
 const searchInputClassName = `min-w-0 flex-1 border-0 bg-transparent p-0 outline-none font-sans
@@ -60,7 +62,7 @@ const searchInputClassName = `min-w-0 flex-1 border-0 bg-transparent p-0 outline
   leading-(--semantics-typography-heading-heading-xl-lh-tight)
   tracking-(--semantics-typography-heading-heading-xl-tracking-tight)
   [color:var(--semantics-colors-foreground-primary)]
-  placeholder:[color:var(--semantics-colors-foreground-subtle-on-dark)]
+  placeholder:[color:var(--semantics-colors-foreground-primary-subtle)]
   [&::-webkit-search-cancel-button]:hidden`;
 
 function useIsDesktop() {
@@ -83,6 +85,16 @@ interface NavigationContextValue {
   cancelPendingOpen: () => void;
   /** Opens the panel of a link on its first touch. Returns false when it is already open. */
   openFromTouch: (value: string) => boolean;
+  searchLabel: string;
+  clearSearchLabel: string;
+  search: string;
+  changeSearch: (value: string) => void;
+  onSearchSubmit?: (value: string) => void;
+  onSearch?: () => void;
+  requestSearch: () => void;
+  isDesktop: boolean;
+  searchButtonRef: React.RefObject<HTMLButtonElement | null>;
+  expanded: boolean;
 }
 
 interface MobileLevelContextValue {
@@ -356,7 +368,7 @@ function NavigationMenuIcon({ open }: { open: boolean }) {
       viewBox="0 0 16 16"
       aria-hidden="true"
       data-state={open ? "open" : "closed"}
-      className="group/menu-icon size-(--primitives-spacing-4) fill-none stroke-current [stroke-width:var(--primitives-stroke-width-border-1-33)]"
+      className="group/menu-icon size-(--primitives-spacing-4) fill-none stroke-current [stroke-width:var(--primitives-stroke-width-stroke-1-33)]"
       strokeLinecap="round"
     >
       <g
@@ -504,14 +516,17 @@ export function NavigationLink({
 
   if (!hasMenu) {
     return (
-      <NavigationMenu.Item value={itemValue} className="relative">
+      <NavigationMenu.Item value={itemValue} className="relative max-md:hidden">
         {anchor}
       </NavigationMenu.Item>
     );
   }
 
   return (
-    <NavigationMenu.Item value={itemValue} className="group/item relative">
+    <NavigationMenu.Item
+      value={itemValue}
+      className="group/item relative max-md:hidden"
+    >
       {anchor}
       <NavigationMenu.Trigger
         data-slot="navigation-link-menu-trigger"
@@ -588,7 +603,7 @@ export function NavigationSection({
             text-(length:--semantics-typography-label-label-sm-font-size)
             leading-(--semantics-typography-label-label-sm-lh-snug)
             tracking-(--semantics-typography-label-label-sm-tracking-0-125)
-            [color:var(--semantics-colors-foreground-subtle-on-dark)]`}
+            [color:var(--semantics-colors-foreground-primary-subtle)]`}
         >
           {heading}
         </h2>
@@ -662,7 +677,7 @@ export function NavigationSearch({
         name="search"
         size={iconBox20}
         aria-hidden="true"
-        className="shrink-0 [color:var(--semantics-colors-foreground-subtle-on-dark)]"
+        className="shrink-0 [color:var(--semantics-colors-foreground-primary-subtle)]"
       />
       <input
         {...props}
@@ -685,9 +700,9 @@ export function NavigationSearch({
             inputElement.current?.focus();
           }}
           className={cn(
-            "box-border inline-flex size-(--primitives-spacing-5) shrink-0 items-center justify-center",
+            "box-border inline-flex size-(--primitives-spacing-out-of-scale-5) shrink-0 items-center justify-center",
             "border-0 bg-transparent p-0 [color:inherit] cursor-pointer",
-            "hover:[color:var(--semantics-colors-interaction-navigation-link-hover)]",
+            "[@media(hover:hover)]:hover:[color:var(--semantics-colors-foreground-primary-highlight)]",
             focusRing,
           )}
         >
@@ -698,11 +713,132 @@ export function NavigationSearch({
   );
 }
 
+export interface NavigationIconButtonProps extends React.ComponentProps<"button"> {
+  name: IconName;
+}
+
+export function NavigationIconButton({
+  name,
+  className,
+  onPointerEnter,
+  ...props
+}: NavigationIconButtonProps) {
+  const navigation = React.useContext(NavigationContext);
+
+  return (
+    <NavigationMenu.Item>
+      <button
+        type="button"
+        data-slot="navigation-icon-button"
+        className={cn(
+          iconButtonClassName,
+          navigation?.expanded && "max-md:hidden",
+          className,
+        )}
+        onPointerEnter={(event) => {
+          onPointerEnter?.(event);
+          if (event.pointerType === "mouse") navigation?.openFromHover(null);
+        }}
+        {...props}
+      >
+        <Icon name={name} size={iconBox16} />
+      </button>
+    </NavigationMenu.Item>
+  );
+}
+
+export function NavigationSearchTrigger({
+  className,
+}: {
+  className?: string;
+}) {
+  const navigation = React.useContext(NavigationContext);
+  if (!navigation) {
+    throw new Error("NavigationSearchTrigger must be rendered inside Navigation.");
+  }
+
+  const {
+    searchLabel,
+    clearSearchLabel,
+    search,
+    changeSearch,
+    onSearchSubmit,
+    onSearch,
+    requestSearch,
+    isDesktop,
+    searchButtonRef,
+    expanded,
+    openFromHover,
+  } = navigation;
+
+  const field = (
+    <NavigationSearch
+      label={searchLabel}
+      clearLabel={clearSearchLabel}
+      value={search}
+      onValueChange={changeSearch}
+      onSubmit={onSearchSubmit}
+      autoFocus
+    />
+  );
+
+  if (isDesktop) {
+    return (
+      <NavigationMenu.Item value={SEARCH_VALUE}>
+        <NavigationMenu.Trigger
+          data-slot="navigation-search-trigger"
+          aria-label={searchLabel}
+          onClick={() => onSearch?.()}
+          onPointerEnter={(event) => {
+            if (event.pointerType === "mouse") openFromHover(null);
+          }}
+          className={cn(iconButtonClassName, className)}
+        >
+          <Icon name="search" size={iconBox16} />
+        </NavigationMenu.Trigger>
+        <NavigationMenu.Content
+          className={cn(
+            panelContentClassName,
+            "justify-start pb-(--primitives-spacing-32)",
+          )}
+        >
+          <div
+            className={cn(
+              "ml-[var(--navigation-content-offset,0px)] w-[min(100%,var(--navigation-content-width,100%))]",
+              itemMotionClassName,
+            )}
+          >
+            {field}
+          </div>
+        </NavigationMenu.Content>
+      </NavigationMenu.Item>
+    );
+  }
+
+  return (
+    <NavigationMenu.Item>
+      <button
+        ref={searchButtonRef}
+        type="button"
+        data-slot="navigation-search-trigger"
+        aria-label={searchLabel}
+        onClick={requestSearch}
+        className={cn(iconButtonClassName, expanded && "hidden", className)}
+      >
+        <Icon name="search" size={iconBox16} />
+      </button>
+    </NavigationMenu.Item>
+  );
+}
+
 export interface NavigationProps extends Omit<
   React.ComponentProps<"header">,
   "children" | "defaultValue"
 > {
-  /** `NavigationLink` items. Hidden below the `md` breakpoint. */
+  /**
+   * Bar items: `NavigationLink`, `NavigationSearchTrigger`, and `NavigationIconButton`.
+   * Links are hidden below the `md` breakpoint. Icon buttons stay visible.
+   */
   children?: React.ReactNode;
   /** Mobile panel, opened by the menu button. Desktop uses the `menu` of each `NavigationLink`. */
   menu?: React.ReactNode;
@@ -818,10 +954,13 @@ export function Navigation({
     mobileMenuRef.current?.scrollTo({ top: 0 });
   }, [level]);
 
-  function changeSearch(next: string) {
-    if (searchValue === undefined) setUncontrolledSearch(next);
-    onSearchValueChange?.(next);
-  }
+  const changeSearch = React.useCallback(
+    (next: string) => {
+      if (searchValue === undefined) setUncontrolledSearch(next);
+      onSearchValueChange?.(next);
+    },
+    [searchValue, onSearchValueChange],
+  );
 
   const setBarRef = React.useCallback(
     (node: HTMLElement | null) => {
@@ -918,8 +1057,31 @@ export function Navigation({
         changeValueRef.current(next);
         return true;
       },
+      searchLabel,
+      clearSearchLabel,
+      search,
+      changeSearch,
+      onSearchSubmit,
+      onSearch,
+      requestSearch() {
+        returnFocusToSearch.current = true;
+        onSearch?.();
+        changeValueRef.current(SEARCH_VALUE);
+      },
+      isDesktop,
+      searchButtonRef,
+      expanded,
     }),
-    [],
+    [
+      searchLabel,
+      clearSearchLabel,
+      search,
+      changeSearch,
+      onSearchSubmit,
+      onSearch,
+      isDesktop,
+      expanded,
+    ],
   );
 
   // The panel stays open while the pointer is anywhere over the bar or the panel, and closes
@@ -981,12 +1143,15 @@ export function Navigation({
       const first = bar.firstElementChild;
       const last = bar.querySelector("[data-slot=navigation-search-trigger]");
       if (first && last && positionerElement) {
-        const width =
-          last.getBoundingClientRect().right -
-          first.getBoundingClientRect().left;
+        const barLeft = bar.getBoundingClientRect().left;
+        const firstLeft = first.getBoundingClientRect().left;
         positionerElement.style.setProperty(
           "--navigation-content-width",
-          `${width}px`,
+          `${last.getBoundingClientRect().right - firstLeft}px`,
+        );
+        positionerElement.style.setProperty(
+          "--navigation-content-offset",
+          `${firstLeft - barLeft}px`,
         );
       }
     }
@@ -1037,12 +1202,6 @@ export function Navigation({
     }
   }, [level]);
 
-  function requestSearch() {
-    returnFocusToSearch.current = true;
-    onSearch?.();
-    changeValue(SEARCH_VALUE);
-  }
-
   function closeMobile() {
     if (mobileMode === "search") changeValue(null);
     else requestClose();
@@ -1078,11 +1237,6 @@ export function Navigation({
     return () => document.removeEventListener("keydown", onKeyDown);
   }, [mobileMode, onOpenChange, openProp]);
 
-  const iconBarButtonClassName = cn(
-    iconButtonClassName,
-    "md:h-(--primitives-spacing-8) md:w-auto md:px-(--primitives-spacing-1)",
-  );
-
   const searchField = (autoFocus: boolean) => (
     <NavigationSearch
       label={searchLabel}
@@ -1104,7 +1258,7 @@ export function Navigation({
          [transition-property:background-color] duration-(--semantics-motion-duration-320) ${ease}
          motion-reduce:transition-none
          md:justify-center md:gap-(--primitives-spacing-12)
-         px-(--primitives-spacing-2) py-(--primitives-spacing-1-5)
+         px-(--primitives-spacing-2) py-(--primitives-spacing-out-of-scale-1-5)
          md:px-(--primitives-spacing-6)`,
         expanded
           ? `max-md:[background-color:var(--semantics-colors-background-primary)]
@@ -1123,11 +1277,7 @@ export function Navigation({
           if (event.pointerType === "mouse")
             navigationContext.openFromHover(null);
         }}
-        className={cn(
-          iconButtonClassName,
-          "md:h-(--primitives-spacing-8) md:w-auto md:px-(--primitives-spacing-1)",
-          expanded && "max-md:hidden",
-        )}
+        className={cn(iconButtonClassName, expanded && "max-md:hidden")}
       >
         <span className="inline-flex size-(--primitives-spacing-4) items-center justify-center">
           <NavigationMark />
@@ -1161,64 +1311,13 @@ export function Navigation({
           }}
           className="contents"
         >
-          <NavigationMenu.List
-            data-slot="navigation-list"
-            className="m-0 hidden list-none items-center gap-(--primitives-spacing-12) p-0 md:flex"
-          >
-            {children}
-          </NavigationMenu.List>
-          <div
-            className={cn(
-              "flex items-center gap-(--primitives-spacing-4) max-md:ml-auto",
-            )}
-          >
-            {isDesktop ? (
-              <NavigationMenu.List className="m-0 flex list-none p-0">
-                <NavigationMenu.Item value={SEARCH_VALUE}>
-                  <NavigationMenu.Trigger
-                    data-slot="navigation-search-trigger"
-                    aria-label={searchLabel}
-                    onClick={() => onSearch?.()}
-                    onPointerEnter={(event) => {
-                      if (event.pointerType === "mouse")
-                        navigationContext.openFromHover(null);
-                    }}
-                    className={cn(
-                      iconBarButtonClassName,
-                      "pointer-events-auto",
-                      mobileMode === "menu" && "max-md:hidden",
-                    )}
-                  >
-                    <Icon name="search" size={iconBox16} />
-                  </NavigationMenu.Trigger>
-                  <NavigationMenu.Content
-                    className={cn(
-                      panelContentClassName,
-                      "pb-(--primitives-spacing-32)",
-                    )}
-                  >
-                    <div
-                      className={cn(
-                        "w-[min(100%,var(--navigation-content-width,100%))]",
-                        itemMotionClassName,
-                      )}
-                    >
-                      {searchField(true)}
-                    </div>
-                  </NavigationMenu.Content>
-                </NavigationMenu.Item>
-              </NavigationMenu.List>
-            ) : (
-              <button
-                ref={searchButtonRef}
-                type="button"
-                aria-label={searchLabel}
-                onClick={requestSearch}
-                className={cn(iconBarButtonClassName, expanded && "hidden")}
-              >
-                <Icon name="search" size={iconBox16} />
-              </button>
-            )}
+          <div className="flex items-center gap-(--primitives-spacing-4) max-md:ml-auto md:contents">
+            <NavigationMenu.List
+              data-slot="navigation-list"
+              className="m-0 flex list-none items-center gap-(--primitives-spacing-4) p-0 md:gap-(--primitives-spacing-12)"
+            >
+              {children}
+            </NavigationMenu.List>
             <button
               ref={menuButtonRef}
               type="button"

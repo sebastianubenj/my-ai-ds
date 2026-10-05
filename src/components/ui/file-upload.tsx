@@ -125,33 +125,33 @@ export function FileUpload({
       data-focused={isFocused ? "true" : undefined}
       className={cn(
         `relative box-border flex w-full flex-col items-center justify-center
-         h-(--primitives-spacing-35) gap-(--primitives-spacing-2)
+         h-(--primitives-spacing-out-of-scale-35) gap-(--primitives-spacing-2)
          rounded-(--primitives-radius-rounded-14)
-         border-solid border-(length:--primitives-stroke-width-border)
+         border-solid border-(length:--primitives-stroke-width-stroke)
          [border-color:transparent]
-         bg-background px-(--primitives-spacing-2-5) py-(--primitives-spacing-0)
+         bg-background px-(--primitives-spacing-out-of-scale-2-5) py-(--primitives-spacing-0)
          [--file-upload-stroke:var(--semantics-colors-border-default)]
-         [--file-upload-stroke-width:var(--primitives-stroke-width-border)]
+         [--file-upload-stroke-width:var(--primitives-stroke-width-stroke)]
          has-aria-invalid:[--file-upload-stroke:var(--semantics-colors-border-destructive)]
-         data-[focused=true]:border-(length:--primitives-stroke-width-border-2)
-         data-[focused=true]:px-(--primitives-spacing-2-25)
-         data-[focused=true]:[--file-upload-stroke-width:var(--primitives-stroke-width-border-2)]
+         data-[focused=true]:border-(length:--primitives-stroke-width-stroke-2)
+         data-[focused=true]:px-(--primitives-spacing-out-of-scale-2-25)
+         data-[focused=true]:[--file-upload-stroke-width:var(--primitives-stroke-width-stroke-2)]
          data-[focused=true]:[--file-upload-stroke:var(--semantics-colors-border-strong)]
          has-aria-invalid:data-[focused=true]:[--file-upload-stroke:var(--semantics-colors-border-destructive)]
-         focus-within:border-(length:--primitives-stroke-width-border-2)
-         focus-within:px-(--primitives-spacing-2-25)
-         focus-within:[--file-upload-stroke-width:var(--primitives-stroke-width-border-2)]
+         focus-within:border-(length:--primitives-stroke-width-stroke-2)
+         focus-within:px-(--primitives-spacing-out-of-scale-2-25)
+         focus-within:[--file-upload-stroke-width:var(--primitives-stroke-width-stroke-2)]
          focus-within:[--file-upload-stroke:var(--semantics-colors-border-strong)]
          has-aria-invalid:focus-within:[--file-upload-stroke:var(--semantics-colors-border-destructive)]
-         data-[dragging=true]:border-(length:--primitives-stroke-width-border-2)
-         data-[dragging=true]:px-(--primitives-spacing-2-25)
-         data-[dragging=true]:[--file-upload-stroke-width:var(--primitives-stroke-width-border-2)]
+         data-[dragging=true]:border-(length:--primitives-stroke-width-stroke-2)
+         data-[dragging=true]:px-(--primitives-spacing-out-of-scale-2-25)
+         data-[dragging=true]:[--file-upload-stroke-width:var(--primitives-stroke-width-stroke-2)]
          data-[dragging=true]:[--file-upload-stroke:var(--semantics-colors-border-strong)]
          data-[dragging=true]:[background-color:var(--semantics-colors-interaction-file-upload-drag-over)]
          intent-keyboard:data-[focused=true]:[outline:var(--primitives-ring-focus-width-ring-2)_solid_var(--semantics-colors-border-ring-focus)]
-         intent-keyboard:data-[focused=true]:[outline-offset:var(--primitives-spacing-0-75)]
+         intent-keyboard:data-[focused=true]:[outline-offset:var(--primitives-spacing-out-of-scale-0-75)]
          intent-keyboard:focus-within:[outline:var(--primitives-ring-focus-width-ring-2)_solid_var(--semantics-colors-border-ring-focus)]
-         intent-keyboard:focus-within:[outline-offset:var(--primitives-spacing-0-75)]
+         intent-keyboard:focus-within:[outline-offset:var(--primitives-spacing-out-of-scale-0-75)]
          has-disabled:[--file-upload-stroke:var(--semantics-colors-border-default)]
          has-disabled:opacity-(--primitives-opacity-opacity-45)
          has-disabled:pointer-events-none has-disabled:cursor-default

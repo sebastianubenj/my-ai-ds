@@ -11,7 +11,7 @@ const buttonVariants = cva(
    font-sans [font-weight:var(--semantics-typography-button-font-weight)] tracking-(--semantics-typography-button-tracking-normal)
    transition-colors outline-none cursor-pointer
    focus-visible:[outline:var(--primitives-ring-focus-width-ring-2)_solid_var(--semantics-colors-border-ring-focus)]
-   focus-visible:[outline-offset:var(--primitives-spacing-0-75)]
+   focus-visible:[outline-offset:var(--primitives-spacing-out-of-scale-0-75)]
    disabled:pointer-events-none disabled:cursor-default
    aria-disabled:pointer-events-none aria-disabled:cursor-default
    disabled:data-[loading]:opacity-(--primitives-opacity-opacity-100)
@@ -24,6 +24,10 @@ const buttonVariants = cva(
           [color:var(--semantics-colors-foreground-primary)]
           hover:[background-color:var(--semantics-colors-interaction-primary-hover)]
           active:[background-color:var(--semantics-colors-background-primary)]
+          data-[surface=on-primary]:[background-color:var(--semantics-colors-background-default)]
+          data-[surface=on-primary]:[color:var(--semantics-colors-foreground-default)]
+          data-[surface=on-primary]:hover:[background-color:var(--semantics-colors-interaction-primary-on-primary-hover)]
+          data-[surface=on-primary]:active:[background-color:var(--semantics-colors-background-default)]
           disabled:opacity-(--primitives-opacity-opacity-10)
           aria-disabled:opacity-(--primitives-opacity-opacity-10)`,
 
@@ -46,7 +50,7 @@ const buttonVariants = cva(
           aria-disabled:opacity-(--primitives-opacity-opacity-25)`,
 
         outline: `bg-transparent [color:var(--semantics-colors-foreground-default)]
-          border-solid border-(length:--primitives-stroke-width-border)
+          border-solid border-(length:--primitives-stroke-width-stroke)
           [border-color:var(--semantics-colors-border-strong)]
           hover:[background-color:var(--semantics-colors-background-accent)]
           active:bg-transparent
@@ -66,22 +70,22 @@ const buttonVariants = cva(
 
       size: {
         lg: `h-(--primitives-spacing-12) rounded-(--primitives-radius-rounded-2xl)
-          px-(--primitives-spacing-2-5) gap-(--primitives-spacing-1)
+          px-(--primitives-spacing-4) gap-(--primitives-spacing-1)
           text-(length:--semantics-typography-button-button-xl-font-size)
           leading-(--semantics-typography-button-button-xl-lh-snug)`,
 
-        md: `h-(--primitives-spacing-11) rounded-(--primitives-radius-rounded-14)
-          px-(--primitives-spacing-2) gap-(--primitives-spacing-1)
+        md: `h-(--primitives-spacing-out-of-scale-11) rounded-(--primitives-radius-rounded-14)
+          px-(--primitives-spacing-out-of-scale-3-5) gap-(--primitives-spacing-1)
           text-(length:--semantics-typography-button-button-xl-font-size)
           leading-(--semantics-typography-button-button-xl-lh-snug)`,
 
         sm: `h-(--primitives-spacing-10) rounded-(--primitives-radius-rounded-xl)
-          px-(--primitives-spacing-1-5) gap-(--primitives-spacing-0-5)
+          px-(--primitives-spacing-out-of-scale-2-5) gap-(--primitives-spacing-out-of-scale-0-5)
           text-(length:--semantics-typography-button-button-lg-font-size)
           leading-(--semantics-typography-button-button-lg-lh-snug)`,
 
         xs: `h-(--primitives-spacing-8) rounded-(--primitives-radius-rounded-10)
-          px-(--primitives-spacing-1) gap-(--primitives-spacing-0-5)
+          px-(--primitives-spacing-2) gap-(--primitives-spacing-out-of-scale-0-5)
           text-(length:--semantics-typography-button-button-md-font-size)
           leading-(--semantics-typography-button-button-md-lh-snug)`,
 
@@ -89,7 +93,7 @@ const buttonVariants = cva(
           "h-(--primitives-spacing-12) w-(--primitives-spacing-12) rounded-(--primitives-radius-rounded-2xl)",
 
         "icon-md":
-          "h-(--primitives-spacing-11) w-(--primitives-spacing-11) rounded-(--primitives-radius-rounded-14)",
+          "h-(--primitives-spacing-out-of-scale-11) w-(--primitives-spacing-out-of-scale-11) rounded-(--primitives-radius-rounded-14)",
 
         "icon-sm":
           "h-(--primitives-spacing-10) w-(--primitives-spacing-10) rounded-(--primitives-radius-rounded-xl)",
@@ -97,17 +101,24 @@ const buttonVariants = cva(
         "icon-xs":
           "h-(--primitives-spacing-8) w-(--primitives-spacing-8) rounded-(--primitives-radius-rounded-10)",
       },
+
+      surface: {
+        default: "",
+        "on-primary": "",
+      },
     },
 
     defaultVariants: {
       variant: "primary",
       size: "md",
+      surface: "default",
     },
   },
 );
 
 export type ButtonVariant = NonNullable<VariantProps<typeof buttonVariants>["variant"]>;
 export type ButtonSize = NonNullable<VariantProps<typeof buttonVariants>["size"]>;
+export type ButtonSurface = NonNullable<VariantProps<typeof buttonVariants>["surface"]>;
 
 /** Icon box per Button size. Large tiers use spacing.5; small tiers use spacing.4. */
 const ICON_BOX: Record<ButtonSize, string> = {
@@ -134,6 +145,13 @@ export interface ButtonProps
   icon?: IconName;
 
   /**
+   * Surface the button sits on. `on-primary` is the primary action on
+   * `background/primary` (navigation, cart panel). Only `variant="primary"`
+   * has an `on-primary` treatment.
+   */
+  surface?: ButtonSurface;
+
+  /**
    * Shows a leading loader indicator and prevents interaction.
    * Does not change the visual variant. An explicit `disabled` prop wins visually.
    */
@@ -144,6 +162,7 @@ export function Button({
   className,
   variant,
   size,
+  surface = "default",
   leadingIcon,
   trailingIcon,
   icon,
@@ -175,8 +194,9 @@ export function Button({
   return (
     <button
       type={type}
-      className={cn(buttonVariants({ variant, size: resolvedSize }), className)}
+      className={cn(buttonVariants({ variant, size: resolvedSize, surface }), className)}
       {...props}
+      data-surface={surface}
       disabled={disabled || loading}
       aria-busy={loading ? true : undefined}
       data-loading={showLoadingVisuals ? true : undefined}

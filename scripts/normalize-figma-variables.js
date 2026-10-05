@@ -1,11 +1,15 @@
-import { readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { pathToFileURL } from 'node:url';
 
 const FIGMA_EXT = 'org.lukasoppermann.figmaDesignTokens';
 const COLLECTION_ROOT = {
   Primitives: 'primitives',
   Semantics: 'semantics',
+  'Semantic Colors': 'semantics',
 };
+// Only this collection may carry a Dark mode. Every other collection has one mode.
+const THEMED_COLLECTION = 'Semantic Colors';
+const DARK_MODE_NAME = /dark/i;
 const TOKEN_TYPE = {
   COLOR: 'color',
   FLOAT: 'dimension',
@@ -16,6 +20,7 @@ const TOKEN_TYPE = {
 };
 
 const SOURCE_PATH = 'tokens/tokens.json';
+const DARK_PATH = 'tokens/tokens.dark.json';
 const RAW_PATH = 'tokens/figma-variables.raw.json';
 
 function isAlias(value) {
@@ -87,7 +92,29 @@ function tokenRef(variable, collectionById) {
   return [root, ...nameSegments(variable.name)].join('.');
 }
 
-function buildIndex(raw) {
+function themeModes(collection) {
+  const modes = collection.modes ?? [];
+  const modeNames = modes.map((mode) => mode.name).join(', ') || 'none';
+  if (collection.name !== THEMED_COLLECTION) {
+    if (modes.length !== 1) {
+      throw new Error(
+        `Collection "${collection.name}" has ${modes.length} modes (${modeNames}). This token file supports one mode.`,
+      );
+    }
+    return { light: modes[0].modeId, dark: null };
+  }
+  if (modes.length === 1) return { light: modes[0].modeId, dark: null };
+  const dark = modes.filter((mode) => DARK_MODE_NAME.test(mode.name));
+  if (modes.length !== 2 || dark.length !== 1) {
+    throw new Error(
+      `Collection "${collection.name}" has modes (${modeNames}). Expected one mode, or two modes where exactly one is named Dark.`,
+    );
+  }
+  const light = modes.find((mode) => mode !== dark[0]);
+  return { light: light.modeId, dark: dark[0].modeId };
+}
+
+function buildIndex(raw, theme = 'light') {
   if (!raw || !Array.isArray(raw.collections) || !Array.isArray(raw.variables)) {
     throw new Error('Raw variable file must contain collections and variables arrays.');
   }
@@ -96,17 +123,14 @@ function buildIndex(raw) {
   for (const collection of raw.collections) {
     if (!Object.hasOwn(COLLECTION_ROOT, collection.name)) {
       throw new Error(
-        `Collection "${collection.name}" is not supported. Expected Primitives or Semantics.`,
+        `Collection "${collection.name}" is not supported. Expected Primitives, Semantics or Semantic Colors.`,
       );
     }
-    const modeCount = collection.modes?.length ?? 0;
-    if (modeCount !== 1) {
-      const modeNames = (collection.modes ?? []).map((mode) => mode.name).join(', ') || 'none';
-      throw new Error(
-        `Collection "${collection.name}" has ${modeCount} modes (${modeNames}). This token file supports one mode.`,
-      );
-    }
-    collectionById.set(collection.id, collection);
+    const modes = themeModes(collection);
+    // Collections without a Dark mode resolve to their only mode in both themes,
+    // so a dark color can alias a primitive or a semantic number.
+    const activeModeId = theme === 'dark' ? (modes.dark ?? modes.light) : modes.light;
+    collectionById.set(collection.id, { ...collection, activeModeId, hasDark: modes.dark !== null });
   }
 
   const byId = new Map();
@@ -125,7 +149,7 @@ function modeValue(variable, collectionById) {
   if (!collection) {
     throw new Error(`Variable "${variable.name}" belongs to an unknown collection.`);
   }
-  const modeId = collection.modes[0].modeId;
+  const modeId = collection.activeModeId;
   if (!Object.hasOwn(variable.valuesByMode, modeId)) {
     throw new Error(`Variable "${variable.name}" has no value for mode ${modeId}.`);
   }
@@ -231,6 +255,9 @@ function setLeaf(tree, segments, token, variableName) {
   if (Object.hasOwn(node, last) && node[last] && typeof node[last] === 'object' && !('type' in node[last])) {
     throw new Error(`Variable "${variableName}" collides with a token group named "${segments.join('/')}".`);
   }
+  if (Object.hasOwn(node, last) && node[last] && typeof node[last] === 'object' && 'type' in node[last]) {
+    throw new Error(`Variable "${variableName}" is defined in more than one collection.`);
+  }
   node[last] = token;
 }
 
@@ -272,8 +299,8 @@ function variableValue(variable, byId, collectionById) {
   throw new Error(`Unsupported resolvedType "${variable.resolvedType}" on "${variable.name}".`);
 }
 
-export function buildVariableTrees(raw) {
-  const { collectionById, byId } = buildIndex(raw);
+export function buildVariableTrees(raw, theme = 'light') {
+  const { collectionById, byId } = buildIndex(raw, theme);
   const trees = { primitives: {}, semantics: {} };
 
   for (const variable of raw.variables) {
@@ -281,6 +308,7 @@ export function buildVariableTrees(raw) {
     if (!collection) {
       throw new Error(`Variable "${variable.name}" belongs to an unknown collection.`);
     }
+    if (theme === 'dark' && !collection.hasDark) continue;
     const rootName = COLLECTION_ROOT[collection.name];
     const token = leaf(
       variable,
@@ -292,6 +320,14 @@ export function buildVariableTrees(raw) {
   }
 
   return trees;
+}
+
+// Dark overrides: only the tokens of collections that define a Dark mode.
+// Returns null when the file has no Dark mode.
+export function buildDarkTree(raw) {
+  const { collectionById } = buildIndex(raw, 'dark');
+  if (![...collectionById.values()].some((collection) => collection.hasDark)) return null;
+  return { semantics: buildVariableTrees(raw, 'dark').semantics };
 }
 
 export function normalizeFigmaVariables(raw, source) {
@@ -402,16 +438,24 @@ export function reviewPaths(current, candidate) {
   }));
 }
 
+function readJsonIfExists(path) {
+  return existsSync(path) ? JSON.parse(readFileSync(path, 'utf8')) : {};
+}
+
 function runCli() {
   const raw = JSON.parse(readFileSync(RAW_PATH, 'utf8'));
   const source = JSON.parse(readFileSync(SOURCE_PATH, 'utf8'));
+  const currentDark = readJsonIfExists(DARK_PATH);
   const candidate = normalizeFigmaVariables(raw, source);
+  const dark = buildDarkTree(raw);
   writeFileSync(SOURCE_PATH, `${JSON.stringify(candidate, null, 2)}\n`);
+  writeFileSync(DARK_PATH, `${JSON.stringify(dark ?? {}, null, 2)}\n`);
   const diff = diffTokenTrees(source, candidate);
+  const darkDiff = diffTokenTrees(currentDark, dark ?? {});
   const preserved = ['font', 'typography', 'effect'].every(
     (key) => JSON.stringify(source[key]) === JSON.stringify(candidate[key]),
   );
-  return { diff, preserved, review: reviewPaths(source, candidate) };
+  return { diff, darkDiff, preserved, review: reviewPaths(source, candidate) };
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {

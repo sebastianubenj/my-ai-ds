@@ -12,7 +12,7 @@ const metaClassName = `m-0 flex flex-col gap-(--primitives-spacing-1)
   [color:var(--semantics-colors-foreground-subtle)]`;
 
 const swatchClassName = `box-border w-full shrink-0
-  border-solid border-(length:--primitives-stroke-width-border)
+  border-solid border-(length:--primitives-stroke-width-stroke)
   [border-color:var(--semantics-colors-border-default)]
   rounded-(--primitives-radius-rounded-10)`;
 
@@ -39,6 +39,8 @@ export interface SemanticColorSpecimenProps {
   cssVar: string;
   generated: string;
   alias: string;
+  darkGenerated: string;
+  darkAlias: string;
 }
 
 export function SemanticColorSpecimen({
@@ -47,11 +49,13 @@ export function SemanticColorSpecimen({
   cssVar,
   generated,
   alias,
+  darkGenerated,
+  darkAlias,
 }: SemanticColorSpecimenProps) {
   return (
     <figure className="m-0 flex min-w-0 flex-col gap-(--primitives-spacing-3)">
       <div
-        className={`${swatchClassName} h-(--primitives-spacing-22)`}
+        className={`${swatchClassName} h-(--primitives-spacing-out-of-scale-22)`}
         style={{ backgroundColor: `var(${cssVar})` }}
       />
       <figcaption className={captionClassName}>{name}</figcaption>
@@ -59,8 +63,8 @@ export function SemanticColorSpecimen({
         items={[
           { label: "Token", value: token },
           { label: "CSS", value: cssVar },
-          { label: "Alias", value: alias },
-          { label: "Generated", value: generated },
+          { label: "Light", value: `${alias} · ${generated}` },
+          { label: "Dark", value: `${darkAlias} · ${darkGenerated}` },
         ]}
       />
     </figure>
@@ -85,7 +89,7 @@ export function PrimitiveColorSpecimen({
   return (
     <figure className="m-0 flex min-w-0 flex-col gap-(--primitives-spacing-2)">
       <div
-        className={`${swatchClassName} h-(--primitives-spacing-11)`}
+        className={`${swatchClassName} h-(--primitives-spacing-out-of-scale-11)`}
         style={{ backgroundColor: `var(${cssVar})` }}
       />
       <figcaption className={captionClassName}>{name}</figcaption>

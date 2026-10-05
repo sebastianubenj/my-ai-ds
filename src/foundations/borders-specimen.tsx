@@ -72,18 +72,18 @@ export function FocusRingSpecimen(record: BorderTokenRecord) {
   return (
     <figure className="m-0 flex min-w-0 items-start gap-(--primitives-spacing-4)">
       <div
-        className={`flex size-(--primitives-spacing-22) shrink-0 items-center justify-center
+        className={`flex size-(--primitives-spacing-out-of-scale-22) shrink-0 items-center justify-center
           p-(--primitives-spacing-2)
           [background-color:var(--semantics-colors-background-accent)]`}
       >
         <div
           className={`box-border size-(--primitives-spacing-12) shrink-0
             rounded-(--primitives-radius-rounded-18)
-            border-solid border-(length:--primitives-stroke-width-border)
+            border-solid border-(length:--primitives-stroke-width-stroke)
             [border-color:var(--semantics-colors-border-default)]
             [background-color:var(--semantics-colors-background-default)]
             [outline-color:var(--semantics-colors-border-ring-focus)]
-            [outline-offset:var(--primitives-spacing-0-75)]
+            [outline-offset:var(--primitives-spacing-out-of-scale-0-75)]
             [outline-style:solid]`}
           style={{ outlineWidth: `var(${record.cssVar})` }}
           aria-hidden

@@ -8,9 +8,9 @@ import "@/lib/focus-intent";
 import { Icon, iconBox20, type IconName } from "@/components/icon";
 
 const triggerClassName = `
-  box-border flex w-full items-center gap-(--primitives-spacing-1-5)
-  h-(--primitives-spacing-11) rounded-(--primitives-radius-rounded-14)
-  border border-input bg-background px-(--primitives-spacing-2-5)
+  box-border flex w-full items-center gap-(--primitives-spacing-out-of-scale-1-5)
+  h-(--primitives-spacing-out-of-scale-11) rounded-(--primitives-radius-rounded-14)
+  border border-input bg-background px-(--primitives-spacing-out-of-scale-2-5)
   text-left outline-none cursor-pointer group
   font-sans [font-weight:var(--semantics-typography-body-font-weight)]
   text-(length:--semantics-typography-body-body-lg-font-size)
@@ -20,24 +20,24 @@ const triggerClassName = `
   data-placeholder:[color:var(--semantics-colors-foreground-subtle)]
   aria-invalid:[border-color:var(--semantics-colors-border-destructive)]
   aria-invalid:[color:var(--semantics-colors-foreground-destructive)]
-  focus:border-(length:--primitives-stroke-width-border-2)
-  focus:px-(--primitives-spacing-2-25)
+  focus:border-(length:--primitives-stroke-width-stroke-2)
+  focus:px-(--primitives-spacing-out-of-scale-2-25)
   focus:[border-color:var(--semantics-colors-border-strong)]
   aria-invalid:focus:[border-color:var(--semantics-colors-border-destructive)]
-  data-popup-open:border-(length:--primitives-stroke-width-border-2)
-  data-popup-open:px-(--primitives-spacing-2-25)
+  data-popup-open:border-(length:--primitives-stroke-width-stroke-2)
+  data-popup-open:px-(--primitives-spacing-out-of-scale-2-25)
   data-popup-open:[border-color:var(--semantics-colors-border-strong)]
   aria-invalid:data-popup-open:[border-color:var(--semantics-colors-border-destructive)]
   intent-keyboard:focus:[outline:var(--primitives-ring-focus-width-ring-2)_solid_var(--semantics-colors-border-ring-focus)]
-  intent-keyboard:focus:[outline-offset:var(--primitives-spacing-0-75)]
+  intent-keyboard:focus:[outline-offset:var(--primitives-spacing-out-of-scale-0-75)]
   disabled:opacity-(--primitives-opacity-opacity-40)
   disabled:cursor-default
   [&_svg]:pointer-events-none [&_svg]:shrink-0
 `;
 
 const selectItemVariants = cva(
-  `flex w-full items-center gap-(--primitives-spacing-1-5)
-   h-(--primitives-spacing-11) rounded-(--primitives-radius-rounded-14)
+  `flex w-full items-center gap-(--primitives-spacing-out-of-scale-1-5)
+   h-(--primitives-spacing-out-of-scale-11) rounded-(--primitives-radius-rounded-14)
    px-(--primitives-spacing-2) py-(--primitives-spacing-0)
    font-sans [font-weight:var(--semantics-typography-body-font-weight)]
    text-(length:--semantics-typography-body-body-lg-font-size)
@@ -157,7 +157,7 @@ export function Select({
           placeholder={placeholder}
           className="min-w-0 flex-1 truncate"
         />
-        <SelectPrimitive.Icon className="relative flex size-(--primitives-spacing-5) shrink-0">
+        <SelectPrimitive.Icon className="relative flex size-(--primitives-spacing-out-of-scale-5) shrink-0">
           <Icon
             name="chevron-down"
             size={iconBox20}
@@ -197,7 +197,7 @@ export function SelectContent({ className, children }: SelectContentProps) {
           className={cn(
             `flex w-(--anchor-width) max-h-(--available-height) flex-col overflow-hidden
              rounded-(--primitives-radius-rounded-14) border border-input bg-background
-             px-(--primitives-spacing-0-5) py-(--primitives-spacing-1)
+             px-(--primitives-spacing-out-of-scale-0-5) py-(--primitives-spacing-1)
              [box-shadow:var(--effect-shadows-popover-0),var(--effect-shadows-popover-1)]
              outline-none`,
             className,
@@ -206,7 +206,7 @@ export function SelectContent({ className, children }: SelectContentProps) {
           <SelectPrimitive.List
             className={cn(
               `min-h-0 flex-1 overflow-y-auto overscroll-contain [scrollbar-gutter:stable]
-              pl-(--primitives-spacing-1) pr-(--primitives-spacing-1-5) py-(--primitives-spacing-0-5)`,
+              pl-(--primitives-spacing-1) pr-(--primitives-spacing-out-of-scale-1-5) py-(--primitives-spacing-out-of-scale-0-5)`,
               scrollbarClassName,
             )}
           >
@@ -255,8 +255,8 @@ export function SelectLabel({
     <SelectPrimitive.GroupLabel
       data-slot="select-label"
       className={cn(
-        `flex w-full items-center gap-(--primitives-spacing-1-5)
-         h-(--primitives-spacing-11) rounded-(--primitives-radius-rounded-14)
+        `flex w-full items-center gap-(--primitives-spacing-out-of-scale-1-5)
+         h-(--primitives-spacing-out-of-scale-11) rounded-(--primitives-radius-rounded-14)
          px-(--primitives-spacing-2) py-(--primitives-spacing-0)
          font-sans [font-weight:var(--semantics-typography-body-font-weight)]
          text-(length:--semantics-typography-body-body-lg-font-size)
