@@ -39,7 +39,7 @@ export function Link({
          hover:no-underline
          active:underline
          focus-visible:[outline:var(--primitives-ring-focus-width-ring-2)_solid_var(--semantics-colors-border-ring-focus)]
-         focus-visible:[outline-offset:var(--primitives-spacing-0-75)]
+         focus-visible:[outline-offset:var(--primitives-spacing-out-of-scale-0-75)]
          aria-disabled:pointer-events-none aria-disabled:cursor-default
          aria-disabled:underline
          aria-disabled:[color:var(--semantics-colors-foreground-subtle)]

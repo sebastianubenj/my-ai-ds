@@ -10,7 +10,8 @@ import {
   PRIMITIVE_EMERALD,
   PRIMITIVE_NEUTRAL,
   PRIMITIVE_RED,
-  PRIMITIVE_SKY,
+  PRIMITIVE_CYAN,
+  PRIMITIVE_GRAY,
   SEMANTIC_BACKGROUND,
   SEMANTIC_BORDER,
   SEMANTIC_FOREGROUND,
@@ -94,8 +95,12 @@ export const Emerald: Story = {
   render: () => primitiveGrid(PRIMITIVE_EMERALD),
 };
 
-export const Sky: Story = {
-  render: () => primitiveGrid(PRIMITIVE_SKY),
+export const Cyan: Story = {
+  render: () => primitiveGrid(PRIMITIVE_CYAN),
+};
+
+export const Gray: Story = {
+  render: () => primitiveGrid(PRIMITIVE_GRAY),
 };
 
 export const Blue: Story = {

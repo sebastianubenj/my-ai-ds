@@ -11,7 +11,7 @@ export const iconBox16 = "var(--primitives-spacing-4)";
  * Icon box on the 20px grid. `primitives.spacing.5` is 1.25rem. At the
  * default root this is 20px.
  */
-export const iconBox20 = "var(--primitives-spacing-5)";
+export const iconBox20 = "var(--primitives-spacing-out-of-scale-5)";
 
 export interface IconProps extends Omit<SVGProps<SVGSVGElement>, "name" | "color"> {
   /** Name of the icon, from the design system's curated icon set. */

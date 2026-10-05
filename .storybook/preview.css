@@ -1,0 +1,9 @@
+/* Preview chrome follows Semantic Colors. Storybook's default canvas stays light. */
+html,
+body,
+#storybook-root,
+.sb-show-main,
+.docs-story {
+  background-color: var(--semantics-colors-background-page);
+  color: var(--semantics-colors-foreground-default);
+}

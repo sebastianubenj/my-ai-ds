@@ -15,6 +15,7 @@ import {
   Menu,
   Minus,
   Search,
+  ShoppingBag,
   Upload,
   X,
   createLucideIcon,
@@ -61,6 +62,7 @@ export const iconRegistry = {
   minus: Minus,
   "resize-thumb": ResizeThumb,
   search: Search,
+  "shopping-bag": ShoppingBag,
   upload: Upload,
   x: X,
 } as const satisfies Record<string, LucideIcon>;

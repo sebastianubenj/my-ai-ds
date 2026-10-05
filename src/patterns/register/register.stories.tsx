@@ -17,7 +17,7 @@ function RegisterPattern() {
 
   return (
     <div
-      className="flex min-h-dvh w-full flex-col items-center justify-center px-(--primitives-spacing-6) py-(--primitives-spacing-4) md:p-(--primitives-spacing-6) [background-color:var(--semantics-colors-background-default)]"
+      className="flex min-h-dvh w-full flex-col items-center justify-center px-(--primitives-spacing-6) py-(--primitives-spacing-4) md:p-(--primitives-spacing-6) [background-color:var(--semantics-colors-background-page)]"
     >
       <form
         className="flex w-full max-w-sm flex-col items-center gap-(--primitives-spacing-10) md:gap-(--primitives-spacing-12)"
@@ -49,7 +49,7 @@ function RegisterPattern() {
             </p>
           </div>
 
-          <Field label="Name" htmlFor="register-name">
+          <Field label="Full name" htmlFor="register-name">
             <Input
               id="register-name"
               type="text"
@@ -139,7 +139,12 @@ function RegisterPattern() {
               [color:var(--semantics-colors-foreground-default)]`}
           >
             <span>Already have an account?</span>
-            <Link href="#">Log in</Link>
+            <Link
+              href="#"
+              className="[color:var(--semantics-colors-foreground-highlight)]"
+            >
+              Log in
+            </Link>
           </p>
         </div>
       </form>
@@ -162,7 +167,7 @@ export const Default: Story = {
   render: () => <RegisterPattern />,
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    const name = canvas.getByLabelText("Name");
+    const name = canvas.getByLabelText("Full name");
     const email = canvas.getByLabelText("Email");
     const password = canvas.getByLabelText("Password");
     const confirmPassword = canvas.getByLabelText("Confirm your password");

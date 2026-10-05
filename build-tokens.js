@@ -1,4 +1,4 @@
-import { readFileSync } from 'node:fs';
+import { readFileSync, writeFileSync } from 'node:fs';
 
 import StyleDictionary from 'style-dictionary';
 
@@ -377,9 +377,22 @@ const cssTokensFilter = (token) =>
     token.path?.[0] === 'typography'
   );
 
+const cssTransforms = [
+  'attribute/cti',
+  'name/kebab',
+  'ds/customShadow',
+  'ds/duration',
+  'ds/cubicBezier',
+  'typography/relativeUnit',
+  'ds/unitlessInteger',
+  'ds/percentToUnitless',
+  'ds/emTracking',
+  'ds/pxToRem',
+];
+
 // 3. Configurar la compilación de Style Dictionary
 const sd = new StyleDictionary({
-  source: ['tokens/tokens.json'], // Verifica que esta sea la ruta exacta de tu JSON
+  source: ['tokens/tokens.json'],
   preprocessors: ['figma/exporter-overrides', 'typography/relative-units'],
   hooks: {
     filters: {
@@ -388,18 +401,7 @@ const sd = new StyleDictionary({
   },
   platforms: {
     css: {
-      transforms: [
-        'attribute/cti',
-        'name/kebab',
-        'ds/customShadow',
-        'ds/duration',
-        'ds/cubicBezier',
-        'typography/relativeUnit',
-        'ds/unitlessInteger',
-        'ds/percentToUnitless',
-        'ds/emTracking',
-        'ds/pxToRem',
-      ],
+      transforms: cssTransforms,
       buildPath: 'src/styles/generated/',
       files: [
         {
@@ -415,6 +417,49 @@ const sd = new StyleDictionary({
   }
 });
 
-// 3. Ejecutar el build
 await sd.buildAllPlatforms();
-console.log('✨ Tokens generados con éxito en src/styles/generated/tokens.css');
+
+// 4. Dark theme. tokens.dark.json holds only the tokens of collections with a
+// Dark mode. It is merged over tokens.json so aliases resolve, and only the
+// tokens that come from the dark file are written under the theme selector.
+const DARK_SOURCE = 'tokens/tokens.dark.json';
+const DARK_SELECTOR = '[data-theme="dark"]';
+const darkTokens = JSON.parse(readFileSync(DARK_SOURCE, 'utf-8'));
+
+if (Object.keys(darkTokens).length > 0) {
+  const darkSd = new StyleDictionary({
+    source: ['tokens/tokens.json', DARK_SOURCE],
+    // The dark file overrides tokens.json on purpose, and references to light-only
+    // tokens are filtered out of this file. Both warnings are expected.
+    log: { warnings: 'disabled' },
+    preprocessors: ['figma/exporter-overrides', 'typography/relative-units'],
+    hooks: {
+      filters: {
+        'ds/darkTokens': (token) => cssTokensFilter(token) && token.filePath?.endsWith('tokens.dark.json'),
+      },
+    },
+    platforms: {
+      css: {
+        transforms: cssTransforms,
+        buildPath: 'src/styles/generated/',
+        files: [
+          {
+            destination: 'tokens.dark.css',
+            format: 'css/variables',
+            filter: 'ds/darkTokens',
+            options: {
+              outputReferences: true,
+              selector: DARK_SELECTOR,
+            },
+          },
+        ],
+      },
+    },
+  });
+  await darkSd.buildAllPlatforms();
+} else {
+  writeFileSync(
+    'src/styles/generated/tokens.dark.css',
+    `/**\n * Do not edit directly, this file was auto-generated.\n */\n\n${DARK_SELECTOR} {\n}\n`,
+  );
+}

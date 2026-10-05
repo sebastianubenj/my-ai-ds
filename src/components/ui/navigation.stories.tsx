@@ -4,8 +4,10 @@ import { expect, fireEvent, userEvent, waitFor, within } from "storybook/test";
 
 import {
   Navigation,
+  NavigationIconButton,
   NavigationLink,
   NavigationMenuLink,
+  NavigationSearchTrigger,
   NavigationSection,
 } from "./navigation";
 
@@ -101,6 +103,8 @@ function SampleNavigation(
           {label}
         </NavigationLink>
       ))}
+      <NavigationSearchTrigger />
+      <NavigationIconButton name="shopping-bag" aria-label="Bag" />
     </Navigation>
   );
 }
@@ -156,6 +160,7 @@ export const Desktop: Story = {
 
     await expect(canvas.getByRole("link", { name: "Products" })).toBeVisible();
     await expect(search).toBeVisible();
+    await expect(canvas.getByRole("button", { name: "Bag" })).toBeVisible();
     await expect(logo).toHaveAttribute("href", "#home");
 
     const menu = canvasElement.querySelector("button[aria-label='Menu']");
@@ -497,6 +502,7 @@ export const Mobile: Story = {
 
     await expect(menu).toBeVisible();
     await expect(canvas.getByRole("button", { name: "Search" })).toBeVisible();
+    await expect(canvas.getByRole("button", { name: "Bag" })).toBeVisible();
     await expect(
       canvas.getByRole("link", { name: "Products", hidden: true }),
     ).not.toBeVisible();

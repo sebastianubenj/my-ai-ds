@@ -9,8 +9,8 @@
  */
 export const scrollbarClassName = `supports-[not_selector(::-webkit-scrollbar)]:[scrollbar-width:thin]
   supports-[not_selector(::-webkit-scrollbar)]:[scrollbar-color:var(--semantics-colors-interaction-scrollbar-thumb)_transparent]
-  [&::-webkit-scrollbar]:w-(--primitives-spacing-0-5)
-  [&::-webkit-scrollbar]:h-(--primitives-spacing-0-5)
+  [&::-webkit-scrollbar]:w-(--primitives-spacing-out-of-scale-0-5)
+  [&::-webkit-scrollbar]:h-(--primitives-spacing-out-of-scale-0-5)
   [&::-webkit-scrollbar-track]:bg-transparent
   [&::-webkit-scrollbar-thumb]:rounded-full
   [&::-webkit-scrollbar-thumb]:[background-color:var(--semantics-colors-interaction-scrollbar-thumb)]`;

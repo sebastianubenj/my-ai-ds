@@ -28,8 +28,10 @@ Figma variables are exported with the development plugin in `figma/export-variab
 
 1. In Figma: Plugins → Development → Import plugin from manifest… → `figma/export-variables/manifest.json`.
 2. Run **Export variables**. Save the download as `tokens/figma-variables.raw.json`.
-3. `npm run tokens:normalize` rewrites primitives and semantics in `tokens/tokens.json`. Font, typography, and effect styles in that file stay as they are.
-4. `npm run build:tokens` writes `src/styles/generated/tokens.css`.
+3. `npm run tokens:normalize` rewrites primitives and semantics in `tokens/tokens.json` and the Dark mode of Semantic Colors in `tokens/tokens.dark.json`. Font, typography, and effect styles in `tokens.json` stay as they are.
+4. `npm run build:tokens` writes `src/styles/generated/tokens.css` and `tokens.dark.css`.
+
+Dark mode is applied with `data-theme="dark"` on `<html>`. Storybook has a Theme switch in the toolbar.
 
 Implementation rules (tokens, components, patterns, testing) live in `.cursor/rules/design-system.mdc`. This file does not restate them.
 
@@ -44,7 +46,8 @@ Implementation rules (tokens, components, patterns, testing) live in `.cursor/ru
 | `figma/export-variables/` | Figma plugin that downloads every local variable |
 | `tokens/figma-variables.raw.json` | Raw variable export. Input to `tokens:normalize` |
 | `tokens/tokens.json` | Token source. Primitives and semantics come from the export; font, typography, and effect stay in this file |
-| `src/styles/generated/tokens.css` | Generated CSS. Produced by `npm run build:tokens` |
+| `tokens/tokens.dark.json` | Dark mode of Semantic Colors. Written by `tokens:normalize` |
+| `src/styles/generated/tokens.css`, `tokens.dark.css` | Generated CSS. Produced by `npm run build:tokens` |
 
 Each UI component has `.tsx`, `.stories.tsx`, and `.mdx`. Usage pages are the MDX files in Storybook.
 

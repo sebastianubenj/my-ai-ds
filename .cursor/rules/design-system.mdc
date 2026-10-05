@@ -12,7 +12,7 @@ This file is the source of truth for architecture and agent behavior. Do not add
 - `README.md` is human onboarding: what the repo is, how to run it, and where files live. It must not restate these rules.
 - `.mdx` next to a component or foundation is Storybook usage (when to use it, canvases, accessibility notes). Add MDX when that family already has MDX. Do not add MDX for a pattern or view unless the story cannot carry the usage guidance.
 - `.stories.tsx` are the examples, controls, and `play` tests. Component API is the TypeScript props. An MDX API table explains usage; it is not a second contract.
-- Tokens: the Figma variables plugin writes `tokens/figma-variables.raw.json`. `scripts/normalize-figma-variables.js` rebuilds primitives and semantics in `tokens/tokens.json`. Font, typography, and effect stay in that file. `build-tokens.js` writes generated CSS, which is an artifact.
+- Tokens: the Figma variables plugin writes `tokens/figma-variables.raw.json`. `scripts/normalize-figma-variables.js` rebuilds primitives and semantics in `tokens/tokens.json`, and the Dark mode of the Semantic Colors collection in `tokens/tokens.dark.json`. Font, typography, and effect stay in `tokens.json`. `build-tokens.js` writes generated CSS, which is an artifact.
 - Enforcement is `npm run check`, not another markdown file.
 
 ## 1. General Architecture
@@ -143,9 +143,11 @@ If a required design value does not have an appropriate token, identify the miss
 
 ## 5. Token Generation
 
-The source token file is:
+The source token files are:
 
-`tokens/tokens.json`
+`tokens/tokens.json` (Primitives, Semantics, and the Light mode of Semantic Colors)
+
+`tokens/tokens.dark.json` (the Dark mode of Semantic Colors; empty when the file has no Dark mode)
 
 Tokens are transformed using:
 
@@ -153,15 +155,19 @@ Tokens are transformed using:
 
 Generated CSS is located at:
 
-`src/styles/generated/tokens.css`
+`src/styles/generated/tokens.css` (light) and `src/styles/generated/tokens.dark.css` (dark overrides under `[data-theme="dark"]`)
 
 Do not manually edit:
 
 `src/styles/generated/tokens.css`
 
+`src/styles/generated/tokens.dark.css`
+
+`tokens/tokens.dark.json`
+
 When token changes are required:
 
-1. For a Figma variable change, run the development plugin in `figma/export-variables/`, save the download as `tokens/figma-variables.raw.json`, then run `npm run tokens:normalize`. That rewrites primitives and semantics. Font, typography, and effect stay as they are in `tokens/tokens.json` and are not rebuilt from Variables.
+1. For a Figma variable change, run the development plugin in `figma/export-variables/`, save the download as `tokens/figma-variables.raw.json`, then run `npm run tokens:normalize`. That rewrites primitives and semantics (both `Semantics` and `Semantic Colors`) and the dark file. Only `Semantic Colors` may have a Dark mode; every other collection has one mode. Font, typography, and effect stay as they are in `tokens/tokens.json` and are not rebuilt from Variables.
 2. For a change to those preserved styles, or to token-generation logic, edit that source directly.
 3. Run:
 
@@ -182,11 +188,11 @@ Figma local variables
 ↓
 `npm run tokens:normalize`
 ↓
-`tokens/tokens.json`
+`tokens/tokens.json` and `tokens/tokens.dark.json`
 ↓
 `build-tokens.js` / Style Dictionary
 ↓
-`src/styles/generated/tokens.css`
+`src/styles/generated/tokens.css` and `tokens.dark.css`
 ↓
 React / Tailwind / shadcn
 

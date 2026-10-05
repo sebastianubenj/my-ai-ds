@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
 
-import { normalizeFigmaVariables } from './normalize-figma-variables.js';
+import { buildDarkTree, normalizeFigmaVariables } from './normalize-figma-variables.js';
 
 const SOURCE = {
   font: { typography: { display: { lg: { type: 'custom-fontStyle', value: { fontSize: 60 } } } } },
@@ -449,8 +449,189 @@ test('a remote library alias fails', () => {
   );
 });
 
+const themed = {
+  id: 'c-col',
+  name: 'Semantic Colors',
+  remote: false,
+  defaultModeId: 'm-light',
+  modes: [
+    { name: 'Light', modeId: 'm-light' },
+    { name: 'Dark', modeId: 'm-dark' },
+  ],
+  variableIds: [],
+};
+
+const white = variable({
+  id: 'white',
+  name: 'colors/white',
+  variableCollectionId: 'c-prim',
+  resolvedType: 'COLOR',
+  valuesByMode: { 'm-prim': { r: 1, g: 1, b: 1, a: 1 } },
+});
+const black = variable({
+  id: 'black',
+  name: 'colors/black',
+  variableCollectionId: 'c-prim',
+  resolvedType: 'COLOR',
+  valuesByMode: { 'm-prim': { r: 0, g: 0, b: 0, a: 1 } },
+});
+
+test('Semantic Colors maps to the semantics root and Light feeds tokens.json', () => {
+  const raw1 = raw([prim, themed], [
+    white,
+    black,
+    variable({
+      id: 'bg',
+      name: 'colors/background/default',
+      variableCollectionId: 'c-col',
+      resolvedType: 'COLOR',
+      valuesByMode: {
+        'm-light': { type: 'VARIABLE_ALIAS', id: 'white' },
+        'm-dark': { type: 'VARIABLE_ALIAS', id: 'black' },
+      },
+    }),
+  ]);
+  const candidate = normalizeFigmaVariables(raw1, SOURCE);
+  const token = leaf(candidate, 'semantics.colors.background.default');
+  assert.equal(token.value, '{primitives.colors.white}');
+  assert.equal(
+    token.extensions['org.lukasoppermann.figmaDesignTokens'].collection,
+    'Semantic Colors',
+  );
+
+  const dark = buildDarkTree(raw1);
+  assert.deepEqual(Object.keys(dark), ['semantics']);
+  assert.equal(leaf(dark, 'semantics.colors.background.default').value, '{primitives.colors.black}');
+});
+
+test('dark tree holds only themed collections and resolves aliases per mode', () => {
+  const raw1 = raw([prim, sem, themed], [
+    white,
+    black,
+    variable({
+      id: 'opacity-10',
+      name: 'opacity/opacity-10',
+      variableCollectionId: 'c-prim',
+      resolvedType: 'FLOAT',
+      valuesByMode: { 'm-prim': 10 },
+    }),
+    variable({
+      id: 'layer',
+      name: 'layer/panel',
+      variableCollectionId: 'c-sem',
+      resolvedType: 'FLOAT',
+      valuesByMode: { 'm-sem': 40 },
+    }),
+    variable({
+      id: 'base',
+      name: 'colors/foreground/default',
+      variableCollectionId: 'c-col',
+      resolvedType: 'COLOR',
+      valuesByMode: {
+        'm-light': { type: 'VARIABLE_ALIAS', id: 'black' },
+        'm-dark': { type: 'VARIABLE_ALIAS', id: 'white' },
+      },
+    }),
+    variable({
+      id: 'subtle',
+      name: 'colors/foreground/subtle',
+      variableCollectionId: 'c-col',
+      resolvedType: 'COLOR',
+      valuesByMode: {
+        'm-light': { type: 'VARIABLE_ALIAS', id: 'base' },
+        'm-dark': { type: 'VARIABLE_ALIAS', id: 'base' },
+      },
+    }),
+    variable({
+      id: 'shadow',
+      name: 'shadow/popover/layer-1/color',
+      variableCollectionId: 'c-col',
+      resolvedType: 'COLOR',
+      valuesByMode: {
+        'm-light': { color: { type: 'VARIABLE_ALIAS', id: 'black' }, opacity: { type: 'VARIABLE_ALIAS', id: 'opacity-10' } },
+        'm-dark': { color: { type: 'VARIABLE_ALIAS', id: 'black' }, opacity: 40 },
+      },
+    }),
+  ]);
+
+  const dark = buildDarkTree(raw1);
+  assert.equal(dark.semantics.layer, undefined);
+  assert.equal(leaf(dark, 'semantics.colors.foreground.subtle').value, '{primitives.colors.white}');
+  assert.equal(leaf(dark, 'semantics.shadow.popover.layer-1.color').value, '#00000066');
+
+  const light = normalizeFigmaVariables(raw1, SOURCE);
+  assert.equal(leaf(light, 'semantics.colors.foreground.subtle').value, '{primitives.colors.black}');
+  assert.equal(leaf(light, 'semantics.shadow.popover.layer-1.color').value, '#0000001a');
+  assert.equal(leaf(light, 'semantics.layer.panel').value, 40);
+});
+
+test('a themed collection with one mode produces no dark tree', () => {
+  const single = { ...themed, modes: [{ name: 'Mode 1', modeId: 'm-light' }] };
+  const raw1 = raw([prim, single], [
+    white,
+    variable({
+      id: 'bg',
+      name: 'colors/background/default',
+      variableCollectionId: 'c-col',
+      resolvedType: 'COLOR',
+      valuesByMode: { 'm-light': { type: 'VARIABLE_ALIAS', id: 'white' } },
+    }),
+  ]);
+  assert.equal(buildDarkTree(raw1), null);
+  assert.equal(
+    leaf(normalizeFigmaVariables(raw1, SOURCE), 'semantics.colors.background.default').value,
+    '{primitives.colors.white}',
+  );
+});
+
+test('a Dark color with no value for the Dark mode fails', () => {
+  const raw1 = raw([prim, themed], [
+    white,
+    variable({
+      id: 'bg',
+      name: 'colors/background/default',
+      variableCollectionId: 'c-col',
+      resolvedType: 'COLOR',
+      valuesByMode: { 'm-light': { type: 'VARIABLE_ALIAS', id: 'white' } },
+    }),
+  ]);
+  assert.throws(() => buildDarkTree(raw1), /has no value for mode m-dark/);
+});
+
+test('a themed collection needs exactly one mode named Dark', () => {
+  const bad = { ...themed, modes: [{ name: 'Light', modeId: 'a' }, { name: 'Night', modeId: 'b' }] };
+  assert.throws(() => normalizeFigmaVariables(raw([bad], []), SOURCE), /exactly one is named Dark/);
+});
+
+test('Semantics and Semantic Colors cannot define the same token', () => {
+  const colorInSemantics = variable({
+    id: 'dup-a',
+    name: 'colors/background/default',
+    variableCollectionId: 'c-sem',
+    resolvedType: 'COLOR',
+    valuesByMode: { 'm-sem': { r: 1, g: 1, b: 1, a: 1 } },
+  });
+  const colorInColors = variable({
+    id: 'dup-b',
+    name: 'colors/background/default',
+    variableCollectionId: 'c-col',
+    resolvedType: 'COLOR',
+    valuesByMode: { 'm-light': { r: 1, g: 1, b: 1, a: 1 }, 'm-dark': { r: 0, g: 0, b: 0, a: 1 } },
+  });
+  assert.throws(
+    () => normalizeFigmaVariables(raw([sem, themed], [colorInSemantics, colorInColors]), SOURCE),
+    /defined in more than one collection/,
+  );
+});
+
 test('the committed raw export reproduces tokens.json', () => {
   const raw = JSON.parse(readFileSync('tokens/figma-variables.raw.json', 'utf8'));
   const source = JSON.parse(readFileSync('tokens/tokens.json', 'utf8'));
   assert.deepEqual(normalizeFigmaVariables(raw, source), source);
+});
+
+test('the committed raw export reproduces tokens.dark.json', () => {
+  const raw = JSON.parse(readFileSync('tokens/figma-variables.raw.json', 'utf8'));
+  const committed = JSON.parse(readFileSync('tokens/tokens.dark.json', 'utf8'));
+  assert.deepEqual(buildDarkTree(raw) ?? {}, committed);
 });

@@ -15,7 +15,7 @@ function LoginPattern() {
 
   return (
     <div
-      className="flex min-h-dvh w-full flex-col items-center justify-center px-(--primitives-spacing-6) py-(--primitives-spacing-4) md:p-(--primitives-spacing-6) [background-color:var(--semantics-colors-background-default)]"
+      className="flex min-h-dvh w-full flex-col items-center justify-center px-(--primitives-spacing-6) py-(--primitives-spacing-4) md:p-(--primitives-spacing-6) [background-color:var(--semantics-colors-background-page)]"
     >
       <form
         className="flex w-full max-w-sm flex-col items-center gap-(--primitives-spacing-10) md:gap-(--primitives-spacing-12)"
@@ -93,7 +93,12 @@ function LoginPattern() {
                   tracking-(--semantics-typography-label-label-md-tracking-0-125)
                   [color:var(--semantics-colors-foreground-default)]`}
               >
-                <Link href="#">Forgot password?</Link>
+                <Link
+                  href="#"
+                  className="[color:var(--semantics-colors-foreground-highlight)]"
+                >
+                  Forgot password?
+                </Link>
               </span>
             </div>
           </div>
@@ -112,7 +117,12 @@ function LoginPattern() {
               [color:var(--semantics-colors-foreground-default)]`}
           >
             <span>Don’t have an account?</span>
-            <Link href="#">Sign up</Link>
+            <Link
+              href="#"
+              className="[color:var(--semantics-colors-foreground-highlight)]"
+            >
+              Sign up
+            </Link>
           </p>
         </div>
       </form>

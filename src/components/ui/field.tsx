@@ -40,7 +40,7 @@ export function Field({
       {label ? (
         <Label
           htmlFor={htmlFor}
-          className="flex w-full items-center gap-(--primitives-spacing-0-5)"
+          className="flex w-full items-center gap-(--primitives-spacing-out-of-scale-0-5)"
         >
           {label}
           {optional ? (

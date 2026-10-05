@@ -7,16 +7,16 @@ import { Meta, Canvas } from "@storybook/addon-docs/blocks";
 
 The design system's spacing scale. Specimens consume the existing `primitives.spacing.*` CSS variables. This page is documentation, not a public Spacing component.
 
-Spacing is a **primitive-only** foundation. There is no semantic spacing layer. Components consume these tokens directly for gap, padding, and control dimensions.
+Spacing is a **primitive-only** foundation. Steps outside the default scale live under `spacing/out-of-scale/*`. There is no semantic spacing layer. Components consume these tokens directly for gap, padding, and control dimensions.
 
 The scale uses a 4px base relationship: Figma name × 4 = px. Names resemble a Tailwind-style scale, but the steps are project-specific. Do not treat this as a standard Tailwind scale or an 8px grid.
 
-Fractional-looking names use Figma's comma notation. For example, `spacing/2,25` is 9px (`--primitives-spacing-2-25`).
+Fractional-looking names use Figma's comma notation. For example, `spacing/out-of-scale/2,25` is 9px (`--primitives-spacing-out-of-scale-2-25`).
 
 This page documents the token scale, not component-specific spacing decisions.
 
 ## Scale
 
-All 43 primitive spacing tokens, ordered by pixel value. Unused steps are still valid tokens.
+All 44 primitive spacing tokens, ordered by pixel value. Unused steps are still valid tokens.
 
 <Canvas of={SpacingStories.Scale} />

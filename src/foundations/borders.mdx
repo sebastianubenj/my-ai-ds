@@ -9,15 +9,15 @@ The design system's stroke-width and focus-ring-width scales. Specimens consume 
 
 Widths are **primitive-only**. There is no semantic border-width or ring-width layer. Semantic border **colors** belong to the Colors Foundation.
 
-Fractional-looking names use Figma's comma notation. For example, `stroke-width/border-1,33` is 1.33px (`--primitives-stroke-width-border-1-33`).
+Fractional-looking names use Figma's comma notation. For example, `stroke-width/stroke-1,33` is 1.33px (`--primitives-stroke-width-stroke-1-33`).
 
 This page documents the token scale, not component-specific border decisions. Unused steps are still valid published primitives. Unused means no Figma binding, not that the token is deprecated.
 
 ## Stroke Widths
 
-Default UI chrome uses `border` (1px). Stronger control states such as focus, drag-over, and open use `border-2` (2px). `border-1,33`, `border-1,5`, and `border-1,66` are primarily Figma Lucide/vector stroke widths, not container borders. `border-0,5` currently has no Figma bindings.
+Default UI chrome uses `stroke` (1px). Stronger control states such as focus, drag-over, and open use `stroke-2` (2px). `stroke-1,33`, `stroke-1,5`, and `stroke-1,66` are primarily Figma Lucide/vector stroke widths, not container borders. `stroke-0,5` currently has no Figma bindings.
 
-`border-2` is a control stroke. It is not the focus ring. `ring-2` is a different token even though both resolve to 2px.
+`stroke-2` is a control stroke. It is not the focus ring. `ring-2` is a different token even though both resolve to 2px.
 
 <Canvas of={BordersStories.StrokeWidths} />
 

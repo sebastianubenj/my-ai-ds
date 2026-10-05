@@ -9,7 +9,7 @@ Primitive palette → semantic roles → components. Specimens consume the exist
 
 Components consume **semantic** colors. Primitive colors are the palette those roles alias.
 
-The design system currently documents a **single light theme**. Figma collections have one mode, and semantic color tokens have no dark variants.
+Semantic colors have Light and Dark modes from the Figma **Semantic Colors** collection. Use the Theme toolbar. Swatches read the CSS variables, so they flip with the theme. Primitive colors do not change: they are the palette both modes alias.
 
 ## Semantic
 
@@ -55,9 +55,17 @@ White, black, and the 50–950 scale.
 
 <Canvas of={ColorStories.Emerald} />
 
-### Sky
+### Cyan
 
-<Canvas of={ColorStories.Sky} />
+100–400, 500–700. There is no 50 / 800–950 scale.
+
+<Canvas of={ColorStories.Cyan} />
+
+### Gray
+
+A single token. Dark `foreground/subtle` aliases it.
+
+<Canvas of={ColorStories.Gray} />
 
 ### Blue
 

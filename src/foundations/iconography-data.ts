@@ -34,7 +34,7 @@ export const ICON_FAMILY = {
   figmaGrid: "Lucide Icons / {kebab-name}",
   figmaMasterSize: 16,
   figmaComponentCount: 1531,
-  reactRegistryCount: 17,
+  reactRegistryCount: 18,
   package: "lucide-react",
 } as const;
 
@@ -88,13 +88,13 @@ export const ICON_SIZES: IconSizeRecord[] = [
 export const FIGMA_UTILITY_ICON_SIZE = 24;
 
 /**
- * Stroke relationship. `border-1,33` belongs to Borders; it is not an
+ * Stroke relationship. `stroke-1,33` belongs to Borders; it is not an
  * icon-specific token.
  */
 export const ICON_STROKE = {
-  figmaName: "stroke-width/border-1,33",
-  token: "primitives.stroke-width.border-1,33",
-  cssVar: "--primitives-stroke-width-border-1-33",
+  figmaName: "stroke-width/stroke-1,33",
+  token: "primitives.stroke-width.stroke-1,33",
+  cssVar: "--primitives-stroke-width-stroke-1-33",
   figmaPx: 1.33,
   reactStrokeWidth: 2,
   lucideViewBox: 24,
@@ -133,6 +133,7 @@ export const ICON_MAPPINGS: IconMappingRecord[] = [
   { figmaName: "Lucide Icons / arrow-left", reactName: "arrow-left" },
   { figmaName: "Lucide Icons / check", reactName: "check" },
   { figmaName: "Lucide Icons / chevron-down", reactName: "chevron-down" },
+  { figmaName: "Lucide Icons / shopping-bag", reactName: "shopping-bag" },
   {
     figmaName: "Lucide Icons / Resize Thumb",
     reactName: "resize-thumb",
