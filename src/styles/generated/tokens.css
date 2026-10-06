@@ -24,7 +24,7 @@
   --primitives-colors-cyan-400: #33ffe7ff;
   --primitives-colors-cyan-500: #00ffe1ff;
   --primitives-colors-cyan-600: #00b8a3ff;
-  --primitives-colors-cyan-700: #009987ff;
+  --primitives-colors-cyan-700: #008576ff;
   --primitives-colors-emerald-50: #ecfdf5ff;
   --primitives-colors-emerald-100: #d1fae5ff;
   --primitives-colors-emerald-200: #a7f3d0ff;
@@ -299,9 +299,9 @@
   --semantics-colors-border-strong: var(--primitives-colors-neutral-900);
   --semantics-colors-foreground-default: var(--primitives-colors-neutral-900);
   --semantics-colors-foreground-destructive: var(--primitives-colors-red-600);
-  --semantics-colors-foreground-highlight: var(--primitives-colors-cyan-600);
+  --semantics-colors-foreground-highlight: var(--primitives-colors-cyan-700);
   --semantics-colors-foreground-primary: var(--primitives-colors-white);
-  --semantics-colors-foreground-primary-highlight: var(--primitives-colors-cyan-300);
+  --semantics-colors-foreground-primary-highlight: var(--primitives-colors-cyan-200);
   --semantics-colors-foreground-primary-subtle: var(--primitives-colors-neutral-400);
   --semantics-colors-foreground-subtle: var(--primitives-colors-neutral-500);
   --semantics-colors-interaction-scrollbar-thumb: var(--primitives-colors-neutral-400);

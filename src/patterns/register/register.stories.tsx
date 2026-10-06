@@ -17,7 +17,7 @@ function RegisterPattern() {
 
   return (
     <div
-      className="flex min-h-dvh w-full flex-col items-center justify-center px-(--primitives-spacing-6) py-(--primitives-spacing-4) md:p-(--primitives-spacing-6) [background-color:var(--semantics-colors-background-page)]"
+      className="flex min-h-dvh w-full flex-col items-center justify-center px-(--primitives-spacing-6) py-(--primitives-spacing-4) md:px-(--primitives-spacing-16) md:py-0 [background-color:var(--semantics-colors-background-page)]"
     >
       <form
         className="flex w-full max-w-sm flex-col items-center gap-(--primitives-spacing-10) md:gap-(--primitives-spacing-12)"

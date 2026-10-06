@@ -1,29 +1,22 @@
 # Accessibility gate
 
-`parameters.a11y.test` in `preview.tsx` stays `'todo'` until the catalog is clean. Switch it to `'error'` only after the blockers below are gone so CI does not fail on known contrast issues.
+`parameters.a11y.test` in `preview.tsx` stays `'todo'` until a full CSF scan is clean. Switch it to `'error'` only then, so CI does not fail on leftover violations.
 
 ## Inventory
 
-Scanned 227 CSF stories with axe-core (WCAG 2.0 A/AA) against `http://localhost:6006` on 6 Oct 2026. Viewport 1280×800. Docs MDX pages were not scanned.
+Last full CSF scan: 6 Oct 2026 (227 stories, WCAG 2.0 A/AA, 1280×800). Docs MDX were not scanned.
 
-| Status | Count |
+Re-checked 6 Oct 2026 after `foreground/highlight` → `cyan/700` (`#008576`):
+
+| Story | Result |
 | --- | --- |
-| Clean | 225 |
-| Violations | 2 stories |
-| Scan errors (retried clean) | 4 transient “Axe is already running” on first pass |
+| `patterns-login--default` | Clean (previously `color-contrast` on 2 links) |
+| `patterns-register--default` | Clean (previously `color-contrast` on 1 link) |
 
-### Blockers (`color-contrast`, serious)
-
-| Story | Nodes | Target |
-| --- | --- | --- |
-| `patterns-login--default` | 2 | Inline `Link` underlines on the login form |
-| `patterns-register--default` | 1 | Inline `Link` underline on the register form |
-
-axe reports the inherited / underlined link color on those patterns against the page background. Foundations and UI component stories did not fail this rule in the same scan.
+Those two were the only catalog blockers in the full scan.
 
 ## Before `test: 'error'`
 
-1. Fix Link contrast on Login and Register (token, underline treatment, or composition).
-2. Re-run the same axe pass on all CSF stories; expect zero violations.
-3. Switch `parameters.a11y.test` to `'error'` in `.storybook/preview.tsx`.
-4. Keep `npm run check` as the only CI gate; addon-a11y then fails Storybook tests on new violations.
+1. Re-run axe on all CSF stories (not only Login/Register).
+2. If zero violations, switch `parameters.a11y.test` to `'error'` in `.storybook/preview.tsx`.
+3. Keep `npm run check` as the only CI gate; addon-a11y then fails Storybook tests on new violations.

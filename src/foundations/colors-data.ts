@@ -157,8 +157,8 @@ export const SEMANTIC_FOREGROUND: SemanticColorRecord[] = [
     name: "Primary highlight",
     token: "semantics.colors.foreground.primary-highlight",
     cssVar: "--semantics-colors-foreground-primary-highlight",
-    generated: "var(--primitives-colors-cyan-300)",
-    alias: "primitives.colors.cyan.300",
+    generated: "var(--primitives-colors-cyan-200)",
+    alias: "primitives.colors.cyan.200",
     darkGenerated: "var(--primitives-colors-cyan-700)",
     darkAlias: "primitives.colors.cyan.700",
   }),
@@ -175,8 +175,8 @@ export const SEMANTIC_FOREGROUND: SemanticColorRecord[] = [
     name: "Highlight",
     token: "semantics.colors.foreground.highlight",
     cssVar: "--semantics-colors-foreground-highlight",
-    generated: "var(--primitives-colors-cyan-600)",
-    alias: "primitives.colors.cyan.600",
+    generated: "var(--primitives-colors-cyan-700)",
+    alias: "primitives.colors.cyan.700",
     darkGenerated: "var(--primitives-colors-cyan-500)",
     darkAlias: "primitives.colors.cyan.500",
   }),
@@ -392,7 +392,7 @@ export const PRIMITIVE_CYAN: PrimitiveColorRecord[] = [
   { name: "Cyan / 400", token: "primitives.colors.cyan.400", cssVar: "--primitives-colors-cyan-400", hex: "#33ffe7ff" },
   { name: "Cyan / 500", token: "primitives.colors.cyan.500", cssVar: "--primitives-colors-cyan-500", hex: "#00ffe1ff" },
   { name: "Cyan / 600", token: "primitives.colors.cyan.600", cssVar: "--primitives-colors-cyan-600", hex: "#00b8a3ff" },
-  { name: "Cyan / 700", token: "primitives.colors.cyan.700", cssVar: "--primitives-colors-cyan-700", hex: "#009987ff" },
+  { name: "Cyan / 700", token: "primitives.colors.cyan.700", cssVar: "--primitives-colors-cyan-700", hex: "#008576ff" },
 ];
 
 export const PRIMITIVE_GRAY: PrimitiveColorRecord[] = [
