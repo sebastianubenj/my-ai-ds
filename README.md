@@ -1,8 +1,10 @@
 # my-ai-ds
 
-React + TypeScript design system. Visual language comes from Figma. Storybook is the working catalog.
+React + TypeScript design system. Visual language comes from [Figma](https://www.figma.com/design/PMZpYxijxLhjDlvMbtVY5j/my-ai-ds). Storybook is the working catalog.
 
 Stack: Vite, Tailwind CSS v4, shadcn structure, Base UI, Style Dictionary.
+
+This repo is a catalog, not a product app. Do not add `src/views/` until there is an application to compose. Do not publish an npm package until another repo consumes it. `src/App.tsx` / `npm run dev` is a leftover Vite shell; leave it until that consumer exists.
 
 ## Run
 
@@ -18,9 +20,9 @@ Storybook: [http://localhost:6006](http://localhost:6006)
 npm run check
 ```
 
-`check` runs typecheck, lint, Storybook interaction tests, and the production build. Use it before commit.
+`check` runs typecheck, lint, token tests (`tokens:test`), Storybook interaction tests, and the production build. Use it before commit.
 
-`npm run dev` is the leftover Vite app shell. Use Storybook for the design system.
+Accessibility checks in Storybook stay at `parameters.a11y.test: 'todo'` until the catalog in [`.storybook/a11y-status.md`](.storybook/a11y-status.md) is clean. Then switch that setting to `'error'`.
 
 ## Tokens
 
@@ -42,7 +44,7 @@ Implementation rules (tokens, components, patterns, testing) live in `.cursor/ru
 | `src/components/ui/` | Components (Button, Field, Input, Link, …) |
 | `src/components/icon/` | Curated icon registry |
 | `src/foundations/` | Token specimens (color, type, space, …) |
-| `src/patterns/` | Composed screens (Login, Register). Specimens, not product routes |
+| `src/patterns/` | Composed screens (Login, Register, Home Products). Specimens, not product routes |
 | `figma/export-variables/` | Figma plugin that downloads every local variable |
 | `tokens/figma-variables.raw.json` | Raw variable export. Input to `tokens:normalize` |
 | `tokens/tokens.json` | Token source. Primitives and semantics come from the export; font, typography, and effect stay in this file |

@@ -14,23 +14,26 @@ Each `NavigationLink` is a real link. Clicking it follows `href`. Pass `menu` an
 `menu` holds `NavigationSection` elements. The panel is one surface under the whole bar, layered over the page with the scrim behind it. It does not push the page down.
 
 - **Open and close** — hover opens it after a short delay and it stays open while the pointer is anywhere over the bar or the panel. It closes when the pointer leaves both. `Escape`, a press outside, and clicking a panel link also close it.
-- **Search** — the search button opens a search panel under the bar on click or `Enter`. Hover never opens it, and the pointer leaving the bar does not close it. The field takes focus on open. `Escape`, a press outside, or the clear button after typing behave as in the field below.
+- **Search** — the search button opens a search panel under the bar on click or `Enter`. Hover never opens it. The field takes focus on open. `Escape`, a press outside, or leaving the bar and panel close it.
+- **Bag** — `NavigationBagTrigger` opens the bag panel on click or `Enter`, with the same motion as search. Hover never opens it. Without `items`, the empty state shows “Your bag is empty” and a `Sign in` link (`signInHref`). With `items`, it shows “Your bag”, `Review bag` (`onReview`), and a list of `BagPreviewProductCard`.
 - **Keyboard** — focusing a link with `menu` shows the Figma `ShowIconLink` chevron next to it, as a button, named by `menuLabel`. `Enter` on the link follows `href`. `Enter` on the chevron opens the panel and moves focus into it.
 - **Sticky bar** — the bar is `sticky top-0` and stays visible while the page scrolls, so the panels always open under it. Sticky only works when no ancestor of `Navigation` sets `overflow` to anything but `visible` (`hidden`, `auto`, or `scroll`), and the bar is expected at the top of the page. In an ancestor that scrolls, put `Navigation` outside it, or make the bar `fixed` through `className` (for example `fixed inset-x-0 top-0`). The panels use fixed positioning, so they follow it.
 - **Controlled value** — give each link a `value`, then use `value`, `defaultValue`, and `onValueChange` on `Navigation` to read or set the open panel. Pass `null` to close it.
 - **Mark** — the mark is a link to `logoHref`. The app decides the URL and any client-side routing, for example in a pattern or view.
 
-`children` is one slot. Put `NavigationLink` items, `NavigationSearchTrigger`, and `NavigationIconButton` in the order they should appear. Links hide below `md`. Icon buttons stay on the bar, including on mobile.
+`children` is one slot. Put `NavigationLink` items, `NavigationSearchTrigger`, `NavigationBagTrigger`, and `NavigationIconButton` in the order they should appear. Links hide below `md`. Icon buttons stay on the bar, including on mobile.
 
 ## Search field
 
 `NavigationSearchTrigger` is the search button. Place it in `children` where the icon should sit. `NavigationSearch` is the field used in both panels. It is a `role="search"` form with a search input. `default` shows the placeholder (the `searchLabel`). `filled` appears once there is text and adds a clear button named by `clearSearchLabel`. Use `searchValue`, `onSearchValueChange`, and `onSearchSubmit` on `Navigation` to read the text and handle submit. To open or close the panel from outside, set `value` to `"search"` or `null`.
 
-`NavigationIconButton` is a bar icon. The shopping bag is `name="shopping-bag"`. It does not open a panel yet.
+`NavigationBagTrigger` is the bag button. Use `value` `"bag"` or `null` to open or close it from outside. `signInHref` is the Sign in destination when the bag is empty. Pass `items` for the loaded list. `onReview` is the Review bag action. `aria-label` names the button.
+
+`NavigationIconButton` is a bar icon without a panel.
 
 ## Mobile behavior
 
-The search button opens a full-screen search view with the same field and focus in the field. It animates like the menu: the menu button turns into the close control and the panel grows from the bar. Closing it returns focus to the search button.
+The search button opens a full-screen search view with the same field and focus in the field. The bag button opens a full-screen bag view (empty or loaded from `items`). Both animate like the menu: the menu button turns into the close control and the panel grows from the bar. Closing them returns focus to the button that opened them.
 
 The menu button opens one shared panel passed as `menu` on `Navigation`. The `menu` of each `NavigationLink` is not used below `md`, because the links do not exist there. `open` is controlled when set, and the button works on its own when it is omitted. The header becomes the close control (`x` on the right). While the panel is open the bar stays at the top, the panel fills the viewport below it and scrolls on its own when the content is taller, and the page behind does not scroll. The menu button points at the panel with `aria-controls`. This relies on the bar being sticky at the top of the page; see the sticky note in desktop behavior.
 

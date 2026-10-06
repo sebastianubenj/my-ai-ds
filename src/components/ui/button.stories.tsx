@@ -429,6 +429,7 @@ export const ForwardsRef: Story = {
     const button = within(canvasElement).getByRole("button", { name: "Button" });
 
     await expect(button.tagName).toBe("BUTTON");
+    await expect(button).toHaveAttribute("data-slot", "button");
     await expect(button).toHaveAttribute("data-ref-tag", "BUTTON");
   },
 };

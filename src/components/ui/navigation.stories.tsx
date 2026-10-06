@@ -4,7 +4,8 @@ import { expect, fireEvent, userEvent, waitFor, within } from "storybook/test";
 
 import {
   Navigation,
-  NavigationIconButton,
+  NavigationBagTrigger,
+  type NavigationBagItem,
   NavigationLink,
   NavigationMenuLink,
   NavigationSearchTrigger,
@@ -72,12 +73,23 @@ function SampleMenu() {
   );
 }
 
+const sampleBagItems: NavigationBagItem[] = Array.from(
+  { length: 6 },
+  () => ({
+    name: "TP-7 aluminum",
+    src: "/product-card-tp7.png",
+    alt: "Teenage Engineering TP-7 aluminum field recorder",
+  }),
+);
+
 function SampleNavigation(
   props: Partial<React.ComponentProps<typeof Navigation>> & {
     navRef?: React.Ref<HTMLElement>;
+    bagItems?: NavigationBagItem[];
+    onReview?: () => void;
   },
 ) {
-  const { navRef, ...rest } = props;
+  const { navRef, bagItems, onReview, ...rest } = props;
 
   return (
     <Navigation
@@ -104,7 +116,13 @@ function SampleNavigation(
         </NavigationLink>
       ))}
       <NavigationSearchTrigger />
-      <NavigationIconButton name="shopping-bag" aria-label="Bag" />
+      <NavigationBagTrigger
+        aria-label="Bag"
+        signInHref="#login"
+        onSignInClick={stopNavigation}
+        items={bagItems}
+        onReview={onReview}
+      />
     </Navigation>
   );
 }
@@ -426,6 +444,85 @@ export const DesktopSearch: Story = {
   },
 };
 
+export const DesktopBagEmpty: Story = {
+  args: requiredArgs,
+  render: () => <SampleNavigation />,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const body = within(document.body);
+    const panel = () => document.querySelector("[data-slot=navigation-panel]");
+    const bag = canvas.getByRole("button", { name: "Bag" });
+
+    await userEvent.hover(bag);
+    await new Promise((resolve) => setTimeout(resolve, 400));
+    await expect(panel()).toBeNull();
+
+    await userEvent.click(bag);
+    await waitFor(() =>
+      expect(
+        body.getByRole("heading", { name: "Your bag is empty" }),
+      ).toBeVisible(),
+    );
+    await expect(body.getByRole("link", { name: "Sign in" })).toHaveAttribute(
+      "href",
+      "#login",
+    );
+
+    await userEvent.hover(canvas.getByRole("link", { name: "Support" }));
+    await waitFor(() =>
+      expect(body.getAllByRole("heading", { name: "Heading" })).toHaveLength(1),
+    );
+
+    await userEvent.click(bag);
+    await waitFor(() =>
+      expect(
+        body.getByRole("heading", { name: "Your bag is empty" }),
+      ).toBeVisible(),
+    );
+
+    await userEvent.keyboard("{Escape}");
+    await waitFor(() => expect(panel()).toBeNull());
+
+    await userEvent.click(bag);
+    await waitFor(() =>
+      expect(
+        body.getByRole("heading", { name: "Your bag is empty" }),
+      ).toBeVisible(),
+    );
+    await userEvent.unhover(bag);
+    await waitFor(() => expect(panel()).toBeNull());
+  },
+};
+
+export const DesktopBag: Story = {
+  args: requiredArgs,
+  render: () => <SampleNavigation bagItems={sampleBagItems} />,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const body = within(document.body);
+    const panel = () => document.querySelector("[data-slot=navigation-panel]");
+    const bag = canvas.getByRole("button", { name: "Bag" });
+
+    await userEvent.hover(bag);
+    await new Promise((resolve) => setTimeout(resolve, 400));
+    await expect(panel()).toBeNull();
+
+    await userEvent.click(bag);
+    await waitFor(() =>
+      expect(body.getByRole("heading", { name: "Your bag" })).toBeVisible(),
+    );
+    await expect(
+      body.getByRole("button", { name: "Review bag" }),
+    ).toBeVisible();
+    await expect(
+      body.getAllByRole("article"),
+    ).toHaveLength(6);
+
+    await userEvent.keyboard("{Escape}");
+    await waitFor(() => expect(panel()).toBeNull());
+  },
+};
+
 export const DesktopHoverCloses: Story = {
   args: requiredArgs,
   render: () => <SampleNavigation />,
@@ -487,6 +584,67 @@ export const MobileSearch: Story = {
     await userEvent.click(canvas.getByRole("button", { name: "Close" }));
     await waitFor(() => expect(canvas.queryByRole("searchbox")).toBeNull());
     await expect(canvas.getByRole("button", { name: "Search" })).toHaveFocus();
+  },
+};
+
+export const MobileBagEmpty: Story = {
+  args: requiredArgs,
+  globals: {
+    viewport: { value: "mobile2", isRotated: false },
+  },
+  render: () => <SampleNavigation />,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    await userEvent.click(canvas.getByRole("button", { name: "Bag" }));
+    await waitFor(() =>
+      expect(
+        canvas.getByRole("heading", { name: "Your bag is empty" }),
+      ).toBeVisible(),
+    );
+    await expect(canvas.getByRole("button", { name: "Close" })).toBeVisible();
+    await expect(canvas.queryByRole("button", { name: "Menu" })).toBeNull();
+    await expect(canvas.getByRole("link", { name: "Sign in" })).toHaveAttribute(
+      "href",
+      "#login",
+    );
+
+    await userEvent.click(canvas.getByRole("button", { name: "Close" }));
+    await waitFor(() =>
+      expect(
+        canvas.queryByRole("heading", { name: "Your bag is empty" }),
+      ).toBeNull(),
+    );
+    await expect(canvas.getByRole("button", { name: "Bag" })).toHaveFocus();
+  },
+};
+
+export const MobileBag: Story = {
+  args: requiredArgs,
+  globals: {
+    viewport: { value: "mobile2", isRotated: false },
+  },
+  render: () => <SampleNavigation bagItems={sampleBagItems} />,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    await userEvent.click(canvas.getByRole("button", { name: "Bag" }));
+    await waitFor(() => {
+      expect(canvas.getByRole("button", { name: "Close" })).toBeVisible();
+      expect(
+        canvas.getByRole("heading", { name: "Your bag" }),
+      ).toBeVisible();
+    });
+    await expect(
+      canvas.getByRole("button", { name: "Review bag" }),
+    ).toBeVisible();
+    await expect(canvas.getAllByRole("article")).toHaveLength(6);
+
+    await userEvent.click(canvas.getByRole("button", { name: "Close" }));
+    await waitFor(() =>
+      expect(canvas.queryByRole("heading", { name: "Your bag" })).toBeNull(),
+    );
+    await expect(canvas.getByRole("button", { name: "Bag" })).toHaveFocus();
   },
 };
 

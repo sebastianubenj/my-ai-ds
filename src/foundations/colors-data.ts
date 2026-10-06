@@ -396,7 +396,7 @@ export const PRIMITIVE_CYAN: PrimitiveColorRecord[] = [
 ];
 
 export const PRIMITIVE_GRAY: PrimitiveColorRecord[] = [
-  { name: "Gray / 500", token: "primitives.colors.gray.500", cssVar: "--primitives-colors-gray-500", hex: "#6b7280ff" },
+  { name: "Gray / 500", token: "primitives.colors.gray.500", cssVar: "--primitives-colors-gray-500", hex: "#6f798bff" },
 ];
 
 export const PRIMITIVE_BLUE: PrimitiveColorRecord[] = [

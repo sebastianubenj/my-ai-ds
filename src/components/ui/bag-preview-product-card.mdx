@@ -1,0 +1,49 @@
+import * as BagPreviewProductCardStories from "./bag-preview-product-card.stories";
+import { Meta, Canvas } from "@storybook/addon-docs/blocks";
+
+<Meta of={BagPreviewProductCardStories} />
+
+# BagPreviewProductCard
+
+A compact bag-panel row: accent photo well, product name, and an optional quantity. The row has no fill of its own — the bag panel will provide the surface later. There is no action button and no cart logic.
+
+The bag panel and ProductCard Add wiring come later. This component only renders one line item.
+
+## Devices
+
+### Desktop
+
+64px thumb. Quantity, when shown, sits 2px below the name.
+
+<Canvas of={BagPreviewProductCardStories.Desktop} />
+
+### Mobile
+
+48px thumb. Quantity, when shown, sits flush under the name.
+
+<Canvas of={BagPreviewProductCardStories.Mobile} />
+
+### Quantity
+
+Set `showQuantity` to show the quantity line. Hidden by default.
+
+<Canvas of={BagPreviewProductCardStories.WithQuantity} />
+
+## Accessibility
+
+- Root is an `<article>`.
+- The photo uses `alt`.
+
+## API
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `device` | `"desktop"` &#124; `"mobile"` | `"desktop"` | Thumb size and name-to-quantity gap. |
+| `name` | `string` | — | Product name. |
+| `src` | `string` | — | Product photo URL. |
+| `alt` | `string` | — | Accessible description of the photo. |
+| `showQuantity` | `boolean` | `false` | Shows the quantity line. |
+| `quantity` | `string` | `"x2"` | Quantity line. Visible when `showQuantity` is true. |
+| `className` | `string` | — | Adds custom CSS classes to the article. |
+
+The component also supports the standard HTML `<article>` attributes through `React.ComponentProps<"article">`.

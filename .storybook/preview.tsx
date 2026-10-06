@@ -1,6 +1,7 @@
 import "../src/index.css";
 import "./preview.css";
 import type { Decorator, Preview } from '@storybook/react-vite'
+import { MINIMAL_VIEWPORTS } from "storybook/viewport";
 
 const withTheme: Decorator = (Story, context) => {
   const theme = context.globals.theme === 'dark' ? 'dark' : 'light';
@@ -31,6 +32,9 @@ const preview: Preview = {
   },
 
   parameters: {
+    viewport: {
+      options: MINIMAL_VIEWPORTS,
+    },
     backgrounds: {
       disabled: true,
     },

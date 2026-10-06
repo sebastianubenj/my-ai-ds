@@ -1,0 +1,58 @@
+import * as ProductCardStories from "./product-card.stories";
+import { Meta, Canvas } from "@storybook/addon-docs/blocks";
+
+<Meta of={ProductCardStories} />
+
+# ProductCard
+
+A product photo, name, price, and optional primary Add action. Layout changes how the photo sits in the accent well. The card has no fill, border, or shadow — it sits on the page background.
+
+Use the existing Button. Hide it with `showAction={false}` when the product is sold out. Do not treat this as cart or checkout logic.
+
+## Layouts
+
+### Horizontal
+
+Wide well. Square photo centered, with accent bands on the sides.
+
+<Canvas of={ProductCardStories.Horizontal} />
+
+### Vertical
+
+Taller well. Square photo centered, with accent bands above and below.
+
+<Canvas of={ProductCardStories.Vertical} />
+
+### Square
+
+Square well. Photo fills the well.
+
+<Canvas of={ProductCardStories.Square} />
+
+### Without action
+
+Hide the button when the product is sold out.
+
+<Canvas of={ProductCardStories.WithoutAction} />
+
+## Accessibility
+
+- Root is an `<article>`.
+- The photo uses `alt`.
+- When shown, Add is the existing Button (`type="button"`). Give `actionLabel` a clear name.
+
+## API
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `layout` | `"horizontal"` &#124; `"vertical"` &#124; `"square"` | `"horizontal"` | Photo well aspect and image placement. |
+| `name` | `string` | — | Product name. |
+| `price` | `string` | — | Price line. |
+| `src` | `string` | — | Product photo URL. |
+| `alt` | `string` | — | Accessible description of the photo. |
+| `actionLabel` | `string` | `"Add"` | Label of the primary button. |
+| `onAction` | `MouseEventHandler<HTMLButtonElement>` | — | Fired when the primary button is clicked. |
+| `showAction` | `boolean` | `true` | When `false`, the primary button is not rendered. |
+| `className` | `string` | — | Adds custom CSS classes to the article. |
+
+The component also supports the standard HTML `<article>` attributes through `React.ComponentProps<"article">`.

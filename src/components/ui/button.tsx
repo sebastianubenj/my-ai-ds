@@ -196,6 +196,7 @@ export function Button({
       type={type}
       className={cn(buttonVariants({ variant, size: resolvedSize, surface }), className)}
       {...props}
+      data-slot="button"
       data-surface={surface}
       disabled={disabled || loading}
       aria-busy={loading ? true : undefined}
