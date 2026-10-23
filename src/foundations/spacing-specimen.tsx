@@ -34,7 +34,7 @@ export function SpacingSpecimen({
           border-solid border-(length:--primitives-stroke-width-stroke)
           [border-color:var(--semantics-colors-border-default)]
           rounded-(--primitives-radius-rounded-10)
-          [background-color:var(--semantics-colors-background-accent)]`}
+          [background-color:var(--semantics-colors-background-subtle)]`}
       >
         {px === 0 ? (
           <div

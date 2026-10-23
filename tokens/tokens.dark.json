@@ -2,21 +2,6 @@
   "semantics": {
     "colors": {
       "background": {
-        "accent": {
-          "type": "color",
-          "value": "{primitives.colors.neutral.900}",
-          "extensions": {
-            "org.lukasoppermann.figmaDesignTokens": {
-              "collection": "Semantic Colors",
-              "scopes": [
-                "FRAME_FILL",
-                "SHAPE_FILL"
-              ],
-              "variableId": "VariableID:450:1636",
-              "exportKey": "variables"
-            }
-          }
-        },
         "default": {
           "type": "color",
           "value": "{primitives.colors.neutral.950}",
@@ -93,7 +78,7 @@
         },
         "primary-blur": {
           "type": "color",
-          "value": "#ffffffcc",
+          "value": "#17171799",
           "extensions": {
             "org.lukasoppermann.figmaDesignTokens": {
               "collection": "Semantic Colors",
@@ -121,9 +106,39 @@
             }
           }
         },
+        "subtle": {
+          "type": "color",
+          "value": "{primitives.colors.neutral.900}",
+          "extensions": {
+            "org.lukasoppermann.figmaDesignTokens": {
+              "collection": "Semantic Colors",
+              "scopes": [
+                "FRAME_FILL",
+                "SHAPE_FILL"
+              ],
+              "variableId": "VariableID:450:1636",
+              "exportKey": "variables"
+            }
+          }
+        },
+        "subtlest": {
+          "type": "color",
+          "value": "{primitives.colors.neutral.950}",
+          "extensions": {
+            "org.lukasoppermann.figmaDesignTokens": {
+              "collection": "Semantic Colors",
+              "scopes": [
+                "FRAME_FILL",
+                "SHAPE_FILL"
+              ],
+              "variableId": "VariableID:500:5846",
+              "exportKey": "variables"
+            }
+          }
+        },
         "success": {
           "type": "color",
-          "value": "{primitives.colors.emerald.500}",
+          "value": "{primitives.colors.green.600}",
           "extensions": {
             "org.lukasoppermann.figmaDesignTokens": {
               "collection": "Semantic Colors",
@@ -208,6 +223,20 @@
               "exportKey": "variables"
             }
           }
+        },
+        "success": {
+          "type": "color",
+          "value": "{primitives.colors.green.600}",
+          "extensions": {
+            "org.lukasoppermann.figmaDesignTokens": {
+              "collection": "Semantic Colors",
+              "scopes": [
+                "STROKE_COLOR"
+              ],
+              "variableId": "VariableID:486:1331",
+              "exportKey": "variables"
+            }
+          }
         }
       },
       "foreground": {
@@ -275,38 +304,6 @@
             }
           }
         },
-        "primary-highlight": {
-          "type": "color",
-          "value": "{primitives.colors.cyan.700}",
-          "extensions": {
-            "org.lukasoppermann.figmaDesignTokens": {
-              "collection": "Semantic Colors",
-              "scopes": [
-                "SHAPE_FILL",
-                "TEXT_FILL",
-                "STROKE_COLOR"
-              ],
-              "variableId": "VariableID:450:18628",
-              "exportKey": "variables"
-            }
-          }
-        },
-        "primary-subtle": {
-          "type": "color",
-          "value": "{primitives.colors.neutral.500}",
-          "extensions": {
-            "org.lukasoppermann.figmaDesignTokens": {
-              "collection": "Semantic Colors",
-              "scopes": [
-                "SHAPE_FILL",
-                "TEXT_FILL",
-                "STROKE_COLOR"
-              ],
-              "variableId": "VariableID:450:18627",
-              "exportKey": "variables"
-            }
-          }
-        },
         "subtle": {
           "type": "color",
           "value": "{primitives.colors.gray.500}",
@@ -319,6 +316,38 @@
                 "STROKE_COLOR"
               ],
               "variableId": "VariableID:450:1657",
+              "exportKey": "variables"
+            }
+          }
+        },
+        "subtle-on-subtlest": {
+          "type": "color",
+          "value": "{primitives.colors.gray.500}",
+          "extensions": {
+            "org.lukasoppermann.figmaDesignTokens": {
+              "collection": "Semantic Colors",
+              "scopes": [
+                "SHAPE_FILL",
+                "TEXT_FILL",
+                "STROKE_COLOR"
+              ],
+              "variableId": "VariableID:500:5856",
+              "exportKey": "variables"
+            }
+          }
+        },
+        "success": {
+          "type": "color",
+          "value": "{primitives.colors.green.600}",
+          "extensions": {
+            "org.lukasoppermann.figmaDesignTokens": {
+              "collection": "Semantic Colors",
+              "scopes": [
+                "SHAPE_FILL",
+                "TEXT_FILL",
+                "STROKE_COLOR"
+              ],
+              "variableId": "VariableID:486:1328",
               "exportKey": "variables"
             }
           }
@@ -374,6 +403,24 @@
             }
           }
         },
+        "navigation-link": {
+          "hover": {
+            "type": "color",
+            "value": "{primitives.colors.neutral.500}",
+            "extensions": {
+              "org.lukasoppermann.figmaDesignTokens": {
+                "collection": "Semantic Colors",
+                "scopes": [
+                  "SHAPE_FILL",
+                  "TEXT_FILL",
+                  "STROKE_COLOR"
+                ],
+                "variableId": "VariableID:450:18627",
+                "exportKey": "variables"
+              }
+            }
+          }
+        },
         "primary": {
           "hover": {
             "type": "color",
@@ -390,20 +437,18 @@
               }
             }
           },
-          "on-primary": {
-            "hover": {
-              "type": "color",
-              "value": "#171717e6",
-              "extensions": {
-                "org.lukasoppermann.figmaDesignTokens": {
-                  "collection": "Semantic Colors",
-                  "scopes": [
-                    "FRAME_FILL",
-                    "SHAPE_FILL"
-                  ],
-                  "variableId": "VariableID:451:18655",
-                  "exportKey": "variables"
-                }
+          "on-primary-hover": {
+            "type": "color",
+            "value": "#171717e6",
+            "extensions": {
+              "org.lukasoppermann.figmaDesignTokens": {
+                "collection": "Semantic Colors",
+                "scopes": [
+                  "FRAME_FILL",
+                  "SHAPE_FILL"
+                ],
+                "variableId": "VariableID:451:18655",
+                "exportKey": "variables"
               }
             }
           }

@@ -72,10 +72,10 @@ export const SEMANTIC_BACKGROUND: SemanticColorRecord[] = [
     name: "Primary blur",
     token: "semantics.colors.background.primary-blur",
     cssVar: "--semantics-colors-background-primary-blur",
-    generated: "#171717cc",
-    alias: "primitives.colors.neutral.900 @ 80%",
-    darkGenerated: "#ffffffcc",
-    darkAlias: "primitives.colors.white @ 80%",
+    generated: "#ffffff99",
+    alias: "primitives.colors.white @ 60%",
+    darkGenerated: "#17171799",
+    darkAlias: "primitives.colors.neutral.900 @ 60%",
   }),
   semantic({
     name: "Secondary",
@@ -87,13 +87,22 @@ export const SEMANTIC_BACKGROUND: SemanticColorRecord[] = [
     darkAlias: "primitives.colors.neutral.800",
   }),
   semantic({
-    name: "Accent",
-    token: "semantics.colors.background.accent",
-    cssVar: "--semantics-colors-background-accent",
+    name: "Subtle",
+    token: "semantics.colors.background.subtle",
+    cssVar: "--semantics-colors-background-subtle",
     generated: "var(--primitives-colors-neutral-100)",
     alias: "primitives.colors.neutral.100",
     darkGenerated: "var(--primitives-colors-neutral-900)",
     darkAlias: "primitives.colors.neutral.900",
+  }),
+  semantic({
+    name: "Subtlest",
+    token: "semantics.colors.background.subtlest",
+    cssVar: "--semantics-colors-background-subtlest",
+    generated: "var(--primitives-colors-neutral-50)",
+    alias: "primitives.colors.neutral.50",
+    darkGenerated: "var(--primitives-colors-neutral-950)",
+    darkAlias: "primitives.colors.neutral.950",
   }),
   semantic({
     name: "Destructive",
@@ -106,8 +115,10 @@ export const SEMANTIC_BACKGROUND: SemanticColorRecord[] = [
     name: "Success",
     token: "semantics.colors.background.success",
     cssVar: "--semantics-colors-background-success",
-    generated: "var(--primitives-colors-emerald-500)",
-    alias: "primitives.colors.emerald.500",
+    generated: "var(--primitives-colors-green-700)",
+    alias: "primitives.colors.green.700",
+    darkGenerated: "var(--primitives-colors-green-600)",
+    darkAlias: "primitives.colors.green.600",
   }),
   semantic({
     name: "Warning",
@@ -145,29 +156,20 @@ export const SEMANTIC_FOREGROUND: SemanticColorRecord[] = [
     darkAlias: "primitives.colors.black",
   }),
   semantic({
-    name: "Primary subtle",
-    token: "semantics.colors.foreground.primary-subtle",
-    cssVar: "--semantics-colors-foreground-primary-subtle",
-    generated: "var(--primitives-colors-neutral-400)",
-    alias: "primitives.colors.neutral.400",
-    darkGenerated: "var(--primitives-colors-neutral-500)",
-    darkAlias: "primitives.colors.neutral.500",
-  }),
-  semantic({
-    name: "Primary highlight",
-    token: "semantics.colors.foreground.primary-highlight",
-    cssVar: "--semantics-colors-foreground-primary-highlight",
-    generated: "var(--primitives-colors-cyan-200)",
-    alias: "primitives.colors.cyan.200",
-    darkGenerated: "var(--primitives-colors-cyan-700)",
-    darkAlias: "primitives.colors.cyan.700",
-  }),
-  semantic({
     name: "Subtle",
     token: "semantics.colors.foreground.subtle",
     cssVar: "--semantics-colors-foreground-subtle",
     generated: "var(--primitives-colors-neutral-500)",
     alias: "primitives.colors.neutral.500",
+    darkGenerated: "var(--primitives-colors-gray-500)",
+    darkAlias: "primitives.colors.gray.500",
+  }),
+  semantic({
+    name: "Subtle on subtlest",
+    token: "semantics.colors.foreground.subtle-on-subtlest",
+    cssVar: "--semantics-colors-foreground-subtle-on-subtlest",
+    generated: "#737373ff",
+    alias: "#737373ff",
     darkGenerated: "var(--primitives-colors-gray-500)",
     darkAlias: "primitives.colors.gray.500",
   }),
@@ -186,6 +188,15 @@ export const SEMANTIC_FOREGROUND: SemanticColorRecord[] = [
     cssVar: "--semantics-colors-foreground-destructive",
     generated: "var(--primitives-colors-red-600)",
     alias: "primitives.colors.red.600",
+  }),
+  semantic({
+    name: "Success",
+    token: "semantics.colors.foreground.success",
+    cssVar: "--semantics-colors-foreground-success",
+    generated: "var(--primitives-colors-green-700)",
+    alias: "primitives.colors.green.700",
+    darkGenerated: "var(--primitives-colors-green-600)",
+    darkAlias: "primitives.colors.green.600",
   }),
 ];
 
@@ -222,6 +233,15 @@ export const SEMANTIC_BORDER: SemanticColorRecord[] = [
     generated: "var(--primitives-colors-blue-500)",
     alias: "primitives.colors.blue.500",
   }),
+  semantic({
+    name: "Success",
+    token: "semantics.colors.border.success",
+    cssVar: "--semantics-colors-border-success",
+    generated: "var(--primitives-colors-green-700)",
+    alias: "primitives.colors.green.700",
+    darkGenerated: "var(--primitives-colors-green-600)",
+    darkAlias: "primitives.colors.green.600",
+  }),
 ];
 
 export const SEMANTIC_INTERACTION: SemanticColorRecord[] = [
@@ -235,8 +255,17 @@ export const SEMANTIC_INTERACTION: SemanticColorRecord[] = [
     darkAlias: "primitives.colors.neutral.100 @ 90%",
   }),
   semantic({
-    name: "Primary / On primary / Hover",
-    token: "semantics.colors.interaction.primary.on-primary.hover",
+    name: "Navigation link / Hover",
+    token: "semantics.colors.interaction.navigation-link.hover",
+    cssVar: "--semantics-colors-interaction-navigation-link-hover",
+    generated: "var(--primitives-colors-neutral-400)",
+    alias: "primitives.colors.neutral.400",
+    darkGenerated: "var(--primitives-colors-neutral-500)",
+    darkAlias: "primitives.colors.neutral.500",
+  }),
+  semantic({
+    name: "Primary / On primary hover",
+    token: "semantics.colors.interaction.primary.on-primary-hover",
     cssVar: "--semantics-colors-interaction-primary-on-primary-hover",
     generated: "#f5f5f5e6",
     alias: "primitives.colors.neutral.100 @ 90%",
@@ -335,20 +364,6 @@ const AMBER_HEX: Record<(typeof SCALE)[number], string> = {
   "950": "#451a03ff",
 };
 
-const EMERALD_HEX: Record<(typeof SCALE)[number], string> = {
-  "50": "#ecfdf5ff",
-  "100": "#d1fae5ff",
-  "200": "#a7f3d0ff",
-  "300": "#6ee7b7ff",
-  "400": "#34d399ff",
-  "500": "#10b981ff",
-  "600": "#059669ff",
-  "700": "#047857ff",
-  "800": "#065f46ff",
-  "900": "#064e3bff",
-  "950": "#022c22ff",
-};
-
 function hueScale(
   hue: string,
   hexByStep: Record<(typeof SCALE)[number], string>,
@@ -383,7 +398,20 @@ export const PRIMITIVE_NEUTRAL: PrimitiveColorRecord[] = [
 
 export const PRIMITIVE_RED = hueScale("red", RED_HEX);
 export const PRIMITIVE_AMBER = hueScale("amber", AMBER_HEX);
-export const PRIMITIVE_EMERALD = hueScale("emerald", EMERALD_HEX);
+export const PRIMITIVE_GREEN: PrimitiveColorRecord[] = [
+  {
+    name: "Green / 600",
+    token: "primitives.colors.green.600",
+    cssVar: "--primitives-colors-green-600",
+    hex: "#00bf00ff",
+  },
+  {
+    name: "Green / 700",
+    token: "primitives.colors.green.700",
+    cssVar: "--primitives-colors-green-700",
+    hex: "#008a00ff",
+  },
+];
 
 export const PRIMITIVE_CYAN: PrimitiveColorRecord[] = [
   { name: "Cyan / 100", token: "primitives.colors.cyan.100", cssVar: "--primitives-colors-cyan-100", hex: "#ccfff9ff" },
@@ -391,7 +419,7 @@ export const PRIMITIVE_CYAN: PrimitiveColorRecord[] = [
   { name: "Cyan / 300", token: "primitives.colors.cyan.300", cssVar: "--primitives-colors-cyan-300", hex: "#66ffedff" },
   { name: "Cyan / 400", token: "primitives.colors.cyan.400", cssVar: "--primitives-colors-cyan-400", hex: "#33ffe7ff" },
   { name: "Cyan / 500", token: "primitives.colors.cyan.500", cssVar: "--primitives-colors-cyan-500", hex: "#00ffe1ff" },
-  { name: "Cyan / 600", token: "primitives.colors.cyan.600", cssVar: "--primitives-colors-cyan-600", hex: "#00b8a3ff" },
+  { name: "Cyan / 600", token: "primitives.colors.cyan.600", cssVar: "--primitives-colors-cyan-600", hex: "#00a794ff" },
   { name: "Cyan / 700", token: "primitives.colors.cyan.700", cssVar: "--primitives-colors-cyan-700", hex: "#008576ff" },
 ];
 

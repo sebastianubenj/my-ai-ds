@@ -27,7 +27,7 @@ const surfaceClassName = `box-border size-(--primitives-spacing-20) shrink-0
 
 const stageClassName = `flex items-center justify-center
   rounded-(--primitives-radius-rounded-10)
-  [background-color:var(--semantics-colors-background-accent)]`;
+  [background-color:var(--semantics-colors-background-subtle)]`;
 
 function Status({ used }: { used: boolean }) {
   return (

@@ -20,14 +20,14 @@ const nameClassName = `m-0 w-full overflow-hidden text-ellipsis whitespace-nowra
   text-(length:--semantics-typography-label-label-md-font-size)
   leading-(--semantics-typography-label-label-md-lh-snug)
   tracking-(--semantics-typography-label-label-md-tracking-0-125)
-  [color:var(--semantics-colors-foreground-primary)]`;
+  [color:var(--semantics-colors-foreground-default)]`;
 
 const quantityClassName = `m-0 w-full overflow-hidden text-ellipsis whitespace-nowrap font-sans
   [font-weight:var(--semantics-typography-body-font-weight)]
   text-(length:--semantics-typography-body-body-md-font-size)
   leading-(--semantics-typography-body-body-md-lh-normal)
   tracking-(--semantics-typography-body-body-md-tracking-tight)
-  [color:var(--semantics-colors-foreground-primary)]`;
+  [color:var(--semantics-colors-foreground-default)]`;
 
 export interface BagPreviewProductCardProps
   extends Omit<React.ComponentProps<"article">, "children"> {
@@ -64,7 +64,7 @@ export function BagPreviewProductCard({
     >
       <div
         className={cn(
-          "relative shrink-0 overflow-hidden [background-color:var(--semantics-colors-background-accent)]",
+          "relative shrink-0 overflow-hidden [background-color:var(--semantics-colors-background-subtle)]",
           sizes.thumb,
         )}
       >

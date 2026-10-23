@@ -36,7 +36,7 @@ const noteClassName = `m-0 font-sans [font-weight:var(--semantics-typography-bod
 
 const stageClassName = `flex items-center justify-center
   rounded-(--primitives-radius-rounded-10)
-  [background-color:var(--semantics-colors-background-accent)]
+  [background-color:var(--semantics-colors-background-subtle)]
   [color:var(--semantics-colors-foreground-default)]`;
 
 function MetaList({ items }: { items: { label: string; value: string }[] }) {

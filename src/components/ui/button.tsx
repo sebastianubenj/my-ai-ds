@@ -52,13 +52,13 @@ const buttonVariants = cva(
         outline: `bg-transparent [color:var(--semantics-colors-foreground-default)]
           border-solid border-(length:--primitives-stroke-width-stroke)
           [border-color:var(--semantics-colors-border-strong)]
-          hover:[background-color:var(--semantics-colors-background-accent)]
+          hover:[background-color:var(--semantics-colors-interaction-secondary-hover)]
           active:bg-transparent
           disabled:opacity-(--primitives-opacity-opacity-10)
           aria-disabled:opacity-(--primitives-opacity-opacity-10)`,
 
         ghost: `bg-transparent [color:var(--semantics-colors-foreground-default)]
-          hover:[background-color:var(--semantics-colors-background-accent)]
+          hover:[background-color:var(--semantics-colors-interaction-secondary-hover)]
           active:bg-transparent
           disabled:[color:var(--semantics-colors-foreground-subtle)]
           aria-disabled:[color:var(--semantics-colors-foreground-subtle)]

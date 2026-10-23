@@ -4,7 +4,7 @@
 
 [data-theme="dark"] {
   --semantics-colors-background-destructive: #d600001a;
-  --semantics-colors-background-primary-blur: #ffffffcc;
+  --semantics-colors-background-primary-blur: #17171799;
   --semantics-colors-interaction-destructive-hover: #d6000033;
   --semantics-colors-interaction-destructive-subtle-hover: #d600001a;
   --semantics-colors-interaction-file-upload-drag-over: #0074e81a;
@@ -13,24 +13,27 @@
   --semantics-colors-interaction-secondary-hover: #171717ff;
   --semantics-shadow-popover-layer-1-color: #0000001a;
   --semantics-shadow-popover-layer-2-color: #0000001a;
-  --semantics-colors-background-accent: var(--primitives-colors-neutral-900);
   --semantics-colors-background-default: var(--primitives-colors-neutral-950);
   --semantics-colors-background-info: var(--primitives-colors-blue-500);
   --semantics-colors-background-page: var(--primitives-colors-black);
   --semantics-colors-background-primary: var(--primitives-colors-white);
   --semantics-colors-background-secondary: var(--primitives-colors-neutral-800);
-  --semantics-colors-background-success: var(--primitives-colors-emerald-500);
+  --semantics-colors-background-subtle: var(--primitives-colors-neutral-900);
+  --semantics-colors-background-subtlest: var(--primitives-colors-neutral-950);
+  --semantics-colors-background-success: var(--primitives-colors-green-600);
   --semantics-colors-background-warning: var(--primitives-colors-amber-500);
   --semantics-colors-border-default: var(--primitives-colors-neutral-700);
   --semantics-colors-border-destructive: var(--primitives-colors-red-500);
   --semantics-colors-border-ring-focus: var(--primitives-colors-blue-500);
   --semantics-colors-border-strong: var(--primitives-colors-neutral-400);
+  --semantics-colors-border-success: var(--primitives-colors-green-600);
   --semantics-colors-foreground-default: var(--primitives-colors-white);
   --semantics-colors-foreground-destructive: var(--primitives-colors-red-600);
   --semantics-colors-foreground-highlight: var(--primitives-colors-cyan-500);
   --semantics-colors-foreground-primary: var(--primitives-colors-black);
-  --semantics-colors-foreground-primary-highlight: var(--primitives-colors-cyan-700);
-  --semantics-colors-foreground-primary-subtle: var(--primitives-colors-neutral-500);
   --semantics-colors-foreground-subtle: var(--primitives-colors-gray-500);
+  --semantics-colors-foreground-subtle-on-subtlest: var(--primitives-colors-gray-500);
+  --semantics-colors-foreground-success: var(--primitives-colors-green-600);
+  --semantics-colors-interaction-navigation-link-hover: var(--primitives-colors-neutral-500);
   --semantics-colors-interaction-scrollbar-thumb: var(--primitives-colors-neutral-400);
 }

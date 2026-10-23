@@ -15,7 +15,7 @@ function Frame({
 }) {
   return (
     <div
-      className="max-w-full p-(--primitives-spacing-4) [background-color:var(--semantics-colors-background-primary)] [color:var(--semantics-colors-foreground-primary)]"
+      className="max-w-full p-(--primitives-spacing-4) [background-color:var(--semantics-colors-background-default)] [color:var(--semantics-colors-foreground-default)]"
       style={{ width }}
     >
       {children}

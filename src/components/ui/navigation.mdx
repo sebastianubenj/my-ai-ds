@@ -15,7 +15,7 @@ Each `NavigationLink` is a real link. Clicking it follows `href`. Pass `menu` an
 
 - **Open and close** — hover opens it after a short delay and it stays open while the pointer is anywhere over the bar or the panel. It closes when the pointer leaves both. `Escape`, a press outside, and clicking a panel link also close it.
 - **Search** — the search button opens a search panel under the bar on click or `Enter`. Hover never opens it. The field takes focus on open. `Escape`, a press outside, or leaving the bar and panel close it.
-- **Bag** — `NavigationBagTrigger` opens the bag panel on click or `Enter`, with the same motion as search. Hover never opens it. Without `items`, the empty state shows “Your bag is empty” and a `Sign in` link (`signInHref`). With `items`, it shows “Your bag”, `Review bag` (`onReview`), and a list of `BagPreviewProductCard`.
+- **Bag** — `NavigationBagTrigger` opens the bag panel on click or `Enter`, with the same motion as search. Hover never opens it. Without `items`, the empty state shows “Your bag is empty” and a `Sign in` link (`signInHref`). With `items`, it shows “Your bag”, `Review bag` (`onReview`), and up to five `BagPreviewProductCard` rows. Extra items appear as “n more items in your bag”.
 - **Keyboard** — focusing a link with `menu` shows the Figma `ShowIconLink` chevron next to it, as a button, named by `menuLabel`. `Enter` on the link follows `href`. `Enter` on the chevron opens the panel and moves focus into it.
 - **Sticky bar** — the bar is `sticky top-0` and stays visible while the page scrolls, so the panels always open under it. Sticky only works when no ancestor of `Navigation` sets `overflow` to anything but `visible` (`hidden`, `auto`, or `scroll`), and the bar is expected at the top of the page. In an ancestor that scrolls, put `Navigation` outside it, or make the bar `fixed` through `className` (for example `fixed inset-x-0 top-0`). The panels use fixed positioning, so they follow it.
 - **Controlled value** — give each link a `value`, then use `value`, `defaultValue`, and `onValueChange` on `Navigation` to read or set the open panel. Pass `null` to close it.
@@ -41,7 +41,7 @@ The panel has two levels. On the second level the first `NavigationSection` is s
 
 Do not use `Link` for these items. `Link` is underlined text. `NavigationLink` is the bar label. `NavigationMenuLink` is the large panel link.
 
-The closed bar fill is `colors/background/primary-blur`. Its blur is `glass/navigation/frost`. The panel is solid `colors/background/primary`. The scrim over the page uses `colors/background/primary-blur` and `background-blur/navigation`.
+The closed bar fill is `colors/background/primary-blur`. Its blur is `glass/navigation/frost`. The open bar is `colors/background/default`. The open panel is solid `colors/background/subtlest`. The scrim over the page uses `colors/background/primary-blur` and `background-blur/navigation`.
 
 ## Motion
 

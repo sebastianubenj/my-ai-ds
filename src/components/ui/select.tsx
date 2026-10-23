@@ -52,7 +52,7 @@ const selectItemVariants = cva(
     variants: {
       destructive: {
         false: `text-foreground
-          data-highlighted:[background-color:var(--semantics-colors-background-accent)]`,
+          data-highlighted:[background-color:var(--semantics-colors-background-subtle)]`,
         true: `[color:var(--semantics-colors-foreground-destructive)]
           data-highlighted:[background-color:var(--semantics-colors-interaction-destructive-subtle-hover)]`,
       },

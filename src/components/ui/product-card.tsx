@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 
 const productCardMediaClassName = `relative w-full overflow-hidden
-  [background-color:var(--semantics-colors-background-accent)]`;
+  [background-color:var(--semantics-colors-background-subtle)]`;
 
 const MEDIA_ASPECT = {
   horizontal: "644 / 389",

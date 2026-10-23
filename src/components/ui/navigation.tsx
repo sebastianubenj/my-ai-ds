@@ -26,7 +26,7 @@ const linkClassName = `inline-flex h-(--primitives-spacing-8) shrink-0 items-cen
   leading-(--semantics-typography-label-label-sm-lh-snug)
   tracking-(--semantics-typography-label-label-sm-tracking-0-125)
   whitespace-nowrap [color:inherit] cursor-pointer
-  [@media(hover:hover)]:hover:[color:var(--semantics-colors-foreground-primary-highlight)]
+  [@media(hover:hover)]:hover:[color:var(--semantics-colors-interaction-navigation-link-hover)]
   ${focusRing}`;
 
 const menuLinkClassName = `flex w-full items-center justify-start no-underline
@@ -36,14 +36,14 @@ const menuLinkClassName = `flex w-full items-center justify-start no-underline
   leading-(--semantics-typography-heading-heading-xl-lh-tight)
   tracking-(--semantics-typography-heading-heading-xl-tracking-tight)
   whitespace-nowrap cursor-pointer
-  [color:var(--semantics-colors-foreground-primary)]
-  [@media(hover:hover)]:hover:[color:var(--semantics-colors-foreground-primary-highlight)]
+  [color:var(--semantics-colors-foreground-default)]
+  [@media(hover:hover)]:hover:[color:var(--semantics-colors-interaction-navigation-link-hover)]
   ${focusRing}`;
 
 const iconButtonClassName = `box-border inline-flex shrink-0 items-center justify-center
   border-0 bg-transparent p-0 [color:inherit] cursor-pointer
   pointer-events-auto
-  [@media(hover:hover)]:hover:[color:var(--semantics-colors-foreground-primary-highlight)]
+  [@media(hover:hover)]:hover:[color:var(--semantics-colors-interaction-navigation-link-hover)]
   size-(--primitives-spacing-out-of-scale-9)
   md:h-(--primitives-spacing-8) md:w-auto md:px-(--primitives-spacing-1)
   ${focusRing}`;
@@ -54,7 +54,7 @@ const chevronClassName = `absolute top-0 left-[calc(100%-var(--primitives-spacin
   border-0 bg-transparent [color:inherit] cursor-pointer
   pointer-events-none opacity-0
   group-has-[:focus-visible]/item:pointer-events-auto group-has-[:focus-visible]/item:opacity-100
-  [@media(hover:hover)]:hover:[color:var(--semantics-colors-foreground-primary-highlight)]`;
+  [@media(hover:hover)]:hover:[color:var(--semantics-colors-interaction-navigation-link-hover)]`;
 
 const SEARCH_VALUE = "search";
 const BAG_VALUE = "bag";
@@ -73,15 +73,15 @@ export interface NavigationBagItem {
 
 const searchFieldClassName = `box-border flex w-full items-center
   gap-(--primitives-spacing-out-of-scale-2-5) py-(--primitives-spacing-out-of-scale-1-5)
-  [color:var(--semantics-colors-foreground-primary)]`;
+  [color:var(--semantics-colors-foreground-default)]`;
 
 const searchInputClassName = `min-w-0 flex-1 border-0 bg-transparent p-0 outline-none font-sans
   [font-weight:var(--semantics-typography-heading-font-weight)]
   text-(length:--semantics-typography-heading-heading-xl-font-size)
   leading-(--semantics-typography-heading-heading-xl-lh-tight)
   tracking-(--semantics-typography-heading-heading-xl-tracking-tight)
-  [color:var(--semantics-colors-foreground-primary)]
-  placeholder:[color:var(--semantics-colors-foreground-primary-subtle)]
+  [color:var(--semantics-colors-foreground-default)]
+  placeholder:[color:var(--semantics-colors-foreground-subtle-on-subtlest)]
   [&::-webkit-search-cancel-button]:hidden`;
 
 const TRIGGER_SELECTOR =
@@ -626,7 +626,7 @@ export function NavigationSection({
             text-(length:--semantics-typography-label-label-sm-font-size)
             leading-(--semantics-typography-label-label-sm-lh-snug)
             tracking-(--semantics-typography-label-label-sm-tracking-0-125)
-            [color:var(--semantics-colors-foreground-primary-subtle)]`}
+            [color:var(--semantics-colors-foreground-subtle-on-subtlest)]`}
         >
           {heading}
         </h2>
@@ -700,7 +700,7 @@ export function NavigationSearch({
         name="search"
         size={iconBox20}
         aria-hidden="true"
-        className="shrink-0 [color:var(--semantics-colors-foreground-primary-subtle)]"
+        className="shrink-0 [color:var(--semantics-colors-foreground-subtle-on-subtlest)]"
       />
       <input
         {...props}
@@ -725,7 +725,7 @@ export function NavigationSearch({
           className={cn(
             "box-border inline-flex size-(--primitives-spacing-out-of-scale-5) shrink-0 items-center justify-center",
             "border-0 bg-transparent p-0 [color:inherit] cursor-pointer",
-            "[@media(hover:hover)]:hover:[color:var(--semantics-colors-foreground-primary-highlight)]",
+            "[@media(hover:hover)]:hover:[color:var(--semantics-colors-interaction-navigation-link-hover)]",
             focusRing,
           )}
         >
@@ -854,11 +854,13 @@ export function NavigationSearchTrigger({
   );
 }
 
+const BAG_PREVIEW_LIMIT = 5;
+
 const bagHeadingClassName = `m-0 font-sans [font-weight:var(--semantics-typography-heading-font-weight)]
   text-(length:--semantics-typography-heading-heading-xl-font-size)
   leading-(--semantics-typography-heading-heading-xl-lh-tight)
   tracking-(--semantics-typography-heading-heading-xl-tracking-tight)
-  [color:var(--semantics-colors-foreground-primary)]`;
+  [color:var(--semantics-colors-foreground-default)]`;
 
 function NavigationBagEmpty({
   signInHref,
@@ -882,12 +884,12 @@ function NavigationBagEmpty({
           text-(length:--semantics-typography-body-body-md-font-size)
           leading-(--semantics-typography-body-body-md-lh-normal)
           tracking-(--semantics-typography-body-body-md-tracking-tight)
-          [color:var(--semantics-colors-foreground-primary-subtle)]`}
+          [color:var(--semantics-colors-foreground-subtle-on-subtlest)]`}
       >
         <Link
           href={signInHref}
           onClick={onSignInClick}
-          className="[color:var(--semantics-colors-foreground-primary-highlight)]"
+          className="[color:var(--semantics-colors-foreground-highlight)]"
         >
           {signInLabel}
         </Link>
@@ -924,8 +926,7 @@ function NavigationBagLoaded({
         <Button
           type="button"
           variant="primary"
-          size={device === "mobile" ? "md" : "lg"}
-          surface="on-primary"
+          size="md"
           onClick={onReview}
         >
           {reviewLabel}
@@ -938,7 +939,7 @@ function NavigationBagLoaded({
             `min-h-0 flex-1 overflow-y-auto [scrollbar-gutter:stable] ${scrollbarClassName}`,
         )}
       >
-        {items.map((item, index) => (
+        {items.slice(0, BAG_PREVIEW_LIMIT).map((item, index) => (
           <BagPreviewProductCard
             key={`${item.name}-${index}`}
             device={device}
@@ -949,6 +950,19 @@ function NavigationBagLoaded({
             quantity={item.quantity}
           />
         ))}
+        {items.length > BAG_PREVIEW_LIMIT ? (
+          <p
+            data-slot="navigation-bag-overflow"
+            className={`m-0 font-sans
+              [font-weight:var(--semantics-typography-body-font-weight)]
+              text-(length:--semantics-typography-body-body-md-font-size)
+              leading-(--semantics-typography-body-body-md-lh-normal)
+              tracking-(--semantics-typography-body-body-md-tracking-tight)
+              [color:var(--semantics-colors-foreground-subtle-on-subtlest)]`}
+          >
+            {`${items.length - BAG_PREVIEW_LIMIT} more items in your bag`}
+          </p>
+        ) : null}
       </div>
     </div>
   );
@@ -1224,6 +1238,7 @@ export function Navigation({
       : bagOpen && !isDesktop
         ? "bag"
         : null;
+  const menuChromeOpen = activeValue !== null || mobileMode === "menu";
   const expanded = mobileMode !== null;
   const [lastMobileMode, setLastMobileMode] = React.useState(mobileMode);
   if (mobileMode !== null && mobileMode !== lastMobileMode) {
@@ -1562,16 +1577,14 @@ export function Navigation({
       ref={setBarRef}
       className={cn(
         `sticky top-0 z-(--semantics-layer-navigation) flex w-full items-center justify-between
-         [color:var(--semantics-colors-foreground-primary)]
+         [color:var(--semantics-colors-foreground-default)]
          [transition-property:background-color] duration-(--semantics-motion-duration-320) ${ease}
          motion-reduce:transition-none
          md:justify-center md:gap-(--primitives-spacing-12)
          px-(--primitives-spacing-2) py-(--primitives-spacing-out-of-scale-1-5)
          md:px-(--primitives-spacing-6)`,
-        expanded
-          ? `max-md:[background-color:var(--semantics-colors-background-primary)]
-             md:[background-color:var(--semantics-colors-background-primary-blur)]
-             md:[backdrop-filter:blur(var(--semantics-glass-navigation-frost))]`
+        menuChromeOpen
+          ? `[background-color:var(--semantics-colors-background-default)]`
           : `[background-color:var(--semantics-colors-background-primary-blur)]
              [backdrop-filter:blur(var(--semantics-glass-navigation-frost))]`,
         className,
@@ -1668,10 +1681,11 @@ export function Navigation({
                 onClick={(event) => {
                   if ((event.target as Element).closest("a")) changeValue(null);
                 }}
-                className={`group/popup h-(--popup-height) w-full overflow-hidden
-                [background-color:var(--semantics-colors-background-primary)]
-                [color:var(--semantics-colors-foreground-primary)]
-                ${panelMotionClassName}`}
+                className={cn(
+                  "group/popup h-(--popup-height) w-full overflow-hidden",
+                  "[background-color:var(--semantics-colors-background-subtlest)] [color:var(--semantics-colors-foreground-default)]",
+                  panelMotionClassName,
+                )}
               >
                 <NavigationMenu.Viewport ref={setViewportElement} />
               </NavigationMenu.Popup>
@@ -1701,7 +1715,7 @@ export function Navigation({
               data-slot="navigation-menu"
               aria-label={menuLabel}
               className={cn(
-                "min-h-0 overflow-x-hidden overflow-y-auto overscroll-contain [background-color:var(--semantics-colors-background-primary)] [color:var(--semantics-colors-foreground-primary)]",
+                "min-h-0 overflow-x-hidden overflow-y-auto overscroll-contain [background-color:var(--semantics-colors-background-subtlest)] [color:var(--semantics-colors-foreground-default)]",
                 scrollbarClassName,
               )}
             >
@@ -1715,7 +1729,7 @@ export function Navigation({
             <div
               data-slot="navigation-search-panel"
               className={cn(
-                "min-h-0 overflow-x-hidden overflow-y-auto overscroll-contain [background-color:var(--semantics-colors-background-primary)] [color:var(--semantics-colors-foreground-primary)]",
+                "min-h-0 overflow-x-hidden overflow-y-auto overscroll-contain [background-color:var(--semantics-colors-background-subtlest)] [color:var(--semantics-colors-foreground-default)]",
                 scrollbarClassName,
               )}
             >
@@ -1731,7 +1745,7 @@ export function Navigation({
           ) : (
             <div
               data-slot="navigation-bag-panel"
-              className="flex min-h-0 w-full flex-col overflow-hidden [background-color:var(--semantics-colors-background-primary)] [color:var(--semantics-colors-foreground-primary)]"
+              className="flex min-h-0 w-full flex-col overflow-hidden [background-color:var(--semantics-colors-background-subtlest)] [color:var(--semantics-colors-foreground-default)]"
             >
               <div className="flex min-h-0 w-full flex-1 flex-col items-stretch px-(--primitives-spacing-8) pt-(--primitives-spacing-4) pb-(--primitives-spacing-20)">
                 {bagConfig ? (

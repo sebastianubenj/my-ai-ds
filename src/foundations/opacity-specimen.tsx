@@ -29,7 +29,7 @@ export function OpacitySpecimen({
           border-solid border-(length:--primitives-stroke-width-stroke)
           [border-color:var(--semantics-colors-border-default)]`}
         style={{
-          backgroundImage: `repeating-conic-gradient(var(--semantics-colors-background-default) 0% 25%, var(--semantics-colors-background-accent) 0% 50%)`,
+          backgroundImage: `repeating-conic-gradient(var(--semantics-colors-background-default) 0% 25%, var(--semantics-colors-background-subtle) 0% 50%)`,
           backgroundSize: `var(--primitives-spacing-out-of-scale-2-5) var(--primitives-spacing-out-of-scale-2-5)`,
         }}
         aria-hidden

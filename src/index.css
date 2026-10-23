@@ -69,7 +69,7 @@
     --primary-foreground: var(--semantics-colors-foreground-primary);
     --secondary: var(--semantics-colors-background-secondary);
     --secondary-foreground: var(--semantics-colors-foreground-default);
-    --accent: var(--semantics-colors-background-accent);
+    --accent: var(--semantics-colors-background-subtle);
     --accent-foreground: var(--semantics-colors-foreground-default);
     --destructive: var(--semantics-colors-background-destructive);
     --destructive-foreground: var(--semantics-colors-foreground-destructive);

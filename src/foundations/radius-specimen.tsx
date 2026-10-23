@@ -25,7 +25,7 @@ export function RadiusSpecimen({
     <figure className="m-0 flex min-w-0 items-start gap-(--primitives-spacing-4)">
       <div
         className={`flex size-(--primitives-spacing-20) shrink-0 items-center justify-center
-          [background-color:var(--semantics-colors-background-accent)]`}
+          [background-color:var(--semantics-colors-background-subtle)]`}
       >
         <div
           className={`box-border size-(--primitives-spacing-16) shrink-0

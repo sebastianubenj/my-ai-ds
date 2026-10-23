@@ -74,7 +74,7 @@ function SampleMenu() {
 }
 
 const sampleBagItems: NavigationBagItem[] = Array.from(
-  { length: 6 },
+  { length: 13 },
   () => ({
     name: "TP-7 aluminum",
     src: "/product-card-tp7.png",
@@ -516,7 +516,8 @@ export const DesktopBag: Story = {
     ).toBeVisible();
     await expect(
       body.getAllByRole("article"),
-    ).toHaveLength(6);
+    ).toHaveLength(5);
+    await expect(body.getByText("8 more items in your bag")).toBeVisible();
 
     await userEvent.keyboard("{Escape}");
     await waitFor(() => expect(panel()).toBeNull());
@@ -638,7 +639,8 @@ export const MobileBag: Story = {
     await expect(
       canvas.getByRole("button", { name: "Review bag" }),
     ).toBeVisible();
-    await expect(canvas.getAllByRole("article")).toHaveLength(6);
+    await expect(canvas.getAllByRole("article")).toHaveLength(5);
+    await expect(canvas.getByText("8 more items in your bag")).toBeVisible();
 
     await userEvent.click(canvas.getByRole("button", { name: "Close" }));
     await waitFor(() =>

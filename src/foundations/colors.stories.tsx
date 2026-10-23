@@ -7,7 +7,7 @@ import {
 import {
   PRIMITIVE_AMBER,
   PRIMITIVE_BLUE,
-  PRIMITIVE_EMERALD,
+  PRIMITIVE_GREEN,
   PRIMITIVE_NEUTRAL,
   PRIMITIVE_RED,
   PRIMITIVE_CYAN,
@@ -91,8 +91,8 @@ export const Amber: Story = {
   render: () => primitiveGrid(PRIMITIVE_AMBER),
 };
 
-export const Emerald: Story = {
-  render: () => primitiveGrid(PRIMITIVE_EMERALD),
+export const Green: Story = {
+  render: () => primitiveGrid(PRIMITIVE_GREEN),
 };
 
 export const Cyan: Story = {

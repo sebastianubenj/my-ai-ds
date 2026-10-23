@@ -34,18 +34,9 @@
         "VariableID:445:4234",
         "VariableID:445:4235",
         "VariableID:454:21982",
-        "VariableID:10:2200",
-        "VariableID:10:2198",
-        "VariableID:10:2203",
-        "VariableID:10:2197",
-        "VariableID:10:2205",
-        "VariableID:10:2196",
-        "VariableID:10:2204",
-        "VariableID:10:2202",
-        "VariableID:10:2201",
-        "VariableID:10:2195",
-        "VariableID:10:2199",
         "VariableID:454:21081",
+        "VariableID:489:1582",
+        "VariableID:10:2196",
         "VariableID:9:2063",
         "VariableID:9:2059",
         "VariableID:9:2057",
@@ -231,7 +222,6 @@
         }
       ],
       "variableIds": [
-        "VariableID:450:1636",
         "VariableID:450:1637",
         "VariableID:450:1640",
         "VariableID:450:1639",
@@ -239,22 +229,26 @@
         "VariableID:450:1642",
         "VariableID:450:1641",
         "VariableID:450:1638",
+        "VariableID:450:1636",
+        "VariableID:500:5846",
         "VariableID:450:1634",
         "VariableID:450:1635",
         "VariableID:450:1673",
         "VariableID:450:1671",
         "VariableID:450:1670",
         "VariableID:450:1672",
+        "VariableID:486:1331",
         "VariableID:450:1659",
         "VariableID:450:1656",
         "VariableID:450:1655",
         "VariableID:450:1658",
-        "VariableID:450:18628",
-        "VariableID:450:18627",
         "VariableID:450:1657",
+        "VariableID:500:5856",
+        "VariableID:486:1328",
         "VariableID:450:1691",
         "VariableID:450:1690",
         "VariableID:450:1695",
+        "VariableID:450:18627",
         "VariableID:450:1678",
         "VariableID:451:18655",
         "VariableID:450:1700",
@@ -754,8 +748,8 @@
       "valuesByMode": {
         "9:0": {
           "r": 0,
-          "g": 0.7215686440467834,
-          "b": 0.6392157077789307,
+          "g": 0.6549019813537598,
+          "b": 0.5803921818733215,
           "a": 1
         }
       }
@@ -781,226 +775,6 @@
       }
     },
     {
-      "id": "VariableID:10:2200",
-      "name": "colors/emerald/100",
-      "remote": false,
-      "key": "b5b525e861b2f1772dfac5ea2cffa7484f53ff8d",
-      "variableCollectionId": "VariableCollectionId:9:2",
-      "resolvedType": "COLOR",
-      "scopes": [],
-      "codeSyntax": {},
-      "hiddenFromPublishing": false,
-      "description": "",
-      "valuesByMode": {
-        "9:0": {
-          "r": 0.8196078538894653,
-          "g": 0.9803921580314636,
-          "b": 0.8980392217636108,
-          "a": 1
-        }
-      }
-    },
-    {
-      "id": "VariableID:10:2198",
-      "name": "colors/emerald/200",
-      "remote": false,
-      "key": "1fe5448d7d804c3a6ecef6f2989bc851575e49d4",
-      "variableCollectionId": "VariableCollectionId:9:2",
-      "resolvedType": "COLOR",
-      "scopes": [],
-      "codeSyntax": {},
-      "hiddenFromPublishing": false,
-      "description": "",
-      "valuesByMode": {
-        "9:0": {
-          "r": 0.6549019813537598,
-          "g": 0.9529411792755127,
-          "b": 0.8156862854957581,
-          "a": 1
-        }
-      }
-    },
-    {
-      "id": "VariableID:10:2203",
-      "name": "colors/emerald/300",
-      "remote": false,
-      "key": "cba60f597ee77d46b8e0064d7ed7c82f18416a43",
-      "variableCollectionId": "VariableCollectionId:9:2",
-      "resolvedType": "COLOR",
-      "scopes": [],
-      "codeSyntax": {},
-      "hiddenFromPublishing": false,
-      "description": "",
-      "valuesByMode": {
-        "9:0": {
-          "r": 0.4313725531101227,
-          "g": 0.9058823585510254,
-          "b": 0.7176470756530762,
-          "a": 1
-        }
-      }
-    },
-    {
-      "id": "VariableID:10:2197",
-      "name": "colors/emerald/400",
-      "remote": false,
-      "key": "75ac0020474a7b4dcaffec67110990b6feffe68c",
-      "variableCollectionId": "VariableCollectionId:9:2",
-      "resolvedType": "COLOR",
-      "scopes": [],
-      "codeSyntax": {},
-      "hiddenFromPublishing": false,
-      "description": "",
-      "valuesByMode": {
-        "9:0": {
-          "r": 0.20392157137393951,
-          "g": 0.8274509906768799,
-          "b": 0.6000000238418579,
-          "a": 1
-        }
-      }
-    },
-    {
-      "id": "VariableID:10:2205",
-      "name": "colors/emerald/50",
-      "remote": false,
-      "key": "19013b216aab993d11abf8abdab6676f76a8e694",
-      "variableCollectionId": "VariableCollectionId:9:2",
-      "resolvedType": "COLOR",
-      "scopes": [],
-      "codeSyntax": {},
-      "hiddenFromPublishing": false,
-      "description": "",
-      "valuesByMode": {
-        "9:0": {
-          "r": 0.9254902005195618,
-          "g": 0.9921568632125854,
-          "b": 0.9607843160629272,
-          "a": 1
-        }
-      }
-    },
-    {
-      "id": "VariableID:10:2196",
-      "name": "colors/emerald/500",
-      "remote": false,
-      "key": "1cdab5f8c52e5b1beb9727ef9aa18f5b432fd5e0",
-      "variableCollectionId": "VariableCollectionId:9:2",
-      "resolvedType": "COLOR",
-      "scopes": [],
-      "codeSyntax": {},
-      "hiddenFromPublishing": false,
-      "description": "",
-      "valuesByMode": {
-        "9:0": {
-          "r": 0.062745101749897,
-          "g": 0.7254902124404907,
-          "b": 0.5058823823928833,
-          "a": 1
-        }
-      }
-    },
-    {
-      "id": "VariableID:10:2204",
-      "name": "colors/emerald/600",
-      "remote": false,
-      "key": "97e8d0452ec6d42c936b391c501e63bc189ed82a",
-      "variableCollectionId": "VariableCollectionId:9:2",
-      "resolvedType": "COLOR",
-      "scopes": [],
-      "codeSyntax": {},
-      "hiddenFromPublishing": false,
-      "description": "",
-      "valuesByMode": {
-        "9:0": {
-          "r": 0.019607843831181526,
-          "g": 0.5882353186607361,
-          "b": 0.4117647111415863,
-          "a": 1
-        }
-      }
-    },
-    {
-      "id": "VariableID:10:2202",
-      "name": "colors/emerald/700",
-      "remote": false,
-      "key": "191b05e886f87f8dca314abb29c8178da4f5b8b4",
-      "variableCollectionId": "VariableCollectionId:9:2",
-      "resolvedType": "COLOR",
-      "scopes": [],
-      "codeSyntax": {},
-      "hiddenFromPublishing": false,
-      "description": "",
-      "valuesByMode": {
-        "9:0": {
-          "r": 0.01568627543747425,
-          "g": 0.47058823704719543,
-          "b": 0.34117648005485535,
-          "a": 1
-        }
-      }
-    },
-    {
-      "id": "VariableID:10:2201",
-      "name": "colors/emerald/800",
-      "remote": false,
-      "key": "5ee1ef175b981b23972bb4527b0dffcce723ea14",
-      "variableCollectionId": "VariableCollectionId:9:2",
-      "resolvedType": "COLOR",
-      "scopes": [],
-      "codeSyntax": {},
-      "hiddenFromPublishing": false,
-      "description": "",
-      "valuesByMode": {
-        "9:0": {
-          "r": 0.0235294122248888,
-          "g": 0.37254902720451355,
-          "b": 0.27450981736183167,
-          "a": 1
-        }
-      }
-    },
-    {
-      "id": "VariableID:10:2195",
-      "name": "colors/emerald/900",
-      "remote": false,
-      "key": "c5b5e81c983ad77c3fdf965010023e4c4822d38b",
-      "variableCollectionId": "VariableCollectionId:9:2",
-      "resolvedType": "COLOR",
-      "scopes": [],
-      "codeSyntax": {},
-      "hiddenFromPublishing": false,
-      "description": "",
-      "valuesByMode": {
-        "9:0": {
-          "r": 0.0235294122248888,
-          "g": 0.30588236451148987,
-          "b": 0.23137255012989044,
-          "a": 1
-        }
-      }
-    },
-    {
-      "id": "VariableID:10:2199",
-      "name": "colors/emerald/950",
-      "remote": false,
-      "key": "5e1a99511515de8d73f3c9b19ef7102bc1e8eaec",
-      "variableCollectionId": "VariableCollectionId:9:2",
-      "resolvedType": "COLOR",
-      "scopes": [],
-      "codeSyntax": {},
-      "hiddenFromPublishing": false,
-      "description": "",
-      "valuesByMode": {
-        "9:0": {
-          "r": 0.007843137718737125,
-          "g": 0.1725490242242813,
-          "b": 0.13333334028720856,
-          "a": 1
-        }
-      }
-    },
-    {
       "id": "VariableID:454:21081",
       "name": "colors/gray/500",
       "remote": false,
@@ -1016,6 +790,46 @@
           "r": 0.43529412150382996,
           "g": 0.4745098054409027,
           "b": 0.545098066329956,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "VariableID:489:1582",
+      "name": "colors/green/600",
+      "remote": false,
+      "key": "0c95979da8c57183e90270ca681c296f30896535",
+      "variableCollectionId": "VariableCollectionId:9:2",
+      "resolvedType": "COLOR",
+      "scopes": [],
+      "codeSyntax": {},
+      "hiddenFromPublishing": false,
+      "description": "",
+      "valuesByMode": {
+        "9:0": {
+          "r": 0,
+          "g": 0.7490196228027344,
+          "b": 0,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "VariableID:10:2196",
+      "name": "colors/green/700",
+      "remote": false,
+      "key": "1cdab5f8c52e5b1beb9727ef9aa18f5b432fd5e0",
+      "variableCollectionId": "VariableCollectionId:9:2",
+      "resolvedType": "COLOR",
+      "scopes": [],
+      "codeSyntax": {},
+      "hiddenFromPublishing": false,
+      "description": "",
+      "valuesByMode": {
+        "9:0": {
+          "r": 0,
+          "g": 0.5411764979362488,
+          "b": 0,
           "a": 1
         }
       }
@@ -3852,31 +3666,6 @@
       }
     },
     {
-      "id": "VariableID:450:1636",
-      "name": "colors/background/accent",
-      "remote": false,
-      "key": "e038681a115dd3ef01c52b66c573e11475f87bae",
-      "variableCollectionId": "VariableCollectionId:450:1530",
-      "resolvedType": "COLOR",
-      "scopes": [
-        "FRAME_FILL",
-        "SHAPE_FILL"
-      ],
-      "codeSyntax": {},
-      "hiddenFromPublishing": false,
-      "description": "",
-      "valuesByMode": {
-        "450:1": {
-          "type": "VARIABLE_ALIAS",
-          "id": "VariableID:9:2063"
-        },
-        "450:2": {
-          "type": "VARIABLE_ALIAS",
-          "id": "VariableID:9:2064"
-        }
-      }
-    },
-    {
       "id": "VariableID:450:1637",
       "name": "colors/background/default",
       "remote": false,
@@ -4030,21 +3819,21 @@
         "450:1": {
           "color": {
             "type": "VARIABLE_ALIAS",
-            "id": "VariableID:9:2064"
+            "id": "VariableID:9:2039"
           },
           "opacity": {
             "type": "VARIABLE_ALIAS",
-            "id": "VariableID:9:2034"
+            "id": "VariableID:9:2026"
           }
         },
         "450:2": {
           "color": {
             "type": "VARIABLE_ALIAS",
-            "id": "VariableID:9:2039"
+            "id": "VariableID:9:2064"
           },
           "opacity": {
             "type": "VARIABLE_ALIAS",
-            "id": "VariableID:9:2034"
+            "id": "VariableID:9:2026"
           }
         }
       }
@@ -4075,6 +3864,56 @@
       }
     },
     {
+      "id": "VariableID:450:1636",
+      "name": "colors/background/subtle",
+      "remote": false,
+      "key": "e038681a115dd3ef01c52b66c573e11475f87bae",
+      "variableCollectionId": "VariableCollectionId:450:1530",
+      "resolvedType": "COLOR",
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL"
+      ],
+      "codeSyntax": {},
+      "hiddenFromPublishing": false,
+      "description": "",
+      "valuesByMode": {
+        "450:1": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:9:2063"
+        },
+        "450:2": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:9:2064"
+        }
+      }
+    },
+    {
+      "id": "VariableID:500:5846",
+      "name": "colors/background/subtlest",
+      "remote": false,
+      "key": "e00e9a5b5901be815a0f34dc965617c243d39f83",
+      "variableCollectionId": "VariableCollectionId:450:1530",
+      "resolvedType": "COLOR",
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL"
+      ],
+      "codeSyntax": {},
+      "hiddenFromPublishing": false,
+      "description": "",
+      "valuesByMode": {
+        "450:1": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:9:2066"
+        },
+        "450:2": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:9:2061"
+        }
+      }
+    },
+    {
       "id": "VariableID:450:1634",
       "name": "colors/background/success",
       "remote": false,
@@ -4095,7 +3934,7 @@
         },
         "450:2": {
           "type": "VARIABLE_ALIAS",
-          "id": "VariableID:10:2196"
+          "id": "VariableID:489:1582"
         }
       }
     },
@@ -4221,6 +4060,30 @@
       }
     },
     {
+      "id": "VariableID:486:1331",
+      "name": "colors/border/success",
+      "remote": false,
+      "key": "49cabf6c038172e7a769ae8301b32e9eeb19d0d8",
+      "variableCollectionId": "VariableCollectionId:450:1530",
+      "resolvedType": "COLOR",
+      "scopes": [
+        "STROKE_COLOR"
+      ],
+      "codeSyntax": {},
+      "hiddenFromPublishing": false,
+      "description": "",
+      "valuesByMode": {
+        "450:1": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:10:2196"
+        },
+        "450:2": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:489:1582"
+        }
+      }
+    },
+    {
       "id": "VariableID:450:1659",
       "name": "colors/foreground/default",
       "remote": false,
@@ -4325,58 +4188,6 @@
       }
     },
     {
-      "id": "VariableID:450:18628",
-      "name": "colors/foreground/primary-highlight",
-      "remote": false,
-      "key": "89baede7e14cc54314b97cbf20337f2facee50f3",
-      "variableCollectionId": "VariableCollectionId:450:1530",
-      "resolvedType": "COLOR",
-      "scopes": [
-        "SHAPE_FILL",
-        "TEXT_FILL",
-        "STROKE_COLOR"
-      ],
-      "codeSyntax": {},
-      "hiddenFromPublishing": false,
-      "description": "",
-      "valuesByMode": {
-        "450:1": {
-          "type": "VARIABLE_ALIAS",
-          "id": "VariableID:454:21971"
-        },
-        "450:2": {
-          "type": "VARIABLE_ALIAS",
-          "id": "VariableID:454:21982"
-        }
-      }
-    },
-    {
-      "id": "VariableID:450:18627",
-      "name": "colors/foreground/primary-subtle",
-      "remote": false,
-      "key": "19d937099b8cc2bfa2ae580094e452b77abdf26d",
-      "variableCollectionId": "VariableCollectionId:450:1530",
-      "resolvedType": "COLOR",
-      "scopes": [
-        "SHAPE_FILL",
-        "TEXT_FILL",
-        "STROKE_COLOR"
-      ],
-      "codeSyntax": {},
-      "hiddenFromPublishing": false,
-      "description": "",
-      "valuesByMode": {
-        "450:1": {
-          "type": "VARIABLE_ALIAS",
-          "id": "VariableID:9:2060"
-        },
-        "450:2": {
-          "type": "VARIABLE_ALIAS",
-          "id": "VariableID:9:2056"
-        }
-      }
-    },
-    {
       "id": "VariableID:450:1657",
       "name": "colors/foreground/subtle",
       "remote": false,
@@ -4399,6 +4210,60 @@
         "450:2": {
           "type": "VARIABLE_ALIAS",
           "id": "VariableID:454:21081"
+        }
+      }
+    },
+    {
+      "id": "VariableID:500:5856",
+      "name": "colors/foreground/subtle-on-subtlest",
+      "remote": false,
+      "key": "40a847c07c9eb9288d56262f5fcfc64407d9d281",
+      "variableCollectionId": "VariableCollectionId:450:1530",
+      "resolvedType": "COLOR",
+      "scopes": [
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "codeSyntax": {},
+      "hiddenFromPublishing": false,
+      "description": "",
+      "valuesByMode": {
+        "450:1": {
+          "r": 0.45098039507865906,
+          "g": 0.45098039507865906,
+          "b": 0.45098039507865906,
+          "a": 1
+        },
+        "450:2": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:454:21081"
+        }
+      }
+    },
+    {
+      "id": "VariableID:486:1328",
+      "name": "colors/foreground/success",
+      "remote": false,
+      "key": "980fbdb737fb630631c966107f9658abbdbba697",
+      "variableCollectionId": "VariableCollectionId:450:1530",
+      "resolvedType": "COLOR",
+      "scopes": [
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "codeSyntax": {},
+      "hiddenFromPublishing": false,
+      "description": "",
+      "valuesByMode": {
+        "450:1": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:10:2196"
+        },
+        "450:2": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:489:1582"
         }
       }
     },
@@ -4514,6 +4379,32 @@
       }
     },
     {
+      "id": "VariableID:450:18627",
+      "name": "colors/interaction/navigation-link/hover",
+      "remote": false,
+      "key": "19d937099b8cc2bfa2ae580094e452b77abdf26d",
+      "variableCollectionId": "VariableCollectionId:450:1530",
+      "resolvedType": "COLOR",
+      "scopes": [
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "codeSyntax": {},
+      "hiddenFromPublishing": false,
+      "description": "",
+      "valuesByMode": {
+        "450:1": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:9:2060"
+        },
+        "450:2": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:9:2056"
+        }
+      }
+    },
+    {
       "id": "VariableID:450:1678",
       "name": "colors/interaction/primary/hover",
       "remote": false,
@@ -4552,7 +4443,7 @@
     },
     {
       "id": "VariableID:451:18655",
-      "name": "colors/interaction/primary/on-primary/hover",
+      "name": "colors/interaction/primary/on-primary-hover",
       "remote": false,
       "key": "45f293d7ec0e35744609ab36b3ecbaefea678a6a",
       "variableCollectionId": "VariableCollectionId:450:1530",
@@ -4630,14 +4521,14 @@
         "450:1": {
           "color": {
             "type": "VARIABLE_ALIAS",
-            "id": "VariableID:450:1636"
+            "id": "VariableID:9:2063"
           },
           "opacity": 100
         },
         "450:2": {
           "color": {
             "type": "VARIABLE_ALIAS",
-            "id": "VariableID:450:1636"
+            "id": "VariableID:9:2064"
           },
           "opacity": 100
         }
