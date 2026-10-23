@@ -5,7 +5,7 @@ function App() {
         <h1 className="text-3xl font-bold tracking-tight">
           My AI Design System
         </h1>
-        <p className="text-muted-foreground max-w-md">
+        <p className="max-w-md [color:var(--semantics-colors-foreground-subtle)]">
           Tokens consumidos desde Figma → Style Dictionary → Tailwind v4
         </p>
       </header>
@@ -17,7 +17,7 @@ function App() {
           <h2 className="font-semibold text-lg">Prueba de Tokens</h2>
         </div>
         
-        <p className="text-sm text-muted-foreground">
+        <p className="text-sm [color:var(--semantics-colors-foreground-subtle)]">
           Si ves este contenedor renderizado con fondo, bordes y texto correctamente contrastados, tus tokens semánticos están aplicándose.
         </p>
 

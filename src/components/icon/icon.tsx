@@ -30,7 +30,7 @@ export interface IconProps extends Omit<SVGProps<SVGSVGElement>, "name" | "color
  *
  * Wraps the underlying icon implementation (currently lucide-react) behind a
  * stable, library-independent API. Color is inherited via `currentColor` —
- * style icons the same way you'd style text (e.g. `className="text-muted-foreground"`).
+ * style icons the same way you'd style text (semantic foreground tokens).
  */
 export function Icon({ name, size = iconBox16, strokeWidth = 2, className, ...props }: IconProps) {
   const IconComponent = iconRegistry[name];
