@@ -61,7 +61,7 @@ export const Horizontal: Story = {
     layout: "horizontal",
   },
   render: (args) => (
-    <div className="max-w-full" style={{ width: 644 }}>
+    <div className="max-w-full" style={{ width: 628 }}>
       <ProductCard {...args} />
     </div>
   ),
@@ -79,7 +79,7 @@ export const Vertical: Story = {
     layout: "vertical",
   },
   render: (args) => (
-    <div className="max-w-full" style={{ width: 310 }}>
+    <div className="max-w-full" style={{ width: 302 }}>
       <ProductCard {...args} />
     </div>
   ),
@@ -90,7 +90,7 @@ export const Square: Story = {
     layout: "square",
   },
   render: (args) => (
-    <div className="max-w-full" style={{ width: 342 }}>
+    <div className="max-w-full" style={{ width: 358 }}>
       <ProductCard {...args} />
     </div>
   ),
@@ -103,7 +103,7 @@ export const WithoutAction: Story = {
     showAction: false,
   },
   render: (args) => (
-    <div className="max-w-full" style={{ width: 644 }}>
+    <div className="max-w-full" style={{ width: 628 }}>
       <ProductCard {...args} />
     </div>
   ),
@@ -129,7 +129,7 @@ export const ForwardsRef: Story = {
     }, []);
 
     return (
-      <div className="max-w-full" style={{ width: 342 }}>
+      <div className="max-w-full" style={{ width: 358 }}>
         <ProductCard {...args} ref={ref} />
       </div>
     );

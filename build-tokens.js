@@ -216,6 +216,12 @@ function classifyDimension(token) {
   if (scopes.includes('OPACITY')) return 'opacity';
 
   if (token.path?.[0] === 'semantics' && token.path?.[1] === 'layer') return 'layer';
+  // Grid column counts are integers (12 / 4), not px. Primitive path is
+  // grid/columns/{n}; semantic path is layout/{breakpoint}/grid/columns.
+  // Gutter and margin under the same grid group stay rem.
+  if (pathIncludes(token, 'grid') && pathIncludes(token, 'columns')) {
+    return 'grid-columns';
+  }
   if (pathIncludes(token, 'font-weight')) return 'font-weight';
   if (pathIncludes(token, 'opacity')) return 'opacity';
   if (pathIncludes(token, 'line-height')) return 'line-height';
@@ -260,16 +266,17 @@ StyleDictionary.registerTransform({
   },
 });
 
-// 2. font-weight and z-index layers -> bare unitless integer (100-900, 0-60). Figma has no dedicated
-// "number" variable type, so these are mistakenly typed "dimension" in the
-// source export, which would otherwise make them look like a sizing value.
+// 2. font-weight, z-index layers, and grid column counts -> bare unitless
+// integer. Figma has no dedicated "number" variable type, so these are
+// mistakenly typed "dimension" in the source export, which would otherwise
+// make them look like a sizing value.
 StyleDictionary.registerTransform({
   name: 'ds/unitlessInteger',
   type: 'value',
   filter: (token) =>
     token.type === 'dimension' &&
     typeof token.value === 'number' &&
-    ['font-weight', 'layer'].includes(classifyDimension(token)),
+    ['font-weight', 'layer', 'grid-columns'].includes(classifyDimension(token)),
   transform: (token) => `${token.value}`,
 });
 

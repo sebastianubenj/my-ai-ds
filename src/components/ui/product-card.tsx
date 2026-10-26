@@ -7,8 +7,8 @@ const productCardMediaClassName = `relative w-full overflow-hidden
   [background-color:var(--semantics-colors-background-subtle)]`;
 
 const MEDIA_ASPECT = {
-  horizontal: "644 / 389",
-  vertical: "310 / 389",
+  horizontal: "628 / 389",
+  vertical: "302 / 389",
   square: "1",
 } as const;
 

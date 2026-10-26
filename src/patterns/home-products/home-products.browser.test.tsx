@@ -44,8 +44,8 @@ describe("Home Products breakpoint", () => {
     await mount();
     await vi.waitFor(() => expect(mediaAspects()).toHaveLength(10));
     const aspects = mediaAspects();
-    expect(aspects).toContain("644 / 389");
-    expect(aspects).toContain("310 / 389");
+    expect(aspects).toContain("628 / 389");
+    expect(aspects).toContain("302 / 389");
     expect(aspects).not.toContain("1 / 1");
   });
 });

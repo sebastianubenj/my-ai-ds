@@ -61,6 +61,8 @@
         "VariableID:10:2111",
         "VariableID:10:2108",
         "VariableID:9:2039",
+        "VariableID:527:2946",
+        "VariableID:527:2947",
         "VariableID:9:1877",
         "VariableID:9:1876",
         "VariableID:9:1875",
@@ -290,6 +292,13 @@
         "VariableID:427:574",
         "VariableID:427:576",
         "VariableID:427:573",
+        "VariableID:526:2944",
+        "VariableID:526:2940",
+        "VariableID:526:2936",
+        "VariableID:526:2939",
+        "VariableID:526:2938",
+        "VariableID:526:2934",
+        "VariableID:526:2935",
         "VariableID:427:567",
         "VariableID:427:566",
         "VariableID:425:408",
@@ -1316,6 +1325,36 @@
       }
     },
     {
+      "id": "VariableID:527:2946",
+      "name": "grid/columns/12",
+      "remote": false,
+      "key": "7055c6d27d2b0d7b3fc77d35a4a9f388d7508b99",
+      "variableCollectionId": "VariableCollectionId:9:2",
+      "resolvedType": "FLOAT",
+      "scopes": [],
+      "codeSyntax": {},
+      "hiddenFromPublishing": false,
+      "description": "",
+      "valuesByMode": {
+        "9:0": 12
+      }
+    },
+    {
+      "id": "VariableID:527:2947",
+      "name": "grid/columns/4",
+      "remote": false,
+      "key": "d60314e4761cfadcdf1e32fef4a78d4d825bf733",
+      "variableCollectionId": "VariableCollectionId:9:2",
+      "resolvedType": "FLOAT",
+      "scopes": [],
+      "codeSyntax": {},
+      "hiddenFromPublishing": false,
+      "description": "",
+      "valuesByMode": {
+        "9:0": 4
+      }
+    },
+    {
       "id": "VariableID:9:1877",
       "name": "max-width/max-w-2xl",
       "remote": false,
@@ -1427,12 +1466,14 @@
       "key": "64665ef15465e458e7e22c4f8c719120158453ea",
       "variableCollectionId": "VariableCollectionId:9:2",
       "resolvedType": "FLOAT",
-      "scopes": [],
+      "scopes": [
+        "WIDTH_HEIGHT"
+      ],
       "codeSyntax": {},
       "hiddenFromPublishing": false,
       "description": "",
       "valuesByMode": {
-        "9:0": 448
+        "9:0": 410
       }
     },
     {
@@ -1517,9 +1558,7 @@
       "key": "f18062b3b5125391ab89ffdd9920112ff04f6b36",
       "variableCollectionId": "VariableCollectionId:9:2",
       "resolvedType": "FLOAT",
-      "scopes": [
-        "WIDTH_HEIGHT"
-      ],
+      "scopes": [],
       "codeSyntax": {
         "WEB": "max-w-sm"
       },
@@ -4919,6 +4958,146 @@
       "description": "",
       "valuesByMode": {
         "9:1": 30
+      }
+    },
+    {
+      "id": "VariableID:526:2944",
+      "name": "layout/desktop/content-max-width",
+      "remote": false,
+      "key": "60a4287fadf9f12fd82ce2f0bdf346a1d2b64367",
+      "variableCollectionId": "VariableCollectionId:9:3",
+      "resolvedType": "FLOAT",
+      "scopes": [
+        "ALL_SCOPES"
+      ],
+      "codeSyntax": {},
+      "hiddenFromPublishing": false,
+      "description": "",
+      "valuesByMode": {
+        "9:1": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:9:1888"
+        }
+      }
+    },
+    {
+      "id": "VariableID:526:2940",
+      "name": "layout/desktop/grid/columns",
+      "remote": false,
+      "key": "4b910161d2212b7ea3017f5cb6ab7f8ef0e1c918",
+      "variableCollectionId": "VariableCollectionId:9:3",
+      "resolvedType": "FLOAT",
+      "scopes": [
+        "ALL_SCOPES"
+      ],
+      "codeSyntax": {},
+      "hiddenFromPublishing": false,
+      "description": "",
+      "valuesByMode": {
+        "9:1": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:527:2946"
+        }
+      }
+    },
+    {
+      "id": "VariableID:526:2936",
+      "name": "layout/desktop/grid/gutter",
+      "remote": false,
+      "key": "211c9b34fbc45880e06a6a5986a2e472c628fb43",
+      "variableCollectionId": "VariableCollectionId:9:3",
+      "resolvedType": "FLOAT",
+      "scopes": [
+        "ALL_SCOPES"
+      ],
+      "codeSyntax": {},
+      "hiddenFromPublishing": false,
+      "description": "",
+      "valuesByMode": {
+        "9:1": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:9:1510"
+        }
+      }
+    },
+    {
+      "id": "VariableID:526:2939",
+      "name": "layout/desktop/grid/margin",
+      "remote": false,
+      "key": "a58ddfdca375501f1569598ee5b6bbc2f4f681d8",
+      "variableCollectionId": "VariableCollectionId:9:3",
+      "resolvedType": "FLOAT",
+      "scopes": [
+        "ALL_SCOPES"
+      ],
+      "codeSyntax": {},
+      "hiddenFromPublishing": false,
+      "description": "",
+      "valuesByMode": {
+        "9:1": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:9:1495"
+        }
+      }
+    },
+    {
+      "id": "VariableID:526:2938",
+      "name": "layout/mobile/grid/columns",
+      "remote": false,
+      "key": "94f6a9103df4fb3a4d92c9148f893d14008c17ea",
+      "variableCollectionId": "VariableCollectionId:9:3",
+      "resolvedType": "FLOAT",
+      "scopes": [
+        "ALL_SCOPES"
+      ],
+      "codeSyntax": {},
+      "hiddenFromPublishing": false,
+      "description": "",
+      "valuesByMode": {
+        "9:1": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:527:2947"
+        }
+      }
+    },
+    {
+      "id": "VariableID:526:2934",
+      "name": "layout/mobile/grid/gutter",
+      "remote": false,
+      "key": "2e8d76e44e6c520b712641ae2255d4c2dab6c65f",
+      "variableCollectionId": "VariableCollectionId:9:3",
+      "resolvedType": "FLOAT",
+      "scopes": [
+        "ALL_SCOPES"
+      ],
+      "codeSyntax": {},
+      "hiddenFromPublishing": false,
+      "description": "",
+      "valuesByMode": {
+        "9:1": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:9:1493"
+        }
+      }
+    },
+    {
+      "id": "VariableID:526:2935",
+      "name": "layout/mobile/grid/margin",
+      "remote": false,
+      "key": "3e76ea1202aa719d467f5e15f3dfa1ba80f89a8d",
+      "variableCollectionId": "VariableCollectionId:9:3",
+      "resolvedType": "FLOAT",
+      "scopes": [
+        "ALL_SCOPES"
+      ],
+      "codeSyntax": {},
+      "hiddenFromPublishing": false,
+      "description": "",
+      "valuesByMode": {
+        "9:1": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:9:1493"
+        }
       }
     },
     {

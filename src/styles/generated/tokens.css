@@ -52,6 +52,8 @@
   --primitives-colors-red-900: #330000ff;
   --primitives-colors-red-950: #1a0001ff;
   --primitives-colors-white: #ffffffff;
+  --primitives-grid-columns-4: 4;
+  --primitives-grid-columns-12: 12;
   --primitives-max-width-max-w-2xl: 42rem;
   --primitives-max-width-max-w-3xl: 48rem;
   --primitives-max-width-max-w-4xl: 56rem;
@@ -59,7 +61,7 @@
   --primitives-max-width-max-w-6xl: 72rem;
   --primitives-max-width-max-w-7xl: 80rem;
   --primitives-max-width-max-w-lg: 32rem;
-  --primitives-max-width-max-w-md: 28rem;
+  --primitives-max-width-max-w-md: 25.625rem;
   --primitives-max-width-max-w-screen-2xl: 96rem;
   --primitives-max-width-max-w-screen-lg: 64rem;
   --primitives-max-width-max-w-screen-md: 48rem;
@@ -300,6 +302,13 @@
   --semantics-colors-foreground-success: var(--primitives-colors-green-700);
   --semantics-colors-interaction-navigation-link-hover: var(--primitives-colors-neutral-400);
   --semantics-colors-interaction-scrollbar-thumb: var(--primitives-colors-neutral-400);
+  --semantics-layout-desktop-content-max-width: var(--primitives-max-width-max-w-7xl);
+  --semantics-layout-desktop-grid-columns: var(--primitives-grid-columns-12);
+  --semantics-layout-desktop-grid-gutter: var(--primitives-spacing-6);
+  --semantics-layout-desktop-grid-margin: var(--primitives-spacing-20);
+  --semantics-layout-mobile-grid-columns: var(--primitives-grid-columns-4);
+  --semantics-layout-mobile-grid-gutter: var(--primitives-spacing-4);
+  --semantics-layout-mobile-grid-margin: var(--primitives-spacing-4);
   --semantics-typography-body-body-lg-font-size: var(--primitives-typography-font-size-text-base);
   --semantics-typography-body-body-md-font-size: var(--primitives-typography-font-size-text-sm);
   --semantics-typography-body-body-sm-font-size: var(--primitives-typography-font-size-text-xs);

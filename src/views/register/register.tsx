@@ -381,16 +381,17 @@ export function Register({
 
       <div
         className={`flex w-full flex-1 flex-col items-center
-          px-(--primitives-spacing-6) py-(--primitives-spacing-4)
-          md:px-(--primitives-spacing-16) md:pt-(--primitives-spacing-4)`}
+          px-(--semantics-layout-mobile-grid-margin) py-(--primitives-spacing-4)
+          md:px-(--primitives-spacing-8) md:pt-(--primitives-spacing-4)`}
       >
-        <form
-          noValidate
-          className="flex w-full max-w-sm flex-col items-center gap-(--primitives-spacing-10) md:gap-(--primitives-spacing-12)"
-          onSubmit={(event) => {
-            void handleSubmit(event);
-          }}
-        >
+        <div className="flex w-full max-w-(--semantics-layout-desktop-content-max-width) justify-center">
+          <form
+            noValidate
+            className="flex w-full max-w-(--primitives-max-width-max-w-sm) flex-col items-center gap-(--primitives-spacing-10) md:max-w-(--primitives-max-width-max-w-md) md:gap-(--primitives-spacing-12)"
+            onSubmit={(event) => {
+              void handleSubmit(event);
+            }}
+          >
           <div className="flex w-full flex-col items-start gap-(--primitives-spacing-4)">
             <div
               className="flex w-full flex-col items-start gap-(--primitives-spacing-6) md:gap-(--primitives-spacing-8) [color:var(--semantics-colors-foreground-default)]"
@@ -580,7 +581,8 @@ export function Register({
               </Link>
             </p>
           </div>
-        </form>
+          </form>
+        </div>
       </div>
     </div>
   );

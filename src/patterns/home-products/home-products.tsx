@@ -104,12 +104,12 @@ export function HomeProducts({ onAction }: HomeProductsProps) {
 
   return (
     <div
-      className="flex min-h-dvh w-full flex-col items-center px-(--primitives-spacing-6) md:px-(--primitives-spacing-16) [background-color:var(--semantics-colors-background-page)]"
+      className="flex min-h-dvh w-full flex-col items-center px-(--semantics-layout-mobile-grid-margin) md:px-(--semantics-layout-desktop-grid-margin) [background-color:var(--semantics-colors-background-page)]"
     >
-      <div className="flex w-full flex-col items-start gap-(--primitives-spacing-4)">
+      <div className="flex w-full max-w-(--semantics-layout-desktop-content-max-width) flex-col items-start gap-(--primitives-spacing-4)">
         <h1 className={headingClassName}>All products</h1>
         <div
-          className="grid w-full grid-cols-1 gap-(--primitives-spacing-6) md:grid-cols-4 md:gap-x-(--primitives-spacing-6) md:gap-y-(--primitives-spacing-10)"
+          className="grid w-full grid-cols-1 gap-(--primitives-spacing-6) md:grid-cols-4 md:gap-x-(--semantics-layout-desktop-grid-gutter) md:gap-y-(--primitives-spacing-10)"
         >
           {PRODUCTS.map((product) => (
             <ProductCard
