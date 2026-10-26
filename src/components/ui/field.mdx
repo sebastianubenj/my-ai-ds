@@ -9,6 +9,8 @@ A form field wrapper that combines a label, a single form control, and an option
 
 Field is a composition wrapper. It is not a form control. It has no border, background, radius, or other chrome. Width follows the parent. Height follows its content.
 
+In Figma, Field has one variant: `optional` (`false` | `true`). Supporting copy is not a Field variant. It is the `description` slot (on or off), filled with a string or with `FieldDescriptionOrRequirement`.
+
 ## When to use
 
 Use Field when a control needs a visible label and, optionally, supporting text or an error message.
@@ -51,7 +53,7 @@ The existing `Label` component renders the name. Pass `htmlFor` on Field and the
 
 ## Optional fields
 
-Set `optional` to show a muted `(optional)` marker next to the label. The React default is `false`. There is no required asterisk and no `required` visual prop. HTML `required` belongs on the control.
+Set `optional` to show a muted `(optional)` marker next to the label. This is the only Figma variant. The React default is `false`. There is no required asterisk and no `required` visual prop. HTML `required` belongs on the control.
 
 ```tsx
 <Field label="Nickname" optional htmlFor="nickname">
@@ -63,13 +65,14 @@ Set `optional` to show a muted `(optional)` marker next to the label. The React 
 
 ## Description vs error
 
-Field has one supporting line.
+Field has one supporting slot below the control. Figma no longer has a `support message` variant (`none` / `description` / `error`). Omit `description` to hide the slot; pass it to show it.
 
 - No `description` — no support text
-- `description` — muted helper text
-- `description` + `error` — destructive error text
+- `description` as a string — helper copy, no icon
+- `description` as a string + `error` — destructive copy, no icon
+- `description` as `FieldDescriptionOrRequirement` (one or more) — each row owns its `state` and icon
 
-Do not pass a helper and an error at the same time. There are no separate `helperText` or `errorMessage` props.
+`error` is a string shortcut: it sets the wrapped line to `state="invalid"`. It is not the removed Figma `support message` variant. Do not pass a helper string and a requirement list at the same time. There are no separate `helperText` or `errorMessage` props.
 
 ```tsx
 <Field
@@ -83,7 +86,7 @@ Do not pass a helper and an error at the same time. There are no separate `helpe
 
 <Canvas of={FieldStories.Description} />
 
-Field’s `error` prop styles the supporting text only. It does **not** set `error` on the child. Set both when the control should look invalid:
+Field’s `error` prop only styles a string `description`. It does **not** set `error` on the child. Set both when the control should look invalid:
 
 ```tsx
 <Field
@@ -98,7 +101,15 @@ Field’s `error` prop styles the supporting text only. It does **not** set `err
 
 <Canvas of={FieldStories.Error} />
 
-When both `htmlFor` and `description` are set, the description element’s `id` is `` `${htmlFor}-description` ``. Pass that same value as `aria-describedby` on the control. Field does not inject `aria-describedby` into children.
+When both `htmlFor` and `description` are set, the slot wrapper’s `id` is `` `${htmlFor}-description` ``. Pass that same value as `aria-describedby` on the control. Field does not inject `aria-describedby` into children.
+
+`error` on Field does not recolor `FieldDescriptionOrRequirement` rows. Those rows keep their own `state`.
+
+### Requirement list
+
+Pass requirement rows as `description`. Use this for live password rules. Each row keeps its own `state`.
+
+<Canvas of={FieldStories.Requirements} />
 
 ## Examples
 
@@ -135,7 +146,7 @@ CheckboxGroup and RadioGroup contain multiple controls, so `htmlFor` is usually 
 - `(optional)` is rendered inside the label so it is part of the accessible name.
 - `disabled`, `required`, `aria-invalid`, and the control’s visual error state belong on the child.
 - Field does not clone children or set `error` / `id` / `aria-describedby` on them.
-- Wire `aria-describedby` on the control when a description is present, using `` `${htmlFor}-description` ``.
+- Wire `aria-describedby` on the control when a description is present, using `` `${htmlFor}-description` `` on the slot wrapper.
 - For CheckboxGroup and RadioGroup, prefer the Field label as a visual heading and keep item-level names on each control.
 
 ## API
@@ -144,9 +155,9 @@ CheckboxGroup and RadioGroup contain multiple controls, so `htmlFor` is usually 
 | --- | --- | --- | --- |
 | `children` | `React.ReactNode` | — | The form control. |
 | `label` | `React.ReactNode` | — | Visible field name. Omit to hide the label row. |
-| `optional` | `boolean` | `false` | Shows an “(optional)” marker next to the label. |
-| `description` | `React.ReactNode` | — | Supporting helper or error copy. |
-| `error` | `boolean` | `false` | Styles the description as an error. Does not set `error` on the child. |
+| `optional` | `boolean` | `false` | Figma variant. Shows an “(optional)” marker next to the label. |
+| `description` | `React.ReactNode` | — | Supporting slot. Omit to hide. A string is helper or error copy. A node is rendered as-is. |
+| `error` | `boolean` | `false` | String shortcut to `invalid`. Not a Figma variant. Does not set `error` on the child or recolor requirement rows. |
 | `htmlFor` | `string` | — | Associates the label with a control. Match this to the control’s `id`. |
 | `className` | `string` | — | Adds custom CSS classes to the Field root. |
 

@@ -1,6 +1,6 @@
 import * as React from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { expect, userEvent, within } from "storybook/test";
+import { expect, userEvent, waitFor, within } from "storybook/test";
 
 import { Label } from "./label";
 import {
@@ -397,6 +397,10 @@ export const KeyboardSelection: Story = {
     await userEvent.keyboard("{Enter}");
 
     await expect(trigger).toHaveTextContent("Banana");
+    await waitFor(() => {
+      expect(within(document.body).queryByRole("listbox")).toBeNull();
+    });
+    await expect(trigger).toHaveFocus();
   },
 };
 

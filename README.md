@@ -4,7 +4,7 @@ React + TypeScript design system. Visual language comes from [Figma](https://www
 
 Stack: Vite, Tailwind CSS v4, shadcn structure, Base UI, Style Dictionary.
 
-This repo is a catalog, not a product app. Do not add `src/views/` until there is an application to compose. Do not publish an npm package until another repo consumes it. `src/App.tsx` / `npm run dev` is a leftover Vite shell; leave it until that consumer exists.
+This repo is a catalog, not a product app. Product screens live in `src/views/` and appear in Storybook (`Views/Register`). They are not routed and have no auth backend. Do not publish an npm package until another repo consumes it. `src/App.tsx` / `npm run dev` is a leftover Vite shell; leave it until that consumer exists.
 
 ## Run
 
@@ -45,6 +45,7 @@ Implementation rules (tokens, components, patterns, testing) live in `.cursor/ru
 | `src/components/icon/` | Curated icon registry |
 | `src/foundations/` | Token specimens (color, type, space, …) |
 | `src/patterns/` | Composed screens (Login, Register, Home Products). Specimens, not product routes |
+| `src/views/` | Product screens in Storybook. Register is the first; no routes or publish |
 | `figma/export-variables/` | Figma plugin that downloads every local variable |
 | `tokens/figma-variables.raw.json` | Raw variable export. Input to `tokens:normalize` |
 | `tokens/tokens.json` | Token source. Primitives and semantics come from the export; font, typography, and effect stay in this file |

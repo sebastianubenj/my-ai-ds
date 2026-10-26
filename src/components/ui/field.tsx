@@ -1,6 +1,7 @@
 import * as React from "react";
 
 import { cn } from "@/lib/utils";
+import { FieldDescriptionOrRequirement } from "@/components/ui/field-description-or-requirement";
 import { Label } from "@/components/ui/label";
 
 export interface FieldProps extends React.ComponentProps<"div"> {
@@ -9,9 +10,15 @@ export interface FieldProps extends React.ComponentProps<"div"> {
   label?: React.ReactNode;
   /** When true, shows an “(optional)” marker next to the label. */
   optional?: boolean;
-  /** Supporting helper or error copy. Omit to hide the support line. */
+  /**
+   * Supporting slot. A string is helper or error copy (no icon). A node is
+   * rendered as-is, typically `FieldDescriptionOrRequirement` rows.
+   */
   description?: React.ReactNode;
-  /** Styles the description as an error. Does not set `error` on the child control. */
+  /**
+   * String shortcut: wraps `description` as `invalid`. Not a Figma variant.
+   * Does not set `error` on the child control.
+   */
   error?: boolean;
   /** Associates the label with a control. Pass the same value as the control’s `id`. */
   htmlFor?: string;
@@ -58,20 +65,21 @@ export function Field({
       ) : null}
       {children}
       {description ? (
-        <p
+        <div
           id={descriptionId}
-          className={cn(
-            `m-0 w-full font-sans [font-weight:var(--semantics-typography-body-font-weight)]
-             text-(length:--semantics-typography-body-body-sm-font-size)
-             leading-(--semantics-typography-body-body-sm-lh-normal)
-             tracking-(--semantics-typography-body-body-sm-tracking-tight)`,
-            error
-              ? "[color:var(--semantics-colors-foreground-destructive)]"
-              : "[color:var(--semantics-colors-foreground-subtle)]",
-          )}
+          className="flex w-full flex-col gap-(--primitives-spacing-1)"
         >
-          {description}
-        </p>
+          {typeof description === "string" || typeof description === "number" ? (
+            <FieldDescriptionOrRequirement
+              showIcon={false}
+              state={error ? "invalid" : "pending"}
+            >
+              {description}
+            </FieldDescriptionOrRequirement>
+          ) : (
+            description
+          )}
+        </div>
       ) : null}
     </div>
   );

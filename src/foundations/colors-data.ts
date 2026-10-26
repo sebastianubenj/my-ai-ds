@@ -168,8 +168,8 @@ export const SEMANTIC_FOREGROUND: SemanticColorRecord[] = [
     name: "Subtle on subtlest",
     token: "semantics.colors.foreground.subtle-on-subtlest",
     cssVar: "--semantics-colors-foreground-subtle-on-subtlest",
-    generated: "#737373ff",
-    alias: "#737373ff",
+    generated: "var(--primitives-colors-neutral-495)",
+    alias: "primitives.colors.neutral.495",
     darkGenerated: "var(--primitives-colors-gray-500)",
     darkAlias: "primitives.colors.gray.500",
   }),
@@ -393,7 +393,19 @@ export const PRIMITIVE_NEUTRAL: PrimitiveColorRecord[] = [
     cssVar: "--primitives-colors-black",
     hex: "#000000ff",
   },
-  ...hueScale("neutral", NEUTRAL_HEX),
+  ...hueScale("neutral", NEUTRAL_HEX).flatMap((step) =>
+    step.token.endsWith(".500")
+      ? [
+          {
+            name: "Neutral / 495",
+            token: "primitives.colors.neutral.495",
+            cssVar: "--primitives-colors-neutral-495",
+            hex: "#737373ff",
+          },
+          step,
+        ]
+      : [step],
+  ),
 ];
 
 export const PRIMITIVE_RED = hueScale("red", RED_HEX);

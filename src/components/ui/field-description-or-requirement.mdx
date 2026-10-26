@@ -1,0 +1,73 @@
+import * as FieldDescriptionOrRequirementStories from "./field-description-or-requirement.stories";
+import { Meta, Canvas } from "@storybook/addon-docs/blocks";
+
+<Meta of={FieldDescriptionOrRequirementStories} />
+
+# FieldDescriptionOrRequirement
+
+A supporting line under a Field. Use it as Field helper copy (no icon) or as a requirement row with a status icon.
+
+The line uses `body-sm`. Color and icon follow `state`. Width follows the parent.
+
+## When to use
+
+Use this component in Field’s `description` slot.
+
+- Helper or error copy — `showIcon={false}`
+- Password or other live requirements — one instance per rule, with `showIcon` left on
+
+Do not use it as a Field label or as a standalone alert.
+
+## States
+
+`state` is the public variant. It is not derived from Field’s `error` unless Field wraps a string (see Field).
+
+### Pending
+
+Default. Subtle copy and a dashed circle. The rule is not met yet and is not in error. Pass `icon` to replace that glyph (Register uses `circle` for a leaked-password row that has not been checked).
+
+<Canvas of={FieldDescriptionOrRequirementStories.Pending} />
+
+### Met
+
+Success copy and a check circle. The rule is satisfied.
+
+<Canvas of={FieldDescriptionOrRequirementStories.Met} />
+
+### Invalid
+
+Destructive copy and an x circle. The rule failed validation.
+
+<Canvas of={FieldDescriptionOrRequirementStories.Invalid} />
+
+## Without icon
+
+Field helper and error strings render this way. `state` still sets the color.
+
+<Canvas of={FieldDescriptionOrRequirementStories.WithoutIcon} />
+
+## Requirement list
+
+Pass several instances as Field `description`. Each row owns its `state`. Field’s `error` does not recolor them.
+
+<Canvas of={FieldDescriptionOrRequirementStories.RequirementList} />
+
+The status icon is 12px (`primitives.spacing.3`) so it sits on the `body-sm` line. That size is local to this component. It is not a public Icon box.
+
+## Accessibility
+
+- The root is a `<p>`. The copy is the accessible name.
+- The icon is `aria-hidden`. Status is also in color; do not rely on the icon alone.
+- When Field sets `htmlFor` and `description`, the Field slot wrapper uses `` `${htmlFor}-description` ``. Wire that value as `aria-describedby` on the control.
+
+## API
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `children` | `React.ReactNode` | — | Supporting copy for this line. |
+| `state` | `"pending" \| "met" \| "invalid"` | `"pending"` | Color and icon. |
+| `showIcon` | `boolean` | `true` | When false, only the copy is shown. |
+| `icon` | `IconName` | — | Replaces the default icon for `state`. Ignored when `showIcon` is false. |
+| `className` | `string` | — | Adds custom CSS classes to the line. |
+
+The component also supports the standard HTML `<p>` attributes through `React.ComponentProps<"p">`.

@@ -5,6 +5,7 @@ import { expect } from "storybook/test";
 import { Checkbox } from "./checkbox";
 import { CheckboxGroup } from "./checkbox-group";
 import { Field } from "./field";
+import { FieldDescriptionOrRequirement } from "./field-description-or-requirement";
 import { Input } from "./input";
 import { RadioGroup } from "./radio-group";
 import { RadioItem } from "./radio-item";
@@ -32,7 +33,8 @@ const meta = {
     },
     description: {
       control: "text",
-      description: "Supporting helper or error copy.",
+      description:
+        "Supporting slot. A string is helper or error copy. A node is rendered as-is.",
     },
     error: {
       control: "boolean",
@@ -156,6 +158,54 @@ export const Error: Story = {
       />
     </Field>
   ),
+};
+
+/* -------------------------------------------------------------------------- */
+/* Requirements                                                                */
+/* -------------------------------------------------------------------------- */
+
+export const Requirements: Story = {
+  render: () => (
+    <Field
+      label="Password"
+      htmlFor="field-requirements-password"
+      description={
+        <>
+          <FieldDescriptionOrRequirement state="met">
+            At least 15 characters
+          </FieldDescriptionOrRequirement>
+          <FieldDescriptionOrRequirement state="pending">
+            At least one number
+          </FieldDescriptionOrRequirement>
+          <FieldDescriptionOrRequirement state="invalid">
+            At least one special character
+          </FieldDescriptionOrRequirement>
+        </>
+      }
+    >
+      <Input
+        id="field-requirements-password"
+        type="password"
+        autoComplete="new-password"
+        placeholder="Enter your password"
+        aria-describedby="field-requirements-password-description"
+      />
+    </Field>
+  ),
+  play: async ({ canvasElement }) => {
+    const slot = canvasElement.querySelector(
+      "#field-requirements-password-description",
+    );
+    const rows = canvasElement.querySelectorAll(
+      '[data-slot="field-description-or-requirement"]',
+    );
+
+    await expect(slot).toBeInstanceOf(HTMLDivElement);
+    await expect(rows).toHaveLength(3);
+    await expect(rows[0]).toHaveAttribute("data-state", "met");
+    await expect(rows[1]).toHaveAttribute("data-state", "pending");
+    await expect(rows[2]).toHaveAttribute("data-state", "invalid");
+  },
 };
 
 /* -------------------------------------------------------------------------- */
