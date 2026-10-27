@@ -1,0 +1,27 @@
+import * as DescriptionStories from "./description.stories";
+import { Meta, Canvas } from "@storybook/addon-docs/blocks";
+
+<Meta of={DescriptionStories} />
+
+# Description
+
+Supporting line under a page Title. Body-lg, subtle foreground. Same type on every breakpoint.
+
+## Basic
+
+<Canvas of={DescriptionStories.Basic} />
+
+## Usage
+
+Prefer `PageHeader` when Title and Description appear together. Use Description on its own only when the title is already rendered.
+
+Do not use it for field helper or error copy; that is `FieldDescriptionOrRequirement`.
+
+## API
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `children` | `React.ReactNode` | — | The supporting text. |
+| `className` | `string` | — | Adds custom CSS classes to the paragraph. |
+
+Also accepts native `<p>` attributes via `React.ComponentProps<"p">`.

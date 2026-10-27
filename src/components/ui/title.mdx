@@ -1,0 +1,33 @@
+import * as TitleStories from "./title.stories";
+import { Meta, Canvas } from "@storybook/addon-docs/blocks";
+
+<Meta of={TitleStories} />
+
+# Title
+
+Page or section heading. Uses heading-xl on small viewports and display-sm from `md` up.
+
+## Basic
+
+<Canvas of={TitleStories.Basic} />
+
+## Heading level
+
+Defaults to `<h1>`. Pass `as` when the title is not the page’s primary heading.
+
+<Canvas of={TitleStories.HeadingLevel} />
+
+## Accessibility
+
+- Renders a native heading (`h1`–`h4`). Keep one `h1` per view.
+- Do not use Title for form-field names; use Label.
+
+## API
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `as` | `"h1" \| "h2" \| "h3" \| "h4"` | `"h1"` | Heading element. |
+| `children` | `React.ReactNode` | — | The title text. |
+| `className` | `string` | — | Adds custom CSS classes to the heading. |
+
+Also accepts native heading attributes via `React.ComponentProps<"h1">`.

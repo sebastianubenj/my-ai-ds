@@ -1,0 +1,36 @@
+import * as PageHeaderStories from "./page-header.stories";
+import { Meta, Canvas } from "@storybook/addon-docs/blocks";
+
+<Meta of={PageHeaderStories} />
+
+# PageHeader
+
+View heading block: Title plus an optional Description. Aligns start. Title scales at `md`; Description does not.
+
+This is not the sticky navigation chrome. Views that already use `<header>` for the nav should keep PageHeader as a `div`.
+
+## With description
+
+<Canvas of={PageHeaderStories.WithDescription} />
+
+## Title only
+
+Omit `description` to hide the supporting line.
+
+<Canvas of={PageHeaderStories.TitleOnly} />
+
+## Accessibility
+
+- Title defaults to `h1`. Pass `titleAs` when this block is not the page heading.
+- Description is a paragraph, not a second heading.
+
+## API
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `title` | `React.ReactNode` | — | Heading copy. |
+| `description` | `React.ReactNode` | — | Optional supporting copy. Hidden when omitted. |
+| `titleAs` | `"h1" \| "h2" \| "h3" \| "h4"` | `"h1"` | Heading element for Title. |
+| `className` | `string` | — | Adds custom CSS classes to the root. |
+
+Also accepts native `<div>` attributes via `React.ComponentProps<"div">`.

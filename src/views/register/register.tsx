@@ -6,6 +6,7 @@ import { Field } from "@/components/ui/field";
 import { FieldDescriptionOrRequirement } from "@/components/ui/field-description-or-requirement";
 import { Input } from "@/components/ui/input";
 import { Link } from "@/components/ui/link";
+import { PageHeader } from "@/components/ui/page-header";
 
 const NAME_MAX_LENGTH = 100;
 const PASSWORD_MIN_LENGTH = 15;
@@ -381,8 +382,8 @@ export function Register({
 
       <div
         className={`flex w-full flex-1 flex-col items-center
-          px-(--semantics-layout-mobile-grid-margin) py-(--primitives-spacing-4)
-          md:px-(--primitives-spacing-8) md:pt-(--primitives-spacing-4)`}
+          px-(--semantics-layout-mobile-grid-margin)
+          md:px-(--primitives-spacing-8)`}
       >
         <div className="flex w-full max-w-(--semantics-layout-desktop-content-max-width) justify-center">
           <form
@@ -393,28 +394,7 @@ export function Register({
             }}
           >
           <div className="flex w-full flex-col items-start gap-(--primitives-spacing-4)">
-            <div
-              className="flex w-full flex-col items-start gap-(--primitives-spacing-6) md:gap-(--primitives-spacing-8) [color:var(--semantics-colors-foreground-default)]"
-            >
-              <h1
-                className={`m-0 w-full text-center font-sans
-                  [font-weight:var(--semantics-typography-display-font-weight)]
-                  text-(length:--semantics-typography-display-display-sm-font-size)
-                  leading-(--semantics-typography-display-display-sm-lh-tighter)
-                  tracking-(--semantics-typography-display-display-sm-tracking-tight)`}
-              >
-                Create your account
-              </h1>
-              <p
-                className={`m-0 w-full font-sans
-                  [font-weight:var(--semantics-typography-heading-font-weight)]
-                  text-(length:--semantics-typography-heading-heading-xl-font-size)
-                  leading-(--semantics-typography-heading-heading-xl-lh-tight)
-                  tracking-(--semantics-typography-heading-heading-xl-tracking-tight)`}
-              >
-                Get started with your account
-              </p>
-            </div>
+            <PageHeader title="Create your account" description="Get started with your account." />
 
             <Field
               label="Full name"
