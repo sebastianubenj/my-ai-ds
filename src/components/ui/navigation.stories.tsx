@@ -8,6 +8,7 @@ import {
   type NavigationBagItem,
   NavigationLink,
   NavigationMenuLink,
+  type NavigationProductProps,
   NavigationSearchTrigger,
   NavigationSection,
 } from "./navigation";
@@ -83,7 +84,7 @@ const sampleBagItems: NavigationBagItem[] = Array.from(
 );
 
 function SampleNavigation(
-  props: Partial<React.ComponentProps<typeof Navigation>> & {
+  props: Partial<NavigationProductProps> & {
     navRef?: React.Ref<HTMLElement>;
     bagItems?: NavigationBagItem[];
     onReview?: () => void;
@@ -975,5 +976,46 @@ export const ForwardsRef: Story = {
     const navigation = canvasElement.querySelector("[data-slot=navigation]");
 
     await expect(navigation).toHaveAttribute("data-ref-tag", "HEADER");
+  },
+};
+
+export const Empty: Story = {
+  args: {
+    appearance: "empty",
+    logoHref: "#home",
+    logoLabel: "Home",
+  },
+  render: () => (
+    <Navigation appearance="empty" logoHref="#home" logoLabel="Home" />
+  ),
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    await expect(canvas.getByRole("link", { name: "Home" })).toBeVisible();
+    await expect(
+      canvas.queryByRole("button", { name: "Menu" }),
+    ).not.toBeInTheDocument();
+  },
+};
+
+export const EmptyMobile: Story = {
+  args: {
+    appearance: "empty",
+    logoHref: "#home",
+    logoLabel: "Home",
+  },
+  globals: {
+    viewport: { value: "mobile2", isRotated: false },
+  },
+  render: () => (
+    <Navigation appearance="empty" logoHref="#home" logoLabel="Home" />
+  ),
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    await expect(canvas.getByRole("link", { name: "Home" })).toBeVisible();
+    await expect(
+      canvas.queryByRole("button", { name: "Menu" }),
+    ).not.toBeInTheDocument();
   },
 };

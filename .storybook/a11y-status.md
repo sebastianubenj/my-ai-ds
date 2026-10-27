@@ -1,22 +1,13 @@
 # Accessibility gate
 
-`parameters.a11y.test` in `preview.tsx` stays `'todo'` until a full CSF scan is clean. Switch it to `'error'` only then, so CI does not fail on leftover violations.
+`parameters.a11y.test` in `preview.tsx` is `'error'`. CSF stories that fail axe fail `npm test`. MDX docs are not scanned.
 
 ## Inventory
 
-Last full CSF scan: 6 Oct 2026 (227 stories, WCAG 2.0 A/AA, 1280×800). Docs MDX were not scanned.
+Full CSF scan: 27 Oct 2026. `npm test` with the gate on `'error'`: 40 files, 285 tests, WCAG via `@storybook/addon-a11y` (addon-vitest, Chromium). Zero violations.
 
-Re-checked 6 Oct 2026 after `foreground/highlight` → `cyan/700` (`#008576`):
+Previous full scan: 6 Oct 2026 (227 stories). Auth views, FormAlert, Navigation empty, and pattern deletions landed after that scan.
 
-| Story | Result |
-| --- | --- |
-| `patterns-login--default` | Clean (previously `color-contrast` on 2 links) |
-| `patterns-register--default` | Clean (previously `color-contrast` on 1 link) |
+## After a new story
 
-Those two were the only catalog blockers in the full scan.
-
-## Before `test: 'error'`
-
-1. Re-run axe on all CSF stories (not only Login/Register).
-2. If zero violations, switch `parameters.a11y.test` to `'error'` in `.storybook/preview.tsx`.
-3. Keep `npm run check` as the only CI gate; addon-a11y then fails Storybook tests on new violations.
+Fix axe issues in the work you touch. Do not set the gate back to `'todo'` to land a story.

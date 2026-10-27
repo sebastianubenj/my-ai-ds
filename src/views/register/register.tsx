@@ -1,12 +1,13 @@
 import * as React from "react";
 
-import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Field } from "@/components/ui/field";
 import { FieldDescriptionOrRequirement } from "@/components/ui/field-description-or-requirement";
+import { FormAlert } from "@/components/ui/form-alert";
 import { Input } from "@/components/ui/input";
 import { Link } from "@/components/ui/link";
 import { PageHeader } from "@/components/ui/page-header";
+import { AuthLayout } from "@/views/auth-layout";
 
 const NAME_MAX_LENGTH = 100;
 const PASSWORD_MIN_LENGTH = 15;
@@ -25,6 +26,7 @@ export const REGISTER_COPY = {
   leakedUnavailable: "We couldn’t check this password right now. Please try again.",
   confirmRequired: "Confirm your password.",
   confirmMismatch: "Passwords don’t match.",
+  network: "Something went wrong. Please try again.",
   submit: "Create account",
   submitting: "Creating account…",
 } as const;
@@ -42,23 +44,28 @@ export interface RegisterValues {
   confirmPassword: string;
 }
 
+export type RegisterSubmitResult = "success" | "network";
+
 export type RegisterAppearance =
   | "initial"
   | "requirements-met"
   | "validation-errors"
   | "compromised"
-  | "submitting";
+  | "submitting"
+  | "network";
 
 export interface RegisterProps {
   className?: string;
   defaultValues?: Partial<RegisterValues>;
   /**
-   * Story fixture. Seeds values and visual state for the five Figma frames.
+   * Story fixture. Seeds values and visual state for the Figma frames.
    * A product screen omits this and drives the form from user input.
    */
   appearance?: RegisterAppearance;
   checkCompromisedPassword?: CheckCompromisedPassword;
-  onSubmit?: (values: RegisterValues) => Promise<void> | void;
+  onSubmit?: (
+    values: RegisterValues,
+  ) => Promise<RegisterSubmitResult | void> | RegisterSubmitResult | void;
   logoHref?: string;
   logoLabel?: string;
   loginHref?: string;
@@ -94,7 +101,11 @@ function valuesForAppearance(
     };
   }
 
-  if (appearance === "compromised" || appearance === "submitting") {
+  if (
+    appearance === "compromised" ||
+    appearance === "submitting" ||
+    appearance === "network"
+  ) {
     const password = defaults?.password ?? "abcdefghijklmnop";
     return {
       name: defaults?.name ?? "John Doe",
@@ -131,25 +142,6 @@ function confirmError(
   }
   if (confirmPassword !== password) return REGISTER_COPY.confirmMismatch;
   return undefined;
-}
-
-function RegisterMark() {
-  return (
-    <svg
-      viewBox="0 0 12 12"
-      aria-hidden="true"
-      className="size-(--primitives-spacing-3)"
-      fill="currentColor"
-    >
-      <rect x="4" y="0" width="4" height="4" rx="2" />
-      <rect x="4" y="4" width="4" height="4" rx="2" />
-      <rect x="4" y="8" width="4" height="4" rx="2" />
-      <path d="M0 4A4 4 0 0 1 4 0V6A2 2 0 0 1 2 8A2 2 0 0 1 0 6Z" />
-      <path d="M8 6A2 2 0 0 1 10 4A2 2 0 0 1 12 6V8A4 4 0 0 1 8 12Z" />
-      <path d="M4 8H2A2 2 0 0 0 2 12H4Z" />
-      <path d="M8 0H10A2 2 0 0 1 12 2V2A2 2 0 0 1 10 4H8V0Z" />
-    </svg>
-  );
 }
 
 function PasswordVisibilityButton({
@@ -200,16 +192,21 @@ export function Register({
   const [confirmPassword, setConfirmPassword] = React.useState(seeded.confirmPassword);
   const [passwordVisible, setPasswordVisible] = React.useState(false);
   const [confirmVisible, setConfirmVisible] = React.useState(false);
+  const formAlertId = `${id}-form-alert`;
   const [submitted, setSubmitted] = React.useState(
     appearance === "validation-errors" ||
       appearance === "compromised" ||
-      appearance === "submitting",
+      appearance === "submitting" ||
+      appearance === "network",
   );
   const [submitting, setSubmitting] = React.useState(appearance === "submitting");
+  const [formError, setFormError] = React.useState<string | undefined>(
+    appearance === "network" ? REGISTER_COPY.network : undefined,
+  );
   const [leakedResult, setLeakedResult] = React.useState<CompromisedPasswordResult | null>(
     appearance === "compromised"
       ? "compromised"
-      : appearance === "submitting"
+      : appearance === "submitting" || appearance === "network"
         ? "clear"
         : null,
   );
@@ -277,6 +274,7 @@ export function Register({
 
   function handleConfirmChange(value: string) {
     setConfirmPassword(value);
+    setFormError(undefined);
     setErrors((current) => ({
       ...current,
       confirm: confirmError(password, value, submitted || value.length > 0),
@@ -285,6 +283,7 @@ export function Register({
 
   function handlePasswordChange(value: string) {
     setPassword(value);
+    setFormError(undefined);
     setLeakedResult(null);
     setErrors((current) => ({
       ...current,
@@ -297,6 +296,7 @@ export function Register({
     if (submitLock.current || submitting) return;
 
     setSubmitted(true);
+    setFormError(undefined);
 
     const nextName = nameError(name);
     const nextEmail = emailError(email, REGISTER_COPY.emailRequired);
@@ -337,7 +337,12 @@ export function Register({
     setSubmitting(true);
 
     try {
-      await onSubmit?.({ name, email, password, confirmPassword });
+      const result = await onSubmit?.({ name, email, password, confirmPassword });
+      if (result === "network") {
+        setFormError(REGISTER_COPY.network);
+      }
+    } catch {
+      setFormError(REGISTER_COPY.network);
     } finally {
       setSubmitting(false);
       submitLock.current = false;
@@ -345,47 +350,12 @@ export function Register({
   }
 
   return (
-    <div
+    <AuthLayout
       data-slot="register"
-      className={cn(
-        "flex min-h-dvh w-full flex-col [background-color:var(--semantics-colors-background-page)]",
-        className,
-      )}
+      className={className}
+      logoHref={logoHref}
+      logoLabel={logoLabel}
     >
-      <header
-        className={`sticky top-0 z-(--semantics-layer-navigation) flex w-full items-center
-          [color:var(--semantics-colors-foreground-default)]
-          [background-color:var(--semantics-colors-background-primary-blur)]
-          [backdrop-filter:blur(var(--semantics-glass-navigation-frost))]
-          px-(--primitives-spacing-2) py-(--primitives-spacing-out-of-scale-1-5)
-          md:justify-center md:px-(--primitives-spacing-6)`}
-      >
-        <div className="flex w-full items-center md:max-w-(--primitives-max-width-max-w-2xl)">
-          <a
-            href={logoHref}
-            aria-label={logoLabel}
-            className={`relative inline-flex size-(--primitives-spacing-out-of-scale-9) shrink-0 items-center justify-center
-              border-0 bg-transparent p-0 [color:inherit] outline-none
-              md:h-(--primitives-spacing-8) md:w-auto md:px-(--primitives-spacing-1)
-              after:pointer-events-none after:absolute after:hidden after:content-['']
-              after:[inset:calc(-1*(var(--primitives-spacing-out-of-scale-0-75)+var(--primitives-ring-focus-width-ring-2)))]
-              after:[border:var(--primitives-ring-focus-width-ring-2)_solid_var(--semantics-colors-border-ring-focus)]
-              after:[border-radius:var(--primitives-radius-rounded-sm)]
-              focus-visible:after:block`}
-          >
-            <span className="inline-flex size-(--primitives-spacing-4) items-center justify-center">
-              <RegisterMark />
-            </span>
-          </a>
-        </div>
-      </header>
-
-      <div
-        className={`flex w-full flex-1 flex-col items-center
-          px-(--semantics-layout-mobile-grid-margin)
-          md:px-(--primitives-spacing-8)`}
-      >
-        <div className="flex w-full max-w-(--semantics-layout-desktop-content-max-width) justify-center">
           <form
             noValidate
             className="flex w-full max-w-(--primitives-max-width-max-w-sm) flex-col items-center gap-(--primitives-spacing-10) md:max-w-(--primitives-max-width-max-w-md) md:gap-(--primitives-spacing-12)"
@@ -415,6 +385,7 @@ export function Register({
                 onChange={(event) => {
                   const value = event.target.value;
                   setName(value);
+                  setFormError(undefined);
                   setErrors((current) =>
                     current.name !== undefined || submitted
                       ? { ...current, name: nameError(value) }
@@ -444,6 +415,7 @@ export function Register({
                 onChange={(event) => {
                   const value = event.target.value;
                   setEmail(value);
+                  setFormError(undefined);
                   setErrors((current) => ({
                     ...current,
                     email: current.email ? emailError(value, REGISTER_COPY.emailRequired) : undefined,
@@ -530,8 +502,10 @@ export function Register({
                     />
                   ) : undefined
                 }
-              />
+                />
             </Field>
+
+            {formError ? <FormAlert id={formAlertId}>{formError}</FormAlert> : null}
           </div>
 
           <div className="flex w-full flex-col items-center gap-(--primitives-spacing-6)">
@@ -562,8 +536,6 @@ export function Register({
             </p>
           </div>
           </form>
-        </div>
-      </div>
-    </div>
+    </AuthLayout>
   );
 }

@@ -1,10 +1,10 @@
 # my-ai-ds
 
-React + TypeScript design system. Visual language comes from [Figma](https://www.figma.com/design/PMZpYxijxLhjDlvMbtVY5j/my-ai-ds). Storybook is the working catalog.
+React + TypeScript design system. Visual language comes from [Figma](https://www.figma.com/design/PMZpYxijxLhjDlvMbtVY5j/my-ai-ds). Storybook is the working catalog, not a routed app.
 
 Stack: Vite, Tailwind CSS v4, shadcn structure, Base UI, Style Dictionary.
 
-This repo is a catalog, not a product app. Product screens live in `src/views/` and appear in Storybook (`Views/Register`). They are not routed and have no auth backend. Do not publish an npm package until another repo consumes it. `src/App.tsx` / `npm run dev` is a leftover Vite shell; leave it until that consumer exists.
+Product screens live in `src/views/` and show up in Storybook under Views. There is no router and no auth backend. Do not publish an npm package until another repo consumes it. `src/App.tsx` / `npm run dev` is a leftover Vite shell; leave it until that consumer exists.
 
 ## Run
 
@@ -22,7 +22,7 @@ npm run check
 
 `check` runs typecheck, lint, token tests (`tokens:test`), Storybook interaction tests, and the production build. Use it before commit.
 
-Accessibility checks in Storybook stay at `parameters.a11y.test: 'todo'` until the catalog in [`.storybook/a11y-status.md`](.storybook/a11y-status.md) is clean. Then switch that setting to `'error'`.
+Accessibility: `@storybook/addon-a11y` fails `npm test` on CSF violations (`parameters.a11y.test: 'error'`). See [`.storybook/a11y-status.md`](.storybook/a11y-status.md).
 
 ## Tokens
 
@@ -41,11 +41,11 @@ Implementation rules (tokens, components, patterns, testing) live in `.cursor/ru
 
 | Path | Role |
 | --- | --- |
-| `src/components/ui/` | Components (Button, Field, Input, Link, …) |
+| `src/components/ui/` | Components (Button, Field, FormAlert, Input, Link, …) |
 | `src/components/icon/` | Curated icon registry |
 | `src/foundations/` | Token specimens (color, type, space, …) |
-| `src/patterns/` | Composed screens (Login, Register, Home Products). Specimens, not product routes |
-| `src/views/` | Product screens in Storybook. Register is the first; no routes or publish |
+| `src/patterns/` | Composed specimens that are not product views. Home Products is the grid of ProductCards |
+| `src/views/` | Auth screens in Storybook, no routes: Login, Register, Forgot password, Reset password, Password updated, Expired link |
 | `figma/export-variables/` | Figma plugin that downloads every local variable |
 | `tokens/figma-variables.raw.json` | Raw variable export. Input to `tokens:normalize` |
 | `tokens/tokens.json` | Token source. Primitives and semantics come from the export; font, typography, and effect stay in this file |

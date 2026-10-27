@@ -5,6 +5,7 @@ import {
   Register,
   REGISTER_COPY,
   type CheckCompromisedPassword,
+  type RegisterSubmitResult,
   type RegisterValues,
 } from "./register";
 
@@ -27,7 +28,7 @@ const meta = {
   },
   args: {
     checkCompromisedPassword: clearChecker,
-    onSubmit: fn(async () => undefined),
+    onSubmit: fn(async (): Promise<void | RegisterSubmitResult> => undefined),
   },
 } satisfies Meta<typeof Register>;
 
@@ -185,6 +186,36 @@ export const Submitting: Story = {
       "met",
     );
     await expect(args.onSubmit).not.toHaveBeenCalled();
+  },
+};
+
+export const Network: Story = {
+  args: {
+    appearance: "network",
+    defaultValues: validValues,
+    checkCompromisedPassword: clearChecker,
+    onSubmit: fn(async () => "network" as const),
+  },
+  play: async ({ canvasElement, args }) => {
+    const canvas = within(canvasElement);
+    const name = canvas.getByLabelText("Full name");
+    const email = canvas.getByLabelText("Email");
+    const password = canvas.getByLabelText("Password");
+    const confirmPassword = canvas.getByLabelText("Confirm your password");
+
+    await expect(canvas.getByRole("alert")).toHaveTextContent(REGISTER_COPY.network);
+    await expect(name).not.toHaveAttribute("aria-invalid", "true");
+    await expect(email).not.toHaveAttribute("aria-invalid", "true");
+    await expect(password).not.toHaveAttribute("aria-invalid", "true");
+    await expect(confirmPassword).not.toHaveAttribute("aria-invalid", "true");
+    await expect(canvas.getByText(REGISTER_COPY.lengthRequirement)).toHaveAttribute(
+      "data-state",
+      "met",
+    );
+
+    await userEvent.click(canvas.getByRole("button", { name: REGISTER_COPY.submit }));
+    await waitFor(() => expect(args.onSubmit).toHaveBeenCalled());
+    await expect(canvas.getByRole("alert")).toHaveTextContent(REGISTER_COPY.network);
   },
 };
 

@@ -723,7 +723,7 @@ Behavior tests are Storybook `play` functions. `npm test` runs them in Vitest br
 
 Do not add `*.test.ts` / `*.test.tsx` for UI that a `play` function already covers. `*.browser.test.tsx` is only for what a story cannot set up. Add a unit test only for logic that is awkward to assert through the rendered story (pure transforms, token build helpers).
 
-`@storybook/addon-a11y` is installed. `parameters.a11y.test` is `todo`: violations show in Storybook and do not fail `npm test`. Fix accessibility bugs in the work you touch. Do not switch this to `error` until the existing catalog is clean.
+`@storybook/addon-a11y` is installed. `parameters.a11y.test` is `error`: CSF violations fail `npm test`. Fix accessibility bugs in the work you touch. Do not set the gate back to `todo` to land a story. MDX is not scanned.
 
 Do not gate on a coverage percentage. `@vitest/coverage-v8` is installed and unused. Line coverage would count stories, MDX, and specimens and would not add confidence.
 
@@ -743,16 +743,16 @@ Stories show the real variants and states. Add `play` for behavior: events, keyb
 
 ### Patterns
 
-`play` covers behavior that exists only because components are composed (labels, submit, password visibility). Do not re-test component variants inside the pattern. Do not assert validation or navigation the pattern does not implement.
+`play` covers behavior that exists only because components are composed. Home Products is the remaining pattern. Do not re-test component variants inside the pattern.
 
 ### Views
 
-There is no views layer yet. When one exists, test the observable flow (navigation, loading, error) with `play` if it renders in Storybook. Do not unit-test layout markup.
+Auth screens live in `src/views/`. Test the observable flow (submit, loading, form errors, password visibility) with `play`. Do not unit-test layout markup.
 
 ### Done
 
 `npm run check` must pass: typecheck, lint, token tests, Storybook tests, build.
 
 - Component: implementation, stories for real variants and states, MDX when that component family has MDX, `play` when there is behavior.
-- Pattern: composition story, `play` for composed behavior.
+- Pattern: composition story (Home Products), `play` for composed behavior.
 - View: a behavior test for each critical flow. No extra unit tests for markup.

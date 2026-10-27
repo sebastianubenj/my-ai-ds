@@ -1133,10 +1133,22 @@ export function NavigationBagTrigger({
   );
 }
 
-export interface NavigationProps extends Omit<
+type NavigationChromeProps = Omit<
   React.ComponentProps<"header">,
   "children" | "defaultValue"
-> {
+> & {
+  /** Destination of the mark. The mark is decorative; this link carries the name. */
+  logoHref: string;
+  /** Accessible name for the mark link. */
+  logoLabel: string;
+};
+
+export type NavigationEmptyProps = NavigationChromeProps & {
+  appearance: "empty";
+};
+
+export type NavigationProductProps = NavigationChromeProps & {
+  appearance?: "product";
   /**
    * Bar items: `NavigationLink`, `NavigationSearchTrigger`, `NavigationBagTrigger`, and `NavigationIconButton`.
    * Links are hidden below the `md` breakpoint. Icon buttons stay visible.
@@ -1154,10 +1166,6 @@ export interface NavigationProps extends Omit<
   /** Initially open desktop panel when uncontrolled. */
   defaultValue?: string | null;
   onValueChange?: (value: string | null) => void;
-  /** Destination of the mark. The mark is decorative; this link carries the name. */
-  logoHref: string;
-  /** Accessible name for the mark link. */
-  logoLabel: string;
   /** Accessible name for the search button, and the name and placeholder of the search field. */
   searchLabel: string;
   /** Accessible name for the button that clears the search field. */
@@ -1178,9 +1186,81 @@ export interface NavigationProps extends Omit<
   /** Called when the search button is pressed, before the search panel opens. */
   onSearch?: () => void;
   onMenu?: () => void;
+};
+
+export type NavigationProps = NavigationEmptyProps | NavigationProductProps;
+
+const navigationSpacerClassName =
+  "h-(--navigation-bar-height,var(--primitives-spacing-12)) md:h-(--navigation-bar-height,var(--primitives-spacing-out-of-scale-11))";
+
+function NavigationEmpty({
+  className,
+  logoHref,
+  logoLabel,
+  ref,
+  ...props
+}: NavigationChromeProps) {
+  const [barElement, setBarElement] = React.useState<HTMLElement | null>(null);
+  const [wrapperElement, setWrapperElement] =
+    React.useState<HTMLDivElement | null>(null);
+
+  const setBarRef = React.useCallback(
+    (node: HTMLElement | null) => {
+      setBarElement(node);
+      if (typeof ref === "function") ref(node);
+      else if (ref) ref.current = node;
+    },
+    [ref],
+  );
+
+  React.useLayoutEffect(() => {
+    if (!barElement || !wrapperElement) return;
+    const bar = barElement;
+    const wrapper = wrapperElement;
+
+    function measure() {
+      wrapper.style.setProperty(
+        "--navigation-bar-height",
+        `${bar.getBoundingClientRect().height}px`,
+      );
+    }
+
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(bar);
+    return () => observer.disconnect();
+  }, [barElement, wrapperElement]);
+
+  return (
+    <div ref={setWrapperElement} className="w-full">
+      <div aria-hidden="true" className={navigationSpacerClassName} />
+      <header
+        data-slot="navigation"
+        ref={setBarRef}
+        className={cn(
+          `fixed inset-x-0 top-0 z-(--semantics-layer-navigation) flex w-full items-center
+           [color:var(--semantics-colors-foreground-default)]
+           [background-color:var(--semantics-colors-background-primary-blur)]
+           [backdrop-filter:blur(var(--semantics-glass-navigation-frost))]
+           px-(--primitives-spacing-2) py-(--primitives-spacing-out-of-scale-1-5)
+           md:justify-center md:px-(--primitives-spacing-6)`,
+          className,
+        )}
+        {...props}
+      >
+        <div className="flex w-full items-center md:max-w-(--primitives-max-width-max-w-2xl)">
+          <a href={logoHref} aria-label={logoLabel} className={iconButtonClassName}>
+            <span className="inline-flex size-(--primitives-spacing-4) items-center justify-center">
+              <NavigationMark />
+            </span>
+          </a>
+        </div>
+      </header>
+    </div>
+  );
 }
 
-export function Navigation({
+function NavigationProduct({
   children,
   menu,
   open: openProp,
@@ -1205,7 +1285,7 @@ export function Navigation({
   onMenu,
   ref,
   ...props
-}: NavigationProps) {
+}: Omit<NavigationProductProps, "appearance">) {
   const menuButtonRef = React.useRef<HTMLButtonElement>(null);
   const searchButtonRef = React.useRef<HTMLButtonElement>(null);
   const bagButtonRef = React.useRef<HTMLButtonElement>(null);
@@ -1576,7 +1656,7 @@ export function Navigation({
       data-slot="navigation"
       ref={setBarRef}
       className={cn(
-        `sticky top-0 z-(--semantics-layer-navigation) flex w-full items-center justify-between
+        `fixed inset-x-0 top-0 z-(--semantics-layer-navigation) flex w-full items-center justify-between
          [color:var(--semantics-colors-foreground-default)]
          [transition-property:background-color] duration-(--semantics-motion-duration-320) ${ease}
          motion-reduce:transition-none
@@ -1697,7 +1777,8 @@ export function Navigation({
   );
 
   return (
-    <div ref={setWrapperElement} className="contents">
+    <div ref={setWrapperElement} className="w-full">
+      <div aria-hidden="true" className={navigationSpacerClassName} />
       {bar}
       {mobilePanel.mounted ? (
         <div
@@ -1765,4 +1846,20 @@ export function Navigation({
       ) : null}
     </div>
   );
+}
+
+function omitAppearance<T extends { appearance?: unknown }>(
+  props: T,
+): Omit<T, "appearance"> {
+  const next = { ...props };
+  delete next.appearance;
+  return next;
+}
+
+export function Navigation(props: NavigationProps) {
+  if (props.appearance === "empty") {
+    return <NavigationEmpty {...omitAppearance(props)} />;
+  }
+
+  return <NavigationProduct {...omitAppearance(props)} />;
 }

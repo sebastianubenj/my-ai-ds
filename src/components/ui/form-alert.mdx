@@ -1,0 +1,30 @@
+import * as FormAlertStories from "./form-alert.stories";
+import { Meta, Canvas } from "@storybook/addon-docs/blocks";
+
+<Meta of={FormAlertStories} />
+
+# FormAlert
+
+Form-level error copy. Body-lg, destructive foreground. Not a field helper and not a product banner Alert.
+
+## Basic
+
+<Canvas of={FormAlertStories.Basic} />
+
+## Usage
+
+Place it in the form stack after the fields, before the actions. Use it for errors that belong to the whole form (invalid credentials, network, wait), not for a single control.
+
+Field helper and requirement rows stay on `FieldDescriptionOrRequirement`. Page subtitle copy stays on `Description`.
+
+The root is a `<p>` with `role="alert"` so assistive tech is notified when it appears.
+
+## API
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `children` | `React.ReactNode` | — | The error text. |
+| `className` | `string` | — | Adds custom CSS classes to the paragraph. |
+| `role` | `string` | `"alert"` | Landmark role. Override with a native `role` if needed. |
+
+Also accepts native `<p>` attributes via `React.ComponentProps<"p">`.
