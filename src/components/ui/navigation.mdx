@@ -5,55 +5,26 @@ import { Meta } from "@storybook/addon-docs/blocks";
 
 # Navigation
 
-One bar. Desktop shows the mark, primary links, and the icon buttons passed as children. Below the `md` breakpoint (768px) it shows the mark, those icon buttons, and the menu. Links move into the mobile `menu` panel.
+One bar. Desktop shows the mark, primary links, and the icon buttons passed as `children`. Below `md` (768px) it shows the mark, those icon buttons, and the menu; links move into the mobile `menu` panel.
 
 `appearance="empty"` is the same bar with only the mark (`logoHref`, `logoLabel`). There is no menu, search, or bag.
 
-## Desktop behavior
-
-Each `NavigationLink` is a real link. Clicking it follows `href`. Pass `menu` and `menuLabel` to also open a panel under the bar while the link is hovered, as in the Apple global nav. Moving to another link swaps the content without closing the panel. Links without `menu` just navigate. With touch there is no hover, so the first tap on a link with `menu` opens its panel and the second tap follows `href`.
-
-`menu` holds `NavigationSection` elements. The panel is one surface under the whole bar, layered over the page with the scrim behind it. It does not push the page down.
-
-- **Open and close** — hover opens it after a short delay and it stays open while the pointer is anywhere over the bar or the panel. It closes when the pointer leaves both. `Escape`, a press outside, and clicking a panel link also close it.
-- **Search** — the search button opens a search panel under the bar on click or `Enter`. Hover never opens it. The field takes focus on open. `Escape`, a press outside, or leaving the bar and panel close it.
-- **Bag** — `NavigationBagTrigger` opens the bag panel on click or `Enter`, with the same motion as search. Hover never opens it. Without `items`, the empty state shows “Your bag is empty”, a underlined `Log in` hint (`signInHref`) plus “to see if you have any saved items”, then **My profile** as a heading with a control underneath: icon plus `Log in` (`<a>`). Pass `loggedIn` to hide the hint `Log in`, use “Start adding items”, and show `Log out` (`<button>`, `onLogOut`) under My profile. With `items`, it shows “Bag”, `Review bag` (`onReview`), up to five `BagPreviewProductCard` rows, the overflow line, and the same My profile control (icon + Log in or Log out). Extra rows appear as “n more items in your bag”, or “1 more item in your bag” when one row is hidden.
-- **Keyboard** — focusing a link with `menu` shows the Figma `ShowIconLink` chevron next to it, as a button, named by `menuLabel`. `Enter` on the link follows `href`. `Enter` on the chevron opens the panel and moves focus into it.
-- **Fixed bar** — the bar is `fixed` at the top of the viewport. An in-flow spacer keeps page content from sitting under it. Panels open under the bar.
-- **Controlled value** — give each link a `value`, then use `value`, `defaultValue`, and `onValueChange` on `Navigation` to read or set the open panel. Pass `null` to close it.
-- **Mark** — the mark is a link to `logoHref`. The app decides the URL and any client-side routing, for example in a pattern or view.
-
-`children` is one slot. Put `NavigationLink` items, `NavigationSearchTrigger`, `NavigationBagTrigger`, and `NavigationIconButton` in the order they should appear. Links hide below `md`. Icon buttons stay on the bar, including on mobile.
-
-## Search field
-
-`NavigationSearchTrigger` is the search button. Place it in `children` where the icon should sit. `NavigationSearch` is the field used in both panels. It is a `role="search"` form with a search input. `default` shows the placeholder (the `searchLabel`). `filled` appears once there is text and adds a clear button named by `clearSearchLabel`. Use `searchValue`, `onSearchValueChange`, and `onSearchSubmit` on `Navigation` to read the text and handle submit. To open or close the panel from outside, set `value` to `"search"` or `null`.
-
-`NavigationBagTrigger` is the bag button. Use `value` `"bag"` or `null` to open or close it from outside. `signInHref` is the Log in destination on the empty-bag hint and on My profile. `loggedIn` and `onLogOut` switch My profile between Log in and Log out. That control sits under the heading with a log-in or log-out icon, empty or loaded. Pass `items` for the loaded list. A count badge overlays the bag icon for 1–99 units (`99+` after that) and is included in the button name. `onReview` is the Review bag action. `aria-label` is the empty-bag name.
-
-`NavigationIconButton` is a bar icon without a panel.
-
-## Mobile behavior
-
-The search button opens a full-screen search view with the same field and focus in the field. The bag button opens a full-screen bag view (empty or loaded from `items`). Both animate like the menu: the menu button turns into the close control and the panel grows from the bar. Closing them returns focus to the button that opened them.
-
-The menu button opens one shared panel passed as `menu` on `Navigation`. The `menu` of each `NavigationLink` is not used below `md`, because the links do not exist there. `open` is controlled when set, and the button works on its own when it is omitted. The header becomes the close control (`x` on the right). While the panel is open the bar stays at the top, the panel fills the viewport below it and scrolls on its own when the content is taller, and the page behind does not scroll. The menu button points at the panel with `aria-controls`. The bar is `fixed` at the top of the page; see the fixed-bar note in desktop behavior.
-
-The panel has two levels. On the second level the first `NavigationSection` is shown without its heading. On the first level, a `NavigationMenuLink` with `submenu` opens that content as the second level instead of navigating, and the header gains the back control (`backLabel`) on the left. On the second level, a link navigates to its `href`, and back returns to the first level. Without `submenu`, a link always navigates, and so does every link in the desktop panel. `onBack` is called when back is pressed.
+`children` is one slot: `NavigationLink`, `NavigationSearchTrigger`, `NavigationBagTrigger`, and `NavigationIconButton` in bar order. Links hide below `md`. Icon buttons stay on the bar.
 
 Do not use `Link` for these items. `Link` is underlined text. `NavigationLink` is the bar label. `NavigationMenuLink` is the large panel link.
 
-The closed bar fill is `colors/background/primary-op60`. Its blur is `glass/navigation/frost-css`, derived in token build from Figma `glass/navigation/frost` (the CSS blur scale; frost in Figma stays 15). The open bar is `colors/background/default`. The open panel is solid `colors/background/subtlest`. The scrim over the page uses `colors/background/primary-op60` and `background-blur/navigation`. The bag panel content uses the same `max-w-2xl` as the bar.
+## Behavior
 
-## Motion
+- **Desktop panel** — `NavigationLink` with `menu` (usually `NavigationSection`) opens a panel under the bar on hover, like the Apple global nav. The panel is one surface over the page with a scrim; it does not push content. Hovering another link swaps content. `Escape`, a press outside, or leaving the bar and panel closes it. A link without `menu` only navigates. On touch, the first tap on a link with `menu` opens the panel; the second follows `href`.
+- **Search** — `NavigationSearchTrigger` opens search on click or `Enter`, never on hover. The field takes focus. Same close rules as the panel. Drive text with `searchValue`, `onSearchValueChange`, and `onSearchSubmit` on `Navigation`. Open from outside with `value="search"`.
+- **Bag** — `NavigationBagTrigger` opens like search (click / `Enter`, not hover). Empty: “Your bag is empty”, Log in hint, My profile. `loggedIn` swaps hint and Log out. With `items`: “Bag”, Review bag, up to five rows, overflow copy, My profile. A count badge overlays the bag icon (1–99, then `99+`) and is part of the button name. Open from outside with `value="bag"`.
+- **Keyboard** — Focusing a link with `menu` shows a chevron named by `menuLabel`. `Enter` on the link follows `href`; `Enter` on the chevron opens the panel.
+- **Fixed bar** — The bar is `fixed`. An in-flow spacer keeps page content below it. Panels open under the bar.
+- **Controlled value** — Give each link a `value`. `value` / `defaultValue` / `onValueChange` on `Navigation` set the open desktop panel (`null` closes it).
+- **Mobile menu** — `menu` on `Navigation` is the shared panel. Per-link `menu` is unused below `md`. `open` is controlled when set. The header is close (`closeLabel`); with a submenu, back (`backLabel`) appears. Two levels: a `NavigationMenuLink` with `submenu` pushes the second level instead of navigating. `onBack` runs on back.
+- **Mobile search and bag** — Full-screen views with the same field or bag body. Closing returns focus to the trigger.
 
-There are no motion tokens yet. Duration and easing (`cubic-bezier(0.4, 0, 0.6, 1)`) are local constants in `navigation.tsx`, taken from apple.com.
-
-- **Open and close.** The panel background is revealed from top to bottom on open and hidden from bottom to top on close (desktop), or grows in rows (mobile), over `motion/duration/320`. The scrim fades in with a short delay. Links and headings fall in from above, staggered by group and item, and leave 8px upward without delay in `motion/duration/200`. They start 8px above, wait `motion/delay-reveal` (200ms) and last `motion/duration/240` each, trailing by `motion/stagger` (20ms), as on apple.com. The delay grows by at most 12 steps, so long menus do not keep waiting. On mobile each group trails the previous one; on desktop all sections animate together, so only the item position within a section staggers it. This only happens when the panel opens, not when it switches links.
-- **Switching links.** With the panel open, hovering another link animates the panel height to the new content, growing or shrinking over `motion/duration/320`. The texts blink: the old ones disappear in `motion/duration/30` and the new ones appear in `motion/duration/40`.
-- **Menu button.** The icon has two lines that converge and rotate into a close icon on open, and reverse on close. It does the same when the search view opens.
-- **Mobile levels.** Moving to the second level, the current texts fade out while sliding 24px to the left and the new texts fade in from 24px to the right. Going back mirrors it. Both last `motion/duration/240`, and the back control fades in and out with them.
-- **Reduced motion.** All transitions are off under `prefers-reduced-motion`.
+Motion uses `semantics.motion` (durations, stagger, delay-reveal, standard easing). Reduced motion turns transitions off.
 
 ## Desktop
 
@@ -85,7 +56,7 @@ The panel is layered over the page and the scrim covers the viewport, so these e
 
 ## Mobile
 
-The `md` breakpoint (768px) follows the viewport width, and Docs renders canvases inside a wide page. These two examples use a 390px frame so the mobile layout applies. In the story view, use the Viewport control.
+The `md` breakpoint follows the viewport width, and Docs renders canvases inside a wide page. These two examples use a 390px frame so the mobile layout applies. In the story view, use the Viewport control.
 
 <iframe
   title="Navigation mobile"
@@ -110,3 +81,107 @@ The `md` breakpoint (768px) follows the viewport width, and Docs renders canvase
     display: "block",
   }}
 />
+
+## API
+
+The TypeScript props are the contract. These tables explain usage.
+
+### Navigation
+
+Required chrome: `logoHref`, `logoLabel`. Product appearance also requires `searchLabel`, `clearSearchLabel`, `menuLabel`, `closeLabel`, and `backLabel`.
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `appearance` | `"product"` &#124; `"empty"` | `"product"` | `empty` is mark-only. Omit or `product` for the full bar. |
+| `logoHref` | `string` | — | Destination of the mark. The mark is decorative; this link is the name. |
+| `logoLabel` | `string` | — | Accessible name of the mark link. |
+| `children` | `React.ReactNode` | — | Bar items. Product only. |
+| `menu` | `React.ReactNode` | — | Mobile panel. Desktop uses each `NavigationLink` `menu`. Product only. |
+| `open` | `boolean` | — | Controlled mobile panel. Uncontrolled when omitted. |
+| `defaultOpen` | `boolean` | — | Initially open mobile panel when uncontrolled. |
+| `onOpenChange` | `(open: boolean) => void` | — | Mobile panel open changes. |
+| `value` | `string` &#124; `null` | — | Open desktop panel: a link `value`, `"search"`, `"bag"`, or `null`. |
+| `defaultValue` | `string` &#124; `null` | — | Initially open desktop panel when uncontrolled. |
+| `onValueChange` | `(value: string &#124; null) => void` | — | Desktop panel value changes. |
+| `searchLabel` | `string` | — | Search button name, and the field name and placeholder. |
+| `clearSearchLabel` | `string` | — | Name of the clear button in the search field. |
+| `searchValue` | `string` | — | Search text. Controlled when set. |
+| `onSearchValueChange` | `(value: string) => void` | — | Search text changes. |
+| `onSearchSubmit` | `(value: string) => void` | — | Search form submit. |
+| `onSearch` | `() => void` | — | Runs when the search button is pressed, before the panel opens. |
+| `menuLabel` | `string` | — | Name of the mobile menu button. |
+| `closeLabel` | `string` | — | Name of the mobile close control. |
+| `backLabel` | `string` | — | Name of the mobile back control on the second level. |
+| `onBack` | `() => void` | — | Runs when back is pressed. |
+| `onMenu` | `() => void` | — | Runs when the menu button is pressed. |
+| `className` | `string` | — | Classes on the public chrome wrapper. |
+
+Also supports native `<header>` attributes except `children` and `defaultValue`. `ref` is the `header`. Product-only props are invalid when `appearance="empty"`.
+
+`NavigationSearchTrigger` must be a child of `Navigation`. It has no labels of its own; it uses `searchLabel` from the root. Optional `className`.
+
+`NavigationSearch` is the field used in both search panels. Apps usually drive it through the root search props rather than mounting it.
+
+### NavigationLink
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `href` | `string` | — | Destination. Click and Enter on the link follow it. |
+| `children` | `React.ReactNode` | — | Bar label. |
+| `value` | `string` | generated | Id for `Navigation` `value` / `defaultValue`. |
+| `menu` | `React.ReactNode` | — | Desktop panel, usually `NavigationSection`. Required together with `menuLabel`. |
+| `menuLabel` | `string` | — | Name of the focus chevron that opens the panel. Required when `menu` is set. |
+| `className` | `string` | — | Classes on the link. |
+
+Also supports native `<a>` attributes. `ref` is the anchor. Hidden below `md`.
+
+### NavigationSection
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `heading` | `string` | — | Section label. Omit on the first mobile section when it has no heading. |
+| `children` | `React.ReactNode` | — | Usually `NavigationMenuLink` items. |
+| `className` | `string` | — | Classes on the section. |
+
+### NavigationMenuLink
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `href` | `string` | — | Destination. Always followed in the desktop panel. |
+| `submenu` | `React.ReactNode` | — | Below `md`, opens this content as the second mobile level instead of navigating. |
+| `className` | `string` | — | Classes on the link. |
+
+Also supports native `<a>` attributes. `ref` is the anchor.
+
+### NavigationBagTrigger
+
+Must be a child of `Navigation`.
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `aria-label` | `string` | — | Name of the bag button when the count is 0. Count is appended when there are units. |
+| `signInHref` | `string` | — | `href` of Log in on the empty hint and on My profile. |
+| `signInLabel` | `string` | `"Log in"` | Label of those Log in links. |
+| `emptyTitle` | `string` | `"Your bag is empty"` | Empty-state heading. |
+| `emptyHint` | `string` | copy by `loggedIn` | Hint under the heading. Defaults: saved-items copy, or “Start adding items” when `loggedIn`. |
+| `loggedIn` | `boolean` | `false` | Hides the empty-state Log in link; My profile shows Log out. |
+| `onLogOut` | `() => void` | — | Log out under My profile when `loggedIn`. |
+| `profileTitle` | `string` | `"My profile"` | Heading above the session control. |
+| `logOutLabel` | `string` | `"Log out"` | Log out button label. |
+| `items` | `NavigationBagItem[]` | — | Loaded bag. Omit for empty. Count is the sum of item quantities (default 1 each). |
+| `title` | `string` | `"Bag"` | Loaded-state heading. |
+| `reviewLabel` | `string` | `"Review bag"` | Review bag control. |
+| `onReview` | `() => void` | — | Review bag action. |
+| `onSignInClick` | mouse handler | — | Extra handler on Log in anchors. |
+| `className` | `string` | — | Classes on the trigger. |
+
+`NavigationBagItem`: `name`, `src`, `alt`, optional `quantity` (for example `"x2"`).
+
+### NavigationIconButton
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `name` | `IconName` | — | Icon from the registry. |
+| `className` | `string` | — | Classes on the button. |
+
+Also supports native `<button>` attributes. Give an accessible name (`aria-label`). Hidden on mobile while the menu, search, or bag view is open.
