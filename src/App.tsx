@@ -1,32 +1,23 @@
-function App() {
+export default function App() {
   return (
-    <div className="min-h-screen bg-background text-foreground flex flex-col items-center justify-center p-8 gap-6">
-      <header className="text-center space-y-2">
-        <h1 className="text-3xl font-bold tracking-tight">
-          My AI Design System
-        </h1>
-        <p className="max-w-md [color:var(--semantics-colors-foreground-subtle)]">
-          Tokens consumidos desde Figma → Style Dictionary → Tailwind v4
-        </p>
-      </header>
-
-      {/* Tarjeta de prueba usando tokens semánticos */}
-      <div className="bg-card text-card-foreground border border-border rounded-lg p-6 max-w-sm shadow-sm space-y-4">
-        <div className="flex items-center gap-3">
-          <div className="w-4 h-4 rounded-full bg-primary" />
-          <h2 className="font-semibold text-lg">Prueba de Tokens</h2>
-        </div>
-        
-        <p className="text-sm [color:var(--semantics-colors-foreground-subtle)]">
-          Si ves este contenedor renderizado con fondo, bordes y texto correctamente contrastados, tus tokens semánticos están aplicándose.
-        </p>
-
-        <button className="w-full py-2 px-4 bg-primary text-primary-foreground font-medium rounded-md hover:opacity-90 transition-opacity">
-          Botón con token primario
-        </button>
-      </div>
+    <div
+      className={`flex min-h-dvh flex-col items-center justify-center
+        px-(--primitives-spacing-8)
+        [background-color:var(--semantics-colors-background-page)]
+        [color:var(--semantics-colors-foreground-default)]`}
+    >
+      <p
+        className={`m-0 max-w-(--primitives-max-width-max-w-md) text-center font-sans
+          [font-weight:var(--semantics-typography-body-font-weight)]
+          text-(length:--semantics-typography-body-body-lg-font-size)
+          leading-(--semantics-typography-body-body-lg-lh-normal)
+          tracking-(--semantics-typography-body-body-lg-tracking-tight)`}
+      >
+        The catalog is Storybook. Run{" "}
+        <code className="font-sans">npm run storybook</code> and open{" "}
+        <a href="http://localhost:6006">localhost:6006</a>
+        .
+      </p>
     </div>
-  )
+  );
 }
-
-export default App

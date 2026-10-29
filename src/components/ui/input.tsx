@@ -38,7 +38,8 @@ export function Input({
       className={cn(
         `flex w-full items-center gap-(--primitives-spacing-out-of-scale-1-5)
          h-(--primitives-spacing-out-of-scale-11) rounded-(--primitives-radius-rounded-14)
-         border border-input bg-background px-(--primitives-spacing-out-of-scale-2-5)
+         border [border-color:var(--semantics-colors-border-default)]
+         [background-color:var(--semantics-colors-background-default)] px-(--primitives-spacing-out-of-scale-2-5)
          has-aria-invalid:[border-color:var(--semantics-colors-border-destructive)]
          has-[[data-slot=input]:focus]:border-(length:--primitives-stroke-width-stroke-2)
          has-[[data-slot=input]:focus]:px-(--primitives-spacing-out-of-scale-2-25)
@@ -49,7 +50,7 @@ export function Input({
          has-disabled:opacity-(--primitives-opacity-opacity-40)
          [&_svg]:pointer-events-none [&_svg]:shrink-0
          [&_svg]:[color:var(--semantics-colors-foreground-subtle)]
-         has-aria-invalid:[&_svg]:text-destructive-foreground`,
+         has-aria-invalid:[&_svg]:[color:var(--semantics-colors-foreground-destructive)]`,
         className,
       )}
     >
@@ -64,8 +65,8 @@ export function Input({
           text-(length:--semantics-typography-body-body-lg-font-size)
           leading-(--semantics-typography-body-body-lg-lh-normal)
           tracking-(--semantics-typography-body-body-lg-tracking-tight)
-          text-foreground placeholder:[color:var(--semantics-colors-foreground-subtle)]
-          aria-invalid:text-destructive-foreground aria-invalid:placeholder:text-destructive-foreground
+          [color:var(--semantics-colors-foreground-default)] placeholder:[color:var(--semantics-colors-foreground-subtle)]
+          aria-invalid:[color:var(--semantics-colors-foreground-destructive)] aria-invalid:placeholder:[color:var(--semantics-colors-foreground-destructive)]
           disabled:cursor-default`}
         {...props}
         ref={ref}

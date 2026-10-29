@@ -69,9 +69,9 @@ export const SEMANTIC_BACKGROUND: SemanticColorRecord[] = [
     darkAlias: "primitives.colors.white",
   }),
   semantic({
-    name: "Primary blur",
-    token: "semantics.colors.background.primary-blur",
-    cssVar: "--semantics-colors-background-primary-blur",
+    name: "Primary op60",
+    token: "semantics.colors.background.primary-op60",
+    cssVar: "--semantics-colors-background-primary-op60",
     generated: "#ffffff99",
     alias: "primitives.colors.white @ 60%",
     darkGenerated: "#17171799",

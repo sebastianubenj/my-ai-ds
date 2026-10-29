@@ -140,6 +140,7 @@
   --primitives-spacing-out-of-scale-72: 18rem;
   --primitives-spacing-out-of-scale-80: 20rem;
   --primitives-spacing-out-of-scale-96: 24rem;
+  --primitives-spacing-out-of-scale-0-125: 0.03125rem;
   --primitives-spacing-out-of-scale-0-25: 0.0625rem;
   --primitives-spacing-out-of-scale-0-5: 0.125rem;
   --primitives-spacing-out-of-scale-0-75: 0.1875rem;
@@ -149,6 +150,7 @@
   --primitives-spacing-out-of-scale-2-25: 0.5625rem;
   --primitives-spacing-out-of-scale-2-5: 0.625rem;
   --primitives-spacing-out-of-scale-28-5: 7.125rem;
+  --primitives-spacing-out-of-scale-3-25: 0.8125rem;
   --primitives-spacing-out-of-scale-3-5: 0.875rem;
   --primitives-spacing-out-of-scale-4-5: 1.125rem;
   --primitives-stroke-width-stroke: 0.0625rem;
@@ -197,7 +199,7 @@
   --primitives-typography-tracking-tracking-wider: 0.005em;
   --primitives-typography-tracking-tracking-widest: 0.01em;
   --semantics-colors-background-destructive: #d600001a;
-  --semantics-colors-background-primary-blur: #ffffff99;
+  --semantics-colors-background-primary-op60: #ffffff99;
   --semantics-colors-interaction-destructive-hover: #d6000033;
   --semantics-colors-interaction-destructive-subtle-hover: #d600001a;
   --semantics-colors-interaction-file-upload-drag-over: #0074e81a;
@@ -216,10 +218,11 @@
   --semantics-glass-navigation-depth: 0.0625rem;
   --semantics-glass-navigation-dispersion: 6.25rem;
   --semantics-glass-navigation-frost: 0.9375rem;
-  --semantics-glass-navigation-light-80: 0;
+  --semantics-glass-navigation-light-0: 0;
   --semantics-glass-navigation-light-45: -2.8125rem;
   --semantics-glass-navigation-refraction: 0;
   --semantics-glass-navigation-splay: 0;
+  --semantics-glass-navigation-frost-css: 0.408375rem;
   --semantics-icon-library-huge: false;
   --semantics-icon-library-lucide: true;
   --semantics-icon-library-phosphor: false;

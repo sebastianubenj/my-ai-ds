@@ -103,7 +103,11 @@ Examples include:
 
 Prefer semantic tokens when implementing components.
 
-Do not bypass semantic tokens and reference primitive values directly unless there is a clear architectural reason.
+Colors, typography roles, color borders, motion, elevation, and glass must use semantic tokens.
+
+Spacing, radius, sizing, and stroke may use primitives when they are the design decision (the scale). Do not invent a semantic alias that only renames a primitive. Use a semantic token when the value is an intent that might change independently of the scale (for example layout gutter, shared control padding).
+
+Do not bypass an existing semantic token to reach the primitive underneath.
 
 ---
 
@@ -204,7 +208,7 @@ Do not bypass the active token pipeline without an explicit reason.
 
 Use Tailwind CSS v4 for component styling.
 
-Use existing CSS variables and semantic tokens whenever possible.
+Use existing CSS variables and semantic tokens whenever possible. Spacing, radius, sizing, and stroke primitives count as design-system tokens when no semantic intent token exists.
 
 Do not introduce arbitrary hardcoded values such as:
 

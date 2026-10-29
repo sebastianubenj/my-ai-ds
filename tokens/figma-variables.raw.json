@@ -129,6 +129,7 @@
         "VariableID:9:1493",
         "VariableID:9:1510",
         "VariableID:9:1519",
+        "VariableID:554:7247",
         "VariableID:237:4354",
         "VariableID:9:1514",
         "VariableID:237:1627",
@@ -142,6 +143,7 @@
         "VariableID:248:2888",
         "VariableID:9:1507",
         "VariableID:243:2875",
+        "VariableID:554:7249",
         "VariableID:9:1520",
         "VariableID:369:1512",
         "VariableID:248:2955",
@@ -2530,6 +2532,24 @@
       }
     },
     {
+      "id": "VariableID:554:7247",
+      "name": "spacing/out-of-scale/0,125",
+      "remote": false,
+      "key": "b0adf4ed1ac92dcd86eb93cfdddcb0cfd955c1e9",
+      "variableCollectionId": "VariableCollectionId:9:2",
+      "resolvedType": "FLOAT",
+      "scopes": [
+        "WIDTH_HEIGHT",
+        "GAP"
+      ],
+      "codeSyntax": {},
+      "hiddenFromPublishing": false,
+      "description": "",
+      "valuesByMode": {
+        "9:0": 0.5
+      }
+    },
+    {
       "id": "VariableID:237:4354",
       "name": "spacing/out-of-scale/0,25",
       "remote": false,
@@ -2751,6 +2771,24 @@
       "description": "",
       "valuesByMode": {
         "9:0": 114
+      }
+    },
+    {
+      "id": "VariableID:554:7249",
+      "name": "spacing/out-of-scale/3,25",
+      "remote": false,
+      "key": "4b21b2a6e7d0179bdfe3b4f6086f917e93d77dbc",
+      "variableCollectionId": "VariableCollectionId:9:2",
+      "resolvedType": "FLOAT",
+      "scopes": [
+        "WIDTH_HEIGHT",
+        "GAP"
+      ],
+      "codeSyntax": {},
+      "hiddenFromPublishing": false,
+      "description": "",
+      "valuesByMode": {
+        "9:0": 13
       }
     },
     {
@@ -3863,7 +3901,7 @@
     },
     {
       "id": "VariableID:450:1641",
-      "name": "colors/background/primary-blur",
+      "name": "colors/background/primary-op60",
       "remote": false,
       "key": "d0ab1d6d63b0ae1257676aad0e6c2df211a12a76",
       "variableCollectionId": "VariableCollectionId:450:1530",
@@ -4471,7 +4509,9 @@
       "resolvedType": "COLOR",
       "scopes": [
         "FRAME_FILL",
-        "SHAPE_FILL"
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
       ],
       "codeSyntax": {},
       "hiddenFromPublishing": false,
@@ -4751,7 +4791,7 @@
     },
     {
       "id": "VariableID:372:564",
-      "name": "glass/navigation/light/80",
+      "name": "glass/navigation/light/0",
       "remote": false,
       "key": "32e096a7e22deee56947c76c3d45bbdd045ee874",
       "variableCollectionId": "VariableCollectionId:9:3",

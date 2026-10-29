@@ -21,7 +21,7 @@ async function playHomeProducts(canvasElement: HTMLElement) {
     canvas.getByRole("heading", { name: "All products" }),
   ).toBeVisible();
   await expect(canvas.getAllByRole("article")).toHaveLength(10);
-  await expect(canvas.getAllByRole("button", { name: "Add" })).toHaveLength(8);
+  await expect(canvas.getAllByRole("button", { name: "Add" })).toHaveLength(10);
 
   const add = canvas.getAllByRole("button", { name: "Add" })[0];
   await expect(add).toHaveAttribute("type", "button");

@@ -10,7 +10,8 @@ import { Icon, iconBox20, type IconName } from "@/components/icon";
 const triggerClassName = `
   box-border flex w-full items-center gap-(--primitives-spacing-out-of-scale-1-5)
   h-(--primitives-spacing-out-of-scale-11) rounded-(--primitives-radius-rounded-14)
-  border border-input bg-background px-(--primitives-spacing-out-of-scale-2-5)
+  border [border-color:var(--semantics-colors-border-default)]
+  [background-color:var(--semantics-colors-background-default)] px-(--primitives-spacing-out-of-scale-2-5)
   text-left outline-none cursor-pointer group
   font-sans [font-weight:var(--semantics-typography-body-font-weight)]
   text-(length:--semantics-typography-body-body-lg-font-size)

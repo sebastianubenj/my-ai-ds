@@ -21,7 +21,7 @@ const focusRing = `relative outline-none
 
 const linkClassName = `inline-flex h-(--primitives-spacing-8) shrink-0 items-center justify-center
   px-(--primitives-spacing-1) no-underline
-  font-sans [font-weight:var(--primitives-typography-font-weight-regular)]
+  font-sans [font-weight:var(--semantics-typography-body-font-weight)]
   text-(length:--semantics-typography-label-label-sm-font-size)
   leading-(--semantics-typography-label-label-sm-lh-snug)
   tracking-(--semantics-typography-label-label-sm-tracking-0-125)
@@ -48,6 +48,10 @@ const iconButtonClassName = `box-border inline-flex shrink-0 items-center justif
   md:h-(--primitives-spacing-8) md:w-auto md:px-(--primitives-spacing-1)
   ${focusRing}`;
 
+const closedBarGlassClassName = `[background-color:var(--semantics-colors-background-primary-op60)]
+  [-webkit-backdrop-filter:blur(var(--semantics-glass-navigation-frost-css))]
+  [backdrop-filter:blur(var(--semantics-glass-navigation-frost-css))]`;
+
 const chevronClassName = `absolute top-0 left-[calc(100%-var(--primitives-spacing-1)+var(--primitives-spacing-out-of-scale-1-5))]
   box-border inline-flex h-(--primitives-spacing-8) w-(--primitives-spacing-3) items-center justify-center
   pt-(--primitives-spacing-1)
@@ -59,9 +63,12 @@ const chevronClassName = `absolute top-0 left-[calc(100%-var(--primitives-spacin
 const SEARCH_VALUE = "search";
 const BAG_VALUE = "bag";
 const BAG_EMPTY_TITLE = "Your bag is empty";
-const BAG_SIGN_IN_LABEL = "Sign in";
+const BAG_SIGN_IN_LABEL = "Log in";
 const BAG_EMPTY_HINT = "to see if you have any saved items";
-const BAG_TITLE = "Your bag";
+const BAG_EMPTY_HINT_LOGGED_IN = "Start adding items";
+const BAG_PROFILE_TITLE = "My profile";
+const BAG_LOG_OUT_LABEL = "Log out";
+const BAG_TITLE = "Bag";
 const BAG_REVIEW_LABEL = "Review bag";
 
 export interface NavigationBagItem {
@@ -69,6 +76,67 @@ export interface NavigationBagItem {
   src: string;
   alt: string;
   quantity?: string;
+}
+
+function bagItemUnitCount(item: NavigationBagItem): number {
+  if (item.quantity == null) return 1;
+  const parsed = Number.parseInt(item.quantity.replace(/^x/i, ""), 10);
+  return Number.isFinite(parsed) && parsed > 0 ? parsed : 1;
+}
+
+function bagUnitCount(items: NavigationBagItem[] | undefined): number {
+  if (!items?.length) return 0;
+  return items.reduce((sum, item) => sum + bagItemUnitCount(item), 0);
+}
+
+function formatBagBadgeLabel(count: number): string {
+  return count > 99 ? "99+" : String(count);
+}
+
+function bagTriggerAccessibleName(ariaLabel: string, count: number): string {
+  if (count <= 0) return ariaLabel;
+  if (count > 99) return `${ariaLabel}, 99+ items`;
+  if (count === 1) return `${ariaLabel}, 1 item`;
+  return `${ariaLabel}, ${count} items`;
+}
+
+function bagOverflowLabel(extra: number): string {
+  if (extra === 1) return "1 more item in your bag";
+  return `${extra} more items in your bag`;
+}
+
+function BagBadge({ count }: { count: number }) {
+  if (count < 1) return null;
+
+  return (
+    <span
+      aria-hidden="true"
+      data-slot="navigation-bag-badge"
+      className={`pointer-events-none absolute flex
+        top-(--primitives-spacing-2) left-(--primitives-spacing-out-of-scale-2-25)
+        min-h-(--primitives-spacing-out-of-scale-3-25) min-w-(--primitives-spacing-out-of-scale-3-25)
+        items-center justify-center rounded-full
+        px-(--primitives-spacing-out-of-scale-0-5)
+        py-(--primitives-spacing-out-of-scale-0-125)
+        font-sans leading-none
+        [background-color:var(--semantics-colors-background-primary)]
+        [color:var(--semantics-colors-foreground-primary)]
+        [font-weight:var(--semantics-typography-caption-font-weight)]
+        text-(length:--semantics-typography-caption-font-size)
+        tracking-(--semantics-typography-caption-tracking-normal)`}
+    >
+      {formatBagBadgeLabel(count)}
+    </span>
+  );
+}
+
+function NavigationBagGlyph({ count }: { count: number }) {
+  return (
+    <span className="relative inline-flex size-(--primitives-spacing-4) items-center justify-center overflow-visible">
+      <Icon name="shopping-bag" size={iconBox16} />
+      <BagBadge count={count} />
+    </span>
+  );
 }
 
 const searchFieldClassName = `box-border flex w-full items-center
@@ -93,6 +161,10 @@ interface BagPanelConfig {
   emptyTitle: string;
   emptyHint: string;
   onSignInClick?: React.MouseEventHandler<HTMLAnchorElement>;
+  loggedIn: boolean;
+  profileTitle: string;
+  logOutLabel: string;
+  onLogOut?: () => void;
   items?: NavigationBagItem[];
   title: string;
   reviewLabel: string;
@@ -622,7 +694,7 @@ export function NavigationSection({
         <h2
           data-slot="navigation-section-heading"
           className={`${itemMotionClassName} px-(--primitives-spacing-2) font-sans
-            [font-weight:var(--primitives-typography-font-weight-regular)]
+            [font-weight:var(--semantics-typography-body-font-weight)]
             text-(length:--semantics-typography-label-label-sm-font-size)
             leading-(--semantics-typography-label-label-sm-lh-snug)
             tracking-(--semantics-typography-label-label-sm-tracking-0-125)
@@ -862,39 +934,128 @@ const bagHeadingClassName = `m-0 font-sans [font-weight:var(--semantics-typograp
   tracking-(--semantics-typography-heading-heading-xl-tracking-tight)
   [color:var(--semantics-colors-foreground-default)]`;
 
+const bagHintClassName = `m-0 flex flex-wrap items-center gap-(--primitives-spacing-1) font-sans
+  [font-weight:var(--semantics-typography-body-font-weight)]
+  text-(length:--semantics-typography-body-body-md-font-size)
+  leading-(--semantics-typography-body-body-md-lh-normal)
+  tracking-(--semantics-typography-body-body-md-tracking-tight)
+  [color:var(--semantics-colors-foreground-subtle-on-subtlest)]`;
+
+const navPanelButtonClassName = `inline-flex items-center justify-center gap-(--primitives-spacing-1)
+  border-0 bg-transparent p-0 py-(--primitives-spacing-out-of-scale-0-5)
+  font-sans [font-weight:var(--semantics-typography-button-font-weight)]
+  text-(length:--semantics-typography-button-button-md-font-size)
+  leading-(--semantics-typography-button-button-md-lh-snug)
+  tracking-(--semantics-typography-button-tracking-normal)
+  [color:var(--semantics-colors-foreground-default)]
+  no-underline cursor-pointer
+  rounded-(--primitives-radius-rounded-10) outline-none
+  focus-visible:[outline:var(--primitives-ring-focus-width-ring-2)_solid_var(--semantics-colors-border-ring-focus)]
+  focus-visible:[outline-offset:var(--primitives-spacing-out-of-scale-0-75)]`;
+
+type NavigationBagProfileProps = Pick<
+  BagPanelConfig,
+  | "signInHref"
+  | "signInLabel"
+  | "onSignInClick"
+  | "loggedIn"
+  | "profileTitle"
+  | "logOutLabel"
+  | "onLogOut"
+>;
+
+function NavigationBagProfileSessionControl({
+  signInHref,
+  signInLabel,
+  onSignInClick,
+  loggedIn,
+  logOutLabel,
+  onLogOut,
+}: Omit<NavigationBagProfileProps, "profileTitle">) {
+  if (loggedIn) {
+    return (
+      <button
+        type="button"
+        className={navPanelButtonClassName}
+        onClick={onLogOut}
+      >
+        <Icon name="log-out" size={iconBox16} aria-hidden="true" />
+        {logOutLabel}
+      </button>
+    );
+  }
+
+  return (
+    <a
+      href={signInHref}
+      onClick={onSignInClick}
+      className={navPanelButtonClassName}
+    >
+      <Icon name="log-in" size={iconBox16} aria-hidden="true" />
+      {signInLabel}
+    </a>
+  );
+}
+
+function NavigationBagProfile(props: NavigationBagProfileProps) {
+  return (
+    <div className="flex w-full flex-col items-start gap-(--primitives-spacing-4)">
+      <p className={bagHeadingClassName}>{props.profileTitle}</p>
+      <NavigationBagProfileSessionControl {...props} />
+    </div>
+  );
+}
+
 function NavigationBagEmpty({
   signInHref,
   signInLabel,
   emptyTitle,
   emptyHint,
   onSignInClick,
-  gapClassName,
+  loggedIn,
+  profileTitle,
+  logOutLabel,
+  onLogOut,
 }: Pick<
   BagPanelConfig,
-  "signInHref" | "signInLabel" | "emptyTitle" | "emptyHint" | "onSignInClick"
-> & { gapClassName: string }) {
+  | "signInHref"
+  | "signInLabel"
+  | "emptyTitle"
+  | "emptyHint"
+  | "onSignInClick"
+  | "loggedIn"
+  | "profileTitle"
+  | "logOutLabel"
+  | "onLogOut"
+>) {
   return (
-    <div className={cn("flex w-full flex-col items-start", gapClassName)}>
-      <h2 data-slot="navigation-bag-empty-title" className={bagHeadingClassName}>
-        {emptyTitle}
-      </h2>
-      <p
-        className={`m-0 flex flex-wrap items-center gap-(--primitives-spacing-1) font-sans
-          [font-weight:var(--semantics-typography-body-font-weight)]
-          text-(length:--semantics-typography-body-body-md-font-size)
-          leading-(--semantics-typography-body-body-md-lh-normal)
-          tracking-(--semantics-typography-body-body-md-tracking-tight)
-          [color:var(--semantics-colors-foreground-subtle-on-subtlest)]`}
-      >
-        <Link
-          href={signInHref}
-          onClick={onSignInClick}
-          className="[color:var(--semantics-colors-foreground-highlight)]"
-        >
-          {signInLabel}
-        </Link>
-        {emptyHint}
-      </p>
+    <div className="flex w-full flex-col items-start gap-(--primitives-spacing-6)">
+      <div className="flex w-full flex-col items-start gap-(--primitives-spacing-4)">
+        <h2 data-slot="navigation-bag-empty-title" className={bagHeadingClassName}>
+          {emptyTitle}
+        </h2>
+        <p className={bagHintClassName}>
+          {loggedIn ? null : (
+            <Link
+              href={signInHref}
+              onClick={onSignInClick}
+              className="[color:var(--semantics-colors-foreground-highlight)]"
+            >
+              {signInLabel}
+            </Link>
+          )}
+          {emptyHint}
+        </p>
+      </div>
+      <NavigationBagProfile
+        signInHref={signInHref}
+        signInLabel={signInLabel}
+        onSignInClick={onSignInClick}
+        loggedIn={loggedIn}
+        profileTitle={profileTitle}
+        logOutLabel={logOutLabel}
+        onLogOut={onLogOut}
+      />
     </div>
   );
 }
@@ -905,65 +1066,83 @@ function NavigationBagLoaded({
   onReview,
   items,
   device,
+  signInHref,
+  signInLabel,
+  onSignInClick,
+  loggedIn,
+  profileTitle,
+  logOutLabel,
+  onLogOut,
 }: {
   title: string;
   reviewLabel: string;
   onReview?: () => void;
   items: NavigationBagItem[];
   device: BagPreviewProductCardDevice;
-}) {
+} & NavigationBagProfileProps) {
   return (
     <div
       className={cn(
-        "flex w-full min-w-0 flex-col items-start gap-(--primitives-spacing-4)",
+        "flex w-full min-w-0 flex-col items-start gap-(--primitives-spacing-6)",
         device === "mobile" && "min-h-0 flex-1",
       )}
     >
-      <div className="flex w-full min-w-0 shrink-0 items-center justify-between gap-(--primitives-spacing-4)">
-        <h2 data-slot="navigation-bag-title" className={bagHeadingClassName}>
-          {title}
-        </h2>
-        <Button
-          type="button"
-          variant="primary"
-          size="md"
-          onClick={onReview}
-        >
-          {reviewLabel}
-        </Button>
-      </div>
-      <div
-        className={cn(
-          "flex w-full flex-col items-start gap-(--primitives-spacing-2)",
-          device === "mobile" &&
-            `min-h-0 flex-1 overflow-y-auto [scrollbar-gutter:stable] ${scrollbarClassName}`,
-        )}
-      >
-        {items.slice(0, BAG_PREVIEW_LIMIT).map((item, index) => (
-          <BagPreviewProductCard
-            key={`${item.name}-${index}`}
-            device={device}
-            name={item.name}
-            src={item.src}
-            alt={item.alt}
-            showQuantity={item.quantity != null}
-            quantity={item.quantity}
-          />
-        ))}
-        {items.length > BAG_PREVIEW_LIMIT ? (
-          <p
-            data-slot="navigation-bag-overflow"
-            className={`m-0 font-sans
-              [font-weight:var(--semantics-typography-body-font-weight)]
-              text-(length:--semantics-typography-body-body-md-font-size)
-              leading-(--semantics-typography-body-body-md-lh-normal)
-              tracking-(--semantics-typography-body-body-md-tracking-tight)
-              [color:var(--semantics-colors-foreground-subtle-on-subtlest)]`}
+      <div className="flex w-full min-w-0 flex-col items-start gap-(--primitives-spacing-4)">
+        <div className="flex w-full min-w-0 shrink-0 items-center justify-between gap-(--primitives-spacing-4)">
+          <h2 data-slot="navigation-bag-title" className={bagHeadingClassName}>
+            {title}
+          </h2>
+          <Button
+            type="button"
+            variant="primary"
+            size="md"
+            onClick={onReview}
           >
-            {`${items.length - BAG_PREVIEW_LIMIT} more items in your bag`}
-          </p>
-        ) : null}
+            {reviewLabel}
+          </Button>
+        </div>
+        <div
+          className={cn(
+            "flex w-full flex-col items-start gap-(--primitives-spacing-2)",
+            device === "mobile" &&
+              `min-h-0 flex-1 overflow-y-auto [scrollbar-gutter:stable] ${scrollbarClassName}`,
+          )}
+        >
+          {items.slice(0, BAG_PREVIEW_LIMIT).map((item, index) => (
+            <BagPreviewProductCard
+              key={`${item.name}-${index}`}
+              device={device}
+              name={item.name}
+              src={item.src}
+              alt={item.alt}
+              showQuantity={item.quantity != null}
+              quantity={item.quantity}
+            />
+          ))}
+          {items.length > BAG_PREVIEW_LIMIT ? (
+            <p
+              data-slot="navigation-bag-overflow"
+              className={`m-0 font-sans
+                [font-weight:var(--semantics-typography-body-font-weight)]
+                text-(length:--semantics-typography-body-body-md-font-size)
+                leading-(--semantics-typography-body-body-md-lh-normal)
+                tracking-(--semantics-typography-body-body-md-tracking-tight)
+                [color:var(--semantics-colors-foreground-subtle-on-subtlest)]`}
+            >
+              {bagOverflowLabel(items.length - BAG_PREVIEW_LIMIT)}
+            </p>
+          ) : null}
+        </div>
       </div>
+      <NavigationBagProfile
+        signInHref={signInHref}
+        signInLabel={signInLabel}
+        onSignInClick={onSignInClick}
+        loggedIn={loggedIn}
+        profileTitle={profileTitle}
+        logOutLabel={logOutLabel}
+        onLogOut={onLogOut}
+      />
     </div>
   );
 }
@@ -983,6 +1162,13 @@ function NavigationBagBody({
         onReview={config.onReview}
         items={config.items}
         device={device}
+        signInHref={config.signInHref}
+        signInLabel={config.signInLabel}
+        onSignInClick={config.onSignInClick}
+        loggedIn={config.loggedIn}
+        profileTitle={config.profileTitle}
+        logOutLabel={config.logOutLabel}
+        onLogOut={config.onLogOut}
       />
     );
   }
@@ -994,11 +1180,10 @@ function NavigationBagBody({
       emptyTitle={config.emptyTitle}
       emptyHint={config.emptyHint}
       onSignInClick={config.onSignInClick}
-      gapClassName={
-        device === "desktop"
-          ? "gap-(--primitives-spacing-4)"
-          : "gap-(--primitives-spacing-6)"
-      }
+      loggedIn={config.loggedIn}
+      profileTitle={config.profileTitle}
+      logOutLabel={config.logOutLabel}
+      onLogOut={config.onLogOut}
     />
   );
 }
@@ -1007,12 +1192,17 @@ export interface NavigationBagTriggerProps {
   className?: string;
   /** Accessible name of the bag button. */
   "aria-label": string;
-  /** Destination of the empty-state Sign in link. */
+  /** Destination of the Log in links on the bag panel. */
   signInHref: string;
   signInLabel?: string;
   emptyTitle?: string;
   emptyHint?: string;
   onSignInClick?: React.MouseEventHandler<HTMLAnchorElement>;
+  /** When true, hides the bag Log in link and shows Log out on My profile. */
+  loggedIn?: boolean;
+  profileTitle?: string;
+  logOutLabel?: string;
+  onLogOut?: () => void;
   items?: NavigationBagItem[];
   title?: string;
   reviewLabel?: string;
@@ -1025,13 +1215,19 @@ export function NavigationBagTrigger({
   signInHref,
   signInLabel = BAG_SIGN_IN_LABEL,
   emptyTitle = BAG_EMPTY_TITLE,
-  emptyHint = BAG_EMPTY_HINT,
+  emptyHint,
   onSignInClick,
+  loggedIn = false,
+  profileTitle = BAG_PROFILE_TITLE,
+  logOutLabel = BAG_LOG_OUT_LABEL,
+  onLogOut,
   items,
   title = BAG_TITLE,
   reviewLabel = BAG_REVIEW_LABEL,
   onReview,
 }: NavigationBagTriggerProps) {
+  const resolvedEmptyHint =
+    emptyHint ?? (loggedIn ? BAG_EMPTY_HINT_LOGGED_IN : BAG_EMPTY_HINT);
   const navigation = React.useContext(NavigationContext);
   if (!navigation) {
     throw new Error("NavigationBagTrigger must be rendered inside Navigation.");
@@ -1051,8 +1247,12 @@ export function NavigationBagTrigger({
       signInHref,
       signInLabel,
       emptyTitle,
-      emptyHint,
+      emptyHint: resolvedEmptyHint,
       onSignInClick,
+      loggedIn,
+      profileTitle,
+      logOutLabel,
+      onLogOut,
       items,
       title,
       reviewLabel,
@@ -1063,8 +1263,12 @@ export function NavigationBagTrigger({
     signInHref,
     signInLabel,
     emptyTitle,
-    emptyHint,
+    resolvedEmptyHint,
     onSignInClick,
+    loggedIn,
+    profileTitle,
+    logOutLabel,
+    onLogOut,
     items,
     title,
     reviewLabel,
@@ -1072,19 +1276,21 @@ export function NavigationBagTrigger({
   ]);
 
   const bagLoaded = items != null && items.length > 0;
+  const unitCount = bagUnitCount(items);
+  const triggerLabel = bagTriggerAccessibleName(ariaLabel, unitCount);
 
   if (isDesktop) {
     return (
       <NavigationMenu.Item value={BAG_VALUE}>
         <NavigationMenu.Trigger
           data-slot="navigation-bag-trigger"
-          aria-label={ariaLabel}
+          aria-label={triggerLabel}
           onPointerEnter={(event) => {
             if (event.pointerType === "mouse") openFromHover(null);
           }}
-          className={cn(iconButtonClassName, className)}
+          className={cn(iconButtonClassName, "overflow-visible", className)}
         >
-          <Icon name="shopping-bag" size={iconBox16} />
+          <NavigationBagGlyph count={unitCount} />
         </NavigationMenu.Trigger>
         <NavigationMenu.Content
           className={cn(
@@ -1095,15 +1301,22 @@ export function NavigationBagTrigger({
           )}
         >
           <div
-            className={cn("w-full max-w-[42.125rem]", itemMotionClassName)}
+            className={cn(
+              "w-full max-w-(--primitives-max-width-max-w-2xl)",
+              itemMotionClassName,
+            )}
           >
             <NavigationBagBody
               config={{
                 signInHref,
                 signInLabel,
                 emptyTitle,
-                emptyHint,
+                emptyHint: resolvedEmptyHint,
                 onSignInClick,
+                loggedIn,
+                profileTitle,
+                logOutLabel,
+                onLogOut,
                 items,
                 title,
                 reviewLabel,
@@ -1123,11 +1336,16 @@ export function NavigationBagTrigger({
         ref={bagButtonRef}
         type="button"
         data-slot="navigation-bag-trigger"
-        aria-label={ariaLabel}
+        aria-label={triggerLabel}
         onClick={requestBag}
-        className={cn(iconButtonClassName, expanded && "hidden", className)}
+        className={cn(
+          iconButtonClassName,
+          "overflow-visible",
+          expanded && "hidden",
+          className,
+        )}
       >
-        <Icon name="shopping-bag" size={iconBox16} />
+        <NavigationBagGlyph count={unitCount} />
       </button>
     </NavigationMenu.Item>
   );
@@ -1240,8 +1458,7 @@ function NavigationEmpty({
         className={cn(
           `fixed inset-x-0 top-0 z-(--semantics-layer-navigation) flex w-full items-center
            [color:var(--semantics-colors-foreground-default)]
-           [background-color:var(--semantics-colors-background-primary-blur)]
-           [backdrop-filter:blur(var(--semantics-glass-navigation-frost))]
+           ${closedBarGlassClassName}
            px-(--primitives-spacing-2) py-(--primitives-spacing-out-of-scale-1-5)
            md:justify-center md:px-(--primitives-spacing-6)`,
           className,
@@ -1665,8 +1882,7 @@ function NavigationProduct({
          md:px-(--primitives-spacing-6)`,
         menuChromeOpen
           ? `[background-color:var(--semantics-colors-background-default)]`
-          : `[background-color:var(--semantics-colors-background-primary-blur)]
-             [backdrop-filter:blur(var(--semantics-glass-navigation-frost))]`,
+          : closedBarGlassClassName,
         className,
       )}
       {...props}
@@ -1737,7 +1953,7 @@ function NavigationProduct({
             <NavigationMenu.Backdrop
               data-slot="navigation-scrim"
               className="fixed inset-0 z-(--semantics-layer-scrim) max-md:hidden
-              [background-color:var(--semantics-colors-background-primary-blur)]
+              [background-color:var(--semantics-colors-background-primary-op60)]
               [backdrop-filter:blur(var(--semantics-background-blur-navigation))]
               transition-opacity duration-(--semantics-motion-duration-320) delay-(--semantics-motion-delay-scrim) ease-(--semantics-motion-easing-standard)
               motion-reduce:transition-none

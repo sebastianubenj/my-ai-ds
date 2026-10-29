@@ -4,7 +4,7 @@
 
 [data-theme="dark"] {
   --semantics-colors-background-destructive: #d600001a;
-  --semantics-colors-background-primary-blur: #17171799;
+  --semantics-colors-background-primary-op60: #17171799;
   --semantics-colors-interaction-destructive-hover: #d6000033;
   --semantics-colors-interaction-destructive-subtle-hover: #d600001a;
   --semantics-colors-interaction-file-upload-drag-over: #0074e81a;

@@ -171,6 +171,29 @@ StyleDictionary.registerPreprocessor({
   },
 });
 
+// Figma Glass frost is not CSS backdrop-filter blur at the same number.
+// 0.4356 is the Figma-blur to CSS filter:blur scale (Bjango). Designers
+// keep glass/navigation/frost in Figma; this derived token is CSS-only.
+const FIGMA_GLASS_FROST_TO_CSS_BLUR = 0.4356;
+
+function addGlassFrostCss(dictionary) {
+  const navigation = dictionary.semantics?.glass?.navigation;
+  const frost = navigation?.frost;
+  if (!navigation || navigation['frost-css'] || typeof frost?.value !== 'number') {
+    return dictionary;
+  }
+  navigation['frost-css'] = {
+    type: 'dimension',
+    value: roundTo5(frost.value * FIGMA_GLASS_FROST_TO_CSS_BLUR),
+  };
+  return dictionary;
+}
+
+StyleDictionary.registerPreprocessor({
+  name: 'glass/frost-css',
+  preprocessor: addGlassFrostCss,
+});
+
 // ---------------------------------------------------------------------------
 // Centralized numeric-dimension classifier
 // ---------------------------------------------------------------------------
@@ -400,7 +423,7 @@ const cssTransforms = [
 // 3. Configurar la compilación de Style Dictionary
 const sd = new StyleDictionary({
   source: ['tokens/tokens.json'],
-  preprocessors: ['figma/exporter-overrides', 'typography/relative-units'],
+  preprocessors: ['figma/exporter-overrides', 'typography/relative-units', 'glass/frost-css'],
   hooks: {
     filters: {
       'ds/cssTokens': cssTokensFilter,
@@ -439,7 +462,7 @@ if (Object.keys(darkTokens).length > 0) {
     // The dark file overrides tokens.json on purpose, and references to light-only
     // tokens are filtered out of this file. Both warnings are expected.
     log: { warnings: 'disabled' },
-    preprocessors: ['figma/exporter-overrides', 'typography/relative-units'],
+    preprocessors: ['figma/exporter-overrides', 'typography/relative-units', 'glass/frost-css'],
     hooks: {
       filters: {
         'ds/darkTokens': (token) => cssTokensFilter(token) && token.filePath?.endsWith('tokens.dark.json'),

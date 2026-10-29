@@ -76,7 +76,7 @@
             }
           }
         },
-        "primary-blur": {
+        "primary-op60": {
           "type": "color",
           "value": "#17171799",
           "extensions": {
@@ -430,7 +430,9 @@
                 "collection": "Semantic Colors",
                 "scopes": [
                   "FRAME_FILL",
-                  "SHAPE_FILL"
+                  "SHAPE_FILL",
+                  "TEXT_FILL",
+                  "STROKE_COLOR"
                 ],
                 "variableId": "VariableID:450:1678",
                 "exportKey": "variables"

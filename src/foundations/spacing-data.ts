@@ -12,6 +12,7 @@ export interface SpacingTokenRecord {
 /** Steps currently consumed by UI components. Stories/foundations-only use is not counted. */
 const USED_STEPS = new Set([
   "0",
+  "0,125",
   "0,25",
   "0,5",
   "0,75",
@@ -35,6 +36,8 @@ const USED_STEPS = new Set([
 /** Steps outside the default scale. Figma groups them as `spacing/out-of-scale/*`. */
 const OUT_OF_SCALE_STEPS = new Set([
   "0,25",
+  "0,125",
+  "0,25",
   "0,5",
   "0,75",
   "1,25",
@@ -42,7 +45,7 @@ const OUT_OF_SCALE_STEPS = new Set([
   "1,75",
   "2,25",
   "2,5",
-  "3,5",
+  "3,25",
   "4,5",
   "5",
   "7",
@@ -70,6 +73,8 @@ const OUT_OF_SCALE_STEPS = new Set([
 const SCALE: { step: string; px: number }[] = [
   { step: "0", px: 0 },
   { step: "0,25", px: 1 },
+  { step: "0,125", px: 0.5 },
+  { step: "0,25", px: 1 },
   { step: "0,5", px: 2 },
   { step: "0,75", px: 3 },
   { step: "1", px: 4 },
@@ -80,7 +85,7 @@ const SCALE: { step: string; px: number }[] = [
   { step: "2,25", px: 9 },
   { step: "2,5", px: 10 },
   { step: "3", px: 12 },
-  { step: "3,5", px: 14 },
+  { step: "3,25", px: 13 },
   { step: "4", px: 16 },
   { step: "4,5", px: 18 },
   { step: "5", px: 20 },

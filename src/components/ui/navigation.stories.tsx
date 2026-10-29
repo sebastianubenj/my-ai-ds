@@ -88,9 +88,11 @@ function SampleNavigation(
     navRef?: React.Ref<HTMLElement>;
     bagItems?: NavigationBagItem[];
     onReview?: () => void;
+    bagLoggedIn?: boolean;
+    onLogOut?: () => void;
   },
 ) {
-  const { navRef, bagItems, onReview, ...rest } = props;
+  const { navRef, bagItems, onReview, bagLoggedIn, onLogOut, ...rest } = props;
 
   return (
     <Navigation
@@ -121,6 +123,8 @@ function SampleNavigation(
         aria-label="Bag"
         signInHref="#login"
         onSignInClick={stopNavigation}
+        loggedIn={bagLoggedIn}
+        onLogOut={onLogOut}
         items={bagItems}
         onReview={onReview}
       />
@@ -464,10 +468,13 @@ export const DesktopBagEmpty: Story = {
         body.getByRole("heading", { name: "Your bag is empty" }),
       ).toBeVisible(),
     );
-    await expect(body.getByRole("link", { name: "Sign in" })).toHaveAttribute(
-      "href",
-      "#login",
-    );
+    const logInLinks = body.getAllByRole("link", { name: "Log in" });
+    await expect(logInLinks).toHaveLength(2);
+    await expect(logInLinks[0]).toHaveAttribute("href", "#login");
+    await expect(logInLinks[1]).toHaveAttribute("href", "#login");
+    await expect(logInLinks[1].tagName).toBe("A");
+    await expect(body.queryByRole("button", { name: "Log in" })).toBeNull();
+    await expect(body.getByText("My profile")).toBeVisible();
 
     await userEvent.hover(canvas.getByRole("link", { name: "Support" }));
     await waitFor(() =>
@@ -495,6 +502,44 @@ export const DesktopBagEmpty: Story = {
   },
 };
 
+export const DesktopBagEmptyLoggedIn: Story = {
+  args: requiredArgs,
+  render: function DesktopBagEmptyLoggedInRender() {
+    const [status, setStatus] = React.useState("");
+
+    return (
+      <>
+        <SampleNavigation bagLoggedIn onLogOut={() => setStatus("logged-out")} />
+        {status ? <p>{status}</p> : null}
+      </>
+    );
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const body = within(document.body);
+
+    await userEvent.click(canvas.getByRole("button", { name: "Bag" }));
+    await waitFor(() =>
+      expect(
+        body.getByRole("heading", { name: "Your bag is empty" }),
+      ).toBeVisible(),
+    );
+    await expect(body.queryByRole("link", { name: "Log in" })).toBeNull();
+    await expect(body.getByText("Start adding items")).toBeVisible();
+    await expect(body.getByText("My profile")).toBeVisible();
+
+    await userEvent.click(body.getByRole("button", { name: "Log out" }));
+    await expect(canvas.getByText("logged-out")).toBeVisible();
+
+    await userEvent.keyboard("{Escape}");
+    await waitFor(() =>
+      expect(
+        body.queryByRole("heading", { name: "Your bag is empty" }),
+      ).toBeNull(),
+    );
+  },
+};
+
 export const DesktopBag: Story = {
   args: requiredArgs,
   render: () => <SampleNavigation bagItems={sampleBagItems} />,
@@ -502,7 +547,7 @@ export const DesktopBag: Story = {
     const canvas = within(canvasElement);
     const body = within(document.body);
     const panel = () => document.querySelector("[data-slot=navigation-panel]");
-    const bag = canvas.getByRole("button", { name: "Bag" });
+    const bag = canvas.getByRole("button", { name: "Bag, 13 items" });
 
     await userEvent.hover(bag);
     await new Promise((resolve) => setTimeout(resolve, 400));
@@ -510,7 +555,7 @@ export const DesktopBag: Story = {
 
     await userEvent.click(bag);
     await waitFor(() =>
-      expect(body.getByRole("heading", { name: "Your bag" })).toBeVisible(),
+      expect(body.getByRole("heading", { name: "Bag" })).toBeVisible(),
     );
     await expect(
       body.getByRole("button", { name: "Review bag" }),
@@ -519,9 +564,56 @@ export const DesktopBag: Story = {
       body.getAllByRole("article"),
     ).toHaveLength(5);
     await expect(body.getByText("8 more items in your bag")).toBeVisible();
+    await expect(body.getByRole("link", { name: "Log in" })).toHaveAttribute(
+      "href",
+      "#login",
+    );
+    await expect(body.getByRole("link", { name: "Log in" }).tagName).toBe("A");
+    await expect(body.getByText("My profile")).toBeVisible();
 
     await userEvent.keyboard("{Escape}");
     await waitFor(() => expect(panel()).toBeNull());
+  },
+};
+
+export const DesktopBagOneOverflow: Story = {
+  args: requiredArgs,
+  render: () => <SampleNavigation bagItems={sampleBagItems.slice(0, 6)} />,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const body = within(document.body);
+    const panel = () => document.querySelector("[data-slot=navigation-panel]");
+
+    await userEvent.click(canvas.getByRole("button", { name: "Bag, 6 items" }));
+    await waitFor(() =>
+      expect(body.getByRole("heading", { name: "Bag" })).toBeVisible(),
+    );
+    await expect(body.getByText("1 more item in your bag")).toBeVisible();
+
+    await userEvent.keyboard("{Escape}");
+    await waitFor(() => expect(panel()).toBeNull());
+  },
+};
+
+export const DesktopBagLoggedIn: Story = {
+  args: requiredArgs,
+  render: () => <SampleNavigation bagItems={sampleBagItems} bagLoggedIn />,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const body = within(document.body);
+
+    await userEvent.click(canvas.getByRole("button", { name: "Bag, 13 items" }));
+    await waitFor(() =>
+      expect(body.getByRole("heading", { name: "Bag" })).toBeVisible(),
+    );
+    await expect(body.queryByRole("link", { name: "Log in" })).toBeNull();
+    await expect(body.getByRole("button", { name: "Log out" })).toBeVisible();
+    await expect(body.getByText("My profile")).toBeVisible();
+
+    await userEvent.keyboard("{Escape}");
+    await waitFor(() =>
+      expect(body.queryByRole("heading", { name: "Bag" })).toBeNull(),
+    );
   },
 };
 
@@ -606,10 +698,13 @@ export const MobileBagEmpty: Story = {
     );
     await expect(canvas.getByRole("button", { name: "Close" })).toBeVisible();
     await expect(canvas.queryByRole("button", { name: "Menu" })).toBeNull();
-    await expect(canvas.getByRole("link", { name: "Sign in" })).toHaveAttribute(
-      "href",
-      "#login",
-    );
+    const logInLinks = canvas.getAllByRole("link", { name: "Log in" });
+    await expect(logInLinks).toHaveLength(2);
+    await expect(logInLinks[0]).toHaveAttribute("href", "#login");
+    await expect(logInLinks[1]).toHaveAttribute("href", "#login");
+    await expect(logInLinks[1].tagName).toBe("A");
+    await expect(canvas.queryByRole("button", { name: "Log in" })).toBeNull();
+    await expect(canvas.getByText("My profile")).toBeVisible();
 
     await userEvent.click(canvas.getByRole("button", { name: "Close" }));
     await waitFor(() =>
@@ -618,6 +713,34 @@ export const MobileBagEmpty: Story = {
       ).toBeNull(),
     );
     await expect(canvas.getByRole("button", { name: "Bag" })).toHaveFocus();
+  },
+};
+
+export const MobileBagEmptyLoggedIn: Story = {
+  args: requiredArgs,
+  globals: {
+    viewport: { value: "mobile2", isRotated: false },
+  },
+  render: () => <SampleNavigation bagLoggedIn />,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    await userEvent.click(canvas.getByRole("button", { name: "Bag" }));
+    await waitFor(() =>
+      expect(
+        canvas.getByRole("heading", { name: "Your bag is empty" }),
+      ).toBeVisible(),
+    );
+    await expect(canvas.queryByRole("link", { name: "Log in" })).toBeNull();
+    await expect(canvas.getByText("Start adding items")).toBeVisible();
+    await expect(canvas.getByRole("button", { name: "Log out" })).toBeVisible();
+
+    await userEvent.click(canvas.getByRole("button", { name: "Close" }));
+    await waitFor(() =>
+      expect(
+        canvas.queryByRole("heading", { name: "Your bag is empty" }),
+      ).toBeNull(),
+    );
   },
 };
 
@@ -630,11 +753,11 @@ export const MobileBag: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    await userEvent.click(canvas.getByRole("button", { name: "Bag" }));
+    await userEvent.click(canvas.getByRole("button", { name: "Bag, 13 items" }));
     await waitFor(() => {
       expect(canvas.getByRole("button", { name: "Close" })).toBeVisible();
       expect(
-        canvas.getByRole("heading", { name: "Your bag" }),
+        canvas.getByRole("heading", { name: "Bag" }),
       ).toBeVisible();
     });
     await expect(
@@ -642,12 +765,42 @@ export const MobileBag: Story = {
     ).toBeVisible();
     await expect(canvas.getAllByRole("article")).toHaveLength(5);
     await expect(canvas.getByText("8 more items in your bag")).toBeVisible();
+    await expect(canvas.getByRole("link", { name: "Log in" })).toHaveAttribute(
+      "href",
+      "#login",
+    );
+    await expect(canvas.getByRole("link", { name: "Log in" }).tagName).toBe("A");
+    await expect(canvas.getByText("My profile")).toBeVisible();
 
     await userEvent.click(canvas.getByRole("button", { name: "Close" }));
     await waitFor(() =>
-      expect(canvas.queryByRole("heading", { name: "Your bag" })).toBeNull(),
+      expect(canvas.queryByRole("heading", { name: "Bag" })).toBeNull(),
     );
-    await expect(canvas.getByRole("button", { name: "Bag" })).toHaveFocus();
+    await expect(canvas.getByRole("button", { name: "Bag, 13 items" })).toHaveFocus();
+  },
+};
+
+export const MobileBagLoggedIn: Story = {
+  args: requiredArgs,
+  globals: {
+    viewport: { value: "mobile2", isRotated: false },
+  },
+  render: () => <SampleNavigation bagItems={sampleBagItems} bagLoggedIn />,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    await userEvent.click(canvas.getByRole("button", { name: "Bag, 13 items" }));
+    await waitFor(() =>
+      expect(canvas.getByRole("heading", { name: "Bag" })).toBeVisible(),
+    );
+    await expect(canvas.queryByRole("link", { name: "Log in" })).toBeNull();
+    await expect(canvas.getByRole("button", { name: "Log out" })).toBeVisible();
+    await expect(canvas.getByText("My profile")).toBeVisible();
+
+    await userEvent.click(canvas.getByRole("button", { name: "Close" }));
+    await waitFor(() =>
+      expect(canvas.queryByRole("heading", { name: "Bag" })).toBeNull(),
+    );
   },
 };
 

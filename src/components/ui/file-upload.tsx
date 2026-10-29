@@ -129,7 +129,7 @@ export function FileUpload({
          rounded-(--primitives-radius-rounded-14)
          border-solid border-(length:--primitives-stroke-width-stroke)
          [border-color:transparent]
-         bg-background px-(--primitives-spacing-out-of-scale-2-5) py-(--primitives-spacing-0)
+         [background-color:var(--semantics-colors-background-default)] px-(--primitives-spacing-out-of-scale-2-5) py-(--primitives-spacing-0)
          [--file-upload-stroke:var(--semantics-colors-border-default)]
          [--file-upload-stroke-width:var(--primitives-stroke-width-stroke)]
          has-aria-invalid:[--file-upload-stroke:var(--semantics-colors-border-destructive)]

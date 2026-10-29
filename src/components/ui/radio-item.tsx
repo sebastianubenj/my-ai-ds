@@ -97,7 +97,7 @@ export function RadioItem({
                  tracking-(--semantics-typography-label-label-md-tracking-0-125)`,
                 isDefaultInvalid
                   ? "[color:var(--semantics-colors-foreground-destructive)]"
-                  : "text-foreground",
+                  : "[color:var(--semantics-colors-foreground-default)]",
               )}
             >
               {children}

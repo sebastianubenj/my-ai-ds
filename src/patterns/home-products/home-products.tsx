@@ -1,3 +1,5 @@
+import * as React from "react";
+
 import {
   ProductCard,
   type ProductCardLayout,
@@ -11,13 +13,12 @@ const headingClassName = `m-0 w-full font-sans
   tracking-(--semantics-typography-heading-heading-xl-tracking-tight)
   [color:var(--semantics-colors-foreground-default)]`;
 
-interface HomeProduct {
+export interface HomeProduct {
   name: string;
   price: string;
   src: string;
   alt: string;
   layout: ProductCardLayout;
-  showAction?: boolean;
 }
 
 const PRODUCTS: HomeProduct[] = [
@@ -37,11 +38,10 @@ const PRODUCTS: HomeProduct[] = [
   },
   {
     name: "OP-XY",
-    price: "sold out",
+    price: "$2299",
     src: "/product-op-xy.png",
     alt: "Teenage Engineering OP-XY synthesizer",
     layout: "horizontal",
-    showAction: false,
   },
   {
     name: "EP–2350 FX–MIC",
@@ -58,10 +58,10 @@ const PRODUCTS: HomeProduct[] = [
     layout: "vertical",
   },
   {
-    name: "K.O. II splash kit",
-    price: "$338",
-    src: "/product-ko-ii-splash.png",
-    alt: "Teenage Engineering K.O. II splash kit",
+    name: "K.O.-PEDAL",
+    price: "$99",
+    src: "/product-ko-pedal.png",
+    alt: "Teenage Engineering K.O.-PEDAL",
     layout: "horizontal",
   },
   {
@@ -72,12 +72,11 @@ const PRODUCTS: HomeProduct[] = [
     layout: "horizontal",
   },
   {
-    name: "K.O.–SIDEKICK & FX–MIC",
-    price: "sold out",
-    src: "/product-ko-sidekick.png",
-    alt: "Teenage Engineering K.O. SIDEKICK and FX-MIC",
+    name: "life is fantastic!",
+    price: "$399",
+    src: "/product-life-is-fantastic.png",
+    alt: "Teenage Engineering life is fantastic speaker",
     layout: "vertical",
-    showAction: false,
   },
   {
     name: "EP–40 riddim",
@@ -96,7 +95,10 @@ const PRODUCTS: HomeProduct[] = [
 ];
 
 export interface HomeProductsProps {
-  onAction?: React.MouseEventHandler<HTMLButtonElement>;
+  onAction?: (
+    product: HomeProduct,
+    event: React.MouseEvent<HTMLButtonElement>,
+  ) => void;
 }
 
 export function HomeProducts({ onAction }: HomeProductsProps) {
@@ -106,8 +108,10 @@ export function HomeProducts({ onAction }: HomeProductsProps) {
     <div
       className="flex min-h-dvh w-full flex-col items-center px-(--semantics-layout-mobile-grid-margin) md:px-(--semantics-layout-desktop-grid-margin) [background-color:var(--semantics-colors-background-page)]"
     >
-      <div className="flex w-full max-w-(--semantics-layout-desktop-content-max-width) flex-col items-start gap-(--primitives-spacing-4)">
-        <h1 className={headingClassName}>All products</h1>
+      <div className="flex w-full max-w-(--semantics-layout-desktop-content-max-width) flex-col items-start pb-(--primitives-spacing-32)">
+        <div className="flex w-full items-start py-(--primitives-spacing-4)">
+          <h1 className={headingClassName}>All products</h1>
+        </div>
         <div
           className="grid w-full grid-cols-1 gap-(--primitives-spacing-6) md:grid-cols-4 md:gap-x-(--semantics-layout-desktop-grid-gutter) md:gap-y-(--primitives-spacing-10)"
         >
@@ -122,8 +126,11 @@ export function HomeProducts({ onAction }: HomeProductsProps) {
               price={product.price}
               src={product.src}
               alt={product.alt}
-              showAction={product.showAction ?? true}
-              onAction={onAction}
+              onAction={
+                onAction
+                  ? (event) => onAction(product, event)
+                  : undefined
+              }
             />
           ))}
         </div>

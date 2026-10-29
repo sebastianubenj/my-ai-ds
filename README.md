@@ -4,7 +4,7 @@ React + TypeScript design system. Visual language comes from [Figma](https://www
 
 Stack: Vite, Tailwind CSS v4, shadcn structure, Base UI, Style Dictionary.
 
-Product screens live in `src/views/` and show up in Storybook under Views. There is no router and no auth backend. Do not publish an npm package until another repo consumes it. `src/App.tsx` / `npm run dev` is a leftover Vite shell; leave it until that consumer exists.
+Product screens live in `src/views/` and show up in Storybook under Views. There is no router and no auth backend. Do not publish an npm package until another repo consumes it. `npm run dev` is a one-line pointer to Storybook, not a second UI. Use `npm run storybook` as the catalog.
 
 ## Run
 
@@ -45,7 +45,7 @@ Implementation rules (tokens, components, patterns, testing) live in `.cursor/ru
 | `src/components/icon/` | Curated icon registry |
 | `src/foundations/` | Token specimens (color, type, space, …) |
 | `src/patterns/` | Composed specimens that are not product views. Home Products is the grid of ProductCards |
-| `src/views/` | Auth screens in Storybook, no routes: Login, Register, Forgot password, Reset password, Password updated, Expired link |
+| `src/views/` | Product screens in Storybook, no routes: Home, Login, Register, Forgot password, Reset password, Password updated, Expired link |
 | `figma/export-variables/` | Figma plugin that downloads every local variable |
 | `tokens/figma-variables.raw.json` | Raw variable export. Input to `tokens:normalize` |
 | `tokens/tokens.json` | Token source. Primitives and semantics come from the export; font, typography, and effect stay in this file |

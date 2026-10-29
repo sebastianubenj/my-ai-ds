@@ -17,7 +17,7 @@ Each `NavigationLink` is a real link. Clicking it follows `href`. Pass `menu` an
 
 - **Open and close** — hover opens it after a short delay and it stays open while the pointer is anywhere over the bar or the panel. It closes when the pointer leaves both. `Escape`, a press outside, and clicking a panel link also close it.
 - **Search** — the search button opens a search panel under the bar on click or `Enter`. Hover never opens it. The field takes focus on open. `Escape`, a press outside, or leaving the bar and panel close it.
-- **Bag** — `NavigationBagTrigger` opens the bag panel on click or `Enter`, with the same motion as search. Hover never opens it. Without `items`, the empty state shows “Your bag is empty” and a `Sign in` link (`signInHref`). With `items`, it shows “Your bag”, `Review bag` (`onReview`), and up to five `BagPreviewProductCard` rows. Extra items appear as “n more items in your bag”.
+- **Bag** — `NavigationBagTrigger` opens the bag panel on click or `Enter`, with the same motion as search. Hover never opens it. Without `items`, the empty state shows “Your bag is empty”, a underlined `Log in` hint (`signInHref`) plus “to see if you have any saved items”, then **My profile** as a heading with a control underneath: icon plus `Log in` (`<a>`). Pass `loggedIn` to hide the hint `Log in`, use “Start adding items”, and show `Log out` (`<button>`, `onLogOut`) under My profile. With `items`, it shows “Bag”, `Review bag` (`onReview`), up to five `BagPreviewProductCard` rows, the overflow line, and the same My profile control (icon + Log in or Log out). Extra rows appear as “n more items in your bag”, or “1 more item in your bag” when one row is hidden.
 - **Keyboard** — focusing a link with `menu` shows the Figma `ShowIconLink` chevron next to it, as a button, named by `menuLabel`. `Enter` on the link follows `href`. `Enter` on the chevron opens the panel and moves focus into it.
 - **Fixed bar** — the bar is `fixed` at the top of the viewport. An in-flow spacer keeps page content from sitting under it. Panels open under the bar.
 - **Controlled value** — give each link a `value`, then use `value`, `defaultValue`, and `onValueChange` on `Navigation` to read or set the open panel. Pass `null` to close it.
@@ -29,7 +29,7 @@ Each `NavigationLink` is a real link. Clicking it follows `href`. Pass `menu` an
 
 `NavigationSearchTrigger` is the search button. Place it in `children` where the icon should sit. `NavigationSearch` is the field used in both panels. It is a `role="search"` form with a search input. `default` shows the placeholder (the `searchLabel`). `filled` appears once there is text and adds a clear button named by `clearSearchLabel`. Use `searchValue`, `onSearchValueChange`, and `onSearchSubmit` on `Navigation` to read the text and handle submit. To open or close the panel from outside, set `value` to `"search"` or `null`.
 
-`NavigationBagTrigger` is the bag button. Use `value` `"bag"` or `null` to open or close it from outside. `signInHref` is the Sign in destination when the bag is empty. Pass `items` for the loaded list. `onReview` is the Review bag action. `aria-label` names the button.
+`NavigationBagTrigger` is the bag button. Use `value` `"bag"` or `null` to open or close it from outside. `signInHref` is the Log in destination on the empty-bag hint and on My profile. `loggedIn` and `onLogOut` switch My profile between Log in and Log out. That control sits under the heading with a log-in or log-out icon, empty or loaded. Pass `items` for the loaded list. A count badge overlays the bag icon for 1–99 units (`99+` after that) and is included in the button name. `onReview` is the Review bag action. `aria-label` is the empty-bag name.
 
 `NavigationIconButton` is a bar icon without a panel.
 
@@ -43,7 +43,7 @@ The panel has two levels. On the second level the first `NavigationSection` is s
 
 Do not use `Link` for these items. `Link` is underlined text. `NavigationLink` is the bar label. `NavigationMenuLink` is the large panel link.
 
-The closed bar fill is `colors/background/primary-blur`. Its blur is `glass/navigation/frost`. The open bar is `colors/background/default`. The open panel is solid `colors/background/subtlest`. The scrim over the page uses `colors/background/primary-blur` and `background-blur/navigation`.
+The closed bar fill is `colors/background/primary-op60`. Its blur is `glass/navigation/frost-css`, derived in token build from Figma `glass/navigation/frost` (the CSS blur scale; frost in Figma stays 15). The open bar is `colors/background/default`. The open panel is solid `colors/background/subtlest`. The scrim over the page uses `colors/background/primary-op60` and `background-blur/navigation`. The bag panel content uses the same `max-w-2xl` as the bar.
 
 ## Motion
 

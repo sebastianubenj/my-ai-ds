@@ -17,7 +17,7 @@ export function Textarea({ className, error = false, disabled, ref, ...props }: 
          has-disabled:opacity-(--primitives-opacity-opacity-40)
          [&_svg]:pointer-events-none [&_svg]:shrink-0
          [&_svg]:[color:var(--semantics-colors-foreground-subtle)]
-         has-aria-invalid:[&_svg]:text-destructive-foreground`,
+         has-aria-invalid:[&_svg]:[color:var(--semantics-colors-foreground-destructive)]`,
         className,
       )}
     >
@@ -37,8 +37,8 @@ export function Textarea({ className, error = false, disabled, ref, ...props }: 
           tracking-(--semantics-typography-body-body-lg-tracking-tight)
           text-foreground placeholder:[color:var(--semantics-colors-foreground-subtle)]
           aria-invalid:[border-color:var(--semantics-colors-border-destructive)]
-          aria-invalid:text-destructive-foreground
-          aria-invalid:placeholder:text-destructive-foreground
+          aria-invalid:[color:var(--semantics-colors-foreground-destructive)]
+          aria-invalid:placeholder:[color:var(--semantics-colors-foreground-destructive)]
           focus:[border-width:var(--primitives-stroke-width-stroke-2)]
           focus:[padding:var(--primitives-spacing-out-of-scale-1-75)_var(--primitives-spacing-out-of-scale-1-5)_var(--primitives-spacing-out-of-scale-1-5)_var(--primitives-spacing-out-of-scale-2-25)]
           focus:[border-color:var(--semantics-colors-border-strong)]
