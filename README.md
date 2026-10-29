@@ -1,10 +1,11 @@
-# my-ai-ds
+# weaveui
 
-React + TypeScript design system. Visual language comes from [Figma](https://www.figma.com/design/PMZpYxijxLhjDlvMbtVY5j/my-ai-ds). Storybook is the working catalog, not a routed app.
+React + TypeScript design system and storefront in one git repo. Visual language comes from [Figma](https://www.figma.com/design/PMZpYxijxLhjDlvMbtVY5j/weaveui).
 
-Stack: Vite, Tailwind CSS v4, shadcn structure, Base UI, Style Dictionary.
+- `packages/ds` (`@weaveui/ds`): tokens, foundations, controls, icons, and the six form patterns. Storybook on port 6006 is the DS catalog.
+- `apps/store` (`@weaveui/store`): routes, AuthLayout, Navigation, ProductCard, Home, product assets. Consumes the DS. `npm run dev` runs this app.
 
-Product screens live in `src/views/` and show up in Storybook under Views. There is no router and no auth backend. Do not publish an npm package until another repo consumes it. `npm run dev` is a one-line pointer to Storybook, not a second UI. Use `npm run storybook` as the catalog.
+Do not copy Button or other DS components into the store. Do not publish an npm package until another repo consumes it.
 
 ## Run
 
@@ -14,24 +15,36 @@ npx playwright install chromium
 npm run storybook
 ```
 
-Storybook: [http://localhost:6006](http://localhost:6006)
+Design system Storybook: [http://localhost:6006](http://localhost:6006)
+
+```bash
+npm run dev
+```
+
+Store: [http://localhost:5173](http://localhost:5173)
+
+```bash
+npm run storybook:store
+```
+
+Store Storybook (views and commerce components): [http://localhost:6007](http://localhost:6007)
 
 ```bash
 npm run check
 ```
 
-`check` runs typecheck, lint, token tests (`tokens:test`), Storybook interaction tests, and the production build. Use it before commit.
+`check` runs typecheck, lint, token tests, Storybook interaction tests, and production builds for every workspace.
 
-Accessibility: `@storybook/addon-a11y` fails `npm test` on CSF violations (`parameters.a11y.test: 'error'`). See [`.storybook/a11y-status.md`](.storybook/a11y-status.md).
+Accessibility: `@storybook/addon-a11y` fails `npm test` on CSF violations (`parameters.a11y.test: 'error'`). See [`packages/ds/.storybook/a11y-status.md`](packages/ds/.storybook/a11y-status.md).
 
 ## Tokens
 
-Figma variables are exported with the development plugin in `figma/export-variables/`.
+Figma variables are exported with the development plugin in `packages/ds/figma/export-variables/`.
 
-1. In Figma: Plugins → Development → Import plugin from manifest… → `figma/export-variables/manifest.json`.
-2. Run **Export variables**. Save the download as `tokens/figma-variables.raw.json`.
-3. `npm run tokens:normalize` rewrites primitives and semantics in `tokens/tokens.json` and the Dark mode of Semantic Colors in `tokens/tokens.dark.json`. Font, typography, and effect styles in `tokens.json` stay as they are.
-4. `npm run build:tokens` writes `src/styles/generated/tokens.css` and `tokens.dark.css`.
+1. In Figma: Plugins → Development → Import plugin from manifest… → `packages/ds/figma/export-variables/manifest.json`.
+2. Run **Export variables**. Save the download as `packages/ds/tokens/figma-variables.raw.json`.
+3. `npm run tokens:normalize` rewrites primitives and semantics in `packages/ds/tokens/tokens.json` and the Dark mode of Semantic Colors in `packages/ds/tokens/tokens.dark.json`. Font, typography, and effect styles in `tokens.json` stay as they are.
+4. `npm run build:tokens` writes `packages/ds/src/styles/generated/tokens.css` and `tokens.dark.css`.
 
 Dark mode is applied with `data-theme="dark"` on `<html>`. Storybook has a Theme switch in the toolbar.
 
@@ -41,18 +54,17 @@ Implementation rules (tokens, components, patterns, testing) live in `.cursor/ru
 
 | Path | Role |
 | --- | --- |
-| `src/components/ui/` | Components (Button, Field, FormAlert, Input, Link, …) |
-| `src/components/icon/` | Curated icon registry |
-| `src/foundations/` | Token specimens (color, type, space, …) |
-| `src/patterns/` | Composed specimens that are not product views. Home Products is the grid of ProductCards |
-| `src/views/` | Product screens in Storybook, no routes: Home, Login, Register, Forgot password, Reset password, Password updated, Expired link |
-| `figma/export-variables/` | Figma plugin that downloads every local variable |
-| `tokens/figma-variables.raw.json` | Raw variable export. Input to `tokens:normalize` |
-| `tokens/tokens.json` | Token source. Primitives and semantics come from the export; font, typography, and effect stay in this file |
-| `tokens/tokens.dark.json` | Dark mode of Semantic Colors. Written by `tokens:normalize` |
-| `src/styles/generated/tokens.css`, `tokens.dark.css` | Generated CSS. Produced by `npm run build:tokens` |
+| `packages/ds/src/components/ui/` | DS components (Button, Field, FormAlert, Input, Link, …) |
+| `packages/ds/src/components/icon/` | Curated icon registry |
+| `packages/ds/src/foundations/` | Token specimens (color, type, space, …) |
+| `packages/ds/src/patterns/` | Form patterns matching Figma Patterns (Log in, Sign up, Forgot password, Check your email, Set a new password, Password updated) |
+| `apps/store/src/views/` | Store screens: Home, Login, Register, Forgot password, Reset password, Password updated, Expired link |
+| `apps/store/src/components/ui/` | Store chrome: Navigation, ProductCard, bag preview |
+| `packages/ds/figma/export-variables/` | Figma plugin that downloads every local variable |
+| `packages/ds/tokens/` | Token source and Figma variable export |
+| `packages/ds/src/styles/generated/` | Generated CSS from `npm run build:tokens` |
 
-Each UI component has `.tsx`, `.stories.tsx`, and `.mdx`. Usage pages are the MDX files in Storybook.
+Each DS UI component has `.tsx`, `.stories.tsx`, and `.mdx`. Usage pages are the MDX files in Storybook.
 
 ## License
 
