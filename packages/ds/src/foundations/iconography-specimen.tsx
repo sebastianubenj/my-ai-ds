@@ -1,4 +1,4 @@
-import { Icon, iconBox20, type IconName } from "@/components/icon";
+import { Icon, iconBox20, type IconName } from "#/components/icon";
 
 import type {
   IconColorExampleRecord,

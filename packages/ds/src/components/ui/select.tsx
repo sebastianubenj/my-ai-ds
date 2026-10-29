@@ -2,10 +2,10 @@ import * as React from "react";
 import { Select as SelectPrimitive } from "@base-ui/react/select";
 import { cva } from "class-variance-authority";
 
-import { cn } from "@/lib/utils";
-import { scrollbarClassName } from "@/lib/scrollbar";
-import "@/lib/focus-intent";
-import { Icon, iconBox20, type IconName } from "@/components/icon";
+import { cn } from "#/lib/utils";
+import { scrollbarClassName } from "#/lib/scrollbar";
+import "#/lib/focus-intent";
+import { Icon, iconBox20, type IconName } from "#/components/icon";
 
 const triggerClassName = `
   box-border flex w-full items-center gap-(--primitives-spacing-out-of-scale-1-5)

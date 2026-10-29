@@ -1,9 +1,9 @@
 import * as React from "react";
 
-import { cn } from "@/lib/utils";
-import "@/lib/focus-intent";
-import { Icon, iconBox20 } from "@/components/icon";
-import { Button } from "@/components/ui/button";
+import { cn } from "#/lib/utils";
+import "#/lib/focus-intent";
+import { Icon, iconBox20 } from "#/components/icon";
+import { Button } from "#/components/ui/button";
 
 const EMPTY_PROMPT = "Choose a file or drag & drop it here";
 const DRAG_PROMPT = "Drop your file here";

@@ -2,7 +2,7 @@ import { createRoot, type Root } from "react-dom/client";
 import { afterEach, describe, expect, test, vi } from "vitest";
 import { page } from "vitest/browser";
 
-import "@/index.css";
+import "@weaveui/ds/styles.css";
 import { HomeProducts } from "./home-products";
 
 let root: Root | undefined;

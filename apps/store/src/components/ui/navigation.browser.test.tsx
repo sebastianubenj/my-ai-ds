@@ -3,7 +3,7 @@ import { createRoot, type Root } from "react-dom/client";
 import { afterEach, describe, expect, test, vi } from "vitest";
 import { commands, page, userEvent } from "vitest/browser";
 
-import "@/index.css";
+import "@weaveui/ds/styles.css";
 import {
   Navigation,
   NavigationLink,

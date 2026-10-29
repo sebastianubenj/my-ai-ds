@@ -1,8 +1,8 @@
 import * as React from "react";
 
-import { cn } from "@/lib/utils";
-import "@/lib/focus-intent";
-import { Icon, iconBox20 } from "@/components/icon";
+import { cn } from "#/lib/utils";
+import "#/lib/focus-intent";
+import { Icon, iconBox20 } from "#/components/icon";
 
 export interface TextareaProps extends React.ComponentProps<"textarea"> {
   /** Marks the textarea as invalid. Mirrored to `aria-invalid` for styling and accessibility. */

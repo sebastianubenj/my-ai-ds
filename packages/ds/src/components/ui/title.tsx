@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { cn } from "@/lib/utils";
+import { cn } from "#/lib/utils";
 
 export type TitleLevel = "h1" | "h2" | "h3" | "h4";
 

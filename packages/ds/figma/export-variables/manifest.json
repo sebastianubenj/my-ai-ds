@@ -1,6 +1,6 @@
 {
   "name": "Export variables",
-  "id": "my-ai-ds-export-variables",
+  "id": "weaveui-export-variables",
   "api": "1.0.0",
   "main": "code.js",
   "ui": "ui.html",

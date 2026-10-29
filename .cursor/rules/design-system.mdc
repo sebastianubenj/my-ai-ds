@@ -12,12 +12,14 @@ This file is the source of truth for architecture and agent behavior. Do not add
 - `README.md` is human onboarding: what the repo is, how to run it, and where files live. It must not restate these rules.
 - `.mdx` next to a component or foundation is Storybook usage (when to use it, canvases, accessibility notes). Add MDX when that family already has MDX. Do not add MDX for a pattern or view unless the story cannot carry the usage guidance.
 - `.stories.tsx` are the examples, controls, and `play` tests. Component API is the TypeScript props. An MDX API table explains usage; it is not a second contract.
-- Tokens: the Figma variables plugin writes `tokens/figma-variables.raw.json`. `scripts/normalize-figma-variables.js` rebuilds primitives and semantics in `tokens/tokens.json`, and the Dark mode of the Semantic Colors collection in `tokens/tokens.dark.json`. Font, typography, and effect stay in `tokens.json`. `build-tokens.js` writes generated CSS, which is an artifact.
+- Tokens: the Figma variables plugin writes `packages/ds/tokens/figma-variables.raw.json`. `packages/ds/scripts/normalize-figma-variables.js` rebuilds primitives and semantics in `packages/ds/tokens/tokens.json`, and the Dark mode of the Semantic Colors collection in `packages/ds/tokens/tokens.dark.json`. Font, typography, and effect stay in `tokens.json`. `packages/ds/build-tokens.js` writes generated CSS, which is an artifact.
 - Enforcement is `npm run check`, not another markdown file.
 
 ## 1. General Architecture
 
-This repository is a React + TypeScript design system built with:
+This repository is an npm workspace. `packages/ds` is the React + TypeScript design system. `apps/store` is the storefront and depends on `@weaveui/ds`. Do not copy DS components into the store.
+
+The design system is built with:
 
 - React
 - TypeScript
@@ -149,29 +151,29 @@ If a required design value does not have an appropriate token, identify the miss
 
 The source token files are:
 
-`tokens/tokens.json` (Primitives, Semantics, and the Light mode of Semantic Colors)
+`packages/ds/tokens/tokens.json` (Primitives, Semantics, and the Light mode of Semantic Colors)
 
-`tokens/tokens.dark.json` (the Dark mode of Semantic Colors; empty when the file has no Dark mode)
+`packages/ds/tokens/tokens.dark.json` (the Dark mode of Semantic Colors; empty when the file has no Dark mode)
 
 Tokens are transformed using:
 
-`build-tokens.js`
+`packages/ds/build-tokens.js`
 
 Generated CSS is located at:
 
-`src/styles/generated/tokens.css` (light) and `src/styles/generated/tokens.dark.css` (dark overrides under `[data-theme="dark"]`)
+`packages/ds/src/styles/generated/tokens.css` (light) and `packages/ds/src/styles/generated/tokens.dark.css` (dark overrides under `[data-theme="dark"]`)
 
 Do not manually edit:
 
-`src/styles/generated/tokens.css`
+`packages/ds/src/styles/generated/tokens.css`
 
-`src/styles/generated/tokens.dark.css`
+`packages/ds/src/styles/generated/tokens.dark.css`
 
-`tokens/tokens.dark.json`
+`packages/ds/tokens/tokens.dark.json`
 
 When token changes are required:
 
-1. For a Figma variable change, run the development plugin in `figma/export-variables/`, save the download as `tokens/figma-variables.raw.json`, then run `npm run tokens:normalize`. That rewrites primitives and semantics (both `Semantics` and `Semantic Colors`) and the dark file. Only `Semantic Colors` may have a Dark mode; every other collection has one mode. Font, typography, and effect stay as they are in `tokens/tokens.json` and are not rebuilt from Variables.
+1. For a Figma variable change, run the development plugin in `packages/ds/figma/export-variables/`, save the download as `packages/ds/tokens/figma-variables.raw.json`, then run `npm run tokens:normalize`. That rewrites primitives and semantics (both `Semantics` and `Semantic Colors`) and the dark file. Only `Semantic Colors` may have a Dark mode; every other collection has one mode. Font, typography, and effect stay as they are in `packages/ds/tokens/tokens.json` and are not rebuilt from Variables.
 2. For a change to those preserved styles, or to token-generation logic, edit that source directly.
 3. Run:
 
@@ -186,17 +188,17 @@ The current token pipeline is:
 
 Figma local variables
 ↓
-`figma/export-variables/`
+`packages/ds/figma/export-variables/`
 ↓
-`tokens/figma-variables.raw.json`
+`packages/ds/tokens/figma-variables.raw.json`
 ↓
 `npm run tokens:normalize`
 ↓
-`tokens/tokens.json` and `tokens/tokens.dark.json`
+`packages/ds/tokens/tokens.json` and `packages/ds/tokens/tokens.dark.json`
 ↓
-`build-tokens.js` / Style Dictionary
+`packages/ds/build-tokens.js` / Style Dictionary
 ↓
-`src/styles/generated/tokens.css` and `tokens.dark.css`
+`packages/ds/src/styles/generated/tokens.css` and `tokens.dark.css`
 ↓
 React / Tailwind / shadcn
 
@@ -677,7 +679,7 @@ Do not manually edit generated files.
 
 Generated token output:
 
-`src/styles/generated/tokens.css`
+`packages/ds/src/styles/generated/tokens.css`
 
 Build output such as `dist/` is generated and should not be manually modified.
 
@@ -702,7 +704,7 @@ Run the full `npm run check` when:
 
 If a check fails, fix the issue and rerun only the relevant check to verify the fix.
 
-When Figma variables changed, export them and run `npm run tokens:normalize` before `npm run build:tokens`. When token source or `build-tokens.js` changed, run `npm run build:tokens` first and confirm the generated CSS has no `[object Object]` values.
+When Figma variables changed, export them and run `npm run tokens:normalize` before `npm run build:tokens`. When token source or `packages/ds/build-tokens.js` changed, run `npm run build:tokens` first and confirm the generated CSS has no `[object Object]` values.
 
 When UI changed, confirm the affected Storybook story. Testing rules are in section 23.
 
@@ -733,7 +735,7 @@ Do not gate on a coverage percentage. `@vitest/coverage-v8` is installed and unu
 
 ### Do not test
 
-- Generated files (`src/styles/generated/tokens.css`) or token JSON shape
+- Generated files (`packages/ds/src/styles/generated/tokens.css`) or token JSON shape
 - Foundations and other documentation-only stories
 - CSS class strings, CVA output, or internal DOM that is not the public contract. A computed style may be asserted when it is the observable result of a behavior (for example, no transition under reduced motion, or the stagger delay of an item), never the class that produces it
 - Every visual variant when behavior is the same
@@ -747,16 +749,16 @@ Stories show the real variants and states. Add `play` for behavior: events, keyb
 
 ### Patterns
 
-`play` covers behavior that exists only because components are composed. Home Products is the remaining pattern. Do not re-test component variants inside the pattern.
+`play` covers composed behavior in the layer that implements it. Form patterns live in `packages/ds/src/patterns/`: validation, submit, loading, `formError`, resend, password visibility. Do not re-test Button/Field variants inside the pattern. Home Products lives in `apps/store`. Do not repeat the same `play` on a view.
 
 ### Views
 
-Auth screens live in `src/views/`. Test the observable flow (submit, loading, form errors, password visibility) with `play`. Do not unit-test layout markup.
+Auth screens and Home live in `apps/store/src/views/`. `play` covers what the view adds: AuthLayout chrome, Home bag flow, Expired link copy. Do not repeat the form `play` from the pattern. Do not unit-test layout markup.
 
 ### Done
 
 `npm run check` must pass: typecheck, lint, token tests, Storybook tests, build.
 
 - Component: implementation, stories for real variants and states, MDX when that component family has MDX, `play` when there is behavior.
-- Pattern: composition story (Home Products), `play` for composed behavior.
-- View: a behavior test for each critical flow. No extra unit tests for markup.
+- Pattern: stories for real states, `play` for composed form behavior.
+- View: `play` for chrome and product-only flows. No extra unit tests for markup.

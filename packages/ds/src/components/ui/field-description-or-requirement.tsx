@@ -2,8 +2,8 @@ import * as React from "react";
 
 import { cva, type VariantProps } from "class-variance-authority";
 
-import { cn } from "@/lib/utils";
-import { Icon, type IconName } from "@/components/icon";
+import { cn } from "#/lib/utils";
+import { Icon, type IconName } from "#/components/icon";
 
 const fieldDescriptionOrRequirementVariants = cva(
   `m-0 flex w-full min-w-0 items-center gap-(--primitives-spacing-1)

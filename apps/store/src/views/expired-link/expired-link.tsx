@@ -1,6 +1,4 @@
-import { cn } from "@/lib/utils";
-import { buttonVariants } from "@/components/ui/button";
-import { PageHeader } from "@/components/ui/page-header";
+import { PasswordUpdated } from "@weaveui/ds";
 import { AuthLayout } from "@/views/auth-layout";
 
 // eslint-disable-next-line react-refresh/only-export-components -- stories assert the same copy the view renders.
@@ -30,22 +28,12 @@ export function ExpiredLink({
       logoHref={logoHref}
       logoLabel={logoLabel}
     >
-      <div className="flex w-full max-w-(--primitives-max-width-max-w-sm) flex-col items-center gap-(--primitives-spacing-10) md:max-w-(--primitives-max-width-max-w-md) md:gap-(--primitives-spacing-12)">
-        <div className="flex w-full flex-col items-start gap-(--primitives-spacing-4)">
-          <PageHeader
-            title={EXPIRED_LINK_COPY.title}
-            description={EXPIRED_LINK_COPY.description}
-          />
-        </div>
-        <div className="flex w-full flex-col items-start gap-(--primitives-spacing-6)">
-          <a
-            href={forgotPasswordHref}
-            className={cn(buttonVariants({ variant: "primary", size: "lg" }), "w-full")}
-          >
-            {EXPIRED_LINK_COPY.requestNewLink}
-          </a>
-        </div>
-      </div>
+      <PasswordUpdated
+        title={EXPIRED_LINK_COPY.title}
+        description={EXPIRED_LINK_COPY.description}
+        actionHref={forgotPasswordHref}
+        actionLabel={EXPIRED_LINK_COPY.requestNewLink}
+      />
     </AuthLayout>
   );
 }

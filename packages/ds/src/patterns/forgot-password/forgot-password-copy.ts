@@ -1,0 +1,16 @@
+export const FORGOT_PASSWORD_COPY = {
+  title: "Forgot password?",
+  description: "Enter your email and we'll send you a reset link.",
+  emailRequired: "Enter your email address.",
+  emailInvalid: "Enter a valid email address.",
+  submit: "Send reset link",
+  submitting: "Sending...",
+  sentTitle: "Check your email",
+  sentDescriptionBefore: "If an account exists for ",
+  sentDescriptionAfter: ", we sent a reset link. It expires in 15 minutes.",
+  wait: "Please wait before requesting another link.",
+  network: "Something went wrong. Please try again.",
+  resend: "Resend email",
+  useDifferentEmail: "Use a different email",
+  backToLogin: "Back to log in",
+} as const;

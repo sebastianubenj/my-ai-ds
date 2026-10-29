@@ -2,9 +2,9 @@ import * as React from "react";
 
 import { cva, type VariantProps } from "class-variance-authority";
 
-import { cn } from "@/lib/utils";
+import { cn } from "#/lib/utils";
 
-import { Icon, iconBox16, iconBox20, type IconName } from "@/components/icon";
+import { Icon, iconBox16, iconBox20, type IconName } from "#/components/icon";
 
 const buttonVariants = cva(
   `inline-flex items-center justify-center shrink-0 whitespace-nowrap

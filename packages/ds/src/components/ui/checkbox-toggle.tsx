@@ -1,7 +1,7 @@
 import * as React from "react";
 
-import { cn } from "@/lib/utils";
-import { Icon, iconBox16 } from "@/components/icon";
+import { cn } from "#/lib/utils";
+import { Icon, iconBox16 } from "#/components/icon";
 
 const ICON_STROKE_WIDTH = 2;
 

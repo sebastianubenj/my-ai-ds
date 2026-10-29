@@ -1,4 +1,4 @@
-import { iconBox16, iconBox20, type IconName } from "@/components/icon";
+import { iconBox16, iconBox20, type IconName } from "#/components/icon";
 
 export interface IconLibraryRecord {
   name: string;

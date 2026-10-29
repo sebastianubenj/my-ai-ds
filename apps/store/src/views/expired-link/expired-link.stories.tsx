@@ -20,6 +20,8 @@ export const Default: Story = {
     const canvas = within(canvasElement);
     const request = canvas.getByRole("link", { name: EXPIRED_LINK_COPY.requestNewLink });
 
+    await expect(canvas.getByRole("banner")).toBeInTheDocument();
+    await expect(canvas.getByRole("link", { name: "Home" })).toBeInTheDocument();
     await expect(
       canvas.getByRole("heading", { name: EXPIRED_LINK_COPY.title }),
     ).toBeInTheDocument();

@@ -112,7 +112,7 @@ export function Home({ onReview }: HomeProps) {
   return (
     <>
       <Navigation
-        logoHref="#home"
+        logoHref="/"
         logoLabel="Home"
         searchLabel="Search"
         clearSearchLabel="Clear search"
@@ -136,7 +136,7 @@ export function Home({ onReview }: HomeProps) {
         <NavigationSearchTrigger />
         <NavigationBagTrigger
           aria-label="Bag"
-          signInHref="#login"
+          signInHref="/login"
           onSignInClick={stopNavigation}
           items={bagItems}
           onReview={onReview}

@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { cn } from "@/lib/utils";
+import { cn } from "@weaveui/ds";
 import { Navigation } from "@/components/ui/navigation";
 
 export interface AuthLayoutProps extends React.ComponentProps<"div"> {

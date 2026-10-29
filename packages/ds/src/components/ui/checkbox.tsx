@@ -2,8 +2,8 @@ import * as React from "react";
 
 import { cva, type VariantProps } from "class-variance-authority";
 
-import { cn } from "@/lib/utils";
-import { CheckboxToggle } from "@/components/ui/checkbox-toggle";
+import { cn } from "#/lib/utils";
+import { CheckboxToggle } from "#/components/ui/checkbox-toggle";
 
 const checkboxVariants = cva(
   `inline-flex items-start gap-(--primitives-spacing-2) cursor-pointer

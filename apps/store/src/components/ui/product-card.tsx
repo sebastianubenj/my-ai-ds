@@ -1,7 +1,7 @@
 import * as React from "react";
 
-import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
+import { cn } from "@weaveui/ds";
+import { Button } from "@weaveui/ds";
 
 const productCardMediaClassName = `relative w-full overflow-hidden
   [background-color:var(--semantics-colors-background-subtle)]`;

@@ -1,8 +1,8 @@
 import * as React from "react";
 
-import { cn } from "@/lib/utils";
-import { Description } from "@/components/ui/description";
-import { Title, type TitleLevel } from "@/components/ui/title";
+import { cn } from "#/lib/utils";
+import { Description } from "#/components/ui/description";
+import { Title, type TitleLevel } from "#/components/ui/title";
 
 export interface PageHeaderProps extends Omit<React.ComponentProps<"div">, "title"> {
   title: React.ReactNode;

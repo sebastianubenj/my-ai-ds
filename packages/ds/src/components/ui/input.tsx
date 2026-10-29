@@ -1,8 +1,8 @@
 import * as React from "react";
 
-import { cn } from "@/lib/utils";
-import "@/lib/focus-intent";
-import { Icon, iconBox20, type IconName } from "@/components/icon";
+import { cn } from "#/lib/utils";
+import "#/lib/focus-intent";
+import { Icon, iconBox20, type IconName } from "#/components/icon";
 
 export interface InputProps
   extends Omit<React.ComponentProps<"input">, "type" | "size"> {

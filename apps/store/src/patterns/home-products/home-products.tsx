@@ -4,7 +4,7 @@ import {
   ProductCard,
   type ProductCardLayout,
 } from "@/components/ui/product-card";
-import { useIsDesktop } from "@/lib/media";
+import { useIsDesktop } from "@weaveui/ds";
 
 const headingClassName = `m-0 w-full font-sans
   [font-weight:var(--semantics-typography-heading-font-weight)]

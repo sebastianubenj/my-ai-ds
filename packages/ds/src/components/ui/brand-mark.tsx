@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { cn } from "@/lib/utils";
+import { cn } from "#/lib/utils";
 
 export type BrandMarkProps = React.ComponentProps<"svg">;
 
@@ -15,7 +15,7 @@ export function BrandMark({ className, ref, ...props }: BrandMarkProps) {
       {...props}
       data-slot="brand-mark"
       role="img"
-      aria-label="my ai ds"
+      aria-label="Weave UI"
       className={cn(
         `h-(--primitives-spacing-10) w-auto md:h-(--primitives-spacing-12)
          [color:var(--semantics-colors-foreground-default)]`,

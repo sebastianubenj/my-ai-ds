@@ -1,8 +1,8 @@
 import * as React from "react";
 
-import { cn } from "@/lib/utils";
-import { FieldDescriptionOrRequirement } from "@/components/ui/field-description-or-requirement";
-import { Label } from "@/components/ui/label";
+import { cn } from "#/lib/utils";
+import { FieldDescriptionOrRequirement } from "#/components/ui/field-description-or-requirement";
+import { Label } from "#/components/ui/label";
 
 export interface FieldProps extends React.ComponentProps<"div"> {
   children: React.ReactNode;

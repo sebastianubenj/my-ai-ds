@@ -1,0 +1,3 @@
+@import "@weaveui/ds/styles.css";
+@source "./**/*.{ts,tsx}";
+@source "../../../packages/ds/src/**/*.{ts,tsx}";

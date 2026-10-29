@@ -9,8 +9,20 @@ const withTheme: Decorator = (Story, context) => {
   return <Story />;
 };
 
+const withPatternCanvas: Decorator = (Story, context) => {
+  if (!context.title.startsWith("Patterns/")) {
+    return <Story />;
+  }
+
+  return (
+    <div className="w-(--primitives-max-width-max-w-md)">
+      <Story />
+    </div>
+  );
+};
+
 const preview: Preview = {
-  decorators: [withTheme],
+  decorators: [withTheme, withPatternCanvas],
 
   globalTypes: {
     theme: {

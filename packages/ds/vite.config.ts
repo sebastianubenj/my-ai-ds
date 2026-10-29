@@ -10,9 +10,10 @@ import { playwright } from '@vitest/browser-playwright';
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   resolve: {
-    alias: {
-      '@': path.resolve(import.meta.dirname, './src')
-    }
+    alias: [
+      { find: /^@\//, replacement: `${path.resolve(import.meta.dirname, './src')}/` },
+      { find: /^#\//, replacement: `${path.resolve(import.meta.dirname, './src')}/` },
+    ],
   },
   test: {
     projects: [{

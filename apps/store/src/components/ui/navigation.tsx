@@ -1,12 +1,17 @@
 import * as React from "react";
 import { NavigationMenu } from "@base-ui/react/navigation-menu";
 
-import { useIsDesktop } from "@/lib/media";
-import { scrollbarClassName } from "@/lib/scrollbar";
-import { cn } from "@/lib/utils";
-import { Icon, iconBox16, iconBox20, type IconName } from "@/components/icon";
-import { Button } from "@/components/ui/button";
-import { Link } from "@/components/ui/link";
+import {
+  Button,
+  Icon,
+  iconBox16,
+  iconBox20,
+  Link,
+  scrollbarClassName,
+  useIsDesktop,
+  cn,
+  type IconName,
+} from "@weaveui/ds";
 import {
   BagPreviewProductCard,
   type BagPreviewProductCardDevice,

@@ -31,7 +31,7 @@ export const ForwardsRef: Story = {
     return <BrandMark {...args} ref={ref} />;
   },
   play: async ({ canvasElement }) => {
-    const mark = within(canvasElement).getByRole("img", { name: "my ai ds" });
+    const mark = within(canvasElement).getByRole("img", { name: "Weave UI" });
 
     await expect(mark.tagName).toBe("svg");
     await expect(mark).toHaveAttribute("data-ref-tag", "svg");
