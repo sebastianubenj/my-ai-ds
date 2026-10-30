@@ -1,9 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 
+import { confirmEmailErrorMessage } from "@weaveui/ds";
 import {
   registerAccount,
   requestPasswordReset,
+  resendConfirmationEmail,
   signInAccount,
   signOutAccount,
   updatePassword,
@@ -68,13 +70,31 @@ function LoginRoute() {
 function RegisterRoute() {
   const navigate = useNavigate();
   const [confirmationEmail, setConfirmationEmail] = useState<string>();
+  const [confirmationSubmitting, setConfirmationSubmitting] = useState(false);
+  const [confirmationError, setConfirmationError] = useState<string>();
 
   return (
     <Register
       logoHref="/"
       loginHref="/login"
       confirmationEmail={confirmationEmail}
+      confirmationSubmitting={confirmationSubmitting}
+      confirmationError={confirmationError}
+      onResendConfirmation={async () => {
+        if (!confirmationEmail || confirmationSubmitting) return;
+        setConfirmationSubmitting(true);
+        setConfirmationError(undefined);
+        try {
+          const result = await resendConfirmationEmail(confirmationEmail);
+          setConfirmationError(confirmEmailErrorMessage(result === "sent" ? undefined : result));
+        } catch {
+          setConfirmationError(confirmEmailErrorMessage("network"));
+        } finally {
+          setConfirmationSubmitting(false);
+        }
+      }}
       onSubmit={async (values) => {
+        setConfirmationError(undefined);
         const result = await registerAccount(values);
         if (result === "confirm-email") {
           setConfirmationEmail(values.email);

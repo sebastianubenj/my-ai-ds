@@ -34,7 +34,7 @@ export const ICON_FAMILY = {
   figmaGrid: "Lucide Icons / {kebab-name}",
   figmaMasterSize: 16,
   figmaComponentCount: 1531,
-  reactRegistryCount: 24,
+  reactRegistryCount: 26,
   package: "lucide-react",
 } as const;
 

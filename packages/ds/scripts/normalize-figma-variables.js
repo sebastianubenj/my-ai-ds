@@ -416,7 +416,9 @@ function compareLeaf(path, before, after, diff) {
 }
 
 const REVIEW_PATHS = [
-  'semantics.colors.background.destructive',
+  'semantics.colors.background.destructive-op10',
+  'semantics.colors.background.destructive-op5',
+  'semantics.colors.background.success-op5',
   'semantics.colors.interaction.primary.hover',
   'semantics.colors.interaction.destructive.hover',
   'semantics.colors.interaction.secondary.hover',

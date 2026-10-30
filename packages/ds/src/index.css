@@ -58,7 +58,7 @@
     --secondary-foreground: var(--semantics-colors-foreground-default);
     --accent: var(--semantics-colors-background-subtle);
     --accent-foreground: var(--semantics-colors-foreground-default);
-    --destructive: var(--semantics-colors-background-destructive);
+    --destructive: var(--semantics-colors-background-destructive-op10);
     --destructive-foreground: var(--semantics-colors-foreground-destructive);
     --border: var(--semantics-colors-border-default);
     --ring: var(--semantics-colors-border-ring-focus);

@@ -139,9 +139,9 @@ export function LoginForm({
       appearance === "submitting",
   );
   const [submitting, setSubmitting] = React.useState(appearance === "submitting");
-  const [formError, setFormError] = React.useState<string | undefined>(
-    appearance === "invalid-credentials" ? LOGIN_COPY.invalidCredentials : undefined,
-  );
+  const [formError, setFormError] = React.useState<
+    "invalid-credentials" | "network" | undefined
+  >(appearance === "invalid-credentials" ? "invalid-credentials" : undefined);
   const [errors, setErrors] = React.useState<FieldErrors>(() => {
     if (appearance === "invalid-email") {
       return { email: emailError(seeded.email, LOGIN_COPY.emailInvalid) };
@@ -223,13 +223,11 @@ export function LoginForm({
 
     try {
       const result = await onSubmit?.({ email, password, rememberMe });
-      if (result === "invalid-credentials") {
-        setFormError(LOGIN_COPY.invalidCredentials);
-      } else if (result === "network") {
-        setFormError(LOGIN_COPY.network);
+      if (result === "invalid-credentials" || result === "network") {
+        setFormError(result);
       }
     } catch {
-      setFormError(LOGIN_COPY.network);
+      setFormError("network");
     } finally {
       setSubmitting(false);
       submitLock.current = false;
@@ -327,19 +325,26 @@ export function LoginForm({
                 </div>
               </div>
 
-              {formError ? <FormAlert id={formAlertId}>{formError}</FormAlert> : null}
+              {formError === "invalid-credentials" ? (
+                <FormAlert id={formAlertId}>{LOGIN_COPY.invalidCredentials}</FormAlert>
+              ) : null}
             </div>
 
             <div className="flex w-full flex-col items-center gap-(--primitives-spacing-6)">
-              <Button
-                type="submit"
-                variant="primary"
-                size="lg"
-                className="w-full"
-                loading={submitting}
-              >
-                {submitting ? LOGIN_COPY.submitting : LOGIN_COPY.submit}
-              </Button>
+              <div className="flex w-full flex-col gap-(--primitives-spacing-1)">
+                <Button
+                  type="submit"
+                  variant="primary"
+                  size="lg"
+                  className="w-full"
+                  loading={submitting}
+                >
+                  {submitting ? LOGIN_COPY.submitting : LOGIN_COPY.submit}
+                </Button>
+                {formError === "network" ? (
+                  <FormAlert id={formAlertId}>{LOGIN_COPY.network}</FormAlert>
+                ) : null}
+              </div>
               <p
                 className={`m-0 flex w-full items-start justify-center gap-(--primitives-spacing-1)
                   font-sans [font-weight:var(--semantics-typography-button-font-weight)]

@@ -16,6 +16,13 @@ export type ForgotAuthResult =
       seconds?: number;
     };
 export type ResetAuthResult = "network" | "updated";
+export type ConfirmEmailAuthResult =
+  | "network"
+  | "sent"
+  | {
+      type: "wait";
+      seconds?: number;
+    };
 
 function isNetwork(error: AuthError) {
   return (
@@ -156,6 +163,29 @@ export async function updatePassword(password: string): Promise<ResetAuthResult>
   // Do not sign out here: ResetPasswordRoute treats a mid-submit logout as an
   // expired recovery link and navigates away from /password-updated.
   return "updated";
+}
+
+export async function resendConfirmationEmail(
+  email: string,
+): Promise<ConfirmEmailAuthResult> {
+  if (!supabase) return "network";
+
+  const { error } = await supabase.auth.resend({
+    type: "signup",
+    email,
+    options: {
+      emailRedirectTo: authRedirect("/login"),
+    },
+  });
+
+  if (!error) return "sent";
+  if (isRateLimit(error)) {
+    const seconds = error.message.match(/after (\d+) seconds?/i);
+    if (seconds) return { type: "wait", seconds: Number(seconds[1]) };
+    return { type: "wait" };
+  }
+  if (isNetwork(error)) return "network";
+  return "network";
 }
 
 export async function signOutAccount() {

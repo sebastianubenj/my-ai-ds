@@ -53,18 +53,20 @@ export function CheckYourEmail({
             </>
           }
         />
-        {formError ? <FormAlert id={formAlertId}>{formError}</FormAlert> : null}
       </div>
       <div className="flex w-full flex-col items-start gap-(--primitives-spacing-6)">
-        <Button
-          type="submit"
-          variant="primary"
-          size="lg"
-          className="w-full"
-          loading={submitting}
-        >
-          {FORGOT_PASSWORD_COPY.resend}
-        </Button>
+        <div className="flex w-full flex-col gap-(--primitives-spacing-1)">
+          <Button
+            type="submit"
+            variant="primary"
+            size="lg"
+            className="w-full"
+            loading={submitting}
+          >
+            {FORGOT_PASSWORD_COPY.resend}
+          </Button>
+          {formError ? <FormAlert id={formAlertId}>{formError}</FormAlert> : null}
+        </div>
         <Button
           type="button"
           variant="outline"

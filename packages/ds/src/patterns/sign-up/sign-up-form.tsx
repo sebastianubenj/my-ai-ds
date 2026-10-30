@@ -499,19 +499,21 @@ export function SignUpForm({
                 />
             </Field>
 
-            {formError ? <FormAlert id={formAlertId}>{formError}</FormAlert> : null}
           </div>
 
           <div className="flex w-full flex-col items-center gap-(--primitives-spacing-6)">
-            <Button
-              type="submit"
-              variant="primary"
-              size="lg"
-              className="w-full"
-              loading={submitting}
-            >
-              {submitting ? REGISTER_COPY.submitting : REGISTER_COPY.submit}
-            </Button>
+            <div className="flex w-full flex-col gap-(--primitives-spacing-1)">
+              <Button
+                type="submit"
+                variant="primary"
+                size="lg"
+                className="w-full"
+                loading={submitting}
+              >
+                {submitting ? REGISTER_COPY.submitting : REGISTER_COPY.submit}
+              </Button>
+              {formError ? <FormAlert id={formAlertId}>{formError}</FormAlert> : null}
+            </div>
             <p
               className={`m-0 flex w-full items-start justify-center gap-(--primitives-spacing-1)
                 font-sans [font-weight:var(--semantics-typography-button-font-weight)]

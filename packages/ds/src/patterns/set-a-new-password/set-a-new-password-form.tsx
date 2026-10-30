@@ -379,19 +379,21 @@ export function SetANewPasswordForm({
                 />
               </Field>
 
-              {formError ? <FormAlert id={formAlertId}>{formError}</FormAlert> : null}
             </div>
 
             <div className="flex w-full flex-col items-start gap-(--primitives-spacing-6)">
-              <Button
-                type="submit"
-                variant="primary"
-                size="lg"
-                className="w-full"
-                loading={submitting}
-              >
-                {submitting ? RESET_PASSWORD_COPY.submitting : RESET_PASSWORD_COPY.submit}
-              </Button>
+              <div className="flex w-full flex-col gap-(--primitives-spacing-1)">
+                <Button
+                  type="submit"
+                  variant="primary"
+                  size="lg"
+                  className="w-full"
+                  loading={submitting}
+                >
+                  {submitting ? RESET_PASSWORD_COPY.submitting : RESET_PASSWORD_COPY.submit}
+                </Button>
+                {formError ? <FormAlert id={formAlertId}>{formError}</FormAlert> : null}
+              </div>
               <a
                 href={forgotPasswordHref}
                 aria-disabled={submitting || undefined}

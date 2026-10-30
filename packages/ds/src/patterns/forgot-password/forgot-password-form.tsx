@@ -95,7 +95,7 @@ function waitMessage(result: "wait" | ForgotPasswordWait) {
   const seconds = result === "wait" ? undefined : result.seconds;
   if (typeof seconds === "number") {
     const unit = seconds === 1 ? "second" : "seconds";
-    return `Please wait ${seconds} ${unit} before requesting another link.`;
+    return `Please wait ${seconds} ${unit} before resending.`;
   }
   if (result !== "wait") return FORGOT_PASSWORD_COPY.waitHour;
   return FORGOT_PASSWORD_COPY.wait;
@@ -257,18 +257,20 @@ export function ForgotPasswordForm({
                     onBlur={handleEmailBlur}
                   />
                 </Field>
-              {formError ? <FormAlert id={formAlertId}>{formError}</FormAlert> : null}
             </div>
               <div className="flex w-full flex-col items-center gap-(--primitives-spacing-6)">
-                <Button
-                  type="submit"
-                  variant="primary"
-                  size="lg"
-                  className="w-full"
-                  loading={submitting}
-                >
-                  {submitting ? FORGOT_PASSWORD_COPY.submitting : FORGOT_PASSWORD_COPY.submit}
-                </Button>
+                <div className="flex w-full flex-col gap-(--primitives-spacing-1)">
+                  <Button
+                    type="submit"
+                    variant="primary"
+                    size="lg"
+                    className="w-full"
+                    loading={submitting}
+                  >
+                    {submitting ? FORGOT_PASSWORD_COPY.submitting : FORGOT_PASSWORD_COPY.submit}
+                  </Button>
+                  {formError ? <FormAlert id={formAlertId}>{formError}</FormAlert> : null}
+                </div>
                 <p
                   className={`m-0 flex w-full items-start justify-center
                     font-sans [font-weight:var(--semantics-typography-button-font-weight)]

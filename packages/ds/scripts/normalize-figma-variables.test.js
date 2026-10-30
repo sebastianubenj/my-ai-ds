@@ -255,7 +255,7 @@ test('color alias plus opacity alias becomes 8-digit hex', () => {
       }),
       variable({
         id: 'destructive',
-        name: 'colors/background/destructive',
+        name: 'colors/background/destructive-op10',
         variableCollectionId: 'c-sem',
         resolvedType: 'COLOR',
         scopes: ['FRAME_FILL', 'SHAPE_FILL'],
@@ -269,7 +269,7 @@ test('color alias plus opacity alias becomes 8-digit hex', () => {
     ],
   ), SOURCE);
 
-  const token = leaf(candidate, 'semantics.colors.background.destructive');
+  const token = leaf(candidate, 'semantics.colors.background.destructive-op10');
   assert.equal(token.type, 'color');
   assert.equal(token.value, '#d600001a');
   assert.notEqual(token.value, '#000000ff');

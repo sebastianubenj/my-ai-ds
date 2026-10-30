@@ -5,7 +5,6 @@ export { scrollbarClassName } from "#/lib/scrollbar";
 export { Icon, iconBox16, iconBox20 } from "#/components/icon";
 export type { IconName, IconProps } from "#/components/icon";
 
-export { BrandMark } from "#/components/ui/brand-mark";
 export { Button, buttonVariants } from "#/components/ui/button";
 export type {
   ButtonProps,
@@ -31,6 +30,11 @@ export { FileUpload } from "#/components/ui/file-upload";
 export type { FileUploadProps } from "#/components/ui/file-upload";
 export { FormAlert } from "#/components/ui/form-alert";
 export type { FormAlertProps } from "#/components/ui/form-alert";
+export { InlineFeedback } from "#/components/ui/inline-feedback";
+export type {
+  InlineFeedbackProps,
+  InlineFeedbackType,
+} from "#/components/ui/inline-feedback";
 export { Input } from "#/components/ui/input";
 export type { InputProps } from "#/components/ui/input";
 export { Label } from "#/components/ui/label";
@@ -94,6 +98,14 @@ export {
   CheckYourEmail,
   type CheckYourEmailProps,
 } from "#/patterns/check-your-email/check-your-email";
+export {
+  CONFIRM_EMAIL_COPY,
+  ConfirmEmail,
+  confirmEmailErrorMessage,
+  type ConfirmEmailProps,
+  type ConfirmEmailResendResult,
+  type ConfirmEmailWait,
+} from "#/patterns/confirm-email/confirm-email";
 export {
   RESET_PASSWORD_COPY,
   SetANewPasswordForm,

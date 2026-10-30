@@ -74,7 +74,7 @@ export const WaitSeconds: Story = {
 
     await waitFor(() =>
       expect(canvas.getByRole("alert")).toHaveTextContent(
-        "Please wait 42 seconds before requesting another link.",
+        "Please wait 42 seconds before resending.",
       ),
     );
     await expect(canvas.getByRole("heading", { name: FORGOT_PASSWORD_COPY.title })).toBeInTheDocument();

@@ -42,10 +42,10 @@ const buttonVariants = cva(
           disabled:data-[loading]:[color:var(--semantics-colors-foreground-default)]
           aria-disabled:data-[loading]:[color:var(--semantics-colors-foreground-default)]`,
 
-        destructive: `[background-color:var(--semantics-colors-background-destructive)]
+        destructive: `[background-color:var(--semantics-colors-background-destructive-op10)]
           [color:var(--semantics-colors-foreground-destructive)]
           hover:[background-color:var(--semantics-colors-interaction-destructive-hover)]
-          active:[background-color:var(--semantics-colors-background-destructive)]
+          active:[background-color:var(--semantics-colors-background-destructive-op10)]
           disabled:opacity-(--primitives-opacity-opacity-25)
           aria-disabled:opacity-(--primitives-opacity-opacity-25)`,
 

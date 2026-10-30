@@ -105,20 +105,31 @@ export const SEMANTIC_BACKGROUND: SemanticColorRecord[] = [
     darkAlias: "primitives.colors.neutral.950",
   }),
   semantic({
-    name: "Destructive",
-    token: "semantics.colors.background.destructive",
-    cssVar: "--semantics-colors-background-destructive",
+    name: "Destructive / Op10",
+    token: "semantics.colors.background.destructive-op10",
+    cssVar: "--semantics-colors-background-destructive-op10",
     generated: "#d600001a",
     alias: "primitives.colors.red.500 @ 10%",
+    darkGenerated: "#ff00311a",
+    darkAlias: "primitives.colors.red.400 @ 10%",
   }),
   semantic({
-    name: "Success",
-    token: "semantics.colors.background.success",
-    cssVar: "--semantics-colors-background-success",
-    generated: "var(--primitives-colors-green-700)",
-    alias: "primitives.colors.green.700",
-    darkGenerated: "var(--primitives-colors-green-600)",
-    darkAlias: "primitives.colors.green.600",
+    name: "Destructive / Op5",
+    token: "semantics.colors.background.destructive-op5",
+    cssVar: "--semantics-colors-background-destructive-op5",
+    generated: "#d600000d",
+    alias: "primitives.colors.red.500 @ 5%",
+    darkGenerated: "#ff00310d",
+    darkAlias: "primitives.colors.red.400 @ 5%",
+  }),
+  semantic({
+    name: "Success / Op5",
+    token: "semantics.colors.background.success-op5",
+    cssVar: "--semantics-colors-background-success-op5",
+    generated: "#0085000d",
+    alias: "primitives.colors.green.700 @ 5%",
+    darkGenerated: "#00ff000d",
+    darkAlias: "primitives.colors.green.500 @ 5%",
   }),
   semantic({
     name: "Warning",
@@ -186,8 +197,10 @@ export const SEMANTIC_FOREGROUND: SemanticColorRecord[] = [
     name: "Destructive",
     token: "semantics.colors.foreground.destructive",
     cssVar: "--semantics-colors-foreground-destructive",
-    generated: "var(--primitives-colors-red-600)",
-    alias: "primitives.colors.red.600",
+    generated: "var(--primitives-colors-red-500)",
+    alias: "primitives.colors.red.500",
+    darkGenerated: "var(--primitives-colors-red-400)",
+    darkAlias: "primitives.colors.red.400",
   }),
   semantic({
     name: "Success",
@@ -195,8 +208,8 @@ export const SEMANTIC_FOREGROUND: SemanticColorRecord[] = [
     cssVar: "--semantics-colors-foreground-success",
     generated: "var(--primitives-colors-green-700)",
     alias: "primitives.colors.green.700",
-    darkGenerated: "var(--primitives-colors-green-600)",
-    darkAlias: "primitives.colors.green.600",
+    darkGenerated: "var(--primitives-colors-green-500)",
+    darkAlias: "primitives.colors.green.500",
   }),
 ];
 
@@ -225,6 +238,8 @@ export const SEMANTIC_BORDER: SemanticColorRecord[] = [
     cssVar: "--semantics-colors-border-destructive",
     generated: "var(--primitives-colors-red-500)",
     alias: "primitives.colors.red.500",
+    darkGenerated: "var(--primitives-colors-red-400)",
+    darkAlias: "primitives.colors.red.400",
   }),
   semantic({
     name: "Ring focus",
@@ -239,8 +254,8 @@ export const SEMANTIC_BORDER: SemanticColorRecord[] = [
     cssVar: "--semantics-colors-border-success",
     generated: "var(--primitives-colors-green-700)",
     alias: "primitives.colors.green.700",
-    darkGenerated: "var(--primitives-colors-green-600)",
-    darkAlias: "primitives.colors.green.600",
+    darkGenerated: "var(--primitives-colors-green-500)",
+    darkAlias: "primitives.colors.green.500",
   }),
 ];
 
@@ -287,6 +302,8 @@ export const SEMANTIC_INTERACTION: SemanticColorRecord[] = [
     cssVar: "--semantics-colors-interaction-destructive-hover",
     generated: "#d6000033",
     alias: "primitives.colors.red.500 @ 20%",
+    darkGenerated: "#ff003133",
+    darkAlias: "primitives.colors.red.400 @ 20%",
   }),
   semantic({
     name: "Destructive / Subtle hover",
@@ -294,6 +311,8 @@ export const SEMANTIC_INTERACTION: SemanticColorRecord[] = [
     cssVar: "--semantics-colors-interaction-destructive-subtle-hover",
     generated: "#d600001a",
     alias: "primitives.colors.red.500 @ 10%",
+    darkGenerated: "#ff00311a",
+    darkAlias: "primitives.colors.red.400 @ 10%",
   }),
   semantic({
     name: "File upload / Drag over",
@@ -412,6 +431,12 @@ export const PRIMITIVE_RED = hueScale("red", RED_HEX);
 export const PRIMITIVE_AMBER = hueScale("amber", AMBER_HEX);
 export const PRIMITIVE_GREEN: PrimitiveColorRecord[] = [
   {
+    name: "Green / 500",
+    token: "primitives.colors.green.500",
+    cssVar: "--primitives-colors-green-500",
+    hex: "#00ff00ff",
+  },
+  {
     name: "Green / 600",
     token: "primitives.colors.green.600",
     cssVar: "--primitives-colors-green-600",
@@ -421,7 +446,7 @@ export const PRIMITIVE_GREEN: PrimitiveColorRecord[] = [
     name: "Green / 700",
     token: "primitives.colors.green.700",
     cssVar: "--primitives-colors-green-700",
-    hex: "#008a00ff",
+    hex: "#008500ff",
   },
 ];
 

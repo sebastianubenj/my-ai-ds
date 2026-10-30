@@ -1,0 +1,50 @@
+import * as InlineFeedbackStories from "./inline-feedback.stories";
+import { Meta, Canvas } from "@storybook/addon-docs/blocks";
+
+<Meta of={InlineFeedbackStories} />
+
+# InlineFeedback
+
+Process callout with a tone, optional icon, title, and description. Use it for status or troubleshooting tips that need more presence than a single line of copy.
+
+Form-level submit errors stay on `FormAlert`. Field helpers stay on `FieldDescriptionOrRequirement`.
+
+## Info
+
+<Canvas of={InlineFeedbackStories.Info} />
+
+## Invalid
+
+<Canvas of={InlineFeedbackStories.Invalid} />
+
+## Success
+
+<Canvas of={InlineFeedbackStories.Success} />
+
+## Title or description only
+
+Omit `title` or `description` to hide that line. Set `showIcon={false}` to hide the icon.
+
+<Canvas of={InlineFeedbackStories.TitleOnly} />
+
+<Canvas of={InlineFeedbackStories.WithoutIcon} />
+
+## Accessibility
+
+- `type="invalid"` defaults to `role="alert"`.
+- `type="info"` and `type="success"` default to `role="status"`.
+- Override `role` when the callout is static and should not announce.
+- The type icon is decorative (`aria-hidden`).
+
+## API
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `type` | `"info" \| "invalid" \| "success"` | `"info"` | Visual tone. |
+| `title` | `React.ReactNode` | — | Primary line. Hidden when omitted. |
+| `description` | `React.ReactNode` | — | Supporting line. Hidden when omitted. |
+| `showIcon` | `boolean` | `true` | Shows the type icon. |
+| `className` | `string` | — | Adds custom CSS classes to the root. |
+| `role` | `string` | by `type` | Landmark role. Defaults as above. |
+
+Also accepts native `<div>` attributes via `React.ComponentProps<"div">` (except `title`, which is the callout heading).
