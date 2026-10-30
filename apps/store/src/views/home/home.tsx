@@ -9,6 +9,7 @@ import {
   NavigationSearchTrigger,
   NavigationSection,
 } from "@/components/ui/navigation";
+import { useAuth } from "@/lib/auth-context";
 import {
   HomeProducts,
   type HomeProduct,
@@ -107,6 +108,7 @@ export interface HomeProps {
 }
 
 export function Home({ onReview }: HomeProps) {
+  const { loggedIn, logOut } = useAuth();
   const [bagItems, setBagItems] = React.useState<NavigationBagItem[]>([]);
 
   return (
@@ -137,7 +139,10 @@ export function Home({ onReview }: HomeProps) {
         <NavigationBagTrigger
           aria-label="Bag"
           signInHref="/login"
-          onSignInClick={stopNavigation}
+          loggedIn={loggedIn}
+          onLogOut={() => {
+            void logOut();
+          }}
           items={bagItems}
           onReview={onReview}
         />

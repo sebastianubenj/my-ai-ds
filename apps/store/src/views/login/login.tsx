@@ -1,4 +1,5 @@
 import {
+  FormAlert,
   LoginForm,
   type LoginProps as LoginFormProps,
 } from "@weaveui/ds";
@@ -14,12 +15,15 @@ export {
 export type LoginProps = LoginFormProps & {
   logoHref?: string;
   logoLabel?: string;
+  /** Shown above the form. Used when the account still needs email confirmation. */
+  notice?: string;
 };
 
 export function Login({
   className,
   logoHref = "#",
   logoLabel = "Home",
+  notice,
   ...formProps
 }: LoginProps) {
   return (
@@ -29,7 +33,14 @@ export function Login({
       logoHref={logoHref}
       logoLabel={logoLabel}
     >
-      <LoginForm {...formProps} />
+      <div className="flex w-full flex-col items-center gap-(--primitives-spacing-4)">
+        {notice ? (
+          <FormAlert className="max-w-(--primitives-max-width-max-w-sm) md:max-w-(--primitives-max-width-max-w-md)">
+            {notice}
+          </FormAlert>
+        ) : null}
+        <LoginForm {...formProps} />
+      </div>
     </AuthLayout>
   );
 }

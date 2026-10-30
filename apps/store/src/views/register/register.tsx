@@ -1,4 +1,5 @@
 import {
+  PasswordUpdated,
   SignUpForm,
   type RegisterProps as SignUpFormProps,
 } from "@weaveui/ds";
@@ -16,12 +17,16 @@ export {
 export type RegisterProps = SignUpFormProps & {
   logoHref?: string;
   logoLabel?: string;
+  /** When set, the form is replaced by the confirmation message. */
+  confirmationEmail?: string;
 };
 
 export function Register({
   className,
   logoHref = "#",
   logoLabel = "Home",
+  confirmationEmail,
+  loginHref,
   ...formProps
 }: RegisterProps) {
   return (
@@ -31,7 +36,16 @@ export function Register({
       logoHref={logoHref}
       logoLabel={logoLabel}
     >
-      <SignUpForm {...formProps} />
+      {confirmationEmail ? (
+        <PasswordUpdated
+          title="Check your email"
+          description={`We sent a confirmation link to ${confirmationEmail}. It expires in 1 hour.`}
+          actionHref={loginHref}
+          actionLabel="Log in"
+        />
+      ) : (
+        <SignUpForm loginHref={loginHref} {...formProps} />
+      )}
     </AuthLayout>
   );
 }

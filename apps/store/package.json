@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@base-ui/react": "^1.7.0",
+    "@supabase/supabase-js": "^2.118.0",
     "@weaveui/ds": "*",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",

@@ -41,6 +41,46 @@ export const Initial: Story = {
   },
 };
 
+export const Wait: Story = {
+  args: {
+    onSubmit: fn(async () => ({ type: "wait" }) as const),
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    await userEvent.type(canvas.getByLabelText("Email"), validEmail);
+    await userEvent.click(canvas.getByRole("button", { name: FORGOT_PASSWORD_COPY.submit }));
+
+    await waitFor(() =>
+      expect(canvas.getByRole("alert")).toHaveTextContent(FORGOT_PASSWORD_COPY.waitHour),
+    );
+    await expect(canvas.getByRole("heading", { name: FORGOT_PASSWORD_COPY.title })).toBeInTheDocument();
+    await expect(canvas.getByLabelText("Email")).toHaveValue(validEmail);
+    await expect(
+      canvas.queryByRole("heading", { name: FORGOT_PASSWORD_COPY.sentTitle }),
+    ).not.toBeInTheDocument();
+  },
+};
+
+export const WaitSeconds: Story = {
+  args: {
+    onSubmit: fn(async () => ({ type: "wait", seconds: 42 }) as const),
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    await userEvent.type(canvas.getByLabelText("Email"), validEmail);
+    await userEvent.click(canvas.getByRole("button", { name: FORGOT_PASSWORD_COPY.submit }));
+
+    await waitFor(() =>
+      expect(canvas.getByRole("alert")).toHaveTextContent(
+        "Please wait 42 seconds before requesting another link.",
+      ),
+    );
+    await expect(canvas.getByRole("heading", { name: FORGOT_PASSWORD_COPY.title })).toBeInTheDocument();
+  },
+};
+
 export const InvalidEmail: Story = {
   args: {
     appearance: "invalid-email",

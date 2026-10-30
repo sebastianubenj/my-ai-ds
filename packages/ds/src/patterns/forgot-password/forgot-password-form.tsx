@@ -14,7 +14,13 @@ export { FORGOT_PASSWORD_COPY };
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-export type ForgotPasswordSubmitResult = "success" | "network" | "wait";
+export type ForgotPasswordWait = {
+  type: "wait";
+  /** Seconds until another email can be requested, when Supabase includes them. */
+  seconds?: number;
+};
+
+export type ForgotPasswordSubmitResult = "success" | "network" | "wait" | ForgotPasswordWait;
 
 export interface ForgotPasswordValues {
   email: string;
@@ -79,8 +85,24 @@ function isSentAppearance(appearance: ForgotPasswordAppearance) {
   return appearance === "sent" || appearance === "sent-wait" || appearance === "sent-network";
 }
 
+function isWait(
+  result: ForgotPasswordSubmitResult | void,
+): result is "wait" | ForgotPasswordWait {
+  return result === "wait" || (typeof result === "object" && result?.type === "wait");
+}
+
+function waitMessage(result: "wait" | ForgotPasswordWait) {
+  const seconds = result === "wait" ? undefined : result.seconds;
+  if (typeof seconds === "number") {
+    const unit = seconds === 1 ? "second" : "seconds";
+    return `Please wait ${seconds} ${unit} before requesting another link.`;
+  }
+  if (result !== "wait") return FORGOT_PASSWORD_COPY.waitHour;
+  return FORGOT_PASSWORD_COPY.wait;
+}
+
 function formErrorForResult(result: ForgotPasswordSubmitResult | void) {
-  if (result === "wait") return FORGOT_PASSWORD_COPY.wait;
+  if (isWait(result)) return waitMessage(result);
   if (result === "network") return FORGOT_PASSWORD_COPY.network;
   return undefined;
 }
@@ -156,11 +178,8 @@ export function ForgotPasswordForm({
     try {
       const result = await (action === "resend" ? sendReset : onSubmit)?.({ email });
       if (action === "request") {
-        if (result === "network") {
-          setFormError(FORGOT_PASSWORD_COPY.network);
-        } else if (result === "wait") {
-          setStep("sent");
-          setFormError(FORGOT_PASSWORD_COPY.wait);
+        if (result === "network" || isWait(result)) {
+          setFormError(formErrorForResult(result));
         } else {
           setStep("sent");
           setFormError(undefined);
