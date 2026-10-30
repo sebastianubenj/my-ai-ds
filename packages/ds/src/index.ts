@@ -100,11 +100,13 @@ export {
 } from "#/patterns/check-your-email/check-your-email";
 export {
   CONFIRM_EMAIL_COPY,
-  ConfirmEmail,
   confirmEmailErrorMessage,
-  type ConfirmEmailProps,
   type ConfirmEmailResendResult,
   type ConfirmEmailWait,
+} from "#/patterns/confirm-email/confirm-email-copy";
+export {
+  ConfirmEmail,
+  type ConfirmEmailProps,
 } from "#/patterns/confirm-email/confirm-email";
 export {
   RESET_PASSWORD_COPY,

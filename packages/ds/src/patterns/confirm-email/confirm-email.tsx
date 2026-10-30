@@ -8,26 +8,6 @@ import { cn } from "#/lib/utils";
 
 import { CONFIRM_EMAIL_COPY } from "./confirm-email-copy";
 
-export { CONFIRM_EMAIL_COPY } from "./confirm-email-copy";
-
-export type ConfirmEmailWait = { type: "wait"; seconds?: number };
-export type ConfirmEmailResendResult = "network" | "sent" | "wait" | ConfirmEmailWait;
-
-export function confirmEmailErrorMessage(
-  result: ConfirmEmailResendResult | void,
-): string | undefined {
-  if (result === "network") return CONFIRM_EMAIL_COPY.network;
-  if (result === "wait") return CONFIRM_EMAIL_COPY.wait;
-  if (typeof result === "object" && result?.type === "wait") {
-    if (typeof result.seconds === "number") {
-      const unit = result.seconds === 1 ? "second" : "seconds";
-      return `Please wait ${result.seconds} ${unit} before resending.`;
-    }
-    return CONFIRM_EMAIL_COPY.waitHour;
-  }
-  return undefined;
-}
-
 export interface ConfirmEmailProps {
   className?: string;
   email: string;

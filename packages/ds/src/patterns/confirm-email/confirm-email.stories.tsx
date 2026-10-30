@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, fn, userEvent, within } from "storybook/test";
 
-import { CONFIRM_EMAIL_COPY, ConfirmEmail } from "./confirm-email";
+import { ConfirmEmail } from "./confirm-email";
+import { CONFIRM_EMAIL_COPY } from "./confirm-email-copy";
 
 const meta = {
   title: "Patterns/Confirm email",

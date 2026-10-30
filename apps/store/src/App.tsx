@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 
 import { confirmEmailErrorMessage } from "@weaveui/ds";
@@ -127,16 +127,16 @@ function ForgotPasswordRoute() {
 function ResetPasswordRoute() {
   const navigate = useNavigate();
   const { ready, loggedIn, linkError } = useAuth();
-  const completingRef = useRef(false);
+  const [completing, setCompleting] = useState(false);
 
   useEffect(() => {
     // Wait until the email-link exchange finishes. "Not logged in yet" is not
     // the same as an expired link while that exchange is still running.
-    if (!ready || linkError || completingRef.current) return;
+    if (!ready || linkError || completing) return;
     if (!loggedIn) navigate("/expired-link", { replace: true });
-  }, [ready, loggedIn, linkError, navigate]);
+  }, [ready, loggedIn, linkError, completing, navigate]);
 
-  if (!ready || linkError || (!loggedIn && !completingRef.current)) return null;
+  if (!ready || linkError || (!loggedIn && !completing)) return null;
 
   return (
     <ResetPassword
@@ -146,7 +146,7 @@ function ResetPasswordRoute() {
       onSubmit={async ({ password }) => {
         const result = await updatePassword(password);
         if (result === "updated") {
-          completingRef.current = true;
+          setCompleting(true);
           navigate("/password-updated", { replace: true });
           void signOutAccount();
           return;
